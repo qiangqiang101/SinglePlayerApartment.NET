@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AnimationV">
+      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\AnimationV.dll</HintPath>
+    </Reference>
     <Reference Include="PDMCarShopGUI">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\PDMCarShopGUI.dll</HintPath>
     </Reference>
@@ -73,24 +76,25 @@
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apartments\3AltaStreet.vb" />
     <Compile Include="Apartments\4IntegrityWay.vb" />
     <Compile Include="Apartments\DelPerroHeight.vb" />
     <Compile Include="Apartments\HL4IntegrityWay.vb" />
+    <Compile Include="Apartments\HLDelPerro.vb" />
     <Compile Include="Apartments\HLEclipseTower.vb" />
     <Compile Include="Apartments\HLRichardMajestic.vb" />
     <Compile Include="Apartments\HLTinselTower.vb" />
     <Compile Include="Apartments\RichardMajestic.vb" />
-    <Compile Include="Apartments\RichmanMansion.vb" />
-    <Compile Include="Apartments\SinnerSt.vb" />
+    <Compile Include="Apartments\DreamTower.vb" />
     <Compile Include="Apartments\TinselTower.vb" />
     <Compile Include="Apartments\WeazelPlaza.vb" />
     <Compile Include="Class\CFGRead.vb" />
     <Compile Include="Class\logger.vb" />
     <Compile Include="Apartments\EclipseTower.vb" />
+    <Compile Include="Class\Reader.vb" />
+    <Compile Include="Mechanic.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -108,6 +112,8 @@
     </Compile>
     <Compile Include="Class\timer.vb" />
     <Compile Include="SinglePlayerApartment.vb" />
+    <Compile Include="TenCarGarage.vb" />
+    <Compile Include="Wardrobe.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -128,6 +134,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Resources\vehicle.cfg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

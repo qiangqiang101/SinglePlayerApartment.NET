@@ -13,32 +13,32 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports PDMCarShopGUI
 Imports SinglePlayerApartment.Wardrobe
 
-Public Class _4IntegrityWay
+Public Class DreamTower
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("4IWowner", saveFile)
-    Public Shared _Name As String = "4 Integrity Way Apt. "
-    Public Shared Desc As String = "No dropped calls here! This luxury condo is located in the same building as Tinkle Mobile's headquarters in the new real estate hotspot of Downtown Los Santos. This is such an up-and-coming neighborhood, you can literally see the construction from your window! Includes 10-car garage."
-    Public Shared Unit As String = "30"
-    Public Shared Cost As Integer = 476000
+    Public Shared Owner As String = ReadCfgValue("SSowner", saveFile)
+    Public Shared _Name As String = "Dream Tower Apt. "
+    Public Shared Desc As String = "Join the other creative types flocking to this neighborhood. With easy access to both a movie theater and a church, this apartment in Dream Tower is perfect for lovers of fiction. Includes 10-car garage."
+    Public Shared Unit As String = "15"
+    Public Shared Cost As Integer = 134000
     Public Shared _Blip As Blip
     Public Shared Blip2 As Blip
-    Public Shared Entrance As Vector3 = New Vector3(-48.0058, -587.9324, 37.9529)
-    Public Shared Save As Vector3 = New Vector3(-36.6321, -578.1332, 83.9075)
-    Public Shared Teleport As Vector3 = New Vector3(-21.0966, -580.4884, 90.1148)
-    Public Shared Teleport2 As Vector3 = New Vector3(-49.3243, -583.1716, 37.0333)
-    Public Shared _Exit As Vector3 = New Vector3(-18.0797, -582.1524, 90.1148)
-    Public Shared Wardrobe As Vector3 = New Vector3(-37.8572, -583.7734, 83.9183)
-    Public Shared _Garage As Vector3 = New Vector3(-33.8464, -621.676, 35.0433)
-    Public Shared GarageOut As Vector3 = New Vector3(-24.074, -624.9826, 35.0905)
-    Public Shared GarageOutHeading As Single = 251.6195
+    Public Shared Entrance As Vector3 = New Vector3(-763.5511， -753.8142， 27.8686)
+    Public Shared Save As Vector3 = New Vector3(349.9618, -997.4911, -99.1962)
+    Public Shared Teleport As Vector3 = New Vector3(346.5235, -1002.9012, -99.1962)
+    Public Shared Teleport2 As Vector3 = New Vector3(-757.82， -753.8024， 26.6554)
+    Public Shared _Exit As Vector3 = New Vector3(346.3732, -1013.137, -99.1962)
+    Public Shared Wardrobe As Vector3 = New Vector3(350.8938, -993.6076, -99.1961)
+    Public Shared _Garage As Vector3 = New Vector3(-786.7496， -798.91308， 20.6214)
+    Public Shared GarageOut As Vector3 = New Vector3(-789.551, -815.7581, 20.1855)
+    Public Shared GarageOutHeading As Single = 181.6813
     Public Shared GarageDistance As String
+    Public Shared WardrobeDistance As Single
     Public Shared DoorDistance As Single
     Public Shared SaveDistance As Single
     Public Shared ExitDistance As Single
-    Public Shared WardrobeDistance As Single
-    Public Shared CameraPos As Vector3 = New Vector3(-73.43955, -489.4017, 43.24729)
-    Public Shared CameraRot As Vector3 = New Vector3(20.34373, 0, -158.8398)
+    Public Shared CameraPos As Vector3 = New Vector3(-730.9564， -866.194， 39.5012)
+    Public Shared CameraRot As Vector3 = New Vector3(9.584155， 0， 35.26235)
     Public Shared CameraFov As Single = 50.0
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -49,12 +49,12 @@ Public Class _4IntegrityWay
             uiLanguage = Game.Language.ToString
 
             If uiLanguage = "Chinese" Then
-                _Name = "統合小道4號公寓"
-                Desc = "在這裡，不必擔心手機會斷訊！這間豪華公寓跟客來停電信總部就在同一棟大樓內，地點更是位於洛聖都市中心新崛起的熱門住宅區。這一區真的正在迅速成長，您從窗戶往外看便可看到林立的工地！包括可容納十輛車的車庫。"
+                _Name = "集夢樓公寓"
+                Desc = "加入其他種類的創意聚集到這附近。有了方便前往電影院和一座教堂，這座公寓的集夢樓是完美的小說的愛好者。包括可容納十輛車的車庫。"
                 Garage = "車庫"
             Else
-                _Name = "4 Integrity Way Apt. "
-                Desc = "No dropped calls here! This luxury condo is located in the same building as Tinkle Mobile's headquarters in the new real estate hotspot of Downtown Los Santos. This is such an up-and-coming neighborhood, you can literally see the construction from your window! Includes 10-car garage."
+                _Name = "Dream Tower Apt. "
+                Desc = "Join the other creative types flocking to this neighborhood. With easy access to both a movie theater and a church, this apartment in Dream Tower is perfect for lovers of fiction. Includes 10-car garage."
                 Garage = " Garage"
             End If
 
@@ -103,20 +103,6 @@ Public Class _4IntegrityWay
                 End If
             End With
             BuyMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit, HL4IntegrityWay.Desc)
-            With item2
-                If HL4IntegrityWay.Owner = "Michael" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf HL4IntegrityWay.Owner = "Franklin" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf HL4IntegrityWay.Owner = "Trevor" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                Else
-                    .SetRightLabel("$" & HL4IntegrityWay.Cost.ToString("N"))
-                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
-                End If
-                BuyMenu.AddItem(item2)
-            End With
             BuyMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -139,20 +125,6 @@ Public Class _4IntegrityWay
             End If
         End With
         BuyMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit, HL4IntegrityWay.Desc)
-        With item2
-            If HL4IntegrityWay.Owner = "Michael" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf HL4IntegrityWay.Owner = "Franklin" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf HL4IntegrityWay.Owner = "Trevor" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            Else
-                .SetRightLabel("$" & HL4IntegrityWay.Cost.ToString("N"))
-                .SetRightBadge(UIMenuItem.BadgeStyle.None)
-            End If
-        End With
-        BuyMenu.AddItem(item2)
         BuyMenu.RefreshIndex()
     End Sub
 
@@ -171,19 +143,6 @@ Public Class _4IntegrityWay
             End If
         End With
         GarageMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage)
-        With item2
-            If HL4IntegrityWay.Owner = "Michael" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf HL4IntegrityWay.Owner = "Franklin" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf HL4IntegrityWay.Owner = "Trevor" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            Else
-                .SetRightBadge(UIMenuItem.BadgeStyle.None)
-            End If
-        End With
-        GarageMenu.AddItem(item2)
         GarageMenu.RefreshIndex()
     End Sub
 
@@ -243,28 +202,15 @@ Public Class _4IntegrityWay
                 End If
             End With
             GarageMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage)
-            With item2
-                If HL4IntegrityWay.Owner = "Michael" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf HL4IntegrityWay.Owner = "Franklin" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf HL4IntegrityWay.Owner = "Trevor" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                Else
-                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
-                End If
-            End With
-            GarageMenu.AddItem(item2)
             GarageMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Shared Sub Create4IntegrityWay()
+    Public Shared Sub CreateDreamTower()
         _Blip = World.CreateBlip(Entrance)
-        If Owner = "Michael" AndAlso HL4IntegrityWay.Owner = "Michael" Then
+        If Owner = "Michael" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.Blue
             _Blip.IsShortRange = True
@@ -274,7 +220,7 @@ Public Class _4IntegrityWay
             Blip2.Color = BlipColor.Blue
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Franklin" AndAlso HL4IntegrityWay.Owner = "Franklin" Then
+        ElseIf Owner = "Franklin" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.Green
             _Blip.IsShortRange = True
@@ -284,7 +230,7 @@ Public Class _4IntegrityWay
             Blip2.Color = BlipColor.Green
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Trevor" AndAlso HL4IntegrityWay.Owner = "Trevor" Then
+        ElseIf Owner = "Trevor" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = 17
             _Blip.IsShortRange = True
@@ -292,16 +238,6 @@ Public Class _4IntegrityWay
             Blip2 = World.CreateBlip(_Garage)
             Blip2.Sprite = BlipSprite.Garage
             Blip2.Color = 17
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner <> HL4IntegrityWay.Owner Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.White
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.White
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
         Else
@@ -339,7 +275,7 @@ Public Class _4IntegrityWay
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("4IWowner", "None", saveFile)
+                WriteCfgValue("SSowner", "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -347,7 +283,7 @@ Public Class _4IntegrityWay
                 Owner = "None"
                 _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
-                Create4IntegrityWay()
+                CreateDreamTower()
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -365,7 +301,7 @@ Public Class _4IntegrityWay
                 TenCarGarage.lastLocationGarageVector = _Garage
                 TenCarGarage.lastLocationGarageOutVector = GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -380,14 +316,14 @@ Public Class _4IntegrityWay
             If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
                 'Buy Apartment
                 If playerCash > Cost Then
-                    WriteCfgValue("4IWowner", playerName, saveFile)
+                    WriteCfgValue("SSowner", playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Script.Wait(&H3E8)
                     SinglePlayerApartment.player.Money = (playerCash - Cost)
                     Owner = playerName
                     _Blip.Remove()
                     If Not Blip2 Is Nothing Then Blip2.Remove()
-                    Create4IntegrityWay()
+                    CreateDreamTower()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
                     Script.Wait(500)
@@ -435,76 +371,10 @@ Public Class _4IntegrityWay
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
 
-                SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
+                SetInteriorActive2(343.85, -999.08, -99.198) 'midrange apartment
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            '4 Integrity Way HL
-            If selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & HL4IntegrityWay.Cost.ToString("N") AndAlso HL4IntegrityWay.Owner = "None" Then
-                'Buy Apartment
-                If playerCash > HL4IntegrityWay.Cost Then
-                    WriteCfgValue("4IWHLowner", playerName, saveFile)
-                    Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Cost)
-                    HL4IntegrityWay.Owner = playerName
-                    _Blip.Remove()
-                    If Not Blip2 Is Nothing Then Blip2.Remove()
-                    Create4IntegrityWay()
-                    RefreshGarageMenu()
-                    Mechanic.CreateMechanicMenu()
-                    Script.Wait(500)
-                    Game.FadeScreenIn(500)
-                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & HL4IntegrityWay._Name & HL4IntegrityWay.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & HL4IntegrityWay._Name & HL4IntegrityWay.Unit), "", 100, True, 0, True)
-                    End If
-                    _displayTimer.Start()
-                    If playerName = "Michael" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                    ElseIf playerName = "Franklin" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                    ElseIf playerName = "Trevor" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                    End If
-                    selectedItem.SetRightLabel("")
-                Else
-                    If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
-                    ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
-                    ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
-                    End If
-                End If
-            ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HL4IntegrityWay.Owner = playerName Then
-                'Enter Apartment
-                BuyMenu.Visible = False
-                hideHud = False
-                World.DestroyAllCameras()
-                World.RenderingCamera = Nothing
-
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = HL4IntegrityWay.Teleport
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -526,7 +396,7 @@ Public Class _4IntegrityWay
             TenCarGarage.lastLocationGarageVector = _Garage
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
@@ -536,7 +406,7 @@ Public Class _4IntegrityWay
                 'Script.Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 TenCarGarage.isInGarage = True
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
                 TenCarGarage.lastLocationGarageVector = _Garage
@@ -549,54 +419,10 @@ Public Class _4IntegrityWay
                 'Game.FadeScreenIn(500)
             Else
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
+                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
-            End If
-        ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
-            'Teleport to Garage
-            Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
-            playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
-            TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
-            GarageMenu.Visible = False
-            Script.Wait(500)
-            Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
-            If playerPed.CurrentVehicle.CurrentBlip.Exists Then
-                'Game.FadeScreenOut(500)
-                'Script.Wait(&H3E8)
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
-                TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
-                TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.CurrentVehicle.Delete()
-                'Script.Wait(500)
-                'Game.FadeScreenIn(500)
-            Else
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
-                TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
-                TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
                 TenCarGarage.lastLocationGarageVector = _Garage
                 TenCarGarage.lastLocationGarageOutVector = GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
@@ -613,7 +439,7 @@ Public Class _4IntegrityWay
             WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
             GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-            'Enter _4integrity Tower
+            'Enter dream Tower
             If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
@@ -623,7 +449,7 @@ Public Class _4IntegrityWay
             End If
 
             'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 2.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
                 Else
@@ -664,7 +490,7 @@ Public Class _4IntegrityWay
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
         Try
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on Door
+                'Press E on _3alta Door
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 BuyMenu.Visible = True
@@ -678,9 +504,9 @@ Public Class _4IntegrityWay
                 ExitMenu.Visible = True
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on _4integrity Bed
-                playerMap = "4Integrity"
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                'Press E on DreamTower Bed
+                playerMap = "SinnerSt"
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TimeLapse(8)

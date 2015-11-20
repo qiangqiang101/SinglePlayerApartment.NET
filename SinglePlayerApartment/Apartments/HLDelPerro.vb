@@ -13,22 +13,22 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports PDMCarShopGUI
 Imports SinglePlayerApartment.Wardrobe
 
-Public Class HL4IntegrityWay
+Public Class HLDelPerro
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("4IWHLowner", saveFile)
-    Public Shared _Name As String = "4 Integrity Way Apt. "
-    Public Shared Desc As String = "Live in the clouds while your bank balance hits the floor. An apartment so conspicuosly expansive all your friends will immediately know how much you paid for it. The downtown lateral living experience for people who secretly want to be LC based. Includes a 10-car garage."
-    Public Shared Unit As String = "28"
-    Public Shared Cost As Integer = 952000
-    Public Shared Save As Vector3 = New Vector3(-36.3656, -583.9371, 78.8302)
-    Public Shared Teleport As Vector3 = New Vector3(-21.5202, -598.4841, 80.0662)
-    Public Shared Teleport2 As Vector3 = New Vector3(-49.3243, -583.1716, 37.0333)
-    Public Shared _Exit As Vector3 = New Vector3(-24.4089, -597.69, 80.0311)
-    Public Shared Wardrobe As Vector3 = New Vector3(-38.1595, -589.3992, 78.8302)
+    Public Shared Owner As String = ReadCfgValue("DPHHLowner", saveFile)
+    Public Shared _Name As String = "Del Perro Heights Apt. "
+    Public Shared Desc As String = "Enjoy ocean views far away from tourists and bums on Del Perro Beach with this lateral living opportunity for the super rich. If we can overpay for something, we have, and we're passing the expanse on down to you. Includes a 10-car garage."
+    Public Shared Unit As String = "4"
+    Public Shared Cost As Integer = 936000
+    Public Shared Save As Vector3 = New Vector3(-1454.6335, -552.5497, 72.8437)
+    Public Shared Teleport As Vector3 = New Vector3(-1458.6523, -531.4198, 74.0796)
+    Public Shared Teleport2 As Vector3 = New Vector3(-1439.5905, -550.6906, 34.7418)
+    Public Shared _Exit As Vector3 = New Vector3(-1456.5989, -534.5363, 74.0445)
+    Public Shared Wardrobe As Vector3 = New Vector3(-1449.6384, -549.0426, 72.8437)
+    Public Shared WardrobeDistance As Single
     Public Shared SaveDistance As Single
     Public Shared ExitDistance As Single
-    Public Shared WardrobeDistance As Single
 
     Public Shared ExitMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -38,11 +38,11 @@ Public Class HL4IntegrityWay
             uiLanguage = Game.Language.ToString
 
             If uiLanguage = "Chinese" Then
-                _Name = "統合小道4號公寓"
-                Desc = "住在雲端，而你的銀行存款餘額撒在地板上。公寓這樣明顯擴張你所有的朋友都會立刻知道你多少報酬。要基於LC的人誰偷偷想鬧橫向的生活體驗。包括可容納十輛車的車庫。"
+                _Name = "佩羅高地公寓"
+                Desc = "欣賞海景，遠離對德爾佩羅海灘遊客和燒傷與超級富豪這個橫向的生活的機會。如果我們能多付的東西，我們已經和我們傳遞了廣闊下來給你。包括可容納十輛車的車庫。"
             Else
-                _Name = "4 Integrity Way Apt. "
-                Desc = "Live in the clouds while your bank balance hits the floor. An apartment so conspicuosly expansive all your friends will immediately know how much you paid for it. The downtown lateral living experience for people who secretly want to be LC based. Includes a 10-car garage."
+                _Name = "Del Perro Heights Apt. "
+                Desc = "Enjoy ocean views far away from tourists and bums on Del Perro Beach with this lateral living opportunity for the super rich. If we can overpay for something, we have, and we're passing the expanse on down to you. Includes a 10-car garage."
             End If
 
             AddHandler Tick, AddressOf OnTick
@@ -108,20 +108,20 @@ Public Class HL4IntegrityWay
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("4IWHLowner", "None", saveFile)
+                WriteCfgValue("DPHHLowner", "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SinglePlayerApartment.player.Money = (playerCash + Cost)
                 Owner = "None"
-                _4IntegrityWay._Blip.Remove()
-                If Not _4IntegrityWay.Blip2 Is Nothing Then _4IntegrityWay.Blip2.Remove()
-                _4IntegrityWay.Create4IntegrityWay()
+                DelPerroHeight._Blip.Remove()
+                If Not DelPerroHeight.Blip2 Is Nothing Then DelPerroHeight.Blip2.Remove()
+                DelPerroHeight.CreateDelPerroHeight()
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
-                _4IntegrityWay.RefreshMenu()
-                _4IntegrityWay.RefreshGarageMenu()
+                DelPerroHeight.RefreshMenu()
+                DelPerroHeight.RefreshGarageMenu()
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
@@ -131,10 +131,10 @@ Public Class HL4IntegrityWay
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _4IntegrityWay._Garage
-                TenCarGarage.lastLocationGarageOutVector = _4IntegrityWay.GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = _4IntegrityWay.GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                TenCarGarage.lastLocationGarageVector = DelPerroHeight._Garage
+                TenCarGarage.lastLocationGarageOutVector = DelPerroHeight.GarageOut
+                TenCarGarage.lastLocationGarageOutHeading = DelPerroHeight.GarageOutHeading
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -189,7 +189,7 @@ Public Class HL4IntegrityWay
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 'Press E on hl4integrity Bed
-                playerMap = "4IntegrityHL"
+                playerMap = "DelPerroHL"
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TimeLapse(8)

@@ -10,95 +10,148 @@ Imports System.Threading.Tasks
 Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
+Imports PDMCarShopGUI
+Imports SinglePlayerApartment.Wardrobe
 
 Public Class HLEclipseTower
     Inherits Script
 
-    Public Shared hleclipseOwner As String = ReadCfgValue("ETHLowner", saveFile)
-    Public Shared hleclipseCost As Integer = 800000
-    Public Shared hleclipseBlip As Blip
-    Public Shared hleclipseTower As Vector3 = New Vector3(-775.323, 313.1424, 85.6981)
-    Public Shared hleclipseTowerSave As Vector3 = New Vector3(-793.2186, 332.4132, 210.7966)
-    Public Shared hleclipseTowerTeleport As Vector3 = New Vector3(-774.3142, 323.8076, 212.0325)
-    Public Shared hleclipseTowerTeleport2 As Vector3 = New Vector3(-773.282, 312.275, 84.698)
-    Public Shared hleclipseTowerExit As Vector3 = New Vector3(-777.6211, 323.5111, 211.9974)
-    Public Shared hleclipseDoorDistance As Single
-    Public Shared hleclipseSaveDistance As Single
-    Public Shared hleclipseExitDistance As Single
+    Public Shared Owner As String = ReadCfgValue("ETHLowner", saveFile)
+    Public Shared _Name As String = "Eclipse Tower Apt. "
+    Public Shared Desc As String = "Perfectly proportioned, beautifully presented lateral living opportunity on exquisite Eclipse Blvd. This apartment is as unique as the new cheekbones your surgeon just gave you... by that we mean you'll see them all over town. Includes a 10-car garage."
+    Public Shared Unit As String = "3"
+    Public Shared Cost As Integer = 800000
+    Public Shared Save As Vector3 = New Vector3(-793.2186, 332.4132, 210.7966)
+    Public Shared Teleport As Vector3 = New Vector3(-774.3142, 323.8076, 212.0325)
+    Public Shared Teleport2 As Vector3 = New Vector3(-773.282, 312.275, 84.698)
+    Public Shared _Exit As Vector3 = New Vector3(-777.6211, 323.5111, 211.9974)
+    Public Shared Wardrobe As Vector3 = New Vector3(-793.4239, 326.7805, 210.7966)
+    Public Shared WardrobeDistance As Single
+    Public Shared SaveDistance As Single
+    Public Shared ExitDistance As Single
+
+    Public Shared ExitMenu As UIMenu
+    Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
+            uiLanguage = Game.Language.ToString
+
+            If uiLanguage = "Chinese" Then
+                _Name = "日蝕大樓公寓"
+                Desc = "精湛的日蝕大道完美比例，贈送精美橫向生活的機會這間公寓是獨一無二的，因為新的顴骨你的醫生只是給了你......通過我們的意思是，你會看到他們全城。包括可容納十輛車的車庫。"
+            Else
+                _Name = "Eclipse Tower Apt. "
+                Desc = "Perfectly proportioned, beautifully presented lateral living opportunity on exquisite Eclipse Blvd. This apartment is as unique as the new cheekbones your surgeon just gave you... by that we mean you'll see them all over town. Includes a 10-car garage."
+            End If
+
             AddHandler Tick, AddressOf OnTick
             AddHandler KeyDown, AddressOf OnKeyDown
+
+            _menuPool = New MenuPool()
+            CreateExitMenu()
+            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Shared Sub CreateHLEclipseTower()
-        hleclipseBlip = World.CreateBlip(hleclipseTower)
-        If hleclipseOwner = "Michael" Then
-            hleclipseBlip.Sprite = BlipSprite.Safehouse
-            hleclipseBlip.Color = BlipColor.Blue
-            hleclipseBlip.IsShortRange = False
+    Public Shared Sub CreateExitMenu()
+        Try
             If uiLanguage = "Chinese" Then
-                SetBlipName("產業: 日蝕大樓公寓3", hleclipseBlip)
+                ExitApt = "离开公寓"
+                SellApt = "出售產業"
+                EnterGarage = "進入車庫"
+                AptOptions = "公寓選項"
             Else
-                SetBlipName("Property: Eclipse Tower Apartment 3", hleclipseBlip)
+                ExitApt = "Exit Apartment"
+                SellApt = "Sell Property"
+                EnterGarage = "Enter Garage"
+                AptOptions = "APARTMENT OPTIONS"
             End If
-        ElseIf hleclipseOwner = "Franklin" Then
-            hleclipseBlip.Sprite = BlipSprite.Safehouse
-            hleclipseBlip.Color = BlipColor.Green
-            hleclipseBlip.IsShortRange = False
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業: 日蝕大樓公寓3", hleclipseBlip)
-            Else
-                SetBlipName("Property: Eclipse Tower Apartment 3", hleclipseBlip)
+
+            ExitMenu = New UIMenu("", AptOptions, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            ExitMenu.SetBannerType(Rectangle)
+            _menuPool.Add(ExitMenu)
+            ExitMenu.AddItem(New UIMenuItem(ExitApt))
+            ExitMenu.AddItem(New UIMenuItem(EnterGarage))
+            ExitMenu.AddItem(New UIMenuItem(SellApt))
+            ExitMenu.RefreshIndex()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub MenuCloseHandler(sender As UIMenu)
+        Try
+            hideHud = False
+            World.DestroyAllCameras()
+            World.RenderingCamera = Nothing
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub ItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        Try
+            If selectedItem.Text = ExitApt Then
+                'Exit Apt
+                ExitMenu.Visible = False
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                Game.Player.Character.Position = Teleport2
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf selectedItem.Text = SellApt Then
+                'Sell Apt
+                ExitMenu.Visible = False
+                WriteCfgValue("ETHLowner", "None", saveFile)
+                SavePosition2()
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                SinglePlayerApartment.player.Money = (playerCash + Cost)
+                Owner = "None"
+                EclipseTower._Blip.Remove()
+                If Not EclipseTower.Blip2 Is Nothing Then EclipseTower.Blip2.Remove()
+                EclipseTower.CreateEclipseTower()
+                Game.Player.Character.Position = Teleport2
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+                EclipseTower.RefreshMenu()
+                EclipseTower.RefreshGarageMenu()
+            ElseIf selectedItem.Text = EnterGarage Then
+                'Enter Garage
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+                TenCarGarage.isInGarage = True
+                playerPed.Position = TenCarGarage.Elevator
+                TenCarGarage.LastLocationName = _Name & Unit
+                TenCarGarage.lastLocationVector = _Exit
+                TenCarGarage.lastLocationGarageVector = EclipseTower._Garage
+                TenCarGarage.lastLocationGarageOutVector = EclipseTower.GarageOut
+                TenCarGarage.lastLocationGarageOutHeading = EclipseTower.GarageOutHeading
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
+                ExitMenu.Visible = False
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             End If
-        ElseIf hleclipseOwner = "Trevor" Then
-            hleclipseBlip.Sprite = BlipSprite.Safehouse
-            hleclipseBlip.Color = 17
-            hleclipseBlip.IsShortRange = False
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業: 日蝕大樓公寓3", hleclipseBlip)
-            Else
-                SetBlipName("Property: Eclipse Tower Apartment 3", hleclipseBlip)
-            End If
-        Else
-            hleclipseBlip.Sprite = BlipSprite.SafehouseForSale
-            hleclipseBlip.Color = BlipColor.White
-            hleclipseBlip.IsShortRange = True
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業求售", hleclipseBlip)
-            Else
-                SetBlipName("Property For Sale", hleclipseBlip)
-            End If
-        End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            hleclipseDoorDistance = World.GetDistance(playerPed.Position, hleclipseTower)
-            hleclipseSaveDistance = World.GetDistance(playerPed.Position, hleclipseTowerSave)
-            hleclipseExitDistance = World.GetDistance(playerPed.Position, hleclipseTowerExit)
-
-            'Enter hleclipse Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso hleclipseDoorDistance < 3.0 AndAlso hleclipseOwner = "None" Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 花 800000 元買日蝕大樓公寓3。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to purchase Eclipse Tower Apartment 3 for $800,000.")
-                End If
-            ElseIf Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso hleclipseDoorDistance < 2.0 AndAlso hleclipseOwner = playerName Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = hleclipseTowerTeleport
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
+            SaveDistance = World.GetDistance(playerPed.Position, Save)
+            ExitDistance = World.GetDistance(playerPed.Position, _Exit)
+            WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
 
             'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso hleclipseSaveDistance < 3.0 AndAlso hleclipseOwner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
                 Else
@@ -106,13 +159,23 @@ Public Class HLEclipseTower
                 End If
             End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso hleclipseExitDistance < 2.0 AndAlso hleclipseOwner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開公寓, 按 ~INPUT_DETONATE~ 出售產業。")
+                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
                 Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to Exit Apartment, Press ~INPUT_DETONATE~ to Sell Property.")
+                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
                 End If
             End If
+
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 2.0 AndAlso Owner = playerName Then
+                If uiLanguage = "Chinese" Then
+                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
+                Else
+                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                End If
+            End If
+
+            _menuPool.ProcessMenus()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -120,31 +183,11 @@ Public Class HLEclipseTower
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
         Try
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso hleclipseDoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso hleclipseOwner = "None" Then
-                'Press E on hleclipse Door
-                If playerCash > hleclipseCost Then
-                    WriteCfgValue("ETHLowner", playerName, saveFile)
-                    Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - hleclipseCost)
-                    hleclipseOwner = playerName
-                    hleclipseBlip.Remove()
-                    CreateHLEclipseTower()
-                    Script.Wait(500)
-                    Game.FadeScreenIn(500)
-                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~日蝕大樓公寓3"), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~Eclipse Tower Apartment 3"), "", 100, True, 0, True)
-                    End If
-                    _displayTimer.Start()
-                Else
-                    UI.Notify("You have insufficient funds to purchase this property.", True)
-                End If
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                ExitMenu.Visible = True
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso hleclipseSaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso hleclipseOwner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 'Press E on hleclipse Bed
                 playerMap = "EclipseHL"
                 Game.FadeScreenOut(500)
@@ -156,24 +199,18 @@ Public Class HLEclipseTower
                 Game.FadeScreenIn(500)
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso hleclipseExitDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso hleclipseOwner = playerName Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = hleclipseTowerTeleport2
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf Game.IsControlJustPressed(0, GTA.Control.Detonate) AndAlso hleclipseExitDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso hleclipseOwner = playerName Then
-                WriteCfgValue("ETHLowner", "None", saveFile)
-                SavePosition2()
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                SinglePlayerApartment.player.Money = (playerCash + hleclipseCost)
-                hleclipseOwner = "None"
-                hleclipseBlip.Remove()
-                CreateHLEclipseTower()
-                Game.Player.Character.Position = hleclipseTowerTeleport2
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                WardrobeVector = Wardrobe
+                If playerName = "Michael" Then
+                    Player0W.Visible = True
+                    MakeACamera()
+                ElseIf playerName = "Franklin" Then
+                    Player1W.Visible = True
+                    MakeACamera()
+                ElseIf playerName = “Trevor"
+                    Player2W.Visible = True
+                    MakeACamera()
+                End If
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -183,7 +220,7 @@ Public Class HLEclipseTower
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                hleclipseBlip.Remove()
+
             Catch ex As Exception
             End Try
         End If

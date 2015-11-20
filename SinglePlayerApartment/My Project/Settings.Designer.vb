@@ -161,6 +161,18 @@ Namespace My
                 Me("TlastPosZ") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("F6")>  _
+        Public Property Mechanic() As Global.System.Windows.Forms.Keys
+            Get
+                Return CType(Me("Mechanic"),Global.System.Windows.Forms.Keys)
+            End Get
+            Set
+                Me("Mechanic") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

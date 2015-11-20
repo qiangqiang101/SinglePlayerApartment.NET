@@ -29,5 +29,8 @@
     <Setting Name="TlastPosZ" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="Mechanic" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F6</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

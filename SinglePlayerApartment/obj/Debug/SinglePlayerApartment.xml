@@ -22,5 +22,32 @@ SinglePlayerApartment
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:SinglePlayerApartment.My.Resources.Resources.vehicle">
+<summary>
+  Looks up a localized string similar to VehicleModel &quot;&quot;
+PrimaryColor &quot;&quot;
+SecondaryColor &quot;&quot;
+PearlescentColor &quot;&quot;
+HasCustomPrimaryColor &quot;&quot;
+HasCustomSecondaryColor &quot;&quot;
+CustomPrimaryColorRed &quot;&quot;
+CustomPrimaryColorGreen &quot;&quot;
+CustomPrimaryColorBlue &quot;&quot;
+CustomSecondaryColorRed &quot;&quot;
+CustomSecondaryColorGreen &quot;&quot;
+CustomSecondaryColorBlue &quot;&quot;
+RimColor &quot;&quot;
+HasNeonLightBack &quot;&quot;
+HasNeonLightFront &quot;&quot;
+HasNeonLightLeft &quot;&quot;
+HasNeonLightRight &quot;&quot;
+NeonColorRed &quot;&quot;
+NeonColorGreen &quot;&quot;
+NeonColorBlue &quot;&quot;
+TyreSmokeColorRed &quot;&quot;
+TyreSmokeColorGreen &quot;&quot;
+TyreSmokeColorBlu [rest of string was truncated]&quot;;.
+</summary>
+</member>
 </members>
 </doc>

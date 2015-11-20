@@ -22,6 +22,9 @@ Public Class SinglePlayerApartment
     Public Shared uiLanguage As String
     Public Shared playerMap As String
 
+    'Translate
+    Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, _Mechanic, ChooseApt, ChooseVeh As String
+
     Private teleported As Boolean = False
     Private franklinSafeHouse As Vector3 = New Vector3(7.1190319061279, 536.61511230469, 176.02365112305)
     Private michaelSafeHouse As Vector3 = New Vector3(-813.60302734375, 179.47380065918, 72.158325195313)
@@ -29,6 +32,8 @@ Public Class SinglePlayerApartment
     Private trevorSafeHouse2 As Vector3 = New Vector3(96.154197692871, -1290.7312011719, 29.266660690308)
     Private franklinSafeHouseDist, michaelSafeHouseDist, trevorSafeHouseDist, trevorSafeHouseDist2 As Single
 
+    'Public Shared _menuPool As MenuPool
+    Public Shared hideHud As Boolean = False
     Public Shared _scaleform As Scaleform
     Public Shared _displayTimer As Timer
     Public Shared _fadeTimer As Timer
@@ -50,6 +55,28 @@ Public Class SinglePlayerApartment
             End If
             uiLanguage = Game.Language.ToString
 
+            If uiLanguage = "Chinese" Then
+                ExitApt = "离开公寓"
+                SellApt = "出售產業"
+                EnterGarage = "進入車庫"
+                AptOptions = "公寓選項"
+                Garage = "車庫"
+                GrgOptions = "車庫選項"
+                _Mechanic = "機械師"
+                ChooseApt = "選擇公寓"
+                ChooseVeh = "選擇車輛"
+            Else
+                ExitApt = "Exit Apartment"
+                SellApt = "Sell Property"
+                EnterGarage = "Enter Garage"
+                AptOptions = "APARTMENT OPTIONS"
+                Garage = " Garage"
+                GrgOptions = "GARAGE OPTIONS"
+                _Mechanic = "Mechanic"
+                ChooseApt = "CHOOSE APARTMENT"
+                ChooseVeh = "CHOOSE VEHICLE"
+            End If
+
             AddHandler Tick, AddressOf OnTick
             AddHandler KeyDown, AddressOf OnKeyDown
 
@@ -64,25 +91,16 @@ Public Class SinglePlayerApartment
             'SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
             'SetInteriorActive2(-1477.14, -538.75, 55.5264) 'del perro 7
             'SetInteriorActive2(343.85, -999.08, -99.198) 'midrange apartment
+            'SetInteriorActive2(222.592, -968.1, -99) '10 car garage
 
-            Dim update1 As String = ReadCfgValue("Update1", saveFile)
-            If update1 = "0" Then
-                UpgradeFromOldVersion()
-            Else
-                EclipseTower.CreateEclipseTower()
-                HLEclipseTower.CreateHLEclipseTower()
-                _3AltaStreet.Create3AltaStreet()
-                _4IntegrityWay.Create4IntegrityWay()
-                HL4IntegrityWay.CreateHL4IntegrityWay()
-                DelPerroHeight.CreateDelPerroHeight()
-                RichardMajestic.CreateRichardsMajestic()
-                HLRichardMajestic.CreateHLRichardsMajestic()
-                TinselTower.CreateTinselTower()
-                HLTinselTower.CreateHLTinselTower()
-                WeazelPlaza.CreateWeazelPlaza()
-                SinnerSt.CreateSinnerSt()
-                RichmanMansion.CreateRichmanMansion()
-            End If
+            EclipseTower.CreateEclipseTower()
+            _3AltaStreet.Create3AltaStreet()
+            _4IntegrityWay.Create4IntegrityWay()
+            DelPerroHeight.CreateDelPerroHeight()
+            RichardMajestic.CreateRichardsMajestic()
+            TinselTower.CreateTinselTower()
+            WeazelPlaza.CreateWeazelPlaza()
+            DreamTower.CreateDreamTower()
 
             _displayTimer = New Timer(2200)
             _fadeTimer = New Timer(2000)
@@ -150,6 +168,15 @@ Public Class SinglePlayerApartment
         End Try
     End Sub
 
+    Public Shared Sub SetInteriorInActive(X As Single, Y As Single, Z As Single)
+        Try
+            Dim interiorID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, X, Y, Z)
+            Native.Function.Call(Hash.DISABLE_INTERIOR, interiorID, True)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
     Public Shared Sub ToggleIPL(iplName As String)
         If Native.Function.Call(Of Boolean)(Hash.IS_IPL_ACTIVE, New InputArgument() {iplName}) Then
             Native.Function.Call(Hash.REMOVE_IPL, New InputArgument() {iplName})
@@ -158,8 +185,100 @@ Public Class SinglePlayerApartment
         End If
     End Sub
 
+    Enum TelevisionModel
+        HighLifeAptTV = 777010715
+        HighEndAptTV = 1036195894
+        TrevorTV = 1434219911
+        'LowEndAptTV = 3397365739
+    End Enum
+
+    Public Shared Sub TurnOnTV(X As Single, Y As Single, Z As Single, Model As TelevisionModel)
+        Dim TV As Entity = Native.Function.Call(Of Entity)(Hash.CREATE_OBJECT, Model, X, Y, Z, True, True, False)
+        Native.Function.Call(Hash.ATTACH_TV_AUDIO_TO_ENTITY, TV)
+        Dim tvScreen As String = Native.Function.Call(Of String)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID)
+        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, tvScreen) Then
+            Native.Function.Call(Hash.REGISTER_NAMED_RENDERTARGET, tvScreen, 0)
+        End If
+
+        Dim renderTargetID As Integer
+        Dim tvModel As String = Native.Function.Call(Of String)(Hash.GET_ENTITY_MODEL, TV)
+        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_LINKED, tvModel) Then
+            Native.Function.Call(Hash.LINK_NAMED_RENDERTARGET, tvModel)
+            renderTargetID = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, tvScreen)
+        End If
+
+        Native.Function.Call(Hash.SET_TV_CHANNEL, 0) 'TV Channel 0 or 1
+        Native.Function.Call(Hash.SET_TV_VOLUME, 0) 'TV Volume Float in range from -22.5 till 0
+
+        If Native.Function.Call(Of Boolean)(Hash.HAS_ENTITY_BEEN_DAMAGED_BY_ANY_PED, TV) Then
+            Native.Function.Call(Hash.SET_TEXT_RENDER_ID, renderTargetID)
+            Native.Function.Call(Hash._0x61BB1D9B3A95D802, 4)
+            Native.Function.Call(Hash._0xC6372ECD45D73BCD, 1)
+            Dim tvBright As Integer = 255 'TV Bright in range from 0 to 255
+            Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1, 1, 0, 255, 255, 255, tvBright)
+            'Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
+        End If
+
+        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, tvScreen) Then
+            Native.Function.Call(Hash.RELEASE_NAMED_RENDERTARGET, tvScreen)
+        End If
+    End Sub
+
     Public Shared Sub PlayAnimation(ByVal AnimationSet As String, ByVal AnimationName As String)
         Game.Player.Character.Task.PlayAnimation(AnimationSet, AnimationName, 8.0F, -1, True, 4.0F)
+    End Sub
+
+    Enum IconType
+        ChatBox = 1
+        Email = 2
+        AddFriendRequest = 3
+        Nothing4 = 4
+        Nothing5 = 5
+        Nothing6 = 6
+        RightJumpingArrow = 7
+        RPIcon = 8
+        DollarSignIcon = 9
+    End Enum
+
+    ''' <summary>
+    ''' CHAR_DEFAULT : Default profile pic
+    ''' CHAR_FACEBOOK: Facebook
+    ''' CHAR_SOCIAL_CLUB: Social Club Star
+    ''' CHAR_CARSITE2: Super Auto San Andreas Car Site
+    ''' CHAR_BOATSITE: Boat Site Anchor
+    ''' CHAR_BANK_MAZE: Maze Bank Logo
+    ''' CHAR_BANK_FLEECA: Fleeca Bank
+    ''' CHAR_BANK_BOL: Bank Bell Icon
+    ''' CHAR_MINOTAUR: Minotaur Icon
+    ''' CHAR_EPSILON: Epsilon E
+    ''' CHAR_MILSITE: Warstock W
+    ''' CHAR_CARSITE: Legendary Motorsports Icon
+    ''' CHAR_DR_FRIEDLANDER: Dr Freidlander Face
+    ''' CHAR_BIKESITE: P&M Logo
+    ''' CHAR_LIFEINVADER: Liveinvader
+    ''' CHAR_PLANESITE: Plane Site E
+    ''' CHAR_MICHAEL: Michael's Face
+    ''' CHAR_FRANKLIN: Franklin's Face
+    ''' CHAR_TREVOR: Trevor's Face
+    ''' CHAR_SIMEON: Simeon's Face
+    ''' CHAR_RON: Ron's Face
+    ''' CHAR_JIMMY: Jimmy's Face
+    ''' CHAR_LESTER: Lester's Shadowed Face
+    ''' CHAR_DAVE: Dave Norton 's Face
+    ''' CHAR_LAMAR: Chop's Face
+    ''' CHAR_DEVIN: Devin Weston 's Face
+    ''' CHAR_AMANDA: Amanda's Face
+    ''' CHAR_TRACEY: Tracey's Face
+    ''' CHAR_STRETCH: Stretch's Face
+    ''' CHAR_WADE: Wade's Face
+    ''' CHAR_MARTIN: Martin Madrazo 's Face
+    ''' CHAR_ACTING_UP: Acting Icon
+    ''' </summary>
+    Public Shared Sub DisplayNotificationThisFrame(Sender As String, Subject As String, Message As String, Icon As String, Flash As Boolean, Type As IconType)
+        Native.Function.Call(Hash._SET_NOTIFICATION_TEXT_ENTRY, "STRING")
+        Native.Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Message)
+        Native.Function.Call(Hash._SET_NOTIFICATION_MESSAGE, Icon, Icon, Flash, Type, Sender, Subject)
+        Native.Function.Call(Hash._DRAW_NOTIFICATION, False, True)
     End Sub
 
     Public Shared Sub SavePosition()
@@ -251,6 +370,8 @@ Public Class SinglePlayerApartment
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "4IntegrityHL"
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
+                Case "DelPerroHL"
+                    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "EclipseHL"
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "RichardHL"
@@ -277,83 +398,6 @@ Public Class SinglePlayerApartment
         End Try
     End Sub
 
-    Private Sub UpgradeFromOldVersion()
-        Try
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\"
-            Dim check As Integer
-            Dim strError As String
-            Dim files(13) As String
-            files(0) = "3_alta_street.cfg"
-            files(1) = "4_integrity_way.cfg"
-            files(2) = "4_integrity_way_hl.cfg"
-            files(3) = "1102_sinner_st.cfg"
-            files(4) = "del_perro_heights.cfg"
-            files(5) = "eclipse_towers.cfg"
-            files(6) = "eclipse_towers_hl.cfg"
-            files(7) = "richards_majestic.cfg"
-            files(8) = "richards_majestic_hl.cfg"
-            files(9) = "richman_mansion.cfg"
-            files(10) = "tinsel_towers.cfg"
-            files(11) = "tinsel_towers_hl.cfg"
-            files(12) = "weazel_plaza.cfg"
-
-            For i = 0 To 12
-                Do
-                    If UCase(Dir$(path & files(i))) = UCase(files(i)) Then
-                        Dim tempOwner As String = ReadCfgValue("owner", path & files(i))
-                        Select Case files(i)
-                            Case files(0)
-                                WriteCfgValue("3ASowner", tempOwner, saveFile)
-                            Case files(1)
-                                WriteCfgValue("4IWowner", tempOwner, saveFile)
-                            Case files(2)
-                                WriteCfgValue("4IWHLowner", tempOwner, saveFile)
-                            Case files(3)
-                                WriteCfgValue("SSowner", tempOwner, saveFile)
-                            Case files(4)
-                                WriteCfgValue("DPHwoner", tempOwner, saveFile)
-                            Case files(5)
-                                WriteCfgValue("ETowner", tempOwner, saveFile)
-                            Case files(6)
-                                WriteCfgValue("ETHLowner", tempOwner, saveFile)
-                            Case files(7)
-                                WriteCfgValue("RMowner", tempOwner, saveFile)
-                            Case files(8)
-                                WriteCfgValue("RMHLowner", tempOwner, saveFile)
-                            Case files(9)
-                                WriteCfgValue("RMMowner", tempOwner, saveFile)
-                            Case files(10)
-                                WriteCfgValue("TTowner", tempOwner, saveFile)
-                            Case files(11)
-                                WriteCfgValue("TTHLowner", tempOwner, saveFile)
-                            Case files(12)
-                                WriteCfgValue("WPowner", tempOwner, saveFile)
-                        End Select
-                        If System.IO.File.Exists(path & files(i)) = True Then
-                            System.IO.File.Delete(path & files(i))
-                        End If
-                        check = check + 1
-                    Else
-                        strError = strError & files(i) & vbCrLf
-                    End If
-                    i = i + 1
-                Loop Until i > 12
-            Next
-            If check = 13 Then
-                WriteCfgValue("Update1", "1", saveFile)
-                If uiLanguage = "Chinese" Then
-                    UI.ShowSubtitle("單人公寓(SPA)升級完成，請重新開始遊戲或者按'插入'鍵(Insert)來應用變化。", 600000)
-                Else
-                    UI.ShowSubtitle("Single Player Apartment Update Completed Successfully, Please Restart the Game to Apply Changes.", 600000)
-                End If
-            Else
-                logger.Log("The Following Files(s) are Missing From " & vbCrLf & path & vbCrLf & strError)
-            End If
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
             player = Game.Player
@@ -368,6 +412,18 @@ Public Class SinglePlayerApartment
                 playerName = "Trevor"
             Else
                 playerName = "None"
+            End If
+
+            If uiLanguage = "Chinese" Then
+                ExitApt = "离开公寓"
+                SellApt = "出售產業"
+                EnterGarage = "進入車庫"
+                AptOptions = "公寓選項"
+            Else
+                ExitApt = "Exit Apartment"
+                SellApt = "Sell Property"
+                EnterGarage = "Enter Garage"
+                AptOptions = "APARTMENT OPTIONS"
             End If
 
             If _displayTimer.Enabled Then
@@ -388,6 +444,10 @@ Public Class SinglePlayerApartment
                 End If
             End If
 
+            If hideHud Then
+                Native.Function.Call(Hash.HIDE_HUD_AND_RADAR_THIS_FRAME)
+            End If
+
             franklinSafeHouseDist = World.GetDistance(playerPed.Position, franklinSafeHouse)
             michaelSafeHouseDist = World.GetDistance(playerPed.Position, michaelSafeHouse)
             trevorSafeHouseDist = World.GetDistance(playerPed.Position, trevorSafeHouse)
@@ -405,6 +465,8 @@ Public Class SinglePlayerApartment
                 LoadPosition()
                 teleported = True
             End If
+
+            'UI.ShowSubtitle("Position X: " & GameplayCamera.Position.X & " Y: " & GameplayCamera.Position.Y & " Z: " & GameplayCamera.Position.Z & Environment.NewLine & "Rotation X: " & GameplayCamera.Rotation.X & " Y: " & GameplayCamera.Rotation.Y & " Z: " & GameplayCamera.Rotation.Z)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -414,6 +476,19 @@ Public Class SinglePlayerApartment
         Try
             If Game.IsControlJustPressed(0, GTA.Control.MoveUp) AndAlso teleported = False Then
                 teleported = True
+            End If
+
+            If Game.IsControlJustPressed(0, GTA.Control.VehicleDuck) Then
+                'If playerName = "Michael" Then
+                'Wardrobe.Player0W.Visible = True
+                'ElseIf playerName = "Franklin" Then
+                'Wardrobe.Player1W.Visible = True
+                'ElseIf playerName = “Trevor"
+                'Wardrobe.Player2W.Visible = True
+                'End If
+
+                'TurnOnTV(playerPed.Position.X, playerPed.Position.Y, playerPed.Position.Z, TelevisionModel.HighLifeAptTV)
+                'DisplayNotificationThisFrame("I'm Not MentaL", "Single Player Apartment", "Thanks for Downloading my Mod. If you enjoy playing this Mod, Please Like, Rate, Comment and Subscribe, also Donate. :)", "CHAR_MINOTAUR", True, IconType.DollarSignIcon)
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
