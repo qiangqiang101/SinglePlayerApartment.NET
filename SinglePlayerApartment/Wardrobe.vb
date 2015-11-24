@@ -237,15 +237,6 @@ Public Class Wardrobe
 
     Public Sub ItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         sender.GoBack()
-        'Try
-        'Dim currDrawable As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION， playerPed, selectedItem.Price)
-        'Dim currTexture As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, selectedItem.Price)
-        'If Native.Function.Call(Of Boolean)(Hash.IS_PED_COMPONENT_VARIATION_VALID, playerPed, sender.MenuItems(index).Price, currDrawable, currTexture) Then
-        'Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, selectedItem.Price, selectedItem.Model, currTexture, 2)
-        'End If
-        'Catch ex As Exception
-        'logger.Log(ex.Message & " " & ex.StackTrace)
-        'End Try
     End Sub
 
     Public Sub IndexChangeHandler(sender As UIMenu, index As Integer)
@@ -266,12 +257,16 @@ Public Class Wardrobe
             World.DrawSpotLightWithShadow(playerPed.Position + Vector3.WorldUp * 2 + Vector3.WorldNorth * 2, Vector3.WorldSouth + Vector3.WorldDown, Color.White, 10, 30, 100, 50, -1)
         End If
 
+        'Control
+        If Game.IsControlJustPressed(0, GTA.Control.Jump) AndAlso WardrobeDistance < 2.0 AndAlso DrawSpotLight = Not DrawSpotLight Then
+            DrawSpotLight = Not DrawSpotLight
+        End If
+        'End Control
+
         _menuPool.ProcessMenus()
     End Sub
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        If Game.IsControlJustPressed(0, GTA.Control.Jump) AndAlso WardrobeDistance < 2.0 AndAlso DrawSpotLight = Not DrawSpotLight Then
-            DrawSpotLight = True
-        End If
+
     End Sub
 End Class

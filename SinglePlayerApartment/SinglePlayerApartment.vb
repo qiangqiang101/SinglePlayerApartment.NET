@@ -23,7 +23,7 @@ Public Class SinglePlayerApartment
     Public Shared playerMap As String
 
     'Translate
-    Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, _Mechanic, ChooseApt, ChooseVeh As String
+    Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, _Mechanic, ChooseApt, ChooseVeh, ReturnVeh As String
 
     Private teleported As Boolean = False
     Private franklinSafeHouse As Vector3 = New Vector3(7.1190319061279, 536.61511230469, 176.02365112305)
@@ -61,27 +61,29 @@ Public Class SinglePlayerApartment
                 EnterGarage = "進入車庫"
                 AptOptions = "公寓選項"
                 Garage = "車庫"
-                GrgOptions = "車庫選項"
+                GrgOptions = "刪除車輛"
                 _Mechanic = "機械師"
                 ChooseApt = "選擇公寓"
                 ChooseVeh = "選擇車輛"
+                ReturnVeh = "返回所有車輛"
             Else
                 ExitApt = "Exit Apartment"
                 SellApt = "Sell Property"
                 EnterGarage = "Enter Garage"
                 AptOptions = "APARTMENT OPTIONS"
                 Garage = " Garage"
-                GrgOptions = "GARAGE OPTIONS"
+                GrgOptions = "REMOVE VEHICLE"
                 _Mechanic = "Mechanic"
                 ChooseApt = "CHOOSE APARTMENT"
-                ChooseVeh = "CHOOSE VEHICLE"
+                ChooseVeh = "CHOOSE VEHICLE FOR DELIVERY"
+                ReturnVeh = "Return all Vehicles"
             End If
 
             AddHandler Tick, AddressOf OnTick
             AddHandler KeyDown, AddressOf OnKeyDown
 
             LoadSettingFromCFG()
-            LoadMPDLCMap()
+            'LoadMPDLCMap()
 
             'SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
             'SetInteriorActive2(-909.054, -441.466, 120.205) 'weazel plaza 70
@@ -152,6 +154,15 @@ Public Class SinglePlayerApartment
         Try
             Native.Function.Call(Hash._LOAD_MP_DLC_MAPS)
             Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {1})
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub UnLoadMPDLCMap()
+        Try
+            Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {1})
+            Native.Function.Call(Hash._0xD7C10C4A637992C9)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -369,14 +380,19 @@ Public Class SinglePlayerApartment
                     SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "4IntegrityHL"
+                    LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "DelPerroHL"
+                    LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "EclipseHL"
+                    LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "RichardHL"
+                    LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "TinselHL"
+                    LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "Richard"
                     SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
@@ -466,6 +482,12 @@ Public Class SinglePlayerApartment
                 teleported = True
             End If
 
+            'Control
+            If Game.IsControlJustPressed(0, GTA.Control.MoveUp) AndAlso teleported = False Then
+                teleported = True
+            End If
+            'End Control
+
             'UI.ShowSubtitle("Position X: " & GameplayCamera.Position.X & " Y: " & GameplayCamera.Position.Y & " Z: " & GameplayCamera.Position.Z & Environment.NewLine & "Rotation X: " & GameplayCamera.Rotation.X & " Y: " & GameplayCamera.Rotation.Y & " Z: " & GameplayCamera.Rotation.Z)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -474,22 +496,7 @@ Public Class SinglePlayerApartment
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
         Try
-            If Game.IsControlJustPressed(0, GTA.Control.MoveUp) AndAlso teleported = False Then
-                teleported = True
-            End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.VehicleDuck) Then
-                'If playerName = "Michael" Then
-                'Wardrobe.Player0W.Visible = True
-                'ElseIf playerName = "Franklin" Then
-                'Wardrobe.Player1W.Visible = True
-                'ElseIf playerName = “Trevor"
-                'Wardrobe.Player2W.Visible = True
-                'End If
-
-                'TurnOnTV(playerPed.Position.X, playerPed.Position.Y, playerPed.Position.Z, TelevisionModel.HighLifeAptTV)
-                'DisplayNotificationThisFrame("I'm Not MentaL", "Single Player Apartment", "Thanks for Downloading my Mod. If you enjoy playing this Mod, Please Like, Rate, Comment and Subscribe, also Donate. :)", "CHAR_MINOTAUR", True, IconType.DollarSignIcon)
-            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

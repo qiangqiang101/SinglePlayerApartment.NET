@@ -29,7 +29,7 @@ Public Class DelPerroHeight
     Public Shared Teleport2 As Vector3 = New Vector3(-1439.5905, -550.6906, 34.7418)
     Public Shared _Exit As Vector3 = New Vector3(-1457.5853, -520.3571, 56.929)
     Public Shared Wardrobe As Vector3 = New Vector3(-1467.6958, -537.2778, 50.7325)
-    Public Shared _Garage As Vector3 = New Vector3(-1455.885, -503.7586, 31.618)
+    Public Shared _Garage As Vector3 = New Vector3(-1457.6473, -500.7265, 32.1985)
     Public Shared GarageOut As Vector3 = New Vector3(-1457.4394, -490.838, 33.028)
     Public Shared GarageOutHeading As Single = 300.666
     Public Shared GarageDistance As String
@@ -50,7 +50,7 @@ Public Class DelPerroHeight
 
             If uiLanguage = "Chinese" Then
                 _Name = "佩羅高地公寓"
-                Desc = "這間豪華公寓地處馬拉松大街和繁榮街口，就位於時尚佩羅區中風格最高雅的一間公寓大樓內。正對面就是巴哈馬媽媽夜店，辛苦工作一天後可以直接前往那裡徹底放鬆心情。包括可容納十輛車的車庫。"
+                Desc = "這間豪華公寓地處馬拉松大街和繁榮街口， ~n~ 就位於時尚佩羅區中風格最高雅的一間公寓 ~n~ 大樓內。正對面就是巴哈馬媽媽夜店， ~n~ 辛苦工作一天後可以直接前往那裡徹底放鬆 ~n~ 心情。包括可容納十輛車的車庫。"
                 Garage = "車庫"
             Else
                 _Name = "Del Perro Heights Apt. "
@@ -366,6 +366,7 @@ Public Class DelPerroHeight
                 TenCarGarage.lastLocationGarageOutVector = GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -502,6 +503,7 @@ Public Class DelPerroHeight
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
 
+                LoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = HLDelPerro.Teleport
@@ -519,6 +521,7 @@ Public Class DelPerroHeight
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            SetInteriorActive2(-1477.14, -538.75, 55.5264) 'del perro 7
             TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = _Name & Unit
@@ -527,39 +530,153 @@ Public Class DelPerroHeight
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
         ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
-            If playerPed.CurrentVehicle.CurrentBlip.Exists Then
-                'Game.FadeScreenOut(500)
-                'Script.Wait(&H3E8)
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            SetInteriorActive2(-1477.14, -538.75, 55.5264) 'del perro 7
+            TenCarGarage.isInGarage = True
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
+            TenCarGarage.LastLocationName = _Name & Unit
+            TenCarGarage.lastLocationVector = _Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
-                playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.CurrentVehicle.Delete()
-                'Script.Wait(500)
-                'Game.FadeScreenIn(500)
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             Else
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
             End If
         ElseIf selectedItem.Text = HLDelPerro._Name & HLDelPerro.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
+            LoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -571,36 +688,149 @@ Public Class DelPerroHeight
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
         ElseIf selectedItem.Text = HLDelPerro._Name & HLDelPerro.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
-            If playerPed.CurrentVehicle.CurrentBlip.Exists Then
-                'Game.FadeScreenOut(500)
-                'Script.Wait(&H3E8)
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            LoadMPDLCMap()
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
+            TenCarGarage.LastLocationName = HLDelPerro._Name & HLDelPerro.Unit
+            TenCarGarage.lastLocationVector = HLDelPerro._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
-                TenCarGarage.LastLocationName = HLDelPerro._Name & HLDelPerro.Unit
-                TenCarGarage.lastLocationVector = HLDelPerro._Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
-                playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.CurrentVehicle.Delete()
-                'Script.Wait(500)
-                'Game.FadeScreenIn(500)
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             Else
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
-                TenCarGarage.LastLocationName = HLDelPerro._Name & HLDelPerro.Unit
-                TenCarGarage.lastLocationVector = HLDelPerro._Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
             End If
         End If
     End Sub
@@ -639,7 +869,7 @@ Public Class DelPerroHeight
                 End If
             End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 2.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
                 Else
@@ -647,7 +877,7 @@ Public Class DelPerroHeight
                 End If
             End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLDelPerro.Owner = playerName) Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
                 Else
@@ -655,14 +885,7 @@ Public Class DelPerroHeight
                 End If
             End If
 
-            _menuPool.ProcessMenus()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
+            'Control
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
                 'Press E on Door
                 Game.FadeScreenOut(500)
@@ -690,7 +913,7 @@ Public Class DelPerroHeight
                 Game.FadeScreenIn(500)
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
                 If playerName = "Michael" Then
                     Player0W.Visible = True
@@ -704,9 +927,20 @@ Public Class DelPerroHeight
                 End If
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLDelPerro.Owner = playerName) Then
                 GarageMenu.Visible = True
             End If
+            'End Control
+
+            _menuPool.ProcessMenus()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
+        Try
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

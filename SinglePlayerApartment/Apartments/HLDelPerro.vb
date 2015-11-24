@@ -39,7 +39,7 @@ Public Class HLDelPerro
 
             If uiLanguage = "Chinese" Then
                 _Name = "佩羅高地公寓"
-                Desc = "欣賞海景，遠離對德爾佩羅海灘遊客和燒傷與超級富豪這個橫向的生活的機會。如果我們能多付的東西，我們已經和我們傳遞了廣闊下來給你。包括可容納十輛車的車庫。"
+                Desc = "欣賞海景，遠離對德爾佩羅海灘遊客和燒傷與 ~n~ 超級富豪這個橫向的生活的機會。如果我們能 ~n~ 多付的東西，我們已經和我們傳遞了廣闊下來 ~n~ 給你。包括可容納十輛車的車庫。"
             Else
                 _Name = "Del Perro Heights Apt. "
                 Desc = "Enjoy ocean views far away from tourists and bums on Del Perro Beach with this lateral living opportunity for the super rich. If we can overpay for something, we have, and we're passing the expanse on down to you. Includes a 10-car garage."
@@ -100,6 +100,7 @@ Public Class HLDelPerro
             If selectedItem.Text = ExitApt Then
                 'Exit Apt
                 ExitMenu.Visible = False
+                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport2
@@ -110,6 +111,7 @@ Public Class HLDelPerro
                 ExitMenu.Visible = False
                 WriteCfgValue("DPHHLowner", "None", saveFile)
                 SavePosition2()
+                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SinglePlayerApartment.player.Money = (playerCash + Cost)
@@ -135,6 +137,7 @@ Public Class HLDelPerro
                 TenCarGarage.lastLocationGarageOutVector = DelPerroHeight.GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = DelPerroHeight.GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -167,7 +170,7 @@ Public Class HLDelPerro
                 End If
             End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 2.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
                 Else
@@ -175,14 +178,7 @@ Public Class HLDelPerro
                 End If
             End If
 
-            _menuPool.ProcessMenus()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
+            'Controls
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
                 ExitMenu.Visible = True
             End If
@@ -199,7 +195,7 @@ Public Class HLDelPerro
                 Game.FadeScreenIn(500)
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
                 If playerName = "Michael" Then
                     Player0W.Visible = True
@@ -212,6 +208,17 @@ Public Class HLDelPerro
                     MakeACamera()
                 End If
             End If
+            'End Controls
+
+            _menuPool.ProcessMenus()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
+        Try
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

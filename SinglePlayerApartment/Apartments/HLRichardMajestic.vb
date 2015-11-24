@@ -39,7 +39,7 @@ Public Class HLRichardMajestic
 
             If uiLanguage = "Chinese" Then
                 _Name = "李察尊爵公寓"
-                Desc = "擁有一塊美艷舊Vinewood，儘管這是被做看起來就像洛斯桑托斯的其他超級富豪的角落一個非常小的和昂貴的。與以往一隻腳一個現代的橫向的生活體驗。包括可容納十輛車的車庫。"
+                Desc = "擁有一塊美艷舊Vinewood，儘管這是被做看起 ~n~ 來就像洛斯桑托斯的其他超級富豪的角落一個 ~n~ 非常小的和昂貴的。與以往一隻腳一個現代的 ~n~ 橫向的生活體驗。包括可容納十輛車的車庫。"
             Else
                 _Name = "Richards Majestic Apt. "
                 Desc = "Own a piece of glamorous old Vinewood, albeit a very small and expensive piece that's been made to look just like the other super-rich corners of Los Santos. A contemporary lateral living experience with one foot in the past. Includes a 10-car garage."
@@ -100,6 +100,7 @@ Public Class HLRichardMajestic
             If selectedItem.Text = ExitApt Then
                 'Exit Apt
                 ExitMenu.Visible = False
+                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport2
@@ -110,6 +111,7 @@ Public Class HLRichardMajestic
                 ExitMenu.Visible = False
                 WriteCfgValue("RMHLowner", "None", saveFile)
                 SavePosition2()
+                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SinglePlayerApartment.player.Money = (playerCash + Cost)
@@ -135,6 +137,7 @@ Public Class HLRichardMajestic
                 TenCarGarage.lastLocationGarageOutVector = RichardMajestic.GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = RichardMajestic.GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -167,7 +170,7 @@ Public Class HLRichardMajestic
                 End If
             End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 2.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
                 Else
@@ -175,14 +178,7 @@ Public Class HLRichardMajestic
                 End If
             End If
 
-            _menuPool.ProcessMenus()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
+            'Controls
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
                 ExitMenu.Visible = True
             End If
@@ -199,7 +195,7 @@ Public Class HLRichardMajestic
                 Game.FadeScreenIn(500)
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
                 If playerName = "Michael" Then
                     Player0W.Visible = True
@@ -212,6 +208,17 @@ Public Class HLRichardMajestic
                     MakeACamera()
                 End If
             End If
+            'End Controls
+
+            _menuPool.ProcessMenus()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
+        Try
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

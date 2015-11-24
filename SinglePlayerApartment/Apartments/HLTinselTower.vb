@@ -39,7 +39,7 @@ Public Class HLTinselTower
 
             If uiLanguage = "Chinese" Then
                 _Name = "俗華大樓公寓"
-                Desc = "在洛聖最搶手的高樓中的一個圖片完美橫向的生活體驗。這些華麗的橫向公寓只有變得可用時，對沖基金的居民有大量的藥物引起的心臟發作或被捕殺害妓女。包括可容納十輛車的車庫。"
+                Desc = "在洛聖最搶手的高樓中的一個圖片完美橫向的 ~n~ 生活體驗。這些華麗的橫向公寓只有變得可 ~n~ 用時，對沖基金的居民有大量的藥物引起的心 ~n~ 臟發作或被捕殺害妓女。 ~n~ 包括可容納十輛車的車庫。"
             Else
                 _Name = "Tinsel Tower Apt. "
                 Desc = "A picture-perfect lateral living experience in one of Los Santos' most sought-after tower blocks. These gorgeous lateral apartments only become available when hedgefunder residents have massive drug-induced heart attacks or get arrested for killing hookers. Includes a 10-car garage."
@@ -100,6 +100,7 @@ Public Class HLTinselTower
             If selectedItem.Text = ExitApt Then
                 'Exit Apt
                 ExitMenu.Visible = False
+                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport2
@@ -110,6 +111,7 @@ Public Class HLTinselTower
                 ExitMenu.Visible = False
                 WriteCfgValue("TTHLowner", "None", saveFile)
                 SavePosition2()
+                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SinglePlayerApartment.player.Money = (playerCash + Cost)
@@ -135,6 +137,7 @@ Public Class HLTinselTower
                 TenCarGarage.lastLocationGarageOutVector = TinselTower.GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = TinselTower.GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -167,7 +170,7 @@ Public Class HLTinselTower
                 End If
             End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 2.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
                 Else
@@ -175,14 +178,7 @@ Public Class HLTinselTower
                 End If
             End If
 
-            _menuPool.ProcessMenus()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
+            'Controls
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
                 ExitMenu.Visible = True
             End If
@@ -199,7 +195,7 @@ Public Class HLTinselTower
                 Game.FadeScreenIn(500)
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
                 If playerName = "Michael" Then
                     Player0W.Visible = True
@@ -212,6 +208,17 @@ Public Class HLTinselTower
                     MakeACamera()
                 End If
             End If
+            'End Controls
+
+            _menuPool.ProcessMenus()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
+        Try
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

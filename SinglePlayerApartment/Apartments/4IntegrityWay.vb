@@ -29,7 +29,7 @@ Public Class _4IntegrityWay
     Public Shared Teleport2 As Vector3 = New Vector3(-49.3243, -583.1716, 37.0333)
     Public Shared _Exit As Vector3 = New Vector3(-18.0797, -582.1524, 90.1148)
     Public Shared Wardrobe As Vector3 = New Vector3(-37.8572, -583.7734, 83.9183)
-    Public Shared _Garage As Vector3 = New Vector3(-33.8464, -621.676, 35.0433)
+    Public Shared _Garage As Vector3 = New Vector3(-31.3821, -622.3356, 35.1917)
     Public Shared GarageOut As Vector3 = New Vector3(-24.074, -624.9826, 35.0905)
     Public Shared GarageOutHeading As Single = 251.6195
     Public Shared GarageDistance As String
@@ -50,7 +50,7 @@ Public Class _4IntegrityWay
 
             If uiLanguage = "Chinese" Then
                 _Name = "統合小道4號公寓"
-                Desc = "在這裡，不必擔心手機會斷訊！這間豪華公寓跟客來停電信總部就在同一棟大樓內，地點更是位於洛聖都市中心新崛起的熱門住宅區。這一區真的正在迅速成長，您從窗戶往外看便可看到林立的工地！包括可容納十輛車的車庫。"
+                Desc = "在這裡，不必擔心手機會斷訊！這間豪華公寓 ~n~ 跟客來停電信總部就在同一棟大樓內，地點更 ~n~ 是位於洛聖都市中心新崛起的熱門住宅區。 ~n~ 這一區真的正在迅速成長，您從窗戶往外看便 ~n~ 可看到林立的工地！ ~n~ 包括可容納十輛車的車庫。"
                 Garage = "車庫"
             Else
                 _Name = "4 Integrity Way Apt. "
@@ -366,6 +366,7 @@ Public Class _4IntegrityWay
                 TenCarGarage.lastLocationGarageOutVector = GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -501,6 +502,7 @@ Public Class _4IntegrityWay
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
+                LoadMPDLCMap()
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -519,6 +521,7 @@ Public Class _4IntegrityWay
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
             TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = _Name & Unit
@@ -527,39 +530,153 @@ Public Class _4IntegrityWay
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
         ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
-            If playerPed.CurrentVehicle.CurrentBlip.Exists Then
-                'Game.FadeScreenOut(500)
-                'Script.Wait(&H3E8)
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
+            TenCarGarage.isInGarage = True
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
+            TenCarGarage.LastLocationName = _Name & Unit
+            TenCarGarage.lastLocationVector = _Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
-                playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.CurrentVehicle.Delete()
-                'Script.Wait(500)
-                'Game.FadeScreenIn(500)
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             Else
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
             End If
         ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
+            LoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -571,36 +688,149 @@ Public Class _4IntegrityWay
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
         ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
-            If playerPed.CurrentVehicle.CurrentBlip.Exists Then
-                'Game.FadeScreenOut(500)
-                'Script.Wait(&H3E8)
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            LoadMPDLCMap()
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
+            TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
+            TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
-                TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
-                TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
-                playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.CurrentVehicle.Delete()
-                'Script.Wait(500)
-                'Game.FadeScreenIn(500)
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             Else
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
-                TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
-                TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                GarageMenu.Visible = False
             End If
         End If
     End Sub
@@ -639,7 +869,7 @@ Public Class _4IntegrityWay
                 End If
             End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 2.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
                 Else
@@ -647,7 +877,7 @@ Public Class _4IntegrityWay
                 End If
             End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
                 Else
@@ -655,14 +885,7 @@ Public Class _4IntegrityWay
                 End If
             End If
 
-            _menuPool.ProcessMenus()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
+            ' Controls
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
                 'Press E on Door
                 Game.FadeScreenOut(500)
@@ -690,7 +913,7 @@ Public Class _4IntegrityWay
                 Game.FadeScreenIn(500)
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
                 If playerName = "Michael" Then
                     Player0W.Visible = True
@@ -704,9 +927,20 @@ Public Class _4IntegrityWay
                 End If
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) Then
                 GarageMenu.Visible = True
             End If
+            'End Control
+
+            _menuPool.ProcessMenus()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
+        Try
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

@@ -12,10 +12,12 @@ Imports System.IO
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports AnimationV
+Imports System.Runtime.InteropServices
 
 Public Class TenCarGarage
     Inherits Script
 
+    Public Shared CurrentPath As String
     Public Shared playerHash As String
     Public Shared veh0, veh1, veh2, veh3, veh4, veh5, veh6, veh7, veh8, veh9 As Vehicle
     Public Shared LastLocationName As String
@@ -75,6 +77,7 @@ Public Class TenCarGarage
         End Try
     End Sub
 
+#Region "LoadGarageVehicles"
     Public Shared Sub LoadGarageVehicle0(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
             Dim VehicleModel As String = ReadCfgValue("VehicleModel", file)
@@ -125,6 +128,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh0 = Nothing Then
                 veh0 = World.CreateVehicle(VehicleModel, pos, head)
@@ -173,6 +179,9 @@ Public Class TenCarGarage
             veh0.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh0.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh0.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh0.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh0, False)
+            If Active = "True" Then veh0.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -228,6 +237,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh1 = Nothing Then
                 veh1 = World.CreateVehicle(VehicleModel, pos, head)
@@ -276,6 +288,9 @@ Public Class TenCarGarage
             veh1.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh1.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh1.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh1, False)
+            If Active = "True" Then veh1.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -331,6 +346,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh2 = Nothing Then
                 veh2 = World.CreateVehicle(VehicleModel, pos, head)
@@ -379,6 +397,9 @@ Public Class TenCarGarage
             veh2.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh2.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh2.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh2.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh2, False)
+            If Active = "True" Then veh2.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -434,6 +455,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh3 = Nothing Then
                 veh3 = World.CreateVehicle(VehicleModel, pos, head)
@@ -482,6 +506,9 @@ Public Class TenCarGarage
             veh3.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh3.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh3.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh3.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh3, False)
+            If Active = "True" Then veh3.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -537,6 +564,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh4 = Nothing Then
                 veh4 = World.CreateVehicle(VehicleModel, pos, head)
@@ -585,6 +615,9 @@ Public Class TenCarGarage
             veh4.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh4.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh4.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh4.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh4, False)
+            If Active = "True" Then veh4.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -640,6 +673,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh5 = Nothing Then
                 veh5 = World.CreateVehicle(VehicleModel, pos, head)
@@ -688,6 +724,9 @@ Public Class TenCarGarage
             veh5.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh5.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh5.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh5.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh5, False)
+            If Active = "True" Then veh5.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -743,6 +782,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh6 = Nothing Then
                 veh6 = World.CreateVehicle(VehicleModel, pos, head)
@@ -791,6 +833,9 @@ Public Class TenCarGarage
             veh6.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh6.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh6.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh6.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh6, False)
+            If Active = "True" Then veh6.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -846,6 +891,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh7 = Nothing Then
                 veh7 = World.CreateVehicle(VehicleModel, pos, head)
@@ -894,6 +942,9 @@ Public Class TenCarGarage
             veh7.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh7.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh7.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh7.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh7, False)
+            If Active = "True" Then veh7.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -949,6 +1000,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh8 = Nothing Then
                 veh8 = World.CreateVehicle(VehicleModel, pos, head)
@@ -997,6 +1051,9 @@ Public Class TenCarGarage
             veh8.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh8.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh8.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh8.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh8, False)
+            If Active = "True" Then veh8.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -1052,6 +1109,9 @@ Public Class TenCarGarage
             Dim Armor As String = ReadCfgValue("Armor", file)
             Dim XenonHeadlights As String = ReadCfgValue("XenonHeadlights", file)
             Dim Turbo As String = ReadCfgValue("Turbo", file)
+            Dim Horn As String = ReadCfgValue("Horn", file)
+            Dim BulletproofTyres As String = ReadCfgValue("BulletproofTyres", file)
+            Dim Active As String = ReadCfgValue("Active", file)
 
             If veh9 = Nothing Then
                 veh9 = World.CreateVehicle(VehicleModel, pos, head)
@@ -1100,10 +1160,14 @@ Public Class TenCarGarage
             veh9.SetMod(VehicleMod.Armor, Armor, True)
             If XenonHeadlights = "True" Then veh9.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
             If Turbo = "True" Then veh9.ToggleMod(VehicleToggleMod.Turbo, True)
+            veh9.SetMod(VehicleMod.Horns, Horn, True)
+            If BulletproofTyres = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh9, False)
+            If Active = "True" Then veh9.Delete()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
+#End Region
 
     Public Shared Sub LoadGarageVechicles(file As String)
         Try
@@ -1132,6 +1196,17 @@ Public Class TenCarGarage
             Mechanic.Path = file
             Mechanic.CreateGarageMenu(file)
             AddHandler Mechanic.GarageMenu.OnItemSelect, AddressOf Mechanic.ItemSelectHandler
+
+            veh0.MarkAsNoLongerNeeded()
+            veh1.MarkAsNoLongerNeeded()
+            veh2.MarkAsNoLongerNeeded()
+            veh3.MarkAsNoLongerNeeded()
+            veh4.MarkAsNoLongerNeeded()
+            veh5.MarkAsNoLongerNeeded()
+            veh6.MarkAsNoLongerNeeded()
+            veh7.MarkAsNoLongerNeeded()
+            veh8.MarkAsNoLongerNeeded()
+            veh9.MarkAsNoLongerNeeded()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -1141,103 +1216,113 @@ Public Class TenCarGarage
         Try
             If Not IO.File.Exists(file & "vehicle_0.cfg") Then
                 IO.File.WriteAllText(file & "vehicle_0.cfg", My.Resources.vehicle)
-                UpdateGarageVehicle(file & "vehicle_0.cfg")
+                UpdateGarageVehicle(file & "vehicle_0.cfg", "False")
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 playerPed.CurrentVehicle.Position = veh0Pos
                 playerPed.CurrentVehicle.Rotation = vehRot04
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
             Else
                 If Not IO.File.Exists(file & "vehicle_1.cfg") Then
                     IO.File.WriteAllText(file & "vehicle_1.cfg", My.Resources.vehicle)
-                    UpdateGarageVehicle(file & "vehicle_1.cfg")
+                    UpdateGarageVehicle(file & "vehicle_1.cfg", "False")
                     Game.FadeScreenOut(500)
                     Script.Wait(&H3E8)
                     playerPed.CurrentVehicle.Position = veh1Pos
                     playerPed.CurrentVehicle.Rotation = vehRot04
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
+                    playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Else
                     If Not IO.File.Exists(file & "vehicle_2.cfg") Then
                         IO.File.WriteAllText(file & "vehicle_2.cfg", My.Resources.vehicle)
-                        UpdateGarageVehicle(file & "vehicle_2.cfg")
+                        UpdateGarageVehicle(file & "vehicle_2.cfg", "False")
                         Game.FadeScreenOut(500)
                         Script.Wait(&H3E8)
                         playerPed.CurrentVehicle.Position = veh2Pos
                         playerPed.CurrentVehicle.Rotation = vehRot04
                         Script.Wait(500)
                         Game.FadeScreenIn(500)
+                        playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                     Else
                         If Not IO.File.Exists(file & "vehicle_3.cfg") Then
                             IO.File.WriteAllText(file & "vehicle_3.cfg", My.Resources.vehicle)
-                            UpdateGarageVehicle(file & "vehicle_3.cfg")
+                            UpdateGarageVehicle(file & "vehicle_3.cfg", "False")
                             Game.FadeScreenOut(500)
                             Script.Wait(&H3E8)
                             playerPed.CurrentVehicle.Position = veh3Pos
                             playerPed.CurrentVehicle.Rotation = vehRot04
                             Script.Wait(500)
                             Game.FadeScreenIn(500)
+                            playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                         Else
                             If Not IO.File.Exists(file & "vehicle_4.cfg") Then
                                 IO.File.WriteAllText(file & "vehicle_4.cfg", My.Resources.vehicle)
-                                UpdateGarageVehicle(file & "vehicle_4.cfg")
+                                UpdateGarageVehicle(file & "vehicle_4.cfg", "False")
                                 Game.FadeScreenOut(500)
                                 Script.Wait(&H3E8)
                                 playerPed.CurrentVehicle.Position = veh4Pos
                                 playerPed.CurrentVehicle.Rotation = vehRot04
                                 Script.Wait(500)
                                 Game.FadeScreenIn(500)
+                                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                             Else
                                 If Not IO.File.Exists(file & "vehicle_5.cfg") Then
                                     IO.File.WriteAllText(file & "vehicle_5.cfg", My.Resources.vehicle)
-                                    UpdateGarageVehicle(file & "vehicle_5.cfg")
+                                    UpdateGarageVehicle(file & "vehicle_5.cfg", "False")
                                     Game.FadeScreenOut(500)
                                     Script.Wait(&H3E8)
                                     playerPed.CurrentVehicle.Position = veh5Pos
                                     playerPed.CurrentVehicle.Rotation = vehRot59
                                     Script.Wait(500)
                                     Game.FadeScreenIn(500)
+                                    playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                 Else
                                     If Not IO.File.Exists(file & "vehicle_6.cfg") Then
                                         IO.File.WriteAllText(file & "vehicle_6.cfg", My.Resources.vehicle)
-                                        UpdateGarageVehicle(file & "vehicle_6.cfg")
+                                        UpdateGarageVehicle(file & "vehicle_6.cfg", "False")
                                         Game.FadeScreenOut(500)
                                         Script.Wait(&H3E8)
                                         playerPed.CurrentVehicle.Position = veh6Pos
                                         playerPed.CurrentVehicle.Rotation = vehRot59
                                         Script.Wait(500)
                                         Game.FadeScreenIn(500)
+                                        playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                     Else
                                         If Not IO.File.Exists(file & "vehicle_7.cfg") Then
                                             IO.File.WriteAllText(file & "vehicle_7.cfg", My.Resources.vehicle)
-                                            UpdateGarageVehicle(file & "vehicle_7.cfg")
+                                            UpdateGarageVehicle(file & "vehicle_7.cfg", "False")
                                             Game.FadeScreenOut(500)
                                             Script.Wait(&H3E8)
                                             playerPed.CurrentVehicle.Position = veh7Pos
                                             playerPed.CurrentVehicle.Rotation = vehRot59
                                             Script.Wait(500)
                                             Game.FadeScreenIn(500)
+                                            playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                         Else
                                             If Not IO.File.Exists(file & "vehicle_8.cfg") Then
                                                 IO.File.WriteAllText(file & "vehicle_8.cfg", My.Resources.vehicle)
-                                                UpdateGarageVehicle(file & "vehicle_8.cfg")
+                                                UpdateGarageVehicle(file & "vehicle_8.cfg", "False")
                                                 Game.FadeScreenOut(500)
                                                 Script.Wait(&H3E8)
                                                 playerPed.CurrentVehicle.Position = veh8Pos
                                                 playerPed.CurrentVehicle.Rotation = vehRot59
                                                 Script.Wait(500)
                                                 Game.FadeScreenIn(500)
+                                                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                             Else
                                                 If Not IO.File.Exists(file & "vehicle_9.cfg") Then
                                                     IO.File.WriteAllText(file & "vehicle_9.cfg", My.Resources.vehicle)
-                                                    UpdateGarageVehicle(file & "vehicle_9.cfg")
+                                                    UpdateGarageVehicle(file & "vehicle_9.cfg", "False")
                                                     Game.FadeScreenOut(500)
                                                     Script.Wait(&H3E8)
                                                     playerPed.CurrentVehicle.Position = veh9Pos
                                                     playerPed.CurrentVehicle.Rotation = vehRot59
                                                     Script.Wait(500)
                                                     Game.FadeScreenIn(500)
+                                                    playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                                 Else
                                                     If uiLanguage = "Chinese" Then
                                                         UI.ShowSubtitle("車庫~r~已滿~w~。")
@@ -1259,9 +1344,50 @@ Public Class TenCarGarage
         End Try
     End Sub
 
-    Public Shared Sub UpdateGarageVehicle(file As String)
+    <StructLayout(LayoutKind.Explicit)>
+    Public Structure UnionInt32
+        <FieldOffset(0)>
+        Public IntValue As Int32
+        <FieldOffset(0)>
+        Public UIntValue As UInt32
+    End Structure
+
+    Public Shared Sub UpdateGarageVehicle(file As String, Active As String)
         WriteCfgValue("VehicleName", playerPed.CurrentVehicle.FriendlyName, file)
-        WriteCfgValue("VehicleModel", playerPed.CurrentVehicle.DisplayName, file)
+        If playerPed.CurrentVehicle.Model.GetHashCode() = -1013450936 Then
+            WriteCfgValue("VehicleModel", "BUCCANEER2", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1361687965 Then
+            WriteCfgValue("VehicleModel", "CHINO2", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -2119578145 Then
+            WriteCfgValue("VehicleModel", "FACTION", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1790546981 Then
+            WriteCfgValue("VehicleModel", "FACTION2", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 525509695 Then
+            WriteCfgValue("VehicleModel", "MOONBEAM", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 1896491931 Then
+            WriteCfgValue("VehicleModel", "MOONBEAM2", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 2006667053 Then
+            WriteCfgValue("VehicleModel", "VOODOO", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -2040426790 Then
+            WriteCfgValue("VehicleModel", "PRIMO2", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 2068293287 Then
+            WriteCfgValue("VehicleModel", "LURCHER", file)
+        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -831834716 Then
+            WriteCfgValue("VehicleModel", "BTYPE2", file)
+        Else
+            Dim VhNames As Array = GTA.Native.VehicleHash.GetNames(GetType(VehicleHash))
+            Dim VhHash As Array = GTA.Native.VehicleHash.GetValues(GetType(VehicleHash))
+            Dim tmpUint As UnionInt32
+            tmpUint.IntValue = Game.Player.Character.CurrentVehicle.Model.Hash
+            Dim UIntVal As UInt32 = tmpUint.UIntValue
+
+            For i = 0 To UBound(VhHash)
+                If VhHash(i) = UIntVal Then
+                    WriteCfgValue("VehicleModel", VhNames(i), file)
+                    Exit For
+                End If
+            Next
+        End If
         WriteCfgValue("PrimaryColor", playerPed.CurrentVehicle.PrimaryColor, file)
         WriteCfgValue("SecondaryColor", playerPed.CurrentVehicle.SecondaryColor, file)
         WriteCfgValue("PearlescentColor", playerPed.CurrentVehicle.PearlescentColor, file)
@@ -1289,7 +1415,7 @@ Public Class TenCarGarage
         WriteCfgValue("PlateType", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, playerPed.CurrentVehicle), file)
         WriteCfgValue("PlateNumber", playerPed.CurrentVehicle.NumberPlate, file)
         WriteCfgValue("WindowTint", playerPed.CurrentVehicle.WindowTint, file)
-        WriteCfgValue("Spoiler", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 1), file)
+        WriteCfgValue("Spoiler", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 0), file)
         WriteCfgValue("FrontBumper", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 1), file)
         WriteCfgValue("RearBumper", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 2), file)
         WriteCfgValue("SideSkirt", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 3), file)
@@ -1309,6 +1435,10 @@ Public Class TenCarGarage
         WriteCfgValue("Armor", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 16), file)
         WriteCfgValue("XenonHeadlights", Native.Function.Call(Of Boolean)(Hash.IS_TOGGLE_MOD_ON, playerPed.CurrentVehicle, 22), file)
         WriteCfgValue("Turbo", Native.Function.Call(Of Boolean)(Hash.IS_TOGGLE_MOD_ON, playerPed.CurrentVehicle, 18), file)
+        'Added on v1.1.3
+        WriteCfgValue("Horn", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 14), file)
+        WriteCfgValue("BulletproofTyres", Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, playerPed.CurrentVehicle), file)
+        WriteCfgValue("Active", Active, file)
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -1347,28 +1477,340 @@ Public Class TenCarGarage
                     DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to manage vehicles.")
                 End If
             End If
+
+            ControlsKeyDown()
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        If Game.IsControlJustPressed(0, GTA.Control.VehicleAccelerate) AndAlso playerPed.IsInVehicle AndAlso GarageMiddleDistance < 15.0 Then
+    Public Sub ControlsKeyDown()
+        On Error Resume Next
+        If Game.IsControlJustPressed(0, GTA.Control.VehicleAccelerate) AndAlso playerPed.IsInVehicle AndAlso GarageMiddleDistance < 20.0 Then
+            If playerPed.CurrentVehicle = veh0 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_0.cfg")
+            ElseIf playerPed.CurrentVehicle = veh1 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_1.cfg")
+            ElseIf playerPed.CurrentVehicle = veh2 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_2.cfg")
+            ElseIf playerPed.CurrentVehicle = veh3 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_3.cfg")
+            ElseIf playerPed.CurrentVehicle = veh4 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_4.cfg")
+            ElseIf playerPed.CurrentVehicle = veh5 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_5.cfg")
+            ElseIf playerPed.CurrentVehicle = veh6 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_6.cfg")
+            ElseIf playerPed.CurrentVehicle = veh7 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_7.cfg")
+            ElseIf playerPed.CurrentVehicle = veh8 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_8.cfg")
+            ElseIf playerPed.CurrentVehicle = veh9 Then
+                WriteCfgValue("Active", "True", CurrentPath & "vehicle_9.cfg")
+            End If
+            UnLoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
+
+            playerPed.Task.LeaveVehicle()
+            If playerName = "Michael" Then
+                If Mechanic.MPV1 = Nothing Then
+                    Mechanic.MPV1 = World.CreateVehicle(SinglePlayerApartment.player.LastVehicle.DisplayName, lastLocationGarageOutVector)
+                    Mechanic.MPV1.Heading = lastLocationGarageOutHeading
+                    Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, Mechanic.MPV1, 0)
+                    Mechanic.MPV1.DirtLevel = 0F
+                    Mechanic.MPV1.PrimaryColor = SinglePlayerApartment.player.LastVehicle.PrimaryColor
+                    Mechanic.MPV1.SecondaryColor = SinglePlayerApartment.player.LastVehicle.SecondaryColor
+                    Mechanic.MPV1.PearlescentColor = SinglePlayerApartment.player.LastVehicle.PearlescentColor
+                    If SinglePlayerApartment.player.LastVehicle.IsPrimaryColorCustom = True Then Mechanic.MPV1.CustomPrimaryColor = SinglePlayerApartment.player.LastVehicle.CustomPrimaryColor
+                    If SinglePlayerApartment.player.LastVehicle.IsSecondaryColorCustom = True Then Mechanic.MPV1.CustomSecondaryColor = SinglePlayerApartment.player.LastVehicle.CustomSecondaryColor
+                    Mechanic.MPV1.RimColor = SinglePlayerApartment.player.LastVehicle.RimColor
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Back) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Back, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Front) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Front, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Left) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Left, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Right) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Right, True)
+                    Mechanic.MPV1.NeonLightsColor = SinglePlayerApartment.player.LastVehicle.NeonLightsColor
+                    Mechanic.MPV1.TireSmokeColor = SinglePlayerApartment.player.LastVehicle.TireSmokeColor
+                    Mechanic.MPV1.WheelType = SinglePlayerApartment.player.LastVehicle.WheelType
+                    Mechanic.MPV1.Livery = SinglePlayerApartment.player.LastVehicle.Livery
+                    Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, Mechanic.MPV1, Native.Function.Call(Of String)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, SinglePlayerApartment.player.LastVehicle))
+                    Mechanic.MPV1.NumberPlate = SinglePlayerApartment.player.LastVehicle.NumberPlate
+                    Mechanic.MPV1.WindowTint = SinglePlayerApartment.player.LastVehicle.WindowTint
+                    Mechanic.MPV1.SetMod(VehicleMod.Spoilers, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Spoilers), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.FrontBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontBumper), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.RearBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RearBumper), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.SideSkirt, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.SideSkirt), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Frame, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Frame), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Grille, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Grille), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Hood, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Hood), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Fender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Fender), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.RightFender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RightFender), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Roof, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Roof), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Exhaust, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Exhaust), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.FrontWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontWheels), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.BackWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.BackWheels), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Suspension, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Suspension), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Engine, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Engine), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Brakes, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Brakes), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Transmission, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Transmission), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Armor, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Armor), True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.XenonHeadlights) = True Then Mechanic.MPV1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.Turbo) = True Then Mechanic.MPV1.ToggleMod(VehicleToggleMod.Turbo, True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Horns, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Horns), True)
+                    If Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, SinglePlayerApartment.player.LastVehicle) = False Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Mechanic.MPV1, False)
+                    playerPed.SetIntoVehicle(Mechanic.MPV1, VehicleSeat.Driver)
+                    Mechanic.MPV1.MarkAsNoLongerNeeded()
+                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV1, True, True)
+                Else
+                    Mechanic.MPV1.Delete()
+                    Mechanic.MPV1 = World.CreateVehicle(SinglePlayerApartment.player.LastVehicle.DisplayName, lastLocationGarageOutVector)
+                    Mechanic.MPV1.Heading = lastLocationGarageOutHeading
+                    Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, Mechanic.MPV1, 0)
+                    Mechanic.MPV1.DirtLevel = 0F
+                    Mechanic.MPV1.PrimaryColor = SinglePlayerApartment.player.LastVehicle.PrimaryColor
+                    Mechanic.MPV1.SecondaryColor = SinglePlayerApartment.player.LastVehicle.SecondaryColor
+                    Mechanic.MPV1.PearlescentColor = SinglePlayerApartment.player.LastVehicle.PearlescentColor
+                    If SinglePlayerApartment.player.LastVehicle.IsPrimaryColorCustom = True Then Mechanic.MPV1.CustomPrimaryColor = SinglePlayerApartment.player.LastVehicle.CustomPrimaryColor
+                    If SinglePlayerApartment.player.LastVehicle.IsSecondaryColorCustom = True Then Mechanic.MPV1.CustomSecondaryColor = SinglePlayerApartment.player.LastVehicle.CustomSecondaryColor
+                    Mechanic.MPV1.RimColor = SinglePlayerApartment.player.LastVehicle.RimColor
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Back) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Back, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Front) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Front, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Left) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Left, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Right) = True Then Mechanic.MPV1.SetNeonLightsOn(VehicleNeonLight.Right, True)
+                    Mechanic.MPV1.NeonLightsColor = SinglePlayerApartment.player.LastVehicle.NeonLightsColor
+                    Mechanic.MPV1.TireSmokeColor = SinglePlayerApartment.player.LastVehicle.TireSmokeColor
+                    Mechanic.MPV1.WheelType = SinglePlayerApartment.player.LastVehicle.WheelType
+                    Mechanic.MPV1.Livery = SinglePlayerApartment.player.LastVehicle.Livery
+                    Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, Mechanic.MPV1, Native.Function.Call(Of String)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, SinglePlayerApartment.player.LastVehicle))
+                    Mechanic.MPV1.NumberPlate = SinglePlayerApartment.player.LastVehicle.NumberPlate
+                    Mechanic.MPV1.WindowTint = SinglePlayerApartment.player.LastVehicle.WindowTint
+                    Mechanic.MPV1.SetMod(VehicleMod.Spoilers, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Spoilers), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.FrontBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontBumper), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.RearBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RearBumper), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.SideSkirt, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.SideSkirt), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Frame, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Frame), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Grille, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Grille), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Hood, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Hood), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Fender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Fender), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.RightFender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RightFender), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Roof, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Roof), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Exhaust, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Exhaust), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.FrontWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontWheels), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.BackWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.BackWheels), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Suspension, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Suspension), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Engine, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Engine), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Brakes, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Brakes), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Transmission, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Transmission), True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Armor, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Armor), True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.XenonHeadlights) = True Then Mechanic.MPV1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.Turbo) = True Then Mechanic.MPV1.ToggleMod(VehicleToggleMod.Turbo, True)
+                    Mechanic.MPV1.SetMod(VehicleMod.Horns, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Horns), True)
+                    If Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, SinglePlayerApartment.player.LastVehicle) = False Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Mechanic.MPV1, False)
+                    playerPed.SetIntoVehicle(Mechanic.MPV1, VehicleSeat.Driver)
+                    Mechanic.MPV1.MarkAsNoLongerNeeded()
+                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV1, True, True)
+                End If
+            ElseIf playerName = "Franklin" Then
+                If Mechanic.FPV1 = Nothing Then
+                    Mechanic.FPV1 = World.CreateVehicle(SinglePlayerApartment.player.LastVehicle.DisplayName, lastLocationGarageOutVector)
+                    Mechanic.FPV1.Heading = lastLocationGarageOutHeading
+                    Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, Mechanic.FPV1, 0)
+                    Mechanic.FPV1.DirtLevel = 0F
+                    Mechanic.FPV1.PrimaryColor = SinglePlayerApartment.player.LastVehicle.PrimaryColor
+                    Mechanic.FPV1.SecondaryColor = SinglePlayerApartment.player.LastVehicle.SecondaryColor
+                    Mechanic.FPV1.PearlescentColor = SinglePlayerApartment.player.LastVehicle.PearlescentColor
+                    If SinglePlayerApartment.player.LastVehicle.IsPrimaryColorCustom = True Then Mechanic.FPV1.CustomPrimaryColor = SinglePlayerApartment.player.LastVehicle.CustomPrimaryColor
+                    If SinglePlayerApartment.player.LastVehicle.IsSecondaryColorCustom = True Then Mechanic.FPV1.CustomSecondaryColor = SinglePlayerApartment.player.LastVehicle.CustomSecondaryColor
+                    Mechanic.FPV1.RimColor = SinglePlayerApartment.player.LastVehicle.RimColor
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Back) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Back, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Front) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Front, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Left) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Left, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Right) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Right, True)
+                    Mechanic.FPV1.NeonLightsColor = SinglePlayerApartment.player.LastVehicle.NeonLightsColor
+                    Mechanic.FPV1.TireSmokeColor = SinglePlayerApartment.player.LastVehicle.TireSmokeColor
+                    Mechanic.FPV1.WheelType = SinglePlayerApartment.player.LastVehicle.WheelType
+                    Mechanic.FPV1.Livery = SinglePlayerApartment.player.LastVehicle.Livery
+                    Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, Mechanic.FPV1, Native.Function.Call(Of String)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, SinglePlayerApartment.player.LastVehicle))
+                    Mechanic.FPV1.NumberPlate = SinglePlayerApartment.player.LastVehicle.NumberPlate
+                    Mechanic.FPV1.WindowTint = SinglePlayerApartment.player.LastVehicle.WindowTint
+                    Mechanic.FPV1.SetMod(VehicleMod.Spoilers, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Spoilers), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.FrontBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontBumper), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.RearBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RearBumper), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.SideSkirt, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.SideSkirt), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Frame, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Frame), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Grille, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Grille), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Hood, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Hood), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Fender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Fender), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.RightFender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RightFender), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Roof, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Roof), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Exhaust, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Exhaust), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.FrontWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontWheels), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.BackWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.BackWheels), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Suspension, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Suspension), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Engine, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Engine), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Brakes, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Brakes), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Transmission, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Transmission), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Armor, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Armor), True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.XenonHeadlights) = True Then Mechanic.FPV1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.Turbo) = True Then Mechanic.FPV1.ToggleMod(VehicleToggleMod.Turbo, True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Horns, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Horns), True)
+                    If Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, SinglePlayerApartment.player.LastVehicle) = False Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Mechanic.FPV1, False)
+                    playerPed.SetIntoVehicle(Mechanic.FPV1, VehicleSeat.Driver)
+                    Mechanic.FPV1.MarkAsNoLongerNeeded()
+                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV1, True, True)
+                Else
+                    Mechanic.FPV1.Delete()
+                    Mechanic.FPV1 = World.CreateVehicle(SinglePlayerApartment.player.LastVehicle.DisplayName, lastLocationGarageOutVector)
+                    Mechanic.FPV1.Heading = lastLocationGarageOutHeading
+                    Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, Mechanic.FPV1, 0)
+                    Mechanic.FPV1.DirtLevel = 0F
+                    Mechanic.FPV1.PrimaryColor = SinglePlayerApartment.player.LastVehicle.PrimaryColor
+                    Mechanic.FPV1.SecondaryColor = SinglePlayerApartment.player.LastVehicle.SecondaryColor
+                    Mechanic.FPV1.PearlescentColor = SinglePlayerApartment.player.LastVehicle.PearlescentColor
+                    If SinglePlayerApartment.player.LastVehicle.IsPrimaryColorCustom = True Then Mechanic.FPV1.CustomPrimaryColor = SinglePlayerApartment.player.LastVehicle.CustomPrimaryColor
+                    If SinglePlayerApartment.player.LastVehicle.IsSecondaryColorCustom = True Then Mechanic.FPV1.CustomSecondaryColor = SinglePlayerApartment.player.LastVehicle.CustomSecondaryColor
+                    Mechanic.FPV1.RimColor = SinglePlayerApartment.player.LastVehicle.RimColor
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Back) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Back, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Front) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Front, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Left) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Left, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Right) = True Then Mechanic.FPV1.SetNeonLightsOn(VehicleNeonLight.Right, True)
+                    Mechanic.FPV1.NeonLightsColor = SinglePlayerApartment.player.LastVehicle.NeonLightsColor
+                    Mechanic.FPV1.TireSmokeColor = SinglePlayerApartment.player.LastVehicle.TireSmokeColor
+                    Mechanic.FPV1.WheelType = SinglePlayerApartment.player.LastVehicle.WheelType
+                    Mechanic.FPV1.Livery = SinglePlayerApartment.player.LastVehicle.Livery
+                    Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, Mechanic.FPV1, Native.Function.Call(Of String)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, SinglePlayerApartment.player.LastVehicle))
+                    Mechanic.FPV1.NumberPlate = SinglePlayerApartment.player.LastVehicle.NumberPlate
+                    Mechanic.FPV1.WindowTint = SinglePlayerApartment.player.LastVehicle.WindowTint
+                    Mechanic.FPV1.SetMod(VehicleMod.Spoilers, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Spoilers), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.FrontBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontBumper), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.RearBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RearBumper), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.SideSkirt, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.SideSkirt), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Frame, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Frame), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Grille, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Grille), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Hood, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Hood), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Fender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Fender), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.RightFender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RightFender), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Roof, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Roof), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Exhaust, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Exhaust), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.FrontWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontWheels), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.BackWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.BackWheels), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Suspension, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Suspension), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Engine, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Engine), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Brakes, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Brakes), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Transmission, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Transmission), True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Armor, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Armor), True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.XenonHeadlights) = True Then Mechanic.FPV1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.Turbo) = True Then Mechanic.FPV1.ToggleMod(VehicleToggleMod.Turbo, True)
+                    Mechanic.FPV1.SetMod(VehicleMod.Horns, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Horns), True)
+                    If Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, SinglePlayerApartment.player.LastVehicle) = False Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Mechanic.FPV1, False)
+                    playerPed.SetIntoVehicle(Mechanic.FPV1, VehicleSeat.Driver)
+                    Mechanic.FPV1.MarkAsNoLongerNeeded()
+                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV1, True, True)
+                End If
+            ElseIf playerName = "Trevor" Then
+                If Mechanic.TPV1 = Nothing Then
+                    Mechanic.TPV1 = World.CreateVehicle(SinglePlayerApartment.player.LastVehicle.DisplayName, lastLocationGarageOutVector)
+                    Mechanic.TPV1.Heading = lastLocationGarageOutHeading
+                    Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, Mechanic.TPV1, 0)
+                    Mechanic.TPV1.DirtLevel = 0F
+                    Mechanic.TPV1.PrimaryColor = SinglePlayerApartment.player.LastVehicle.PrimaryColor
+                    Mechanic.TPV1.SecondaryColor = SinglePlayerApartment.player.LastVehicle.SecondaryColor
+                    Mechanic.TPV1.PearlescentColor = SinglePlayerApartment.player.LastVehicle.PearlescentColor
+                    If SinglePlayerApartment.player.LastVehicle.IsPrimaryColorCustom = True Then Mechanic.TPV1.CustomPrimaryColor = SinglePlayerApartment.player.LastVehicle.CustomPrimaryColor
+                    If SinglePlayerApartment.player.LastVehicle.IsSecondaryColorCustom = True Then Mechanic.TPV1.CustomSecondaryColor = SinglePlayerApartment.player.LastVehicle.CustomSecondaryColor
+                    Mechanic.TPV1.RimColor = SinglePlayerApartment.player.LastVehicle.RimColor
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Back) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Back, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Front) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Front, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Left) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Left, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Right) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Right, True)
+                    Mechanic.TPV1.NeonLightsColor = SinglePlayerApartment.player.LastVehicle.NeonLightsColor
+                    Mechanic.TPV1.TireSmokeColor = SinglePlayerApartment.player.LastVehicle.TireSmokeColor
+                    Mechanic.TPV1.WheelType = SinglePlayerApartment.player.LastVehicle.WheelType
+                    Mechanic.TPV1.Livery = SinglePlayerApartment.player.LastVehicle.Livery
+                    Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, Mechanic.TPV1, Native.Function.Call(Of String)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, SinglePlayerApartment.player.LastVehicle))
+                    Mechanic.TPV1.NumberPlate = SinglePlayerApartment.player.LastVehicle.NumberPlate
+                    Mechanic.TPV1.WindowTint = SinglePlayerApartment.player.LastVehicle.WindowTint
+                    Mechanic.TPV1.SetMod(VehicleMod.Spoilers, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Spoilers), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.FrontBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontBumper), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.RearBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RearBumper), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.SideSkirt, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.SideSkirt), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Frame, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Frame), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Grille, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Grille), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Hood, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Hood), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Fender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Fender), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.RightFender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RightFender), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Roof, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Roof), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Exhaust, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Exhaust), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.FrontWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontWheels), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.BackWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.BackWheels), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Suspension, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Suspension), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Engine, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Engine), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Brakes, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Brakes), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Transmission, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Transmission), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Armor, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Armor), True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.XenonHeadlights) = True Then Mechanic.TPV1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.Turbo) = True Then Mechanic.TPV1.ToggleMod(VehicleToggleMod.Turbo, True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Horns, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Horns), True)
+                    If Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, SinglePlayerApartment.player.LastVehicle) = False Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Mechanic.TPV1, False)
+                    playerPed.SetIntoVehicle(Mechanic.TPV1, VehicleSeat.Driver)
+                    Mechanic.TPV1.MarkAsNoLongerNeeded()
+                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV1, True, True)
+                Else
+                    Mechanic.TPV1.Delete()
+                    Mechanic.TPV1 = World.CreateVehicle(SinglePlayerApartment.player.LastVehicle.DisplayName, lastLocationGarageOutVector)
+                    Mechanic.TPV1.Heading = lastLocationGarageOutHeading
+                    Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, Mechanic.TPV1, 0)
+                    Mechanic.TPV1.DirtLevel = 0F
+                    Mechanic.TPV1.PrimaryColor = SinglePlayerApartment.player.LastVehicle.PrimaryColor
+                    Mechanic.TPV1.SecondaryColor = SinglePlayerApartment.player.LastVehicle.SecondaryColor
+                    Mechanic.TPV1.PearlescentColor = SinglePlayerApartment.player.LastVehicle.PearlescentColor
+                    If SinglePlayerApartment.player.LastVehicle.IsPrimaryColorCustom = True Then Mechanic.TPV1.CustomPrimaryColor = SinglePlayerApartment.player.LastVehicle.CustomPrimaryColor
+                    If SinglePlayerApartment.player.LastVehicle.IsSecondaryColorCustom = True Then Mechanic.TPV1.CustomSecondaryColor = SinglePlayerApartment.player.LastVehicle.CustomSecondaryColor
+                    Mechanic.TPV1.RimColor = SinglePlayerApartment.player.LastVehicle.RimColor
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Back) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Back, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Front) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Front, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Left) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Left, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsNeonLightsOn(VehicleNeonLight.Right) = True Then Mechanic.TPV1.SetNeonLightsOn(VehicleNeonLight.Right, True)
+                    Mechanic.TPV1.NeonLightsColor = SinglePlayerApartment.player.LastVehicle.NeonLightsColor
+                    Mechanic.TPV1.TireSmokeColor = SinglePlayerApartment.player.LastVehicle.TireSmokeColor
+                    Mechanic.TPV1.WheelType = SinglePlayerApartment.player.LastVehicle.WheelType
+                    Mechanic.TPV1.Livery = SinglePlayerApartment.player.LastVehicle.Livery
+                    Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, Mechanic.TPV1, Native.Function.Call(Of String)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, SinglePlayerApartment.player.LastVehicle))
+                    Mechanic.TPV1.NumberPlate = SinglePlayerApartment.player.LastVehicle.NumberPlate
+                    Mechanic.TPV1.WindowTint = SinglePlayerApartment.player.LastVehicle.WindowTint
+                    Mechanic.TPV1.SetMod(VehicleMod.Spoilers, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Spoilers), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.FrontBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontBumper), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.RearBumper, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RearBumper), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.SideSkirt, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.SideSkirt), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Frame, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Frame), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Grille, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Grille), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Hood, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Hood), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Fender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Fender), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.RightFender, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.RightFender), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Roof, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Roof), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Exhaust, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Exhaust), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.FrontWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.FrontWheels), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.BackWheels, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.BackWheels), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Suspension, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Suspension), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Engine, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Engine), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Brakes, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Brakes), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Transmission, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Transmission), True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Armor, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Armor), True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.XenonHeadlights) = True Then Mechanic.TPV1.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+                    If SinglePlayerApartment.player.LastVehicle.IsToggleModOn(VehicleToggleMod.Turbo) = True Then Mechanic.TPV1.ToggleMod(VehicleToggleMod.Turbo, True)
+                    Mechanic.TPV1.SetMod(VehicleMod.Horns, SinglePlayerApartment.player.LastVehicle.GetMod(VehicleMod.Horns), True)
+                    If Native.Function.Call(Of Boolean)(Hash.GET_VEHICLE_TYRES_CAN_BURST, SinglePlayerApartment.player.LastVehicle) = False Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, Mechanic.TPV1, False)
+                    playerPed.SetIntoVehicle(Mechanic.TPV1, VehicleSeat.Driver)
+                    Mechanic.TPV1.MarkAsNoLongerNeeded()
+                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV1, True, True)
+                End If
+            End If
+
+            playerPed.CurrentVehicle.Repair()
             playerPed.CurrentVehicle.Position = lastLocationGarageOutVector
             playerPed.CurrentVehicle.Heading = lastLocationGarageOutHeading
-            playerPed.CurrentVehicle.AddBlip()
-            playerPed.CurrentVehicle.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             isInGarage = False
-            If playerName = "Michael" Then
-                playerPed.CurrentVehicle.CurrentBlip.Color = BlipColor.Blue
-            ElseIf playerName = "Franklin" Then
-                playerPed.CurrentVehicle.CurrentBlip.Color = BlipColor.Green
-            ElseIf playerName = “Trevor"
-                playerPed.CurrentVehicle.CurrentBlip.Color = 17
-            End If
-            SetBlipName(playerPed.CurrentVehicle.FriendlyName, playerPed.CurrentVehicle.CurrentBlip)
             Script.Wait(500)
             Game.FadeScreenIn(500)
         End If
@@ -1384,6 +1826,7 @@ Public Class TenCarGarage
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
+            UnLoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             isInGarage = False
@@ -1396,6 +1839,9 @@ Public Class TenCarGarage
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 3.0 Then
             Mechanic.GarageMenu.Visible = True
         End If
+    End Sub
+
+    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
 
     End Sub
 
