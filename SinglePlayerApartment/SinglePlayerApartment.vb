@@ -107,6 +107,8 @@ Public Class SinglePlayerApartment
             _displayTimer = New Timer(2200)
             _fadeTimer = New Timer(2000)
             _scaleform = New Scaleform([Function].[Call](Of Integer)(Hash.REQUEST_SCALEFORM_MOVIE, "MP_BIG_MESSAGE_FREEMODE"))
+
+            Resources.ReadDict()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -152,8 +154,9 @@ Public Class SinglePlayerApartment
 
     Public Shared Sub LoadMPDLCMap()
         Try
-            Native.Function.Call(Hash._LOAD_MP_DLC_MAPS)
             Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {1})
+            Native.Function.Call(Hash._LOAD_MP_DLC_MAPS)
+            Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {0})
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -161,7 +164,8 @@ Public Class SinglePlayerApartment
 
     Public Shared Sub UnLoadMPDLCMap()
         Try
-            Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {1})
+            Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {0})
+            Native.Function.Call(Hash._UNLOAD_MP_DLC_MAPS)
             Native.Function.Call(Hash._0xD7C10C4A637992C9)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -496,7 +500,11 @@ Public Class SinglePlayerApartment
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
         Try
-
+            If e.KeyCode = Keys.Z Then
+                For Each key As String In Resources.Dictionary.Keys
+                    UI.Notify(key & ": " & Resources.Dictionary.Item(key))
+                Next
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

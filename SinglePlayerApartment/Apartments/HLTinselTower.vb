@@ -100,18 +100,17 @@ Public Class HLTinselTower
             If selectedItem.Text = ExitApt Then
                 'Exit Apt
                 ExitMenu.Visible = False
-                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
+                UnLoadMPDLCMap()
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
                 WriteCfgValue("TTHLowner", "None", saveFile)
                 SavePosition2()
-                UnLoadMPDLCMap()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SinglePlayerApartment.player.Money = (playerCash + Cost)
@@ -124,6 +123,7 @@ Public Class HLTinselTower
                 Game.FadeScreenIn(500)
                 TinselTower.RefreshMenu()
                 TinselTower.RefreshGarageMenu()
+                UnLoadMPDLCMap()
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)

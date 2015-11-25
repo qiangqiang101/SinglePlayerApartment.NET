@@ -94,6 +94,7 @@
     <Compile Include="Class\logger.vb" />
     <Compile Include="Apartments\EclipseTower.vb" />
     <Compile Include="Class\Reader.vb" />
+    <Compile Include="Class\Resources.vb" />
     <Compile Include="Mechanic.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
