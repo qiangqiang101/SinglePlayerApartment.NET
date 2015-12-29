@@ -29,6 +29,7 @@ Public Class HL4IntegrityWay
     Public Shared SaveDistance As Single
     Public Shared ExitDistance As Single
     Public Shared WardrobeDistance As Single
+    Public Shared WardrobeHeading As Single = 336.2282
 
     Public Shared ExitMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -197,6 +198,7 @@ Public Class HL4IntegrityWay
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
+                WardrobeHead = WardrobeHeading
                 If playerName = "Michael" Then
                     Player0W.Visible = True
                     MakeACamera()

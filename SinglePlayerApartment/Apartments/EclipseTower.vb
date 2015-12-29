@@ -37,10 +37,10 @@ Public Class EclipseTower
     Public Shared DoorDistance As Single
     Public Shared SaveDistance As Single
     Public Shared ExitDistance As Single
-
     Public Shared CameraPos As Vector3 = New Vector3(-881.4312, 214.6852, 91.3971)
     Public Shared CameraRot As Vector3 = New Vector3(25.6109, 0, -39.32376)
     Public Shared CameraFov As Single = 50.0
+    Public Shared WardrobeHeading As Single = 268.5623
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -116,8 +116,50 @@ Public Class EclipseTower
                     .SetRightLabel("$" & HLEclipseTower.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
-                BuyMenu.AddItem(item2)
             End With
+            BuyMenu.AddItem(item2)
+            Dim item3 As New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit, EclipseTowerPS1.Desc)
+            With item3
+                If EclipseTowerPS1.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf EclipseTowerPS1.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf EclipseTowerPS1.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                Else
+                    .SetRightLabel("$" & EclipseTowerPS1.Cost.ToString("N"))
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            BuyMenu.AddItem(item3)
+            Dim item4 As New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit, EclipseTowerPS2.Desc)
+            With item4
+                If EclipseTowerPS2.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf EclipseTowerPS2.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf EclipseTowerPS2.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                Else
+                    .SetRightLabel("$" & EclipseTowerPS2.Cost.ToString("N"))
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            BuyMenu.AddItem(item4)
+            Dim item5 As New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit, EclipseTowerPS3.Desc)
+            With item5
+                If EclipseTowerPS3.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf EclipseTowerPS3.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf EclipseTowerPS3.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                Else
+                    .SetRightLabel("$" & EclipseTowerPS3.Cost.ToString("N"))
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            BuyMenu.AddItem(item5)
             BuyMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -154,6 +196,48 @@ Public Class EclipseTower
             End If
         End With
         BuyMenu.AddItem(item2)
+        Dim item3 As New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit, EclipseTowerPS1.Desc)
+        With item3
+            If EclipseTowerPS1.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf EclipseTowerPS1.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf EclipseTowerPS1.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            Else
+                .SetRightLabel("$" & EclipseTowerPS1.Cost.ToString("N"))
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        BuyMenu.AddItem(item3)
+        Dim item4 As New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit, EclipseTowerPS2.Desc)
+        With item4
+            If EclipseTowerPS2.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf EclipseTowerPS2.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf EclipseTowerPS2.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            Else
+                .SetRightLabel("$" & EclipseTowerPS2.Cost.ToString("N"))
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        BuyMenu.AddItem(item4)
+        Dim item5 As New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit, EclipseTowerPS3.Desc)
+        With item5
+            If EclipseTowerPS3.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf EclipseTowerPS3.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf EclipseTowerPS3.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            Else
+                .SetRightLabel("$" & EclipseTowerPS3.Cost.ToString("N"))
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        BuyMenu.AddItem(item5)
         BuyMenu.RefreshIndex()
     End Sub
 
@@ -185,6 +269,45 @@ Public Class EclipseTower
             End If
         End With
         GarageMenu.AddItem(item2)
+        Dim item3 As New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit & Garage)
+        With item3
+            If EclipseTowerPS1.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf EclipseTowerPS1.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf EclipseTowerPS1.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            Else
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        GarageMenu.AddItem(item3)
+        Dim item4 As New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit & Garage)
+        With item4
+            If EclipseTowerPS2.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf EclipseTowerPS2.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf EclipseTowerPS2.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            Else
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        GarageMenu.AddItem(item4)
+        Dim item5 As New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit & Garage)
+        With item5
+            If EclipseTowerPS3.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf EclipseTowerPS3.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf EclipseTowerPS3.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            Else
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        GarageMenu.AddItem(item5)
         GarageMenu.RefreshIndex()
     End Sub
 
@@ -257,6 +380,45 @@ Public Class EclipseTower
                 End If
             End With
             GarageMenu.AddItem(item2)
+            Dim item3 As New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit & Garage)
+            With item3
+                If EclipseTowerPS1.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf EclipseTowerPS1.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf EclipseTowerPS1.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                Else
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            GarageMenu.AddItem(item3)
+            Dim item4 As New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit & Garage)
+            With item4
+                If EclipseTowerPS2.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf EclipseTowerPS2.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf EclipseTowerPS2.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                Else
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            GarageMenu.AddItem(item4)
+            Dim item5 As New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit & Garage)
+            With item5
+                If EclipseTowerPS3.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf EclipseTowerPS3.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf EclipseTowerPS3.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                Else
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            GarageMenu.AddItem(item5)
             GarageMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -265,7 +427,7 @@ Public Class EclipseTower
 
     Public Shared Sub CreateEclipseTower()
         _Blip = World.CreateBlip(Entrance)
-        If Owner = "Michael" AndAlso HLEclipseTower.Owner = "Michael" Then
+        If Owner = "Michael" AndAlso HLEclipseTower.Owner = "Michael" AndAlso EclipseTowerPS1.Owner = "Michael" AndAlso EclipseTowerPS2.Owner = "Michael" AndAlso EclipseTowerPS3.Owner = "Michael" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.Blue
             _Blip.IsShortRange = True
@@ -275,7 +437,7 @@ Public Class EclipseTower
             Blip2.Color = BlipColor.Blue
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Franklin" AndAlso HLEclipseTower.Owner = "Franklin" Then
+        ElseIf Owner = "Franklin" AndAlso HLEclipseTower.Owner = "Franklin" AndAlso EclipseTowerPS1.Owner = "Franklin" AndAlso EclipseTowerPS2.Owner = "Franklin" AndAlso EclipseTowerPS3.Owner = "Franklin" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.Green
             _Blip.IsShortRange = True
@@ -285,7 +447,7 @@ Public Class EclipseTower
             Blip2.Color = BlipColor.Green
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Trevor" AndAlso HLEclipseTower.Owner = "Trevor" Then
+        ElseIf Owner = "Trevor" AndAlso HLEclipseTower.Owner = "Trevor" AndAlso EclipseTowerPS1.Owner = "Trevor" AndAlso EclipseTowerPS2.Owner = "Trevor" AndAlso EclipseTowerPS3.Owner = "Trevor" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = 17
             _Blip.IsShortRange = True
@@ -295,7 +457,7 @@ Public Class EclipseTower
             Blip2.Color = 17
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner <> HLEclipseTower.Owner Then
+        ElseIf (Owner <> HLEclipseTower.Owner) Or (Owner <> EclipseTowerPS1.Owner) Or (Owner <> EclipseTowerPS2.Owner) Or (Owner <> EclipseTowerPS3.Owner) Or (HLEclipseTower.Owner <> EclipseTowerPS1.Owner) Or (HLEclipseTower.Owner <> EclipseTowerPS2.Owner) Or (HLEclipseTower.Owner <> EclipseTowerPS3.Owner) Or (EclipseTowerPS1.Owner <> EclipseTowerPS2.Owner) Or (EclipseTowerPS1.Owner <> EclipseTowerPS3.Owner) Or (EclipseTowerPS2.Owner <> EclipseTowerPS3.Owner) Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.White
             _Blip.IsShortRange = True
@@ -379,6 +541,7 @@ Public Class EclipseTower
 
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
+            'Eclipse Tower
             If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
                 'Buy Apartment
                 If playerCash > Cost Then
@@ -503,11 +666,215 @@ Public Class EclipseTower
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                LoadMPDLCMap()
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = HLEclipseTower.Teleport
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            End If
+
+            'Eclipse Tower Penthouse 1
+            If selectedItem.Text = EclipseTowerPS1._Name & EclipseTowerPS1.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & EclipseTowerPS1.Cost.ToString("N") AndAlso EclipseTowerPS1.Owner = "None" Then
+                'Buy Apartment
+                If playerCash > EclipseTowerPS1.Cost Then
+                    WriteCfgValue("ETP1owner", playerName, saveFile2)
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    SinglePlayerApartment.player.Money = (playerCash - Cost)
+                    EclipseTowerPS1.Owner = playerName
+                    _Blip.Remove()
+                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    CreateEclipseTower()
+                    RefreshGarageMenu()
+                    Mechanic.CreateMechanicMenu()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
+                    If uiLanguage = "Chinese" Then
+                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & EclipseTowerPS1._Name & EclipseTowerPS1.Unit), "", 100, True, 0, True)
+                    Else
+                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & EclipseTowerPS1._Name & EclipseTowerPS1.Unit), "", 100, True, 0, True)
+                    End If
+                    _displayTimer.Start()
+                    If playerName = "Michael" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                    ElseIf playerName = "Franklin" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                    ElseIf playerName = "Trevor" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    End If
+                    selectedItem.SetRightLabel("")
+                Else
+                    If playerName = "Michael" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
+                    ElseIf playerName = "Franklin" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
+                        End If
+                    ElseIf playerName = "Trevor" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
+                        End If
+                    End If
+                End If
+            ElseIf selectedItem.Text = EclipseTowerPS1._Name & EclipseTowerPS1.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS1.Owner = playerName Then
+                'Enter Apartment
+                BuyMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                ToggleIPL(ReadCfgValue("ETP1ipl", saveFile2))
+
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                Game.Player.Character.Position = EclipseTowerPS1.Teleport
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            End If
+
+            'Eclipse Tower Penthouse 2
+            If selectedItem.Text = EclipseTowerPS2._Name & EclipseTowerPS2.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & EclipseTowerPS2.Cost.ToString("N") AndAlso EclipseTowerPS2.Owner = "None" Then
+                'Buy Apartment
+                If playerCash > EclipseTowerPS2.Cost Then
+                    WriteCfgValue("ETP2owner", playerName, saveFile2)
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    SinglePlayerApartment.player.Money = (playerCash - Cost)
+                    EclipseTowerPS2.Owner = playerName
+                    _Blip.Remove()
+                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    CreateEclipseTower()
+                    RefreshGarageMenu()
+                    Mechanic.CreateMechanicMenu()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
+                    If uiLanguage = "Chinese" Then
+                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & EclipseTowerPS2._Name & EclipseTowerPS2.Unit), "", 100, True, 0, True)
+                    Else
+                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & EclipseTowerPS2._Name & EclipseTowerPS2.Unit), "", 100, True, 0, True)
+                    End If
+                    _displayTimer.Start()
+                    If playerName = "Michael" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                    ElseIf playerName = "Franklin" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                    ElseIf playerName = "Trevor" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    End If
+                    selectedItem.SetRightLabel("")
+                Else
+                    If playerName = "Michael" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
+                    ElseIf playerName = "Franklin" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
+                        End If
+                    ElseIf playerName = "Trevor" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
+                        End If
+                    End If
+                End If
+            ElseIf selectedItem.Text = EclipseTowerPS2._Name & EclipseTowerPS2.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS2.Owner = playerName Then
+                'Enter Apartment
+                BuyMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                ToggleIPL(ReadCfgValue("ETP2ipl", saveFile2))
+
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                Game.Player.Character.Position = EclipseTowerPS2.Teleport
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            End If
+
+            'Eclipse Tower Penthouse 3
+            If selectedItem.Text = EclipseTowerPS3._Name & EclipseTowerPS3.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & EclipseTowerPS3.Cost.ToString("N") AndAlso EclipseTowerPS3.Owner = "None" Then
+                'Buy Apartment
+                If playerCash > EclipseTowerPS3.Cost Then
+                    WriteCfgValue("ETP3owner", playerName, saveFile2)
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    SinglePlayerApartment.player.Money = (playerCash - Cost)
+                    EclipseTowerPS3.Owner = playerName
+                    _Blip.Remove()
+                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    CreateEclipseTower()
+                    RefreshGarageMenu()
+                    Mechanic.CreateMechanicMenu()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
+                    If uiLanguage = "Chinese" Then
+                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & EclipseTowerPS3._Name & EclipseTowerPS3.Unit), "", 100, True, 0, True)
+                    Else
+                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & EclipseTowerPS3._Name & EclipseTowerPS3.Unit), "", 100, True, 0, True)
+                    End If
+                    _displayTimer.Start()
+                    If playerName = "Michael" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                    ElseIf playerName = "Franklin" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                    ElseIf playerName = "Trevor" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    End If
+                    selectedItem.SetRightLabel("")
+                Else
+                    If playerName = "Michael" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
+                    ElseIf playerName = "Franklin" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
+                        End If
+                    ElseIf playerName = "Trevor" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
+                        End If
+                    End If
+                End If
+            ElseIf selectedItem.Text = EclipseTowerPS3._Name & EclipseTowerPS3.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS3.Owner = playerName Then
+                'Enter Apartment
+                BuyMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                ToggleIPL(ReadCfgValue("ETP3ipl", saveFile2))
+
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                Game.Player.Character.Position = EclipseTowerPS3.Teleport
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -517,7 +884,8 @@ Public Class EclipseTower
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        'Eclipse Tower On Foot
+        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
             'Teleport to Garage
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
@@ -535,7 +903,8 @@ Public Class EclipseTower
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+            'Eclipse Tower On Vehicle
+        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
@@ -655,9 +1024,10 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\")
             End If
-        ElseIf selectedItem.Text = HLEclipseTower._Name & HLEclipseTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+            'Eclipse Tower HL On Foot
+        ElseIf selectedItem.Text = HLEclipseTower._Name & HLEclipseTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso HLEclipseTower.Owner = playerName Then
             'Teleport to Garage
-            LoadMPDLCMap()
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -673,6 +1043,7 @@ Public Class EclipseTower
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
+            'Eclipse Tower HL On Vehicle
         ElseIf selectedItem.Text = HLEclipseTower._Name & HLEclipseTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
@@ -688,7 +1059,7 @@ Public Class EclipseTower
             If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            LoadMPDLCMap()
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             TenCarGarage.isInGarage = True
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
@@ -814,6 +1185,501 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
             End If
+
+            'Eclipse Tower Penthouse 1 On Foot
+        ElseIf selectedItem.Text = EclipseTowerPS1._Name & EclipseTowerPS1.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso EclipseTowerPS1.Owner = playerName Then
+            'Teleport to Garage
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            ToggleIPL(ReadCfgValue("ETP1ipl", saveFile2))
+            Game.FadeScreenOut(500)
+            Script.Wait(&H3E8)
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+            playerPed.Position = TenCarGarage.GarageDoorL
+            TenCarGarage.LastLocationName = EclipseTowerPS1._Name & EclipseTowerPS1.Unit
+            TenCarGarage.lastLocationVector = EclipseTowerPS1._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
+            GarageMenu.Visible = False
+            Script.Wait(500)
+            Game.FadeScreenIn(500)
+            'Eclipse Tower Penthouse 1 On Vehicle
+        ElseIf selectedItem.Text = EclipseTowerPS1._Name & EclipseTowerPS1.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso EclipseTowerPS1.Owner = playerName Then
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            ToggleIPL(ReadCfgValue("ETP1ipl", saveFile2))
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
+            TenCarGarage.LastLocationName = EclipseTowerPS1._Name & EclipseTowerPS1.Unit
+            TenCarGarage.lastLocationVector = EclipseTowerPS1._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            Else
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+            End If
+
+            'Eclipse Tower Penthouse 2 On Foot
+        ElseIf selectedItem.Text = EclipseTowerPS2._Name & EclipseTowerPS2.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso EclipseTowerPS2.Owner = playerName Then
+            'Teleport to Garage
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            ToggleIPL(ReadCfgValue("ETP2ipl", saveFile2))
+            Game.FadeScreenOut(500)
+            Script.Wait(&H3E8)
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+            playerPed.Position = TenCarGarage.GarageDoorL
+            TenCarGarage.LastLocationName = EclipseTowerPS2._Name & EclipseTowerPS2.Unit
+            TenCarGarage.lastLocationVector = EclipseTowerPS2._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
+            GarageMenu.Visible = False
+            Script.Wait(500)
+            Game.FadeScreenIn(500)
+            'Eclipse Tower Penthouse 2 On Vehicle
+        ElseIf selectedItem.Text = EclipseTowerPS2._Name & EclipseTowerPS2.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso EclipseTowerPS2.Owner = playerName Then
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            ToggleIPL(ReadCfgValue("ETP2ipl", saveFile2))
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
+            TenCarGarage.LastLocationName = EclipseTowerPS2._Name & EclipseTowerPS2.Unit
+            TenCarGarage.lastLocationVector = EclipseTowerPS2._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            Else
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+            End If
+
+            'Eclipse Tower Penthouse 3 On Foot
+        ElseIf selectedItem.Text = EclipseTowerPS3._Name & EclipseTowerPS3.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso EclipseTowerPS3.Owner = playerName Then
+            'Teleport to Garage
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            ToggleIPL(ReadCfgValue("ETP3ipl", saveFile2))
+            Game.FadeScreenOut(500)
+            Script.Wait(&H3E8)
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+            playerPed.Position = TenCarGarage.GarageDoorL
+            TenCarGarage.LastLocationName = EclipseTowerPS3._Name & EclipseTowerPS3.Unit
+            TenCarGarage.lastLocationVector = EclipseTowerPS3._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
+            GarageMenu.Visible = False
+            Script.Wait(500)
+            Game.FadeScreenIn(500)
+            'Eclipse Tower Penthouse 3 On Vehicle
+        ElseIf selectedItem.Text = EclipseTowerPS3._Name & EclipseTowerPS3.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso EclipseTowerPS3.Owner = playerName Then
+            On Error Resume Next
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
+            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            ToggleIPL(ReadCfgValue("ETP3ipl", saveFile2))
+            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            TenCarGarage.isInGarage = True
+
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
+            TenCarGarage.LastLocationName = EclipseTowerPS3._Name & EclipseTowerPS3.Unit
+            TenCarGarage.lastLocationVector = EclipseTowerPS3._Exit
+            TenCarGarage.lastLocationGarageVector = _Garage
+            TenCarGarage.lastLocationGarageOutVector = GarageOut
+            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            GarageMenu.Visible = False
+
+            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
+                Game.FadeScreenOut(500)
+                Script.Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = TenCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
+            Else
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+            End If
         End If
     End Sub
 
@@ -859,7 +1725,7 @@ Public Class EclipseTower
                 End If
             End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName) Then
+            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
                 Else
@@ -897,6 +1763,7 @@ Public Class EclipseTower
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
+                WardrobeHead = WardrobeHeading
                 If playerName = "Michael" Then
                     Player0W.Visible = True
                     MakeACamera()
@@ -909,7 +1776,7 @@ Public Class EclipseTower
                 End If
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName) Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
                 GarageMenu.Visible = True
             End If
             'End Controls

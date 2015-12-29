@@ -40,6 +40,7 @@ Public Class _4IntegrityWay
     Public Shared CameraPos As Vector3 = New Vector3(-73.43955, -489.4017, 43.24729)
     Public Shared CameraRot As Vector3 = New Vector3(20.34373, 0, -158.8398)
     Public Shared CameraFov As Single = 50.0
+    Public Shared WardrobeHeading As Single = 255.3193
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -502,7 +503,7 @@ Public Class _4IntegrityWay
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                LoadMPDLCMap()
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -516,7 +517,7 @@ Public Class _4IntegrityWay
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
             'Teleport to Garage
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
@@ -534,7 +535,7 @@ Public Class _4IntegrityWay
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
@@ -674,9 +675,9 @@ Public Class _4IntegrityWay
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
             End If
-        ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso HL4IntegrityWay.Owner = playerName Then
             'Teleport to Garage
-            LoadMPDLCMap()
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -692,7 +693,7 @@ Public Class _4IntegrityWay
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso HL4IntegrityWay.Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
@@ -707,7 +708,7 @@ Public Class _4IntegrityWay
             If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            LoadMPDLCMap()
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
@@ -915,6 +916,7 @@ Public Class _4IntegrityWay
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
+                WardrobeHead = WardrobeHeading
                 If playerName = "Michael" Then
                     Player0W.Visible = True
                     MakeACamera()

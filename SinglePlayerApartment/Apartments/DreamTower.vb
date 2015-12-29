@@ -40,6 +40,7 @@ Public Class DreamTower
     Public Shared CameraPos As Vector3 = New Vector3(-730.9564， -866.194， 39.5012)
     Public Shared CameraRot As Vector3 = New Vector3(9.584155， 0， 35.26235)
     Public Shared CameraFov As Single = 50.0
+    Public Shared WardrobeHeading As Single = 200.6809
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -626,6 +627,7 @@ Public Class DreamTower
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
+                WardrobeHead = WardrobeHeading
                 If playerName = "Michael" Then
                     Player0W.Visible = True
                     MakeACamera()

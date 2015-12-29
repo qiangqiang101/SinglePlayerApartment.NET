@@ -23,6 +23,7 @@ Public Class Wardrobe
     Public Shared WardrobeDistance As Single
     Public Shared DrawSpotLight As Boolean = False
     Public Shared WardrobeCam As Camera
+    Public Shared WardrobeHead As Single
 
     Public Shared Player0W, Player1W, Player2W As UIMenu
     Public Shared Shirt0, Pants0, Gloves0, Shoes0, Accessories0, Heist0, Logos0, InnerShirt0 As UIMenu
@@ -130,6 +131,8 @@ Public Class Wardrobe
     End Sub
 
     Public Shared Sub MakeACamera()
+        playerPed.Position = New Vector3(WardrobeVector.X, WardrobeVector.Y, WardrobeVector.Z - 1)
+        playerPed.Heading = WardrobeHead
         WardrobeCam = New Camera(1)
         WardrobeCam = World.CreateCamera(playerPed.Position + playerPed.ForwardVector * 4, GameplayCamera.Rotation, 30)
         WardrobeCam.PointAt(playerPed)

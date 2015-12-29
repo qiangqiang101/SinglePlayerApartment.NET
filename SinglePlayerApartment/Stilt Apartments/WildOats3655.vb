@@ -13,34 +13,34 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports PDMCarShopGUI
 Imports SinglePlayerApartment.Wardrobe
 
-Public Class RichardMajestic
+Public Class WildOats3655
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("RMowner", saveFile)
-    Public Shared _Name As String = "Richards Majestic Apt. "
-    Public Shared Desc As String = "This breathtaking luxury condo on Movie Star Way in Rockford Hills is a stone's throw from Richards Majestic Movie Studios, AKAN Records and a Sperm Donor Clinic. The Ultimate trifecta of dying industries! Includes a 10-car garage."
-    Public Shared Unit As String = "4"
-    Public Shared Cost As Integer = 484000
+    Public Shared Owner As String = ReadCfgValue("3655WODowner", saveFile2)
+    Public Shared _Name As String = "Wild Oats Drive "
+    Public Shared Desc As String = "Welcome to the heights of the Vinewood hills, where the average first time buyer is 24 and the web 2.0 entrepreneurs are only outnumbered by the swarms of fading teenage pop sensations. Buy in now while the price still ridiculously high - what are you, sensible? Includes 10-car garage."
+    Public Shared Unit As String = "3655"
+    Public Shared Cost As Integer = 800000
     Public Shared _Blip As Blip
     Public Shared Blip2 As Blip
-    Public Shared Entrance As Vector3 = New Vector3(-935.4753, -378.6128, 38.9613)
-    Public Shared Save As Vector3 = New Vector3(-900.8789, -374.416, 79.2731)
-    Public Shared Teleport As Vector3 = New Vector3(-913.1502, -384.5727, 85.4804)
-    Public Shared Teleport2 As Vector3 = New Vector3(-933.4771, -383.6144, 38.9613)
-    Public Shared _Exit As Vector3 = New Vector3(-916.3039, -384.9148, 85.4804)
-    Public Shared Wardrobe As Vector3 = New Vector3(-904.1464, -369.6518, 79.2839)
-    Public Shared _Garage As Vector3 = New Vector3(-876.1354, -363.0524, 36.3538)
-    Public Shared GarageOut As Vector3 = New Vector3(-873.362, -368.5318, 37.3505)
-    Public Shared GarageOutHeading As Single = 207.6679
+    Public Shared Entrance As Vector3 = New Vector3(-174.606, 502.6157, 137.4205)
+    Public Shared Save As Vector3 = New Vector3(-163.1819, 484.9918, 133.8695)
+    Public Shared Teleport As Vector3 = New Vector3(-173.286, 495.0179, 137.667)
+    Public Shared Teleport2 As Vector3 = New Vector3(-177.3793, 503.8313, 136.8531)
+    Public Shared _Exit As Vector3 = New Vector3(-174.3115, 497.8294, 137.6536)
+    Public Shared Wardrobe As Vector3 = New Vector3(-167.5116, 487.8223, 133.8438)
+    Public Shared _Garage As Vector3 = New Vector3(-189.307, 502.66, 133.9093)
+    Public Shared GarageOut As Vector3 = New Vector3(-187.563, 502.25, 134.13)
+    Public Shared GarageOutHeading As Single = 332.11
     Public Shared GarageDistance As String
-    Public Shared WardrobeDistance As Single
     Public Shared DoorDistance As Single
     Public Shared SaveDistance As Single
     Public Shared ExitDistance As Single
-    Public Shared CameraPos As Vector3 = New Vector3(-958.2964, -478.6136, 38.73965)
-    Public Shared CameraRot As Vector3 = New Vector3(24.18255, 0, -19.8838)
+    Public Shared WardrobeDistance As Single
+    Public Shared CameraPos As Vector3 = New Vector3(-198.8929, 511.1027, 136.112)
+    Public Shared CameraRot As Vector3 = New Vector3(4.350469, 0, -128.423)
     Public Shared CameraFov As Single = 50.0
-    Public Shared WardrobeHeading As Single = 112.4174
+    Public Shared WardrobeHeading As Single = 187.7794
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -50,12 +50,12 @@ Public Class RichardMajestic
             uiLanguage = Game.Language.ToString
 
             If uiLanguage = "Chinese" Then
-                _Name = "李察尊爵公寓"
-                Desc = "這個每到冒泡的豪華公寓位於羅克福德山的 ~n~ 明星路上，距離理查尊爵電影片場、AKAN唱片 ~n~ 公司和捐精診所都只有幾步之處。 ~n~ 對夕陽產業來說，這裡可是一箭三雕的絕佳 ~n~ 地點！包括可容納十輛車的車庫。"
+                _Name = "野生燕麥車道 "
+                Desc = "歡迎來到麥塢山的頂點，在此處置產的首 ~n~ 購族是平均年齡24歲的數位內容新時代創 ~n~ 業家，而他們只會被一波波引領潮流的年輕 ~n~ 人給取代。在售價仍高得離譜時買下吧， ~n~ 證明您的身價，聰明人！ ~n~ 包括可容納十輛車的車庫。"
                 Garage = "車庫"
             Else
-                _Name = "Richards Majestic Apt. "
-                Desc = "This breathtaking luxury condo on Movie Star Way in Rockford Hills is a stone's throw from Richards Majestic Movie Studios, AKAN Records and a Sperm Donor Clinic. The Ultimate trifecta of dying industries! Includes a 10-car garage."
+                _Name = "Wild Oats Drive "
+                Desc = "Welcome to the heights of the Vinewood hills, where the average first time buyer is 24 and the web 2.0 entrepreneurs are only outnumbered by the swarms of fading teenage pop sensations. Buy in now while the price still ridiculously high - what are you, sensible? Includes 10-car garage."
                 Garage = " Garage"
             End If
 
@@ -104,20 +104,6 @@ Public Class RichardMajestic
                 End If
             End With
             BuyMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit, HLRichardMajestic.Desc)
-            With item2
-                If HLRichardMajestic.Owner = "Michael" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf HLRichardMajestic.Owner = "Franklin" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf HLRichardMajestic.Owner = "Trevor" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                Else
-                    .SetRightLabel("$" & HLRichardMajestic.Cost.ToString("N"))
-                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
-                End If
-                BuyMenu.AddItem(item2)
-            End With
             BuyMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -140,20 +126,6 @@ Public Class RichardMajestic
             End If
         End With
         BuyMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit, HLRichardMajestic.Desc)
-        With item2
-            If HLRichardMajestic.Owner = "Michael" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf HLRichardMajestic.Owner = "Franklin" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf HLRichardMajestic.Owner = "Trevor" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            Else
-                .SetRightLabel("$" & HLRichardMajestic.Cost.ToString("N"))
-                .SetRightBadge(UIMenuItem.BadgeStyle.None)
-            End If
-        End With
-        BuyMenu.AddItem(item2)
         BuyMenu.RefreshIndex()
     End Sub
 
@@ -172,19 +144,6 @@ Public Class RichardMajestic
             End If
         End With
         GarageMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit & Garage)
-        With item2
-            If HLRichardMajestic.Owner = "Michael" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf HLRichardMajestic.Owner = "Franklin" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf HLRichardMajestic.Owner = "Trevor" Then
-                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            Else
-                .SetRightBadge(UIMenuItem.BadgeStyle.None)
-            End If
-        End With
-        GarageMenu.AddItem(item2)
         GarageMenu.RefreshIndex()
     End Sub
 
@@ -244,67 +203,44 @@ Public Class RichardMajestic
                 End If
             End With
             GarageMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit & Garage)
-            With item2
-                If HLRichardMajestic.Owner = "Michael" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf HLRichardMajestic.Owner = "Franklin" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf HLRichardMajestic.Owner = "Trevor" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                Else
-                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
-                End If
-            End With
-            GarageMenu.AddItem(item2)
             GarageMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Shared Sub CreateRichardsMajestic()
+    Public Shared Sub CreateWildOats3655()
         _Blip = World.CreateBlip(Entrance)
-        If Owner = "Michael" AndAlso HLRichardMajestic.Owner = "Michael" Then
+        If Owner = "Michael" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.Blue
             _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
+            SetBlipName(_Name & Unit, _Blip)
             Blip2 = World.CreateBlip(_Garage)
             Blip2.Sprite = BlipSprite.Garage
             Blip2.Color = BlipColor.Blue
             Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Franklin" AndAlso HLRichardMajestic.Owner = "Franklin" Then
+            SetBlipName(_Name & Unit & Garage, Blip2)
+        ElseIf Owner = "Franklin" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = BlipColor.Green
             _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
+            SetBlipName(_Name & Unit, _Blip)
             Blip2 = World.CreateBlip(_Garage)
             Blip2.Sprite = BlipSprite.Garage
             Blip2.Color = BlipColor.Green
             Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Trevor" AndAlso HLRichardMajestic.Owner = "Trevor" Then
+            SetBlipName(_Name & Unit & Garage, Blip2)
+        ElseIf Owner = "Trevor" Then
             _Blip.Sprite = BlipSprite.Safehouse
             _Blip.Color = 17
             _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
+            SetBlipName(_Name & Unit, _Blip)
             Blip2 = World.CreateBlip(_Garage)
             Blip2.Sprite = BlipSprite.Garage
             Blip2.Color = 17
             Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner <> HLRichardMajestic.Owner Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.White
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.White
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
+            SetBlipName(_Name & Unit & Garage, Blip2)
         Else
             _Blip.Sprite = BlipSprite.SafehouseForSale
             _Blip.Color = BlipColor.White
@@ -337,10 +273,11 @@ Public Class RichardMajestic
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
+                UnLoadMPDLCMap()
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("RMowner", "None", saveFile)
+                WriteCfgValue("3655WODowner", "None", saveFile2)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -348,12 +285,13 @@ Public Class RichardMajestic
                 Owner = "None"
                 _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
-                CreateRichardsMajestic()
+                CreateWildOats3655()
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
+                UnLoadMPDLCMap()
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
@@ -366,8 +304,8 @@ Public Class RichardMajestic
                 TenCarGarage.lastLocationGarageVector = _Garage
                 TenCarGarage.lastLocationGarageOutVector = GarageOut
                 TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
+                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -382,14 +320,14 @@ Public Class RichardMajestic
             If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
                 'Buy Apartment
                 If playerCash > Cost Then
-                    WriteCfgValue("RMowner", playerName, saveFile)
+                    WriteCfgValue("3655WODowner", playerName, saveFile2)
                     Game.FadeScreenOut(500)
                     Script.Wait(&H3E8)
                     SinglePlayerApartment.player.Money = (playerCash - Cost)
                     Owner = playerName
                     _Blip.Remove()
                     If Not Blip2 Is Nothing Then Blip2.Remove()
-                    CreateRichardsMajestic()
+                    CreateWildOats3655()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
                     Script.Wait(500)
@@ -436,78 +374,11 @@ Public Class RichardMajestic
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-
-                SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = Teleport
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            '4 Integrity Way HL
-            If selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & HLRichardMajestic.Cost.ToString("N") AndAlso HLRichardMajestic.Owner = "None" Then
-                'Buy Apartment
-                If playerCash > HLRichardMajestic.Cost Then
-                    WriteCfgValue("RMHLowner", playerName, saveFile)
-                    Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Cost)
-                    HLRichardMajestic.Owner = playerName
-                    _Blip.Remove()
-                    If Not Blip2 Is Nothing Then Blip2.Remove()
-                    CreateRichardsMajestic()
-                    RefreshGarageMenu()
-                    Mechanic.CreateMechanicMenu()
-                    Script.Wait(500)
-                    Game.FadeScreenIn(500)
-                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & HLRichardMajestic._Name & HLRichardMajestic.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & HLRichardMajestic._Name & HLRichardMajestic.Unit), "", 100, True, 0, True)
-                    End If
-                    _displayTimer.Start()
-                    If playerName = "Michael" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                    ElseIf playerName = "Franklin" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                    ElseIf playerName = "Trevor" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                    End If
-                    selectedItem.SetRightLabel("")
-                Else
-                    If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
-                    ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
-                    ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
-                    End If
-                End If
-            ElseIf selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HLRichardMajestic.Owner = playerName Then
-                'Enter Apartment
-                BuyMenu.Visible = False
-                hideHud = False
-                World.DestroyAllCameras()
-                World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                Game.Player.Character.Position = HLRichardMajestic.Teleport
+                Game.Player.Character.Position = Teleport
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -517,165 +388,7 @@ Public Class RichardMajestic
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
-            'Teleport to Garage
-            Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
-            TenCarGarage.isInGarage = True
-            playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
-            GarageMenu.Visible = False
-            Script.Wait(500)
-            Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Owner = playerName Then
-            On Error Resume Next
-            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
-            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
-            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
-            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
-            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
-            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
-            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
-            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
-            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
-            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
-            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
-
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
-            TenCarGarage.isInGarage = True
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            GarageMenu.Visible = False
-
-            If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
-            End If
-        ElseIf selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso HLRichardMajestic.Owner = playerName Then
+        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             Game.FadeScreenOut(500)
@@ -683,20 +396,20 @@ Public Class RichardMajestic
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = HLRichardMajestic._Name & HLRichardMajestic.Unit
-            TenCarGarage.lastLocationVector = HLRichardMajestic._Exit
+            TenCarGarage.LastLocationName = _Name & Unit
+            TenCarGarage.lastLocationVector = _Exit
             TenCarGarage.lastLocationGarageVector = _Garage
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
+            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso HLRichardMajestic.Owner = playerName Then
+        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
             If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
             If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
             If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
@@ -711,9 +424,9 @@ Public Class RichardMajestic
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             TenCarGarage.isInGarage = True
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
-            TenCarGarage.LastLocationName = HLRichardMajestic._Name & HLRichardMajestic.Unit
-            TenCarGarage.lastLocationVector = HLRichardMajestic._Exit
+            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
+            TenCarGarage.LastLocationName = _Name & Unit
+            TenCarGarage.lastLocationVector = _Exit
             TenCarGarage.lastLocationGarageVector = _Garage
             TenCarGarage.lastLocationGarageOutVector = GarageOut
             TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
@@ -723,7 +436,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
@@ -734,7 +447,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
@@ -745,7 +458,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
@@ -756,7 +469,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
@@ -767,7 +480,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
@@ -778,7 +491,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
@@ -789,7 +502,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
@@ -800,7 +513,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
@@ -811,7 +524,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
@@ -822,7 +535,7 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
@@ -830,8 +543,8 @@ Public Class RichardMajestic
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
+                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
             End If
         End If
     End Sub
@@ -844,17 +557,17 @@ Public Class RichardMajestic
             WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
             GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-            'Enter richard Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
+            'Enter _3alta Tower
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 2.0 Then
                 If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
+                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & Unit & "。")
                 Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name & Unit)
                 End If
             End If
 
             'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
                 Else
@@ -878,17 +591,17 @@ Public Class RichardMajestic
                 End If
             End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
+            If Not playerPed.IsDead AndAlso GarageDistance < 3.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
                 Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & Garage & ".")
                 End If
             End If
 
-            'Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on Door
+            ' Controls
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                'Press E on Vespucci Blvd Door
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 BuyMenu.Visible = True
@@ -902,9 +615,9 @@ Public Class RichardMajestic
                 ExitMenu.Visible = True
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on richard Bed
-                playerMap = "Richard"
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                'Press E on vespucci blvd Bed
+                playerMap = "WildOats3655"
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TimeLapse(8)
@@ -929,10 +642,10 @@ Public Class RichardMajestic
                 End If
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 3.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 GarageMenu.Visible = True
             End If
-            'End Controls
+            'End Control
 
             _menuPool.ProcessMenus()
         Catch ex As Exception

@@ -89,12 +89,17 @@
     <Compile Include="Apartments\RichardMajestic.vb" />
     <Compile Include="Apartments\DreamTower.vb" />
     <Compile Include="Apartments\TinselTower.vb" />
+    <Compile Include="Apartments\VespucciBlvd.vb" />
     <Compile Include="Apartments\WeazelPlaza.vb" />
+    <Compile Include="Brain.vb" />
     <Compile Include="Class\CFGRead.vb" />
     <Compile Include="Class\logger.vb" />
     <Compile Include="Apartments\EclipseTower.vb" />
     <Compile Include="Class\Reader.vb" />
     <Compile Include="Class\Resources.vb" />
+    <Compile Include="Custom Apartment\EclipseTowerPS1.vb" />
+    <Compile Include="Custom Apartment\EclipseTowerPS2.vb" />
+    <Compile Include="Custom Apartment\EclipseTowerPS3.vb" />
     <Compile Include="Mechanic.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -112,7 +117,18 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Class\timer.vb" />
+    <Compile Include="ReturnAllVehicles.vb" />
     <Compile Include="SinglePlayerApartment.vb" />
+    <Compile Include="SixCarGarage.vb" />
+    <Compile Include="Stilt Apartments\HillcrestAve2862.vb" />
+    <Compile Include="Stilt Apartments\HillcrestAve2868.vb" />
+    <Compile Include="Stilt Apartments\HillcrestAve2874.vb" />
+    <Compile Include="Stilt Apartments\MadWayne2113.vb" />
+    <Compile Include="Stilt Apartments\MiltonRd2117.vb" />
+    <Compile Include="Stilt Apartments\NorthConker2044.vb" />
+    <Compile Include="Stilt Apartments\NorthConker2045.vb" />
+    <Compile Include="Stilt Apartments\Whispymound3677.vb" />
+    <Compile Include="Stilt Apartments\WildOats3655.vb" />
     <Compile Include="TenCarGarage.vb" />
     <Compile Include="Wardrobe.vb" />
   </ItemGroup>
@@ -137,6 +153,7 @@
     </None>
     <None Include="Resources\vehicle.cfg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>COPY "$(TargetDir)$(TargetFileName)" "F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts"</PostBuildEvent>

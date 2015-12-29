@@ -13,36 +13,34 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports PDMCarShopGUI
 Imports SinglePlayerApartment.Wardrobe
 
-Public Class _3AltaStreet
+Public Class VespucciBlvd
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("3ASowner", saveFile)
-    Public Shared _Name As String = "3 Alta Street Apt. "
-    Public Shared Desc As String = "With its own Bean Machine outlet in the ground floor and a short commute to the financial center, this luxury condo on Alta Street in Downtown Los Santos is the perfect pad for the banker who never sleeps because he's having too much fun gambling with other people's money. Includes a 10-car garage."
-    Public Shared Unit As String = "57"
-    Public Shared Cost As Integer = 223000
+    Public Shared Owner As String = ReadCfgValue("VPBowner", saveFile2)
+    Public Shared _Name As String = "2057 Vespucci Boulevard Apt. "
+    Public Shared Desc As String = "The apartment building has seen better days but this affordable unit still has a Little Seoul and a Lot of Potential! Bring your imagination! And a exterminator. Includes 6-car garage."
+    Public Shared Unit As String = "1"
+    Public Shared Cost As Integer = 87000
     Public Shared _Blip As Blip
     Public Shared Blip2 As Blip
-    Public Shared Entrance As Vector3 = New Vector3(-261.768, -970.4873, 31.2199)
-    Public Shared Save As Vector3 = New Vector3(-283.0112, -958.7992, 86.3036)
-    Public Shared Teleport As Vector3 = New Vector3(-281.0908, -943.2817, 92.5108)
-    Public Shared Teleport2 As Vector3 = New Vector3(-258.1236, -969.0657, 31.2199)
-    Public Shared _Exit As Vector3 = New Vector3(-279.2097, -940.9369, 92.5108)
-    Public Shared Wardrobe As Vector3 = New Vector3(-277.7127, -960.4503, 86.3143)
-    Public Shared _Garage As Vector3 = New Vector3(-279.7589, -995.9545, 24.5305)
-    Public Shared GarageOut As Vector3 = New Vector3(-271.5633, -999.2233, 26.0224)
-    Public Shared GarageOutHeading As Single = 249.66
+    Public Shared Entrance As Vector3 = New Vector3(-662.4664, -854.2357, 24.4628)
+    Public Shared Save As Vector3 = New Vector3(262.9082, -1003.095, -99.0086)
+    Public Shared Teleport As Vector3 = New Vector3(265.3285, -1002.7042, -99.0085)
+    Public Shared Teleport2 As Vector3 = New Vector3(-662.6467, -851.4024, 24.4296)
+    Public Shared _Exit As Vector3 = New Vector3(266.1321, -1007.5136, -101.0085)
+    Public Shared Wardrobe As Vector3 = New Vector3(260.0521, -1004.1469, -99.0085)
+    Public Shared _Garage As Vector3 = New Vector3(-667.7385, -853.5117, 23.84)
+    Public Shared GarageOut As Vector3 = New Vector3(-667.6065, -849.4223, 23.8855)
+    Public Shared GarageOutHeading As Single = 358.19
     Public Shared GarageDistance As String
     Public Shared DoorDistance As Single
     Public Shared SaveDistance As Single
     Public Shared ExitDistance As Single
     Public Shared WardrobeDistance As Single
-    Public Shared CameraPos As Vector3 = New Vector3(-215.2378, -1071.639, 32.85828)
-    Public Shared CameraRot As Vector3 = New Vector3(22.62831, 0, 26.93762)
+    Public Shared CameraPos As Vector3 = New Vector3(-644.9753, -820.6812, 33.11289)
+    Public Shared CameraRot As Vector3 = New Vector3(5.2089, -2.1432, 152.9055)
     Public Shared CameraFov As Single = 50.0
-    Public Shared WardrobeHeading As Single = 328.5379
-    Public Shared Bong As Vector3 = New Vector3(-285.587, -955.4965, 90.5339)
-    Public Shared BongDistance As Single
+    Public Shared WardrobeHeading As Single = 359.818
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -52,12 +50,12 @@ Public Class _3AltaStreet
             uiLanguage = Game.Language.ToString
 
             If uiLanguage = "Chinese" Then
-                _Name = "艾爾塔街3號公寓"
-                Desc = "這間豪華公寓位於洛聖都市中心的艾爾塔街， ~n~ 一樓就有『冰的咖啡』，往返商業中心區也僅 ~n~ 需很短的時間，對那些拿別人錢賭得不亦樂乎 ~n~ 、開心到不想睡的銀行家，這可是最適合他們 ~n~ 的舒服小窩。包括可容納十輛車的車庫。"
+                _Name = "威斯普奇大道2057號"
+                Desc = "這棟公寓建築以前的狀況比較好， ~n~ 但這間經濟寶惠的套房還是有些許 ~n~ 殘留的靈魂以及大量的潛力！ ~n~ 帶著你的想像力搬進來吧！ ~n~ 順便帶上除蟲大師喔。包括可容納六輛車的車庫。"
                 Garage = "車庫"
             Else
-                _Name = "3 Alta Street Apt. "
-                Desc = "With its own Bean Machine outlet in the ground floor and a short commute to the financial center, this luxury condo on Alta Street in Downtown Los Santos is the perfect pad for the banker who never sleeps because he's having too much fun gambling with other people's money. Includes a 10-car garage."
+                _Name = "2057 Vespucci Boulevard Apt. "
+                Desc = "The apartment building has seen better days but this affordable unit still has a Little Seoul and a Lot of Potential! Bring your imagination! And a exterminator. Includes 6-car garage."
                 Garage = " Garage"
             End If
 
@@ -211,7 +209,7 @@ Public Class _3AltaStreet
         End Try
     End Sub
 
-    Public Shared Sub Create3AltaStreet()
+    Public Shared Sub CreateVespucciBlvd()
         _Blip = World.CreateBlip(Entrance)
         If Owner = "Michael" Then
             _Blip.Sprite = BlipSprite.Safehouse
@@ -278,7 +276,7 @@ Public Class _3AltaStreet
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("3ASowner", "None", saveFile)
+                WriteCfgValue("VPBowner", "None", saveFile2)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -286,7 +284,7 @@ Public Class _3AltaStreet
                 Owner = "None"
                 _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
-                Create3AltaStreet()
+                CreateVespucciBlvd()
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -296,16 +294,16 @@ Public Class _3AltaStreet
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
-                playerPed.Position = TenCarGarage.Elevator
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
+                SetInteriorActive2(199.0152, -1020.4401, -98.9999) '6 car garage
+                SixCarGarage.isInGarage = True
+                playerPed.Position = SixCarGarage.Elevator
+                SixCarGarage.LastLocationName = _Name & Unit
+                SixCarGarage.lastLocationVector = _Exit
+                SixCarGarage.lastLocationGarageVector = _Garage
+                SixCarGarage.lastLocationGarageOutVector = GarageOut
+                SixCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
+                SixCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -320,14 +318,14 @@ Public Class _3AltaStreet
             If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
                 'Buy Apartment
                 If playerCash > Cost Then
-                    WriteCfgValue("3ASowner", playerName, saveFile)
+                    WriteCfgValue("VPBowner", playerName, saveFile2)
                     Game.FadeScreenOut(500)
                     Script.Wait(&H3E8)
                     SinglePlayerApartment.player.Money = (playerCash - Cost)
                     Owner = playerName
                     _Blip.Remove()
                     If Not Blip2 Is Nothing Then Blip2.Remove()
-                    Create3AltaStreet()
+                    CreateVespucciBlvd()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
                     Script.Wait(500)
@@ -375,7 +373,7 @@ Public Class _3AltaStreet
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
 
-                SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
+                SetInteriorActive2(265.3285, -1002.7042, -99.0085) 'vespucci blvd
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport
@@ -392,161 +390,113 @@ Public Class _3AltaStreet
             'Teleport to Garage
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
-            TenCarGarage.isInGarage = True
-            playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
+            SetInteriorActive2(199.0152, -1020.4401, -98.9999) '6 car garage
+            SetInteriorActive2(265.3285, -1002.7042, -99.0085) 'vespucci blvd
+            SixCarGarage.isInGarage = True
+            playerPed.Position = SixCarGarage.GarageDoorL
+            SixCarGarage.LastLocationName = _Name & Unit
+            SixCarGarage.lastLocationVector = _Exit
+            SixCarGarage.lastLocationGarageVector = _Garage
+            SixCarGarage.lastLocationGarageOutVector = GarageOut
+            SixCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
+            SixCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
         ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
-            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5 As String
+            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
             If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
             If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
             If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
             If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
             If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
             If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
-            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
-            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
-            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
-            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
-            TenCarGarage.isInGarage = True
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            SetInteriorActive2(199.0152, -1020.4401, -98.9999) '6 car garage
+            SetInteriorActive2(265.3285, -1002.7042, -99.0085) 'vespucci blvd
+            SixCarGarage.isInGarage = True
+            SixCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
+            SixCarGarage.LastLocationName = _Name & Unit
+            SixCarGarage.lastLocationVector = _Exit
+            SixCarGarage.lastLocationGarageVector = _Garage
+            SixCarGarage.lastLocationGarageOutVector = GarageOut
+            SixCarGarage.lastLocationGarageOutHeading = GarageOutHeading
             GarageMenu.Visible = False
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+                SixCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Position = SixCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(SixCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+                SixCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Position = SixCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(SixCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+                SixCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Position = SixCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(SixCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+                SixCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Position = SixCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(SixCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+                SixCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Position = SixCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(SixCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+                SixCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
-                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Position = SixCarGarage.GarageDoorL
+                playerPed.SetIntoVehicle(SixCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
             Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
-                End If
+                SixCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
+                SixCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
             End If
+        End If
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -556,10 +506,9 @@ Public Class _3AltaStreet
             ExitDistance = World.GetDistance(playerPed.Position, _Exit)
             WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
             GarageDistance = World.GetDistance(playerPed.Position, _Garage)
-            'BongDistance = World.GetDistance(playerPed.Position, Bong)
 
             'Enter _3alta Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 2.0 Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
                 Else
@@ -568,7 +517,7 @@ Public Class _3AltaStreet
             End If
 
             'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 1.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
                 Else
@@ -592,7 +541,7 @@ Public Class _3AltaStreet
                 End If
             End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName Then
+            If Not playerPed.IsDead AndAlso GarageDistance < 3.0 AndAlso Owner = playerName Then
                 If uiLanguage = "Chinese" Then
                     DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
                 Else
@@ -600,34 +549,9 @@ Public Class _3AltaStreet
                 End If
             End If
 
-            'Bong
-            'If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso BongDistance < 3.0 Then
-            'DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to take a hit from bong.")
-            'End If
-
-            'If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso BongDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead Then
-            ' 'Dim CreateBong As Prop = World.CreateProp("prop_sh_bong_01", Bong, True, True)
-            'Dim ObjBong As Prop = Native.Function.Call(Of Prop)(Hash.GET_CLOSEST_OBJECT_OF_TYPE, playerPed.Position.X, playerPed.Position.Y, playerPed.Position.Z, 10, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "prop_sh_bong_01"), 0, 0, 0)
-            'If Not ObjBong = Nothing AndAlso ObjBong.Exists() Then
-            'playerPed.Task.ClearAllImmediately()
-            'Dim PickupBong As TaskSequence = New TaskSequence()
-            'PickupBong.AddTask.RunTo(ObjBong.Position)
-            'PickupBong.AddTask.PlayAnimation("pickup_object", "pickup_low", 8, -1, False, 0)
-            'PickupBong.Close()
-            'playerPed.Task.PerformSequence(PickupBong)
-            'Script.Wait(750)
-            'End If
-            'ObjBong.AttachTo(playerPed, playerPed.GetBoneIndex(Bone.SKEL_R_Hand), New Vector3(0.085, 0, -0.03), New Vector3(0, 0, -110))
-            'Native.Function.Call(Hash.TASK_START_SCENARIO_IN_PLACE, playerPed, "WORLD_HUMAN_SMOKING_POT", 0, True)
-            'Script.Wait(250)
-            'playerPed.Task.ClearAllImmediately()
-            'ObjBong.Detach()
-            '    ObjBong.Delete()
-            'End If
-
             ' Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on _3alta Door
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                'Press E on Vespucci Blvd Door
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 BuyMenu.Visible = True
@@ -641,9 +565,9 @@ Public Class _3AltaStreet
                 ExitMenu.Visible = True
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on _3alta Bed
-                playerMap = "3Alta"
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                'Press E on vespucci blvd Bed
+                playerMap = "VespucciBlvd"
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 TimeLapse(8)
@@ -668,7 +592,7 @@ Public Class _3AltaStreet
                 End If
             End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 3.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 GarageMenu.Visible = True
             End If
             'End Control

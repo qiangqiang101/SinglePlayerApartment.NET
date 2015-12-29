@@ -40,6 +40,7 @@ Public Class TinselTower
     Public Shared CameraPos As Vector3 = New Vector3(-678.4925, -30.95172, 48.26074)
     Public Shared CameraRot As Vector3 = New Vector3(16.23258, 0, -43.18668)
     Public Shared CameraFov As Single = 50.0
+    Public Shared WardrobeHeading As Single = 79.9632
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -502,7 +503,7 @@ Public Class TinselTower
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                LoadMPDLCMap()
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -516,7 +517,7 @@ Public Class TinselTower
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
             'Teleport to Garage
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
@@ -534,7 +535,7 @@ Public Class TinselTower
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
@@ -674,9 +675,9 @@ Public Class TinselTower
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
             End If
-        ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso hltinseltower.Owner = playerName Then
             'Teleport to Garage
-            LoadMPDLCMap()
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -692,7 +693,7 @@ Public Class TinselTower
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso hltinseltower.Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
@@ -707,7 +708,7 @@ Public Class TinselTower
             If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            LoadMPDLCMap()
+            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
@@ -915,6 +916,7 @@ Public Class TinselTower
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
+                WardrobeHead = WardrobeHeading
                 If playerName = "Michael" Then
                     Player0W.Visible = True
                     MakeACamera()

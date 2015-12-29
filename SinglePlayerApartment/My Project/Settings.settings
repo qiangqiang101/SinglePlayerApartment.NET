@@ -32,5 +32,11 @@
     <Setting Name="Mechanic" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">F6</Value>
     </Setting>
+    <Setting Name="AlwaysEnableMPMaps" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="GetHash" Type="System.Windows.Forms.Keys" Scope="User">
+      <Value Profile="(Default)">F5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

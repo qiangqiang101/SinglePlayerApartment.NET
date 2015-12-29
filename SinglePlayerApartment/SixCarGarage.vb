@@ -14,39 +14,35 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports AnimationV
 Imports System.Runtime.InteropServices
 
-Public Class TenCarGarage
+Public Class SixCarGarage
     Inherits Script
 
     Public Shared CurrentPath As String
     Public Shared playerHash As String
-    Public Shared veh0, veh1, veh2, veh3, veh4, veh5, veh6, veh7, veh8, veh9 As Vehicle
+    Public Shared veh0, veh1, veh2, veh3, veh4, veh5 As Vehicle
     Public Shared LastLocationName As String
     Public Shared lastLocationVector As Vector3
     Public Shared lastLocationGarageVector As Vector3
     Public Shared lastLocationGarageOutVector As Vector3
     Public Shared lastLocationGarageOutHeading As Single
-    Public Shared Elevator As Vector3 = New Vector3(238.7097, -1004.8488, -98.9999)
-    Public Shared GarageDoorL As Vector3 = New Vector3(231.9013, -1006.686, -98.9999)
-    Public Shared GarageDoorR As Vector3 = New Vector3(224.4288, -1006.6892, -98.9999)
-    Public Shared GarageMiddle As Vector3 = New Vector3(228.7026, -989.8284, -98.9999)
-    Public Shared MenuActivator As Vector3 = New Vector3(226.5738, -975.5375, -99.9999)
+    Public Shared Elevator As Vector3 = New Vector3(207.1506, -998.9948, -98.9999)
+    Public Shared GarageDoorL As Vector3 = New Vector3(202.2906, -1007.7249, -98.9992)
+    Public Shared GarageDoorR As Vector3 = New Vector3(194.4465, -1007.7326, -98.9999)
+    Public Shared GarageMiddle As Vector3 = New Vector3(197.9781, -1000.8287, -98.9999)
+    Public Shared MenuActivator As Vector3 = New Vector3(204.6184, -994.6097, -99.9999)
     Public Shared ElevatorDistance As Single
     Public Shared GarageDoorLDistance As Single
     Public Shared GarageDoorRDistance As Single
     Public Shared GarageMiddleDistance As Single
     Public Shared GarageMarkerDistance As Single
-    Public Shared veh0Pos As Vector3 = New Vector3(223.4, -1001, -99.0)
-    Public Shared veh1Pos As Vector3 = New Vector3(223.4, -996, -99.0)
-    Public Shared veh2Pos As Vector3 = New Vector3(223.4, -991, -99.0)
-    Public Shared veh3Pos As Vector3 = New Vector3(223.4, -986, -99.0)
-    Public Shared veh4Pos As Vector3 = New Vector3(223.4, -981, -99.0)
-    Public Shared veh5Pos As Vector3 = New Vector3(232.7, -1001, -99.0)
-    Public Shared veh6Pos As Vector3 = New Vector3(232.7, -996, -99.0)
-    Public Shared veh7Pos As Vector3 = New Vector3(232.7, -991, -99.0)
-    Public Shared veh8Pos As Vector3 = New Vector3(232.7, -986, -99.0)
-    Public Shared veh9Pos As Vector3 = New Vector3(232.7, -981, -99.0)
-    Public Shared vehRot04 As Vector3 = New Vector3(0, 0, -60)
-    Public Shared vehRot59 As Vector3 = New Vector3(0, 0, 60)
+    Public Shared veh0Pos As Vector3 = New Vector3(197.5, -1004.425, -99.99999)
+    Public Shared veh1Pos As Vector3 = New Vector3(201.06, -1004.425, -99.99999)
+    Public Shared veh2Pos As Vector3 = New Vector3(204.62, -1004.425, -99.99999)
+    Public Shared veh3Pos As Vector3 = New Vector3(192.9262, -996.3292, -99.99999)
+    Public Shared veh4Pos As Vector3 = New Vector3(197.5, -996.3292, -99.99999)
+    Public Shared veh5Pos As Vector3 = New Vector3(203.9257, -999.1467, -99.99999)
+    Public Shared vehRot02 As Vector3 = New Vector3(0.0001003991, 4.043804, -4.035995)
+    Public Shared vehRot35 As Vector3 = New Vector3(9.383157, -5.855135, -146.2832)
     Public Shared GarageMarker As New Marker(MarkerType.VerticalCylinder, MenuActivator, Color.LightBlue, AnimationType.Normal)
     Public Shared isInGarage As Boolean = False
 
@@ -562,330 +558,6 @@ Public Class TenCarGarage
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
-
-    Public Shared Sub LoadGarageVehicle6(file As String, pos As Vector3, rot As Vector3, head As Single)
-        Try
-            If veh6 = Nothing Then
-                veh6 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            Else
-                veh6.Delete()
-                veh6 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            End If
-
-            Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, veh6, 0)
-            veh6.Rotation = rot
-            veh6.DirtLevel = 0F
-            veh6.PrimaryColor = ReadCfgValue("PrimaryColor", file)
-            veh6.SecondaryColor = ReadCfgValue("SecondaryColor", file)
-            veh6.PearlescentColor = ReadCfgValue("PearlescentColor", file)
-            If ReadCfgValue("HasCustomPrimaryColor", file) = "True" Then veh6.CustomPrimaryColor = Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", file), ReadCfgValue("CustomPrimaryColorGreen", file), ReadCfgValue("CustomPrimaryColorBlue", file))
-            If ReadCfgValue("HasCustomSecondaryColor", file) = "True" Then veh6.CustomSecondaryColor = Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", file), ReadCfgValue("CustomSecondaryColorGreen", file), ReadCfgValue("CustomSecondaryColorBlue", file))
-            veh6.RimColor = ReadCfgValue("RimColor", file)
-            If ReadCfgValue("HasNeonLightBack", file) = "True" Then veh6.SetNeonLightsOn(VehicleNeonLight.Back, True)
-            If ReadCfgValue("HasNeonLightFront", file) = "True" Then veh6.SetNeonLightsOn(VehicleNeonLight.Front, True)
-            If ReadCfgValue("HasNeonLightLeft", file) = "True" Then veh6.SetNeonLightsOn(VehicleNeonLight.Left, True)
-            If ReadCfgValue("HasNeonLightRight", file) = "True" Then veh6.SetNeonLightsOn(VehicleNeonLight.Right, True)
-            veh6.NeonLightsColor = Color.FromArgb(ReadCfgValue("NeonColorRed", file), ReadCfgValue("NeonColorGreen", file), ReadCfgValue("NeonColorBlue", file))
-            veh6.TireSmokeColor = Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", file), ReadCfgValue("TyreSmokeColorGreen", file), ReadCfgValue("TyreSmokeColorBlue", file))
-            veh6.WheelType = ReadCfgValue("WheelType", file)
-            veh6.Livery = ReadCfgValue("Livery", file)
-            Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, veh6, CInt(ReadCfgValue("PlateType", file)))
-            veh6.NumberPlate = ReadCfgValue("PlateNumber", file)
-            veh6.WindowTint = ReadCfgValue("WindowTint", file)
-            veh6.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", file), True)
-            veh6.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", file), True)
-            veh6.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", file), True)
-            veh6.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", file), True)
-            veh6.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", file), True)
-            veh6.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", file), True)
-            veh6.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", file), True)
-            veh6.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", file), True)
-            veh6.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", file), True)
-            veh6.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", file), True)
-            veh6.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", file), True)
-            If ReadCfgValue("FrontTireVariation", file) = "True" Then veh6.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), True) Else veh6.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), False)
-            If ReadCfgValue("BackTireVariation", file) = "True" Then veh6.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), True) Else veh6.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), False)
-            veh6.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", file), True)
-            veh6.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", file), True)
-            veh6.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", file), True)
-            veh6.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", file), True)
-            veh6.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", file), True)
-            veh6.SetMod(25, ReadCfgValue("TwentyFive", file), True)
-            veh6.SetMod(26, ReadCfgValue("TwentySix", file), True)
-            veh6.SetMod(27, ReadCfgValue("TwentySeven", file), True)
-            veh6.SetMod(28, ReadCfgValue("TwentyEight", file), True)
-            veh6.SetMod(29, ReadCfgValue("TwentyNine", file), True)
-            veh6.SetMod(30, ReadCfgValue("Thirty", file), True)
-            veh6.SetMod(31, ReadCfgValue("ThirtyOne", file), True)
-            veh6.SetMod(32, ReadCfgValue("ThirtyTwo", file), True)
-            veh6.SetMod(33, ReadCfgValue("ThirtyThree", file), True)
-            veh6.SetMod(34, ReadCfgValue("ThirtyFour", file), True)
-            veh6.SetMod(35, ReadCfgValue("ThirtyFive", file), True)
-            veh6.SetMod(36, ReadCfgValue("ThirtySix", file), True)
-            veh6.SetMod(37, ReadCfgValue("ThirtySeven", file), True)
-            veh6.SetMod(38, ReadCfgValue("ThirtyEight", file), True)
-            veh6.SetMod(39, ReadCfgValue("ThirtyNine", file), True)
-            veh6.SetMod(40, ReadCfgValue("Forthy", file), True)
-            veh6.SetMod(41, ReadCfgValue("ForthyOne", file), True)
-            veh6.SetMod(42, ReadCfgValue("ForthyTwo", file), True)
-            veh6.SetMod(43, ReadCfgValue("ForthyThree", file), True)
-            veh6.SetMod(44, ReadCfgValue("ForthyFour", file), True)
-            veh6.SetMod(45, ReadCfgValue("ForthyFive", file), True)
-            veh6.SetMod(46, ReadCfgValue("ForthySix", file), True)
-            veh6.SetMod(47, ReadCfgValue("ForthySeven", file), True)
-            veh6.SetMod(48, ReadCfgValue("ForthyEight", file), True)
-            If ReadCfgValue("XenonHeadlights", file) = "True" Then veh6.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
-            If ReadCfgValue("Turbo", file) = "True" Then veh6.ToggleMod(VehicleToggleMod.Turbo, True)
-            veh6.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", file), True)
-            If ReadCfgValue("BulletproofTyres", file) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh6, False)
-            If ReadCfgValue("Active", file) = "True" Then veh6.Delete()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Shared Sub LoadGarageVehicle7(file As String, pos As Vector3, rot As Vector3, head As Single)
-        Try
-            If veh7 = Nothing Then
-                veh7 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            Else
-                veh7.Delete()
-                veh7 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            End If
-
-            Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, veh7, 0)
-            veh7.Rotation = rot
-            veh7.DirtLevel = 0F
-            veh7.PrimaryColor = ReadCfgValue("PrimaryColor", file)
-            veh7.SecondaryColor = ReadCfgValue("SecondaryColor", file)
-            veh7.PearlescentColor = ReadCfgValue("PearlescentColor", file)
-            If ReadCfgValue("HasCustomPrimaryColor", file) = "True" Then veh7.CustomPrimaryColor = Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", file), ReadCfgValue("CustomPrimaryColorGreen", file), ReadCfgValue("CustomPrimaryColorBlue", file))
-            If ReadCfgValue("HasCustomSecondaryColor", file) = "True" Then veh7.CustomSecondaryColor = Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", file), ReadCfgValue("CustomSecondaryColorGreen", file), ReadCfgValue("CustomSecondaryColorBlue", file))
-            veh7.RimColor = ReadCfgValue("RimColor", file)
-            If ReadCfgValue("HasNeonLightBack", file) = "True" Then veh7.SetNeonLightsOn(VehicleNeonLight.Back, True)
-            If ReadCfgValue("HasNeonLightFront", file) = "True" Then veh7.SetNeonLightsOn(VehicleNeonLight.Front, True)
-            If ReadCfgValue("HasNeonLightLeft", file) = "True" Then veh7.SetNeonLightsOn(VehicleNeonLight.Left, True)
-            If ReadCfgValue("HasNeonLightRight", file) = "True" Then veh7.SetNeonLightsOn(VehicleNeonLight.Right, True)
-            veh7.NeonLightsColor = Color.FromArgb(ReadCfgValue("NeonColorRed", file), ReadCfgValue("NeonColorGreen", file), ReadCfgValue("NeonColorBlue", file))
-            veh7.TireSmokeColor = Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", file), ReadCfgValue("TyreSmokeColorGreen", file), ReadCfgValue("TyreSmokeColorBlue", file))
-            veh7.WheelType = ReadCfgValue("WheelType", file)
-            veh7.Livery = ReadCfgValue("Livery", file)
-            Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, veh7, CInt(ReadCfgValue("PlateType", file)))
-            veh7.NumberPlate = ReadCfgValue("PlateNumber", file)
-            veh7.WindowTint = ReadCfgValue("WindowTint", file)
-            veh7.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", file), True)
-            veh7.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", file), True)
-            veh7.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", file), True)
-            veh7.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", file), True)
-            veh7.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", file), True)
-            veh7.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", file), True)
-            veh7.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", file), True)
-            veh7.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", file), True)
-            veh7.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", file), True)
-            veh7.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", file), True)
-            veh7.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", file), True)
-            If ReadCfgValue("FrontTireVariation", file) = "True" Then veh7.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), True) Else veh7.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), False)
-            If ReadCfgValue("BackTireVariation", file) = "True" Then veh7.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), True) Else veh7.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), False)
-            veh7.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", file), True)
-            veh7.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", file), True)
-            veh7.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", file), True)
-            veh7.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", file), True)
-            veh7.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", file), True)
-            veh7.SetMod(25, ReadCfgValue("TwentyFive", file), True)
-            veh7.SetMod(26, ReadCfgValue("TwentySix", file), True)
-            veh7.SetMod(27, ReadCfgValue("TwentySeven", file), True)
-            veh7.SetMod(28, ReadCfgValue("TwentyEight", file), True)
-            veh7.SetMod(29, ReadCfgValue("TwentyNine", file), True)
-            veh7.SetMod(30, ReadCfgValue("Thirty", file), True)
-            veh7.SetMod(31, ReadCfgValue("ThirtyOne", file), True)
-            veh7.SetMod(32, ReadCfgValue("ThirtyTwo", file), True)
-            veh7.SetMod(33, ReadCfgValue("ThirtyThree", file), True)
-            veh7.SetMod(34, ReadCfgValue("ThirtyFour", file), True)
-            veh7.SetMod(35, ReadCfgValue("ThirtyFive", file), True)
-            veh7.SetMod(36, ReadCfgValue("ThirtySix", file), True)
-            veh7.SetMod(37, ReadCfgValue("ThirtySeven", file), True)
-            veh7.SetMod(38, ReadCfgValue("ThirtyEight", file), True)
-            veh7.SetMod(39, ReadCfgValue("ThirtyNine", file), True)
-            veh7.SetMod(40, ReadCfgValue("Forthy", file), True)
-            veh7.SetMod(41, ReadCfgValue("ForthyOne", file), True)
-            veh7.SetMod(42, ReadCfgValue("ForthyTwo", file), True)
-            veh7.SetMod(43, ReadCfgValue("ForthyThree", file), True)
-            veh7.SetMod(44, ReadCfgValue("ForthyFour", file), True)
-            veh7.SetMod(45, ReadCfgValue("ForthyFive", file), True)
-            veh7.SetMod(46, ReadCfgValue("ForthySix", file), True)
-            veh7.SetMod(47, ReadCfgValue("ForthySeven", file), True)
-            veh7.SetMod(48, ReadCfgValue("ForthyEight", file), True)
-            If ReadCfgValue("XenonHeadlights", file) = "True" Then veh7.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
-            If ReadCfgValue("Turbo", file) = "True" Then veh7.ToggleMod(VehicleToggleMod.Turbo, True)
-            veh7.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", file), True)
-            If ReadCfgValue("BulletproofTyres", file) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh7, False)
-            If ReadCfgValue("Active", file) = "True" Then veh7.Delete()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Shared Sub LoadGarageVehicle8(file As String, pos As Vector3, rot As Vector3, head As Single)
-        Try
-            If veh8 = Nothing Then
-                veh8 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            Else
-                veh8.Delete()
-                veh8 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            End If
-
-            Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, veh8, 0)
-            veh8.Rotation = rot
-            veh8.DirtLevel = 0F
-            veh8.PrimaryColor = ReadCfgValue("PrimaryColor", file)
-            veh8.SecondaryColor = ReadCfgValue("SecondaryColor", file)
-            veh8.PearlescentColor = ReadCfgValue("PearlescentColor", file)
-            If ReadCfgValue("HasCustomPrimaryColor", file) = "True" Then veh8.CustomPrimaryColor = Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", file), ReadCfgValue("CustomPrimaryColorGreen", file), ReadCfgValue("CustomPrimaryColorBlue", file))
-            If ReadCfgValue("HasCustomSecondaryColor", file) = "True" Then veh8.CustomSecondaryColor = Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", file), ReadCfgValue("CustomSecondaryColorGreen", file), ReadCfgValue("CustomSecondaryColorBlue", file))
-            veh8.RimColor = ReadCfgValue("RimColor", file)
-            If ReadCfgValue("HasNeonLightBack", file) = "True" Then veh8.SetNeonLightsOn(VehicleNeonLight.Back, True)
-            If ReadCfgValue("HasNeonLightFront", file) = "True" Then veh8.SetNeonLightsOn(VehicleNeonLight.Front, True)
-            If ReadCfgValue("HasNeonLightLeft", file) = "True" Then veh8.SetNeonLightsOn(VehicleNeonLight.Left, True)
-            If ReadCfgValue("HasNeonLightRight", file) = "True" Then veh8.SetNeonLightsOn(VehicleNeonLight.Right, True)
-            veh8.NeonLightsColor = Color.FromArgb(ReadCfgValue("NeonColorRed", file), ReadCfgValue("NeonColorGreen", file), ReadCfgValue("NeonColorBlue", file))
-            veh8.TireSmokeColor = Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", file), ReadCfgValue("TyreSmokeColorGreen", file), ReadCfgValue("TyreSmokeColorBlue", file))
-            veh8.WheelType = ReadCfgValue("WheelType", file)
-            veh8.Livery = ReadCfgValue("Livery", file)
-            Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, veh8, CInt(ReadCfgValue("PlateType", file)))
-            veh8.NumberPlate = ReadCfgValue("PlateNumber", file)
-            veh8.WindowTint = ReadCfgValue("WindowTint", file)
-            veh8.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", file), True)
-            veh8.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", file), True)
-            veh8.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", file), True)
-            veh8.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", file), True)
-            veh8.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", file), True)
-            veh8.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", file), True)
-            veh8.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", file), True)
-            veh8.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", file), True)
-            veh8.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", file), True)
-            veh8.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", file), True)
-            veh8.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", file), True)
-            If ReadCfgValue("FrontTireVariation", file) = "True" Then veh8.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), True) Else veh8.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), False)
-            If ReadCfgValue("BackTireVariation", file) = "True" Then veh8.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), True) Else veh8.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), False)
-            veh8.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", file), True)
-            veh8.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", file), True)
-            veh8.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", file), True)
-            veh8.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", file), True)
-            veh8.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", file), True)
-            veh8.SetMod(25, ReadCfgValue("TwentyFive", file), True)
-            veh8.SetMod(26, ReadCfgValue("TwentySix", file), True)
-            veh8.SetMod(27, ReadCfgValue("TwentySeven", file), True)
-            veh8.SetMod(28, ReadCfgValue("TwentyEight", file), True)
-            veh8.SetMod(29, ReadCfgValue("TwentyNine", file), True)
-            veh8.SetMod(30, ReadCfgValue("Thirty", file), True)
-            veh8.SetMod(31, ReadCfgValue("ThirtyOne", file), True)
-            veh8.SetMod(32, ReadCfgValue("ThirtyTwo", file), True)
-            veh8.SetMod(33, ReadCfgValue("ThirtyThree", file), True)
-            veh8.SetMod(34, ReadCfgValue("ThirtyFour", file), True)
-            veh8.SetMod(35, ReadCfgValue("ThirtyFive", file), True)
-            veh8.SetMod(36, ReadCfgValue("ThirtySix", file), True)
-            veh8.SetMod(37, ReadCfgValue("ThirtySeven", file), True)
-            veh8.SetMod(38, ReadCfgValue("ThirtyEight", file), True)
-            veh8.SetMod(39, ReadCfgValue("ThirtyNine", file), True)
-            veh8.SetMod(40, ReadCfgValue("Forthy", file), True)
-            veh8.SetMod(41, ReadCfgValue("ForthyOne", file), True)
-            veh8.SetMod(42, ReadCfgValue("ForthyTwo", file), True)
-            veh8.SetMod(43, ReadCfgValue("ForthyThree", file), True)
-            veh8.SetMod(44, ReadCfgValue("ForthyFour", file), True)
-            veh8.SetMod(45, ReadCfgValue("ForthyFive", file), True)
-            veh8.SetMod(46, ReadCfgValue("ForthySix", file), True)
-            veh8.SetMod(47, ReadCfgValue("ForthySeven", file), True)
-            veh8.SetMod(48, ReadCfgValue("ForthyEight", file), True)
-            If ReadCfgValue("XenonHeadlights", file) = "True" Then veh8.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
-            If ReadCfgValue("Turbo", file) = "True" Then veh8.ToggleMod(VehicleToggleMod.Turbo, True)
-            veh8.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", file), True)
-            If ReadCfgValue("BulletproofTyres", file) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh8, False)
-            If ReadCfgValue("Active", file) = "True" Then veh8.Delete()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Shared Sub LoadGarageVehicle9(file As String, pos As Vector3, rot As Vector3, head As Single)
-        Try
-            If veh9 = Nothing Then
-                veh9 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            Else
-                veh9.Delete()
-                veh9 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-            End If
-
-            Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, veh9, 0)
-            veh9.Rotation = rot
-            veh9.DirtLevel = 0F
-            veh9.PrimaryColor = ReadCfgValue("PrimaryColor", file)
-            veh9.SecondaryColor = ReadCfgValue("SecondaryColor", file)
-            veh9.PearlescentColor = ReadCfgValue("PearlescentColor", file)
-            If ReadCfgValue("HasCustomPrimaryColor", file) = "True" Then veh9.CustomPrimaryColor = Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", file), ReadCfgValue("CustomPrimaryColorGreen", file), ReadCfgValue("CustomPrimaryColorBlue", file))
-            If ReadCfgValue("HasCustomSecondaryColor", file) = "True" Then veh9.CustomSecondaryColor = Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", file), ReadCfgValue("CustomSecondaryColorGreen", file), ReadCfgValue("CustomSecondaryColorBlue", file))
-            veh9.RimColor = ReadCfgValue("RimColor", file)
-            If ReadCfgValue("HasNeonLightBack", file) = "True" Then veh9.SetNeonLightsOn(VehicleNeonLight.Back, True)
-            If ReadCfgValue("HasNeonLightFront", file) = "True" Then veh9.SetNeonLightsOn(VehicleNeonLight.Front, True)
-            If ReadCfgValue("HasNeonLightLeft", file) = "True" Then veh9.SetNeonLightsOn(VehicleNeonLight.Left, True)
-            If ReadCfgValue("HasNeonLightRight", file) = "True" Then veh9.SetNeonLightsOn(VehicleNeonLight.Right, True)
-            veh9.NeonLightsColor = Color.FromArgb(ReadCfgValue("NeonColorRed", file), ReadCfgValue("NeonColorGreen", file), ReadCfgValue("NeonColorBlue", file))
-            veh9.TireSmokeColor = Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", file), ReadCfgValue("TyreSmokeColorGreen", file), ReadCfgValue("TyreSmokeColorBlue", file))
-            veh9.WheelType = ReadCfgValue("WheelType", file)
-            veh9.Livery = ReadCfgValue("Livery", file)
-            Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, veh9, CInt(ReadCfgValue("PlateType", file)))
-            veh9.NumberPlate = ReadCfgValue("PlateNumber", file)
-            veh9.WindowTint = ReadCfgValue("WindowTint", file)
-            veh9.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", file), True)
-            veh9.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", file), True)
-            veh9.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", file), True)
-            veh9.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", file), True)
-            veh9.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", file), True)
-            veh9.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", file), True)
-            veh9.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", file), True)
-            veh9.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", file), True)
-            veh9.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", file), True)
-            veh9.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", file), True)
-            veh9.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", file), True)
-            If ReadCfgValue("FrontTireVariation", file) = "True" Then veh9.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), True) Else veh9.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", file), False)
-            If ReadCfgValue("BackTireVariation", file) = "True" Then veh9.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), True) Else veh9.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", file), False)
-            veh9.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", file), True)
-            veh9.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", file), True)
-            veh9.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", file), True)
-            veh9.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", file), True)
-            veh9.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", file), True)
-            veh9.SetMod(25, ReadCfgValue("TwentyFive", file), True)
-            veh9.SetMod(26, ReadCfgValue("TwentySix", file), True)
-            veh9.SetMod(27, ReadCfgValue("TwentySeven", file), True)
-            veh9.SetMod(28, ReadCfgValue("TwentyEight", file), True)
-            veh9.SetMod(29, ReadCfgValue("TwentyNine", file), True)
-            veh9.SetMod(30, ReadCfgValue("Thirty", file), True)
-            veh9.SetMod(31, ReadCfgValue("ThirtyOne", file), True)
-            veh9.SetMod(32, ReadCfgValue("ThirtyTwo", file), True)
-            veh9.SetMod(33, ReadCfgValue("ThirtyThree", file), True)
-            veh9.SetMod(34, ReadCfgValue("ThirtyFour", file), True)
-            veh9.SetMod(35, ReadCfgValue("ThirtyFive", file), True)
-            veh9.SetMod(36, ReadCfgValue("ThirtySix", file), True)
-            veh9.SetMod(37, ReadCfgValue("ThirtySeven", file), True)
-            veh9.SetMod(38, ReadCfgValue("ThirtyEight", file), True)
-            veh9.SetMod(39, ReadCfgValue("ThirtyNine", file), True)
-            veh9.SetMod(40, ReadCfgValue("Forthy", file), True)
-            veh9.SetMod(41, ReadCfgValue("ForthyOne", file), True)
-            veh9.SetMod(42, ReadCfgValue("ForthyTwo", file), True)
-            veh9.SetMod(43, ReadCfgValue("ForthyThree", file), True)
-            veh9.SetMod(44, ReadCfgValue("ForthyFour", file), True)
-            veh9.SetMod(45, ReadCfgValue("ForthyFive", file), True)
-            veh9.SetMod(46, ReadCfgValue("ForthySix", file), True)
-            veh9.SetMod(47, ReadCfgValue("ForthySeven", file), True)
-            veh9.SetMod(48, ReadCfgValue("ForthyEight", file), True)
-            If ReadCfgValue("XenonHeadlights", file) = "True" Then veh9.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
-            If ReadCfgValue("Turbo", file) = "True" Then veh9.ToggleMod(VehicleToggleMod.Turbo, True)
-            veh9.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", file), True)
-            If ReadCfgValue("BulletproofTyres", file) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, veh9, False)
-            If ReadCfgValue("Active", file) = "True" Then veh9.Delete()
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
 #End Region
 
     Public Shared Sub LoadGarageVechicles(file As String)
@@ -896,21 +568,13 @@ Public Class TenCarGarage
             If Not veh3 = Nothing Then veh3.Delete()
             If Not veh4 = Nothing Then veh4.Delete()
             If Not veh5 = Nothing Then veh5.Delete()
-            If Not veh6 = Nothing Then veh6.Delete()
-            If Not veh7 = Nothing Then veh7.Delete()
-            If Not veh8 = Nothing Then veh8.Delete()
-            If Not veh9 = Nothing Then veh9.Delete()
 
-            If IO.File.Exists(file & "vehicle_0.cfg") Then LoadGarageVehicle0(file & "vehicle_0.cfg", veh0Pos, vehRot04, -60)
-            If IO.File.Exists(file & "vehicle_1.cfg") Then LoadGarageVehicle1(file & "vehicle_1.cfg", veh1Pos, vehRot04, -60)
-            If IO.File.Exists(file & "vehicle_2.cfg") Then LoadGarageVehicle2(file & "vehicle_2.cfg", veh2Pos, vehRot04, -60)
-            If IO.File.Exists(file & "vehicle_3.cfg") Then LoadGarageVehicle3(file & "vehicle_3.cfg", veh3Pos, vehRot04, -60)
-            If IO.File.Exists(file & "vehicle_4.cfg") Then LoadGarageVehicle4(file & "vehicle_4.cfg", veh4Pos, vehRot04, -60)
-            If IO.File.Exists(file & "vehicle_5.cfg") Then LoadGarageVehicle5(file & "vehicle_5.cfg", veh5Pos, vehRot59, -60)
-            If IO.File.Exists(file & "vehicle_6.cfg") Then LoadGarageVehicle6(file & "vehicle_6.cfg", veh6Pos, vehRot59, -60)
-            If IO.File.Exists(file & "vehicle_7.cfg") Then LoadGarageVehicle7(file & "vehicle_7.cfg", veh7Pos, vehRot59, -60)
-            If IO.File.Exists(file & "vehicle_8.cfg") Then LoadGarageVehicle8(file & "vehicle_8.cfg", veh8Pos, vehRot59, -60)
-            If IO.File.Exists(file & "vehicle_9.cfg") Then LoadGarageVehicle9(file & "vehicle_9.cfg", veh9Pos, vehRot59, -60)
+            If IO.File.Exists(file & "vehicle_0.cfg") Then LoadGarageVehicle0(file & "vehicle_0.cfg", veh0Pos, vehRot02, -60)
+            If IO.File.Exists(file & "vehicle_1.cfg") Then LoadGarageVehicle1(file & "vehicle_1.cfg", veh1Pos, vehRot02, -60)
+            If IO.File.Exists(file & "vehicle_2.cfg") Then LoadGarageVehicle2(file & "vehicle_2.cfg", veh2Pos, vehRot02, -60)
+            If IO.File.Exists(file & "vehicle_3.cfg") Then LoadGarageVehicle3(file & "vehicle_3.cfg", veh3Pos, vehRot35, -60)
+            If IO.File.Exists(file & "vehicle_4.cfg") Then LoadGarageVehicle4(file & "vehicle_4.cfg", veh4Pos, vehRot35, -60)
+            If IO.File.Exists(file & "vehicle_5.cfg") Then LoadGarageVehicle5(file & "vehicle_5.cfg", veh5Pos, vehRot35, -60)
 
             Mechanic.Path = file
             Mechanic.CreateGarageMenu(file)
@@ -922,12 +586,8 @@ Public Class TenCarGarage
             veh3.MarkAsNoLongerNeeded()
             veh4.MarkAsNoLongerNeeded()
             veh5.MarkAsNoLongerNeeded()
-            veh6.MarkAsNoLongerNeeded()
-            veh7.MarkAsNoLongerNeeded()
-            veh8.MarkAsNoLongerNeeded()
-            veh9.MarkAsNoLongerNeeded()
         Catch ex As Exception
-            'logger.Log(ex.Message & " " & ex.StackTrace)
+            logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
@@ -936,7 +596,7 @@ Public Class TenCarGarage
             If Not IO.File.Exists(file & "vehicle_0.cfg") Then
                 IO.File.WriteAllText(file & "vehicle_0.cfg", My.Resources.vehicle)
                 UpdateGarageVehicle(file & "vehicle_0.cfg", "False")
-                LoadGarageVehicle0(file & "vehicle_0.cfg", veh0Pos, vehRot04, -60)
+                LoadGarageVehicle0(file & "vehicle_0.cfg", veh0Pos, vehRot02, -60)
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 playerPed.CurrentVehicle.Delete()
@@ -953,7 +613,7 @@ Public Class TenCarGarage
                 If Not IO.File.Exists(file & "vehicle_1.cfg") Then
                     IO.File.WriteAllText(file & "vehicle_1.cfg", My.Resources.vehicle)
                     UpdateGarageVehicle(file & "vehicle_1.cfg", "False")
-                    LoadGarageVehicle1(file & "vehicle_1.cfg", veh1Pos, vehRot04, -60)
+                    LoadGarageVehicle1(file & "vehicle_1.cfg", veh1Pos, vehRot02, -60)
                     Game.FadeScreenOut(500)
                     Script.Wait(&H3E8)
                     playerPed.CurrentVehicle.Delete()
@@ -970,7 +630,7 @@ Public Class TenCarGarage
                     If Not IO.File.Exists(file & "vehicle_2.cfg") Then
                         IO.File.WriteAllText(file & "vehicle_2.cfg", My.Resources.vehicle)
                         UpdateGarageVehicle(file & "vehicle_2.cfg", "False")
-                        LoadGarageVehicle2(file & "vehicle_2.cfg", veh2Pos, vehRot04, -60)
+                        LoadGarageVehicle2(file & "vehicle_2.cfg", veh2Pos, vehRot02, -60)
                         Game.FadeScreenOut(500)
                         Script.Wait(&H3E8)
                         playerPed.CurrentVehicle.Delete()
@@ -987,7 +647,7 @@ Public Class TenCarGarage
                         If Not IO.File.Exists(file & "vehicle_3.cfg") Then
                             IO.File.WriteAllText(file & "vehicle_3.cfg", My.Resources.vehicle)
                             UpdateGarageVehicle(file & "vehicle_3.cfg", "False")
-                            LoadGarageVehicle3(file & "vehicle_3.cfg", veh3Pos, vehRot04, -60)
+                            LoadGarageVehicle3(file & "vehicle_3.cfg", veh3Pos, vehRot35, -60)
                             Game.FadeScreenOut(500)
                             Script.Wait(&H3E8)
                             playerPed.CurrentVehicle.Delete()
@@ -1004,7 +664,7 @@ Public Class TenCarGarage
                             If Not IO.File.Exists(file & "vehicle_4.cfg") Then
                                 IO.File.WriteAllText(file & "vehicle_4.cfg", My.Resources.vehicle)
                                 UpdateGarageVehicle(file & "vehicle_4.cfg", "False")
-                                LoadGarageVehicle4(file & "vehicle_4.cfg", veh4Pos, vehRot04, -60)
+                                LoadGarageVehicle4(file & "vehicle_4.cfg", veh4Pos, vehRot35, -60)
                                 Game.FadeScreenOut(500)
                                 Script.Wait(&H3E8)
                                 playerPed.CurrentVehicle.Delete()
@@ -1021,7 +681,7 @@ Public Class TenCarGarage
                                 If Not IO.File.Exists(file & "vehicle_5.cfg") Then
                                     IO.File.WriteAllText(file & "vehicle_5.cfg", My.Resources.vehicle)
                                     UpdateGarageVehicle(file & "vehicle_5.cfg", "False")
-                                    LoadGarageVehicle5(file & "vehicle_5.cfg", veh5Pos, vehRot59, -60)
+                                    LoadGarageVehicle5(file & "vehicle_5.cfg", veh5Pos, vehRot35, -60)
                                     Game.FadeScreenOut(500)
                                     Script.Wait(&H3E8)
                                     playerPed.CurrentVehicle.Delete()
@@ -1035,82 +695,10 @@ Public Class TenCarGarage
                                     Game.FadeScreenIn(500)
                                     playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                 Else
-                                    If Not IO.File.Exists(file & "vehicle_6.cfg") Then
-                                        IO.File.WriteAllText(file & "vehicle_6.cfg", My.Resources.vehicle)
-                                        UpdateGarageVehicle(file & "vehicle_6.cfg", "False")
-                                        LoadGarageVehicle6(file & "vehicle_6.cfg", veh6Pos, vehRot59, -60)
-                                        Game.FadeScreenOut(500)
-                                        Script.Wait(&H3E8)
-                                        playerPed.CurrentVehicle.Delete()
-                                        If Not veh6 = Nothing Then
-                                            playerPed.Position = veh6Pos
-                                            playerPed.SetIntoVehicle(veh6, VehicleSeat.Driver)
-                                        Else
-                                            playerPed.Position = veh6Pos
-                                        End If
-                                        Script.Wait(500)
-                                        Game.FadeScreenIn(500)
-                                        playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                                    If uiLanguage = "Chinese" Then
+                                        UI.ShowSubtitle("車庫~r~已滿~w~。")
                                     Else
-                                        If Not IO.File.Exists(file & "vehicle_7.cfg") Then
-                                            IO.File.WriteAllText(file & "vehicle_7.cfg", My.Resources.vehicle)
-                                            UpdateGarageVehicle(file & "vehicle_7.cfg", "False")
-                                            LoadGarageVehicle7(file & "vehicle_7.cfg", veh7Pos, vehRot59, -60)
-                                            Game.FadeScreenOut(500)
-                                            Script.Wait(&H3E8)
-                                            playerPed.CurrentVehicle.Delete()
-                                            If Not veh7 = Nothing Then
-                                                playerPed.Position = veh7Pos
-                                                playerPed.SetIntoVehicle(veh7, VehicleSeat.Driver)
-                                            Else
-                                                playerPed.Position = veh7Pos
-                                            End If
-                                            Script.Wait(500)
-                                            Game.FadeScreenIn(500)
-                                            playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                                        Else
-                                            If Not IO.File.Exists(file & "vehicle_8.cfg") Then
-                                                IO.File.WriteAllText(file & "vehicle_8.cfg", My.Resources.vehicle)
-                                                UpdateGarageVehicle(file & "vehicle_8.cfg", "False")
-                                                LoadGarageVehicle8(file & "vehicle_8.cfg", veh8Pos, vehRot59, -60)
-                                                Game.FadeScreenOut(500)
-                                                Script.Wait(&H3E8)
-                                                playerPed.CurrentVehicle.Delete()
-                                                If Not veh8 = Nothing Then
-                                                    playerPed.Position = veh8Pos
-                                                    playerPed.SetIntoVehicle(veh8, VehicleSeat.Driver)
-                                                Else
-                                                    playerPed.Position = veh8Pos
-                                                End If
-                                                Script.Wait(500)
-                                                Game.FadeScreenIn(500)
-                                                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                                            Else
-                                                If Not IO.File.Exists(file & "vehicle_9.cfg") Then
-                                                    IO.File.WriteAllText(file & "vehicle_9.cfg", My.Resources.vehicle)
-                                                    UpdateGarageVehicle(file & "vehicle_9.cfg", "False")
-                                                    LoadGarageVehicle9(file & "vehicle_9.cfg", veh9Pos, vehRot59, -60)
-                                                    Game.FadeScreenOut(500)
-                                                    Script.Wait(&H3E8)
-                                                    playerPed.CurrentVehicle.Delete()
-                                                    If Not veh9 = Nothing Then
-                                                        playerPed.Position = veh9Pos
-                                                        playerPed.SetIntoVehicle(veh9, VehicleSeat.Driver)
-                                                    Else
-                                                        playerPed.Position = veh9Pos
-                                                    End If
-                                                    Script.Wait(500)
-                                                    Game.FadeScreenIn(500)
-                                                    playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                                                Else
-                                                    If uiLanguage = "Chinese" Then
-                                                        UI.ShowSubtitle("車庫~r~已滿~w~。")
-                                                    Else
-                                                        UI.ShowSubtitle("Garage ~r~Full~w~.")
-                                                    End If
-                                                End If
-                                            End If
-                                        End If
+                                        UI.ShowSubtitle("Garage ~r~Full~w~.")
                                     End If
                                 End If
                             End If
@@ -1193,7 +781,7 @@ Public Class TenCarGarage
             WriteCfgValue("VehicleModel", "TAMPA", file)
         Else
             If Resources.Dictionary.ContainsKey(playerPed.CurrentVehicle.Model.GetHashCode()) Then
-                WriteCfgValue("VehicleModel", Resources.Dictionary.Item(playerPed.CurrentVehicle.Model.GetHashCode()), file)
+                WriteCfgValue("VehicleModel", Resources.Dictionary.Item(playerPed.CurrentVehicle.Model.Hash), file)
             Else
                 Dim VhNames As Array = GTA.Native.VehicleHash.GetNames(GetType(VehicleHash))
                 Dim VhHash As Array = GTA.Native.VehicleHash.GetValues(GetType(VehicleHash))
@@ -1355,18 +943,6 @@ Public Class TenCarGarage
             ElseIf playerPed.CurrentVehicle = veh5 Then
                 WriteCfgValue("Active", "True", CurrentPath & "vehicle_5.cfg")
                 PPCV = 5
-            ElseIf playerPed.CurrentVehicle = veh6 Then
-                WriteCfgValue("Active", "True", CurrentPath & "vehicle_6.cfg")
-                PPCV = 6
-            ElseIf playerPed.CurrentVehicle = veh7 Then
-                WriteCfgValue("Active", "True", CurrentPath & "vehicle_7.cfg")
-                PPCV = 7
-            ElseIf playerPed.CurrentVehicle = veh8 Then
-                WriteCfgValue("Active", "True", CurrentPath & "vehicle_8.cfg")
-                PPCV = 8
-            ElseIf playerPed.CurrentVehicle = veh9 Then
-                WriteCfgValue("Active", "True", CurrentPath & "vehicle_9.cfg")
-                PPCV = 9
             End If
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
@@ -3986,10 +3562,6 @@ Public Class TenCarGarage
                 If Not veh3 = Nothing Then veh3.Delete()
                 If Not veh4 = Nothing Then veh4.Delete()
                 If Not veh5 = Nothing Then veh5.Delete()
-                If Not veh6 = Nothing Then veh6.Delete()
-                If Not veh7 = Nothing Then veh7.Delete()
-                If Not veh8 = Nothing Then veh8.Delete()
-                If Not veh9 = Nothing Then veh9.Delete()
             Catch ex As Exception
             End Try
         End If

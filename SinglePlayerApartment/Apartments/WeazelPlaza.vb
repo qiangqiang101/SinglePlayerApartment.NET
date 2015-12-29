@@ -40,6 +40,7 @@ Public Class WeazelPlaza
     Public Shared CameraPos As Vector3 = New Vector3(-965.4064, -563.0858, 34.91125)
     Public Shared CameraRot As Vector3 = New Vector3(24.98755, 0, -31.1508)
     Public Shared CameraFov As Single = 50.0
+    Public Shared WardrobeHeading As Single = 296.1297
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
@@ -626,6 +627,7 @@ Public Class WeazelPlaza
 
             If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
                 WardrobeVector = Wardrobe
+                WardrobeHead = WardrobeHeading
                 If playerName = "Michael" Then
                     Player0W.Visible = True
                     MakeACamera()
