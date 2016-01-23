@@ -2,8 +2,6 @@ D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\SinglePlayerA
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.dll
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.pdb
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.xml
-D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\AnimationV.dll
-D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\PDMCarShopGUI.dll
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\ScriptHookVDotNet.dll
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.Resources.resources
@@ -11,3 +9,5 @@ D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerA
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.dll
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.xml
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.pdb
+D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\AnimationV.dll
+D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\bin\Debug\PDMCarShopGUI.dll

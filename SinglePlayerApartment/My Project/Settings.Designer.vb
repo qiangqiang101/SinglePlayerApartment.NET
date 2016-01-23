@@ -185,18 +185,6 @@ Namespace My
                 Me("AlwaysEnableMPMaps") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("F5")>  _
-        Public Property GetHash() As Global.System.Windows.Forms.Keys
-            Get
-                Return CType(Me("GetHash"),Global.System.Windows.Forms.Keys)
-            End Get
-            Set
-                Me("GetHash") = value
-            End Set
-        End Property
     End Class
 End Namespace
 

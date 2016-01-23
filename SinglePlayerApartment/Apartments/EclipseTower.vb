@@ -41,37 +41,52 @@ Public Class EclipseTower
     Public Shared CameraRot As Vector3 = New Vector3(25.6109, 0, -39.32376)
     Public Shared CameraFov As Single = 50.0
     Public Shared WardrobeHeading As Single = 268.5623
+    Public Shared IsAtHome As Boolean = False
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
+            If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
+                uiLanguage = Game.Language.ToString
 
-            If uiLanguage = "Chinese" Then
-                _Name = "日蝕大樓公寓"
-                Desc = "這間豪華的三屋房地產隨時可以搬進去住！ ~n~ 之前的屋主太有錢了，所以留下了所有的家具。 ~n~ 你只要人過來就行，等別人發現你住在羅克福 ~n~ 德山日蝕大道上時，你就會突然有很多膚淺的 ~n~ 新朋友了。包括可容納十輛車的車庫。"
-                Garage = "車庫"
-            Else
-                _Name = "Eclipse Tower Apt. "
-                Desc = "This luxury triplex is move-in ready! The previous owner was so rich he just left all his furniture. Just bring yourself and be ready for lots of new superficial friends when people find out you live on Eclipse Boulevard in Rockford Hills. Includes 10 parking spaces."
-                Garage = " Garage"
+                If uiLanguage = "Chinese" Then
+                    _Name = "日蝕大樓公寓"
+                    Desc = "這間豪華的三屋房地產隨時可以搬進去住！ ~n~ 之前的屋主太有錢了，所以留下了所有的家具。 ~n~ 你只要人過來就行，等別人發現你住在羅克福 ~n~ 德山日蝕大道上時，你就會突然有很多膚淺的 ~n~ 新朋友了。包括可容納十輛車的車庫。"
+                    Garage = "車庫"
+                    EclipseTowerPS1._Name = "日蝕大樓，閣樓套房 "
+                    EclipseTowerPS1.Desc = "這間豪華閣樓公寓套房位於城裡的最佳地點， ~n~ 售價有多貴呢？底層生活的老百姓若想購買， ~n~ 絕對會陷入經濟困境，只能巴望下任聯邦政府 ~n~ 祭出舒困政策。我們提供當日翻修服務作為購 ~n~ 屋標準配備。包括可容納十輛車的車庫。"
+                    EclipseTowerPS2._Name = "日蝕大樓，閣樓套房 "
+                    EclipseTowerPS2.Desc = "住在閣樓的生活並非只是種沒頭沒腦的奢侈行 ~n~ 為，而是讓您每天在總價50萬元的廁所裡，盡 ~n~ 情釋放體內不必要的東西，再痛快地衝出你的 ~n~ 居所，這可是只有金錢才能辦到的事。我們提 ~n~ 供當日翻修服務作為購物標準配備。 ~n~ 包括可容納十輛車的車庫。"
+                    EclipseTowerPS3._Name = "日蝕大樓，閣樓套房 "
+                    EclipseTowerPS3.Desc = "面對真相吧：價格才是重中之重。這棟公寓剛 ~n~ 好是方圓百里內最奢華墮落的生活空間，不過 ~n~ 這完全不是重點。昂貴並不代表一定要 ~n~ 『美觀』或是『有用處』，這點和他的新主人 ~n~ 可是如出一轍。而你就是成為新主人的最佳人 ~n~ 選。還有什麼好猶豫的呢？我們提供當日翻修 ~n~ 服務作為購物標準配備。 ~n~ 包括可容納十輛車的車庫。"
+                Else
+                    _Name = "Eclipse Tower Apt. "
+                    Desc = "This luxury triplex is move-in ready! The previous owner was so rich he just left all his furniture. Just bring yourself and be ready for lots of new superficial friends when people find out you live on Eclipse Boulevard in Rockford Hills. Includes 10 parking spaces."
+                    Garage = " Garage"
+                    EclipseTowerPS1._Name = "Eclipse Tower, Penthouse Suite "
+                    EclipseTowerPS1.Desc = "This lavish penthouse suite at the best address in town is expensive enough to keep the riff raff at bay until at least the next federal bailout. Access to our same-day redecorating service included as standard. Includes a 10-car garage."
+                    EclipseTowerPS2._Name = "Eclipse Tower, Penthouse Suite "
+                    EclipseTowerPS2.Desc = "Penthouse living isn't just about mindless luxury. It's about knowing that when you flush a dump you're literally crapping through every single one of the $500K hovels beneath you - and that's something that only money can buy. Access to our same-day redecorating service included as standard. Includes a 10-car garage."
+                    EclipseTowerPS3._Name = "Eclipse Tower, Penthouse Suite "
+                    EclipseTowerPS3.Desc = "Let's face it: we had you at the price tag. The fact that this happens to be one of the most decadent living spaces for hundreds of miles doesn't really matter. Just like its new owner, something this expensive doesn't need to be 'nice' or 'useful'... Access to our same-day redecorating service included as standard. Includes a 10-car garage."
+                End If
+
+                AddHandler Tick, AddressOf OnTick
+                AddHandler KeyDown, AddressOf OnKeyDown
+
+                _menuPool = New MenuPool()
+                CreateBuyMenu()
+                CreateExitMenu()
+                CreateGarageMenu()
+
+                AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
+                AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
+                AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
             End If
-
-            AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
-
-            _menuPool = New MenuPool()
-            CreateBuyMenu()
-            CreateExitMenu()
-            CreateGarageMenu()
-
-            AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
-            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
-            AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -98,6 +113,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -112,6 +129,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf HLEclipseTower.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf HLEclipseTower.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & HLEclipseTower.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -126,6 +145,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf EclipseTowerPS1.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf EclipseTowerPS1.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & EclipseTowerPS1.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -140,6 +161,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf EclipseTowerPS2.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf EclipseTowerPS2.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & EclipseTowerPS2.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -154,6 +177,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf EclipseTowerPS3.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf EclipseTowerPS3.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & EclipseTowerPS3.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -176,6 +201,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -190,6 +217,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf HLEclipseTower.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf HLEclipseTower.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & HLEclipseTower.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -204,6 +233,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf EclipseTowerPS1.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf EclipseTowerPS1.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & EclipseTowerPS1.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -218,6 +249,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf EclipseTowerPS2.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf EclipseTowerPS2.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & EclipseTowerPS2.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -232,6 +265,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf EclipseTowerPS3.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf EclipseTowerPS3.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & EclipseTowerPS3.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -251,6 +286,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -264,6 +301,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf HLEclipseTower.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf HLEclipseTower.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -277,6 +316,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf EclipseTowerPS1.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf EclipseTowerPS1.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -290,6 +331,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf EclipseTowerPS2.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf EclipseTowerPS2.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -303,6 +346,8 @@ Public Class EclipseTower
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf EclipseTowerPS3.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf EclipseTowerPS3.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -314,7 +359,7 @@ Public Class EclipseTower
     Public Shared Sub CreateExitMenu()
         Try
             If uiLanguage = "Chinese" Then
-                ExitApt = "离开公寓"
+                ExitApt = "离開公寓"
                 SellApt = "出售產業"
                 EnterGarage = "進入車庫"
                 AptOptions = "公寓選項"
@@ -362,6 +407,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -375,6 +422,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf HLEclipseTower.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf HLEclipseTower.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -388,6 +437,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf EclipseTowerPS1.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf EclipseTowerPS1.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -401,6 +452,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf EclipseTowerPS2.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf EclipseTowerPS2.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -414,6 +467,8 @@ Public Class EclipseTower
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf EclipseTowerPS3.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf EclipseTowerPS3.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -455,6 +510,16 @@ Public Class EclipseTower
             Blip2 = World.CreateBlip(_Garage)
             Blip2.Sprite = BlipSprite.Garage
             Blip2.Color = 17
+            Blip2.IsShortRange = True
+            SetBlipName(_Name & Garage, Blip2)
+        ElseIf Owner = "Player3" AndAlso HLEclipseTower.Owner = "Player3" AndAlso EclipseTowerPS1.Owner = "Player3" AndAlso EclipseTowerPS2.Owner = "Player3" AndAlso EclipseTowerPS3.Owner = "Player3" Then
+            _Blip.Sprite = BlipSprite.Safehouse
+            _Blip.Color = BlipColor.Yellow
+            _Blip.IsShortRange = True
+            SetBlipName(_Name, _Blip)
+            Blip2 = World.CreateBlip(_Garage)
+            Blip2.Sprite = BlipSprite.Garage
+            Blip2.Color = BlipColor.Yellow
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
         ElseIf (Owner <> HLEclipseTower.Owner) Or (Owner <> EclipseTowerPS1.Owner) Or (Owner <> EclipseTowerPS2.Owner) Or (Owner <> EclipseTowerPS3.Owner) Or (HLEclipseTower.Owner <> EclipseTowerPS1.Owner) Or (HLEclipseTower.Owner <> EclipseTowerPS2.Owner) Or (HLEclipseTower.Owner <> EclipseTowerPS3.Owner) Or (EclipseTowerPS1.Owner <> EclipseTowerPS2.Owner) Or (EclipseTowerPS1.Owner <> EclipseTowerPS3.Owner) Or (EclipseTowerPS2.Owner <> EclipseTowerPS3.Owner) Then
@@ -499,6 +564,7 @@ Public Class EclipseTower
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
+                IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
@@ -516,6 +582,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
+                IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
@@ -570,6 +637,8 @@ Public Class EclipseTower
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -591,6 +660,12 @@ Public Class EclipseTower
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -599,6 +674,7 @@ Public Class EclipseTower
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
+                IsAtHome = True
 
                 SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
                 Game.FadeScreenOut(500)
@@ -637,6 +713,8 @@ Public Class EclipseTower
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -658,6 +736,12 @@ Public Class EclipseTower
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = HLEclipseTower._Name & HLEclipseTower.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HLEclipseTower.Owner = playerName Then
@@ -667,6 +751,7 @@ Public Class EclipseTower
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                IsAtHome = True
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -704,6 +789,8 @@ Public Class EclipseTower
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -725,6 +812,12 @@ Public Class EclipseTower
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = EclipseTowerPS1._Name & EclipseTowerPS1.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS1.Owner = playerName Then
@@ -735,6 +828,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                 ToggleIPL(ReadCfgValue("ETP1ipl", saveFile2))
+                IsAtHome = True
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -772,6 +866,8 @@ Public Class EclipseTower
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -793,6 +889,12 @@ Public Class EclipseTower
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = EclipseTowerPS2._Name & EclipseTowerPS2.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS2.Owner = playerName Then
@@ -803,6 +905,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                 ToggleIPL(ReadCfgValue("ETP2ipl", saveFile2))
+                IsAtHome = True
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -840,6 +943,8 @@ Public Class EclipseTower
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -861,6 +966,12 @@ Public Class EclipseTower
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = EclipseTowerPS3._Name & EclipseTowerPS3.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS3.Owner = playerName Then
@@ -871,6 +982,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                 ToggleIPL(ReadCfgValue("ETP3ipl", saveFile2))
+                IsAtHome = True
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -887,6 +999,8 @@ Public Class EclipseTower
         'Eclipse Tower On Foot
         If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
             'Teleport to Garage
+            IsAtHome = True
+
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -919,6 +1033,7 @@ Public Class EclipseTower
             If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
 
+            IsAtHome = True
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
             TenCarGarage.isInGarage = True
@@ -939,6 +1054,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -948,6 +1065,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -957,6 +1076,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -966,6 +1087,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -975,6 +1098,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -984,6 +1109,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -993,6 +1120,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -1002,6 +1131,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -1011,6 +1142,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -1020,6 +1153,8 @@ Public Class EclipseTower
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Script.Wait(500)
+                Game.FadeScreenIn(500)
             Else
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\")
                 TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\")
@@ -1685,106 +1820,132 @@ Public Class EclipseTower
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-            SaveDistance = World.GetDistance(playerPed.Position, Save)
-            ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-            WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-            GarageDistance = World.GetDistance(playerPed.Position, _Garage)
+            If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
+                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
+                SaveDistance = World.GetDistance(playerPed.Position, Save)
+                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
+                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
+                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-            'Enter Eclipse Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                'Enter Eclipse Tower
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                    End If
                 End If
-            End If
 
-            'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                'Save Game
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                    End If
                 End If
-            End If
 
-            'Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on Door
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                BuyMenu.Visible = True
-                World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
-                hideHud = True
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                ExitMenu.Visible = True
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on Eclipse Bed
-                playerMap = "Eclipse"
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TimeLapse(8)
-                Game.ShowSaveMenu()
-                SavePosition()
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                WardrobeVector = Wardrobe
-                WardrobeHead = WardrobeHeading
-                If playerName = "Michael" Then
-                    Player0W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = "Franklin" Then
-                    Player1W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = “Trevor"
-                    Player2W.Visible = True
-                    MakeACamera()
+                'Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    'Press E on Door
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    BuyMenu.Visible = True
+                    World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                    hideHud = True
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
                 End If
-            End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
-                GarageMenu.Visible = True
-            End If
-            'End Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    ExitMenu.Visible = True
+                End If
 
-            _menuPool.ProcessMenus()
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    'Press E on Eclipse Bed
+                    playerMap = "Eclipse"
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    TimeLapse(8)
+                    Game.ShowSaveMenu()
+                    SavePosition()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    WardrobeVector = Wardrobe
+                    WardrobeHead = WardrobeHeading
+                    If playerName = "Michael" Then
+                        Player0W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Franklin" Then
+                        Player1W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = “Trevor"
+                        Player2W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Player3" Then
+                        If playerHash = "1885233650" Then
+                            Player3_MW.Visible = True
+                            MakeACamera()
+                        ElseIf playerHash = "-1667301416" Then
+                            Player3_FW.Visible = True
+                            MakeACamera()
+                        End If
+                    End If
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
+                    GarageMenu.Visible = True
+                End If
+                'End Controls
+
+                If IsAtHome = True Then
+                    HIDE_MAP_OBJECT_THIS_FRAME()
+                End If
+
+                _menuPool.ProcessMenus()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
+        Native.Function.Call(Hash._0x4B5CFC83122DF602)
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ss1_11_flats"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ss1_11_ss1_emissive_a"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ss1_11_detail01b"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ss1_11_Flats_LOD"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_02_Building01_LOD"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_LOD_01_02_08_09_10_11"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_02_SLOD1"))
+        Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
@@ -1798,7 +1959,7 @@ Public Class EclipseTower
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                _Blip.Remove()
+                If Not _Blip Is Nothing Then _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
             Catch ex As Exception
             End Try

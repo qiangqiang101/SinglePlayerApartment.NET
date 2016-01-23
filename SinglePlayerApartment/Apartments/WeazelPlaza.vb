@@ -41,37 +41,40 @@ Public Class WeazelPlaza
     Public Shared CameraRot As Vector3 = New Vector3(24.98755, 0, -31.1508)
     Public Shared CameraFov As Single = 50.0
     Public Shared WardrobeHeading As Single = 296.1297
+    Public Shared IsAtHome As Boolean = False
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
+            If ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then
+                uiLanguage = Game.Language.ToString
 
-            If uiLanguage = "Chinese" Then
-                _Name = "威索廣場公寓"
-                Desc = "你是導演嗎？卡緊照過來！想在羅克福德山炙 ~n~ 手可熱的明星路上落腳，甚至就住在知名的 ~n~ 李察尊爵片場的正對面嗎？那可千萬不要錯過 ~n~ 這個機會，一個開前門就是片場喔！ ~n~ 包括可容納十輛車的車庫。"
-                Garage = "車庫"
-            Else
-                _Name = "Weazel Plaza Apt. "
-                Desc = "Calling all actors! This is your chance to live on sought-after Movie Star Way in prime Rockford Hills directly opposite the legendary Richard Majestic film studios. Stagger out of your front door right on your set! Includes a 10-car garage."
-                Garage = " Garage"
+                If uiLanguage = "Chinese" Then
+                    _Name = "威索廣場公寓"
+                    Desc = "你是導演嗎？卡緊照過來！想在羅克福德山炙 ~n~ 手可熱的明星路上落腳，甚至就住在知名的 ~n~ 李察尊爵片場的正對面嗎？那可千萬不要錯過 ~n~ 這個機會，一個開前門就是片場喔！ ~n~ 包括可容納十輛車的車庫。"
+                    Garage = "車庫"
+                Else
+                    _Name = "Weazel Plaza Apt. "
+                    Desc = "Calling all actors! This is your chance to live on sought-after Movie Star Way in prime Rockford Hills directly opposite the legendary Richard Majestic film studios. Stagger out of your front door right on your set! Includes a 10-car garage."
+                    Garage = " Garage"
+                End If
+
+                AddHandler Tick, AddressOf OnTick
+                AddHandler KeyDown, AddressOf OnKeyDown
+
+                _menuPool = New MenuPool()
+                CreateBuyMenu()
+                CreateExitMenu()
+                CreateGarageMenu()
+
+                AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
+                AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
+                AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
             End If
-
-            AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
-
-            _menuPool = New MenuPool()
-            CreateBuyMenu()
-            CreateExitMenu()
-            CreateGarageMenu()
-
-            AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
-            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
-            AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -98,6 +101,8 @@ Public Class WeazelPlaza
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -120,6 +125,8 @@ Public Class WeazelPlaza
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -139,6 +146,8 @@ Public Class WeazelPlaza
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -150,7 +159,7 @@ Public Class WeazelPlaza
     Public Shared Sub CreateExitMenu()
         Try
             If uiLanguage = "Chinese" Then
-                ExitApt = "离开公寓"
+                ExitApt = "离開公寓"
                 SellApt = "出售產業"
                 EnterGarage = "進入車庫"
                 AptOptions = "公寓選項"
@@ -198,6 +207,8 @@ Public Class WeazelPlaza
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -241,6 +252,16 @@ Public Class WeazelPlaza
             Blip2.Color = 17
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
+        ElseIf Owner = "Player3" Then
+            _Blip.Sprite = BlipSprite.Safehouse
+            _Blip.Color = BlipColor.Yellow
+            _Blip.IsShortRange = True
+            SetBlipName(_Name, _Blip)
+            Blip2 = World.CreateBlip(_Garage)
+            Blip2.Sprite = BlipSprite.Garage
+            Blip2.Color = BlipColor.Yellow
+            Blip2.IsShortRange = True
+            SetBlipName(_Name & Garage, Blip2)
         Else
             _Blip.Sprite = BlipSprite.SafehouseForSale
             _Blip.Color = BlipColor.White
@@ -273,6 +294,7 @@ Public Class WeazelPlaza
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
+                IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
@@ -290,6 +312,7 @@ Public Class WeazelPlaza
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
+                IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
@@ -343,6 +366,8 @@ Public Class WeazelPlaza
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -364,6 +389,12 @@ Public Class WeazelPlaza
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -372,6 +403,7 @@ Public Class WeazelPlaza
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
+                IsAtHome = True
 
                 SetInteriorActive2(-909.054, -441.466, 120.205) 'weazel plaza 70
                 Game.FadeScreenOut(500)
@@ -388,6 +420,8 @@ Public Class WeazelPlaza
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
+            IsAtHome = True
+
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -418,6 +452,8 @@ Public Class WeazelPlaza
             If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
             If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-909.054, -441.466, 120.205) 'weazel plaza 70
@@ -549,106 +585,128 @@ Public Class WeazelPlaza
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-            SaveDistance = World.GetDistance(playerPed.Position, Save)
-            ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-            WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-            GarageDistance = World.GetDistance(playerPed.Position, _Garage)
+            If ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then
+                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
+                SaveDistance = World.GetDistance(playerPed.Position, Save)
+                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
+                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
+                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-            'Enter weazel Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                'Enter weazel Tower
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                    End If
                 End If
-            End If
 
-            'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                'Save Game
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                    End If
                 End If
-            End If
 
-            'Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on _3alta Door
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                BuyMenu.Visible = True
-                World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
-                hideHud = True
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                ExitMenu.Visible = True
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on weazel Bed
-                playerMap = "Weazel"
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TimeLapse(8)
-                Game.ShowSaveMenu()
-                SavePosition()
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                WardrobeVector = Wardrobe
-                WardrobeHead = WardrobeHeading
-                If playerName = "Michael" Then
-                    Player0W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = "Franklin" Then
-                    Player1W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = “Trevor"
-                    Player2W.Visible = True
-                    MakeACamera()
+                'Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    'Press E on _3alta Door
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    BuyMenu.Visible = True
+                    World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                    hideHud = True
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
                 End If
-            End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                GarageMenu.Visible = True
-            End If
-            'End Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    ExitMenu.Visible = True
+                End If
 
-            _menuPool.ProcessMenus()
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    'Press E on weazel Bed
+                    playerMap = "Weazel"
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    TimeLapse(8)
+                    Game.ShowSaveMenu()
+                    SavePosition()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    WardrobeVector = Wardrobe
+                    WardrobeHead = WardrobeHeading
+                    If playerName = "Michael" Then
+                        Player0W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Franklin" Then
+                        Player1W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = “Trevor"
+                        Player2W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Player3" Then
+                        If playerHash = "1885233650" Then
+                            Player3_MW.Visible = True
+                            MakeACamera()
+                        ElseIf playerHash = "-1667301416" Then
+                            Player3_FW.Visible = True
+                            MakeACamera()
+                        End If
+                    End If
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    GarageMenu.Visible = True
+                End If
+                'End Controls
+
+                If IsAtHome = True Then
+                    HIDE_MAP_OBJECT_THIS_FRAME()
+                End If
+
+                _menuPool.ProcessMenus()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
+        Native.Function.Call(Hash._0x4B5CFC83122DF602)
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "hei_bh1_09_bld_01"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "bh1_09_ema"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "prop_wall_light_12a"))
+        Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
@@ -662,7 +720,7 @@ Public Class WeazelPlaza
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                _Blip.Remove()
+                If Not _Blip Is Nothing Then _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
             Catch ex As Exception
             End Try

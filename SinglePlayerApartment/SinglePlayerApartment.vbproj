@@ -47,6 +47,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AnimationV">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\AnimationV.dll</HintPath>
@@ -91,16 +94,16 @@
     <Compile Include="Apartments\TinselTower.vb" />
     <Compile Include="Apartments\VespucciBlvd.vb" />
     <Compile Include="Apartments\WeazelPlaza.vb" />
-    <Compile Include="Brain.vb" />
     <Compile Include="Class\CFGRead.vb" />
     <Compile Include="Class\logger.vb" />
     <Compile Include="Apartments\EclipseTower.vb" />
     <Compile Include="Class\Reader.vb" />
     <Compile Include="Class\Resources.vb" />
-    <Compile Include="Custom Apartment\EclipseTowerPS1.vb" />
-    <Compile Include="Custom Apartment\EclipseTowerPS2.vb" />
-    <Compile Include="Custom Apartment\EclipseTowerPS3.vb" />
+    <Compile Include="Custom Apartments\EclipseTowerPS1.vb" />
+    <Compile Include="Custom Apartments\EclipseTowerPS2.vb" />
+    <Compile Include="Custom Apartments\EclipseTowerPS3.vb" />
     <Compile Include="Mechanic.vb" />
+    <Compile Include="Mechanic2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -117,7 +120,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Class\timer.vb" />
-    <Compile Include="ReturnAllVehicles.vb" />
     <Compile Include="SinglePlayerApartment.vb" />
     <Compile Include="SixCarGarage.vb" />
     <Compile Include="Stilt Apartments\HillcrestAve2862.vb" />
@@ -131,6 +133,7 @@
     <Compile Include="Stilt Apartments\WildOats3655.vb" />
     <Compile Include="TenCarGarage.vb" />
     <Compile Include="Wardrobe.vb" />
+    <Compile Include="Z.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -142,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

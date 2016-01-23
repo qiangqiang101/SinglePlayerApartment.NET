@@ -47,31 +47,33 @@ Public Class VespucciBlvd
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
+            If ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then
+                uiLanguage = Game.Language.ToString
 
-            If uiLanguage = "Chinese" Then
-                _Name = "威斯普奇大道2057號"
-                Desc = "這棟公寓建築以前的狀況比較好， ~n~ 但這間經濟寶惠的套房還是有些許 ~n~ 殘留的靈魂以及大量的潛力！ ~n~ 帶著你的想像力搬進來吧！ ~n~ 順便帶上除蟲大師喔。包括可容納六輛車的車庫。"
-                Garage = "車庫"
-            Else
-                _Name = "2057 Vespucci Boulevard Apt. "
-                Desc = "The apartment building has seen better days but this affordable unit still has a Little Seoul and a Lot of Potential! Bring your imagination! And a exterminator. Includes 6-car garage."
-                Garage = " Garage"
+                If uiLanguage = "Chinese" Then
+                    _Name = "威斯普奇大道2057號"
+                    Desc = "這棟公寓建築以前的狀況比較好， ~n~ 但這間經濟寶惠的套房還是有些許 ~n~ 殘留的靈魂以及大量的潛力！ ~n~ 帶著你的想像力搬進來吧！ ~n~ 順便帶上除蟲大師喔。包括可容納六輛車的車庫。"
+                    Garage = "車庫"
+                Else
+                    _Name = "2057 Vespucci Boulevard Apt. "
+                    Desc = "The apartment building has seen better days but this affordable unit still has a Little Seoul and a Lot of Potential! Bring your imagination! And a exterminator. Includes 6-car garage."
+                    Garage = " Garage"
+                End If
+
+                AddHandler Tick, AddressOf OnTick
+                AddHandler KeyDown, AddressOf OnKeyDown
+
+                _menuPool = New MenuPool()
+                CreateBuyMenu()
+                CreateExitMenu()
+                CreateGarageMenu()
+
+                AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
+                AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
+                AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
             End If
-
-            AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
-
-            _menuPool = New MenuPool()
-            CreateBuyMenu()
-            CreateExitMenu()
-            CreateGarageMenu()
-
-            AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
-            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
-            AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -98,6 +100,8 @@ Public Class VespucciBlvd
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -120,6 +124,8 @@ Public Class VespucciBlvd
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -139,6 +145,8 @@ Public Class VespucciBlvd
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -150,7 +158,7 @@ Public Class VespucciBlvd
     Public Shared Sub CreateExitMenu()
         Try
             If uiLanguage = "Chinese" Then
-                ExitApt = "离开公寓"
+                ExitApt = "离開公寓"
                 SellApt = "出售產業"
                 EnterGarage = "進入車庫"
                 AptOptions = "公寓選項"
@@ -198,6 +206,8 @@ Public Class VespucciBlvd
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -239,6 +249,16 @@ Public Class VespucciBlvd
             Blip2 = World.CreateBlip(_Garage)
             Blip2.Sprite = BlipSprite.Garage
             Blip2.Color = 17
+            Blip2.IsShortRange = True
+            SetBlipName(_Name & Garage, Blip2)
+        ElseIf Owner = "Player3" Then
+            _Blip.Sprite = BlipSprite.Safehouse
+            _Blip.Color = BlipColor.Yellow
+            _Blip.IsShortRange = True
+            SetBlipName(_Name, _Blip)
+            Blip2 = World.CreateBlip(_Garage)
+            Blip2.Sprite = BlipSprite.Garage
+            Blip2.Color = BlipColor.Yellow
             Blip2.IsShortRange = True
             SetBlipName(_Name & Garage, Blip2)
         Else
@@ -294,7 +314,7 @@ Public Class VespucciBlvd
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
-                SetInteriorActive2(199.0152, -1020.4401, -98.9999) '6 car garage
+                SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
                 SixCarGarage.isInGarage = True
                 playerPed.Position = SixCarGarage.Elevator
                 SixCarGarage.LastLocationName = _Name & Unit
@@ -343,6 +363,8 @@ Public Class VespucciBlvd
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -364,6 +386,12 @@ Public Class VespucciBlvd
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -373,7 +401,7 @@ Public Class VespucciBlvd
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
 
-                SetInteriorActive2(265.3285, -1002.7042, -99.0085) 'vespucci blvd
+                SetInteriorActive2(263.86999, -998.78002, -99.010002) 'vespucci blvd
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 Game.Player.Character.Position = Teleport
@@ -390,8 +418,8 @@ Public Class VespucciBlvd
             'Teleport to Garage
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
-            SetInteriorActive2(199.0152, -1020.4401, -98.9999) '6 car garage
-            SetInteriorActive2(265.3285, -1002.7042, -99.0085) 'vespucci blvd
+            SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
+            SetInteriorActive2(263.86999, -998.78002, -99.010002) 'vespucci blvd
             SixCarGarage.isInGarage = True
             playerPed.Position = SixCarGarage.GarageDoorL
             SixCarGarage.LastLocationName = _Name & Unit
@@ -415,8 +443,8 @@ Public Class VespucciBlvd
             If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
             If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
 
-            SetInteriorActive2(199.0152, -1020.4401, -98.9999) '6 car garage
-            SetInteriorActive2(265.3285, -1002.7042, -99.0085) 'vespucci blvd
+            SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
+            SetInteriorActive2(263.86999, -998.78002, -99.010002) 'vespucci blvd
             SixCarGarage.isInGarage = True
             SixCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
             SixCarGarage.LastLocationName = _Name & Unit
@@ -501,103 +529,113 @@ Public Class VespucciBlvd
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-            SaveDistance = World.GetDistance(playerPed.Position, Save)
-            ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-            WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-            GarageDistance = World.GetDistance(playerPed.Position, _Garage)
+            If ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then
+                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
+                SaveDistance = World.GetDistance(playerPed.Position, Save)
+                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
+                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
+                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-            'Enter _3alta Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 2.0 Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                'Enter _3alta Tower
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 2.0 Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                    End If
                 End If
-            End If
 
-            'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 1.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                'Save Game
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 1.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 3.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & Garage & ".")
+                If Not playerPed.IsDead AndAlso GarageDistance < 3.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & Garage & ".")
+                    End If
                 End If
-            End If
 
-            ' Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on Vespucci Blvd Door
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                BuyMenu.Visible = True
-                World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
-                hideHud = True
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                ExitMenu.Visible = True
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on vespucci blvd Bed
-                playerMap = "VespucciBlvd"
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TimeLapse(8)
-                Game.ShowSaveMenu()
-                SavePosition()
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                WardrobeVector = Wardrobe
-                WardrobeHead = WardrobeHeading
-                If playerName = "Michael" Then
-                    Player0W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = "Franklin" Then
-                    Player1W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = “Trevor"
-                    Player2W.Visible = True
-                    MakeACamera()
+                ' Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    'Press E on Vespucci Blvd Door
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    BuyMenu.Visible = True
+                    World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                    hideHud = True
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
                 End If
-            End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 3.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                GarageMenu.Visible = True
-            End If
-            'End Control
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    ExitMenu.Visible = True
+                End If
 
-            _menuPool.ProcessMenus()
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    'Press E on vespucci blvd Bed
+                    playerMap = "VespucciBlvd"
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    TimeLapse(8)
+                    Game.ShowSaveMenu()
+                    SavePosition()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    WardrobeVector = Wardrobe
+                    WardrobeHead = WardrobeHeading
+                    If playerName = "Michael" Then
+                        Player0W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Franklin" Then
+                        Player1W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = “Trevor"
+                        Player2W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Player3" Then
+                        If playerHash = "1885233650" Then
+                            Player3_MW.Visible = True
+                            MakeACamera()
+                        ElseIf playerHash = "-1667301416" Then
+                            Player3_FW.Visible = True
+                            MakeACamera()
+                        End If
+                    End If
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 3.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    GarageMenu.Visible = True
+                End If
+                'End Control
+
+                _menuPool.ProcessMenus()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -614,7 +652,7 @@ Public Class VespucciBlvd
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                _Blip.Remove()
+                If Not _Blip Is Nothing Then _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
             Catch ex As Exception
             End Try

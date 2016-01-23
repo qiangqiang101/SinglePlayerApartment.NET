@@ -36,23 +36,25 @@ Public Class HL4IntegrityWay
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
+            If ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then
+                uiLanguage = Game.Language.ToString
 
-            If uiLanguage = "Chinese" Then
-                _Name = "統合小道4號公寓"
-                Desc = "住在雲端，而你的銀行存款餘額撒在地板上。 ~n~ 公寓這樣明顯擴張你所有的朋友都會立刻知道 ~n~ 你多少報酬。要基於LC的人誰偷偷想鬧橫向的 ~n~ 生活體驗。包括可容納十輛車的車庫。"
-            Else
-                _Name = "4 Integrity Way Apt. "
-                Desc = "Live in the clouds while your bank balance hits the floor. An apartment so conspicuosly expansive all your friends will immediately know how much you paid for it. The downtown lateral living experience for people who secretly want to be LC based. Includes a 10-car garage."
+                If uiLanguage = "Chinese" Then
+                    _Name = "統合小道4號公寓"
+                    Desc = "住在雲端，而你的銀行存款餘額撒在地板上。 ~n~ 公寓這樣明顯擴張你所有的朋友都會立刻知道 ~n~ 你多少報酬。要基於LC的人誰偷偷想鬧橫向的 ~n~ 生活體驗。包括可容納十輛車的車庫。"
+                Else
+                    _Name = "4 Integrity Way Apt. "
+                    Desc = "Live in the clouds while your bank balance hits the floor. An apartment so conspicuosly expansive all your friends will immediately know how much you paid for it. The downtown lateral living experience for people who secretly want to be LC based. Includes a 10-car garage."
+                End If
+
+                AddHandler Tick, AddressOf OnTick
+                AddHandler KeyDown, AddressOf OnKeyDown
+
+                _menuPool = New MenuPool()
+                CreateExitMenu()
+                AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
             End If
-
-            AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
-
-            _menuPool = New MenuPool()
-            CreateExitMenu()
-            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -61,7 +63,7 @@ Public Class HL4IntegrityWay
     Public Shared Sub CreateExitMenu()
         Try
             If uiLanguage = "Chinese" Then
-                ExitApt = "离开公寓"
+                ExitApt = "离開公寓"
                 SellApt = "出售產業"
                 EnterGarage = "進入車庫"
                 AptOptions = "公寓選項"
@@ -107,6 +109,7 @@ Public Class HL4IntegrityWay
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
+                _4IntegrityWay.IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
@@ -125,6 +128,7 @@ Public Class HL4IntegrityWay
                 _4IntegrityWay.RefreshMenu()
                 _4IntegrityWay.RefreshGarageMenu()
                 UnLoadMPDLCMap()
+                _4IntegrityWay.IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
@@ -150,69 +154,79 @@ Public Class HL4IntegrityWay
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            SaveDistance = World.GetDistance(playerPed.Position, Save)
-            ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-            WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
+            If ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then
+                SaveDistance = World.GetDistance(playerPed.Position, Save)
+                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
+                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
 
-            'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                'Save Game
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                    End If
                 End If
-            End If
 
-            'Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                ExitMenu.Visible = True
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on hl4integrity Bed
-                playerMap = "4IntegrityHL"
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TimeLapse(8)
-                Game.ShowSaveMenu()
-                SavePosition()
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                WardrobeVector = Wardrobe
-                WardrobeHead = WardrobeHeading
-                If playerName = "Michael" Then
-                    Player0W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = "Franklin" Then
-                    Player1W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = “Trevor"
-                    Player2W.Visible = True
-                    MakeACamera()
+                'Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    ExitMenu.Visible = True
                 End If
-            End If
-            'End Controls
 
-            _menuPool.ProcessMenus()
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    'Press E on hl4integrity Bed
+                    playerMap = "4IntegrityHL"
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    TimeLapse(8)
+                    Game.ShowSaveMenu()
+                    SavePosition()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    WardrobeVector = Wardrobe
+                    WardrobeHead = WardrobeHeading
+                    If playerName = "Michael" Then
+                        Player0W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Franklin" Then
+                        Player1W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = “Trevor"
+                        Player2W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Player3" Then
+                        If playerHash = "1885233650" Then
+                            Player3_MW.Visible = True
+                            MakeACamera()
+                        ElseIf playerHash = "-1667301416" Then
+                            Player3_FW.Visible = True
+                            MakeACamera()
+                        End If
+                    End If
+                End If
+                'End Controls
+
+                _menuPool.ProcessMenus()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

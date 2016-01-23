@@ -41,37 +41,44 @@ Public Class RichardMajestic
     Public Shared CameraRot As Vector3 = New Vector3(24.18255, 0, -19.8838)
     Public Shared CameraFov As Single = 50.0
     Public Shared WardrobeHeading As Single = 112.4174
+    Public Shared IsAtHome As Boolean = False
 
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
+            If ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then
+                uiLanguage = Game.Language.ToString
 
-            If uiLanguage = "Chinese" Then
-                _Name = "李察尊爵公寓"
-                Desc = "這個每到冒泡的豪華公寓位於羅克福德山的 ~n~ 明星路上，距離理查尊爵電影片場、AKAN唱片 ~n~ 公司和捐精診所都只有幾步之處。 ~n~ 對夕陽產業來說，這裡可是一箭三雕的絕佳 ~n~ 地點！包括可容納十輛車的車庫。"
-                Garage = "車庫"
-            Else
-                _Name = "Richards Majestic Apt. "
-                Desc = "This breathtaking luxury condo on Movie Star Way in Rockford Hills is a stone's throw from Richards Majestic Movie Studios, AKAN Records and a Sperm Donor Clinic. The Ultimate trifecta of dying industries! Includes a 10-car garage."
-                Garage = " Garage"
+                If uiLanguage = "Chinese" Then
+                    _Name = "李察尊爵公寓"
+                    Desc = "這個每到冒泡的豪華公寓位於羅克福德山的 ~n~ 明星路上，距離理查尊爵電影片場、AKAN唱片 ~n~ 公司和捐精診所都只有幾步之處。 ~n~ 對夕陽產業來說，這裡可是一箭三雕的絕佳 ~n~ 地點！包括可容納十輛車的車庫。"
+                    Garage = "車庫"
+                    HLRichardMajestic._Name = "李察尊爵公寓"
+                    HLRichardMajestic.Desc = "擁有一塊美艷舊Vinewood，儘管這是被做看起 ~n~ 來就像洛斯桑托斯的其他超級富豪的角落一個 ~n~ 非常小的和昂貴的。與以往一隻腳一個現代的 ~n~ 橫向的生活體驗。包括可容納十輛車的車庫。"
+                Else
+                    _Name = "Richards Majestic Apt. "
+                    Desc = "This breathtaking luxury condo on Movie Star Way in Rockford Hills is a stone's throw from Richards Majestic Movie Studios, AKAN Records and a Sperm Donor Clinic. The Ultimate trifecta of dying industries! Includes a 10-car garage."
+                    Garage = " Garage"
+                    HLRichardMajestic._Name = "Richards Majestic Apt. "
+                    HLRichardMajestic.Desc = "Own a piece of glamorous old Vinewood, albeit a very small and expensive piece that's been made to look just like the other super-rich corners of Los Santos. A contemporary lateral living experience with one foot in the past. Includes a 10-car garage."
+                End If
+
+                AddHandler Tick, AddressOf OnTick
+                AddHandler KeyDown, AddressOf OnKeyDown
+
+                _menuPool = New MenuPool()
+                CreateBuyMenu()
+                CreateExitMenu()
+                CreateGarageMenu()
+
+                AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
+                AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
+                AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
             End If
-
-            AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
-
-            _menuPool = New MenuPool()
-            CreateBuyMenu()
-            CreateExitMenu()
-            CreateGarageMenu()
-
-            AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
-            AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
-            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
-            AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -98,6 +105,8 @@ Public Class RichardMajestic
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -112,6 +121,8 @@ Public Class RichardMajestic
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf HLRichardMajestic.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf HLRichardMajestic.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & HLRichardMajestic.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -134,6 +145,8 @@ Public Class RichardMajestic
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -148,6 +161,8 @@ Public Class RichardMajestic
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf HLRichardMajestic.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf HLRichardMajestic.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & HLRichardMajestic.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -167,6 +182,8 @@ Public Class RichardMajestic
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -180,6 +197,8 @@ Public Class RichardMajestic
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
             ElseIf HLRichardMajestic.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf HLRichardMajestic.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
@@ -191,7 +210,7 @@ Public Class RichardMajestic
     Public Shared Sub CreateExitMenu()
         Try
             If uiLanguage = "Chinese" Then
-                ExitApt = "离开公寓"
+                ExitApt = "离開公寓"
                 SellApt = "出售產業"
                 EnterGarage = "進入車庫"
                 AptOptions = "公寓選項"
@@ -239,6 +258,8 @@ Public Class RichardMajestic
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -252,6 +273,8 @@ Public Class RichardMajestic
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                 ElseIf HLRichardMajestic.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf HLRichardMajestic.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
@@ -337,6 +360,7 @@ Public Class RichardMajestic
                 Game.Player.Character.Position = Teleport2
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
+                IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
@@ -354,6 +378,7 @@ Public Class RichardMajestic
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
+                IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
@@ -407,6 +432,8 @@ Public Class RichardMajestic
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -428,6 +455,12 @@ Public Class RichardMajestic
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -436,6 +469,7 @@ Public Class RichardMajestic
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
+                IsAtHome = True
 
                 SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
                 Game.FadeScreenOut(500)
@@ -474,6 +508,8 @@ Public Class RichardMajestic
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
                     ElseIf playerName = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                    ElseIf playerName = "Player3" Then
+                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
@@ -495,6 +531,12 @@ Public Class RichardMajestic
                         Else
                             DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                         End If
+                    ElseIf playerName = "Player3" Then
+                        If uiLanguage = "Chinese" Then
+                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        Else
+                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
+                        End If
                     End If
                 End If
             ElseIf selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HLRichardMajestic.Owner = playerName Then
@@ -504,6 +546,7 @@ Public Class RichardMajestic
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                IsAtHome = True
 
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
@@ -519,6 +562,8 @@ Public Class RichardMajestic
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
             'Teleport to Garage
+            IsAtHome = True
+
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -549,6 +594,8 @@ Public Class RichardMajestic
             If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
             If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+
+            IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
@@ -678,6 +725,8 @@ Public Class RichardMajestic
         ElseIf selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso HLRichardMajestic.Owner = playerName Then
             'Teleport to Garage
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            IsAtHome = True
+
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
@@ -709,6 +758,8 @@ Public Class RichardMajestic
             If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
 
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+            IsAtHome = True
+
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
@@ -838,106 +889,130 @@ Public Class RichardMajestic
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-            SaveDistance = World.GetDistance(playerPed.Position, Save)
-            ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-            WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-            GarageDistance = World.GetDistance(playerPed.Position, _Garage)
+            If ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then
+                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
+                SaveDistance = World.GetDistance(playerPed.Position, Save)
+                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
+                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
+                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-            'Enter richard Tower
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                'Enter richard Tower
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
+                    End If
                 End If
-            End If
 
-            'Save Game
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                'Save Game
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
+                    If uiLanguage = "Chinese" Then
+                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                    Else
+                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                    End If
                 End If
-            End If
 
-            'Controls
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                'Press E on Door
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                BuyMenu.Visible = True
-                World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
-                hideHud = True
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                ExitMenu.Visible = True
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                'Press E on richard Bed
-                playerMap = "Richard"
-                Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TimeLapse(8)
-                Game.ShowSaveMenu()
-                SavePosition()
-                Script.Wait(500)
-                Game.FadeScreenIn(500)
-            End If
-
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                WardrobeVector = Wardrobe
-                WardrobeHead = WardrobeHeading
-                If playerName = "Michael" Then
-                    Player0W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = "Franklin" Then
-                    Player1W.Visible = True
-                    MakeACamera()
-                ElseIf playerName = “Trevor"
-                    Player2W.Visible = True
-                    MakeACamera()
+                'Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    'Press E on Door
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    BuyMenu.Visible = True
+                    World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                    hideHud = True
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
                 End If
-            End If
 
-            If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
-                GarageMenu.Visible = True
-            End If
-            'End Controls
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
+                    ExitMenu.Visible = True
+                End If
 
-            _menuPool.ProcessMenus()
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    'Press E on richard Bed
+                    playerMap = "Richard"
+                    Game.FadeScreenOut(500)
+                    Script.Wait(&H3E8)
+                    TimeLapse(8)
+                    Game.ShowSaveMenu()
+                    SavePosition()
+                    Script.Wait(500)
+                    Game.FadeScreenIn(500)
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                    WardrobeVector = Wardrobe
+                    WardrobeHead = WardrobeHeading
+                    If playerName = "Michael" Then
+                        Player0W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Franklin" Then
+                        Player1W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = “Trevor"
+                        Player2W.Visible = True
+                        MakeACamera()
+                    ElseIf playerName = "Player3" Then
+                        If playerHash = "1885233650" Then
+                            Player3_MW.Visible = True
+                            MakeACamera()
+                        ElseIf playerHash = "-1667301416" Then
+                            Player3_FW.Visible = True
+                            MakeACamera()
+                        End If
+                    End If
+                End If
+
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
+                    GarageMenu.Visible = True
+                End If
+                'End Controls
+
+                If IsAtHome = True Then
+                    HIDE_MAP_OBJECT_THIS_FRAME()
+                End If
+
+                _menuPool.ProcessMenus()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
+        Native.Function.Call(Hash._0x4B5CFC83122DF602)
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "hei_bh1_08_bld2"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "bh1_emissive_bh1_08"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "bh1_08_bld2_LOD"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "hei_bh1_08_bld2"))
+        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "bh1_08_em"))
+        Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
@@ -951,7 +1026,7 @@ Public Class RichardMajestic
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                _Blip.Remove()
+                If Not _Blip Is Nothing Then _Blip.Remove()
                 If Not Blip2 Is Nothing Then Blip2.Remove()
             Catch ex As Exception
             End Try
