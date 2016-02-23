@@ -1,14 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
-Imports GTA
+﻿Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
-Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 
 Public Class Z
@@ -36,48 +28,55 @@ Public Class Z
                 playerCash = SinglePlayerApartment.player.Money
             End If
 
-            uiLanguage = Game.Language.ToString
-
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-                Garage = "車庫"
-                GrgOptions = "管理車輛"
-                GrgRemove = "刪除車輛"
-                GrgRemoveAndDrive = "刪除並且駕駛離開"
-                GrgMove = "重新排序"
-                GrgSell = "出售車輛給改車王"
-                GrgSelectVeh = "選擇車輛"
-                GrgTooHot = "我們暫時不需要這輛車。"
-                _Mechanic = "機械師"
-                ChooseApt = "選擇公寓"
-                ChooseVeh = "選擇車輛"
-                ChooseVehDesc = "請求交付？"
-                ReturnVeh = "返回所有車輛"
-                AptStyle = "公寓樣式"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-                Garage = " Garage"
-                GrgOptions = "MANAGE VEHICLES"
-                GrgRemove = "Remove Vehicle"
-                GrgRemoveAndDrive = "Remove and exit Garage"
-                GrgMove = "Rearrange Vehicle"
-                GrgSell = "Sell Vehicle to LSC"
-                GrgSelectVeh = "Select vehicle."
-                GrgTooHot = "This vehicle is too hot to sell."
-                _Mechanic = "Mechanic"
-                ChooseApt = "SELECT APARTMENT"
-                ChooseVeh = "SELECT VEHICLE FOR DELIVERY"
-                ChooseVehDesc = "Request Delivery?"
-                ReturnVeh = "Return all Vehicles"
-                AptStyle = "Apartment Style"
-            End If
-
+            'New Language
+            Website.BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
+            Website.DockTease = ReadCfgValue("DockTease", langFile)
+            Website.LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
+            Website.ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
+            Website.PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
+            Website.SouthernSA = ReadCfgValue("SouthernSA", langFile)
+            Website.WarstockCache = ReadCfgValue("WarstockCache", langFile)
+            ExitApt = ReadCfgValue("ExitApt", langFile)
+            SellApt = ReadCfgValue("SellApt", langFile)
+            EnterGarage = ReadCfgValue("EnterGarage", langFile)
+            AptOptions = ReadCfgValue("AptOptions", langFile)
+            Garage = ReadCfgValue("Garage", langFile)
+            GrgOptions = ReadCfgValue("GrgOptions", langFile)
+            GrgRemove = ReadCfgValue("GrgRemove", langFile)
+            GrgRemoveAndDrive = ReadCfgValue("GrgRemoveAndDrive", langFile)
+            GrgMove = ReadCfgValue("GrgMove", langFile)
+            GrgSell = ReadCfgValue("GrgSell", langFile)
+            GrgSelectVeh = ReadCfgValue("GrgSelectVeh", langFile)
+            GrgTooHot = ReadCfgValue("GrgTooHot", langFile)
+            GrgPlate = ReadCfgValue("GrgPlate", langFile)
+            GrgRename = ReadCfgValue("GrgRename", langFile)
+            GrgTransfer = ReadCfgValue("GrgTransfer", langFile)
+            _Mechanic = ReadCfgValue("_Mechanic", langFile)
+            _Pegasus = ReadCfgValue("_Pegasus", langFile)
+            PegasusDeliver = ReadCfgValue("PegasusDeliver", langFile)
+            PegasusDelete = ReadCfgValue("PegasusDelete", langFile)
+            _Phone = ReadCfgValue("_Phone", langFile)
+            ChooseApt = ReadCfgValue("ChooseApt", langFile)
+            ChooseVeh = ReadCfgValue("ChooseVeh", langFile)
+            ChooseVehDesc = ReadCfgValue("ChooseVehDesc", langFile)
+            ReturnVeh = ReadCfgValue("ReturnVeh", langFile)
+            AptStyle = ReadCfgValue("AptStyle", langFile)
+            Reach10 = ReadCfgValue("Reach10", langFile)
+            MechanicBill = ReadCfgValue("MechanicBill", langFile)
+            GrgFull = ReadCfgValue("GrgFull", langFile)
+            Maze = ReadCfgValue("Maze", langFile)
+            Fleeca = ReadCfgValue("Fleeca", langFile)
+            BOL = ReadCfgValue("BOL", langFile)
+            ForSale = ReadCfgValue("ForSale", langFile)
+            PropPurchased = ReadCfgValue("PropPurchased", langFile)
+            InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+            EnterApartment = ReadCfgValue("EnterApartment", langFile)
+            SaveGame = ReadCfgValue("SaveGame", langFile)
+            ExitApartment = ReadCfgValue("ExitApartment", langFile)
+            ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+            _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+            CannotStore = ReadCfgValue("CannotStore", langFile)
+            'End Language
 
             If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then EclipseTower.CreateEclipseTower()
             If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then _3AltaStreet.Create3AltaStreet()

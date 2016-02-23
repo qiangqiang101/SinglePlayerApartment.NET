@@ -49,21 +49,28 @@ Public Class _4IntegrityWay
     Public Sub New()
         Try
             If ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then
-                uiLanguage = Game.Language.ToString
-
-                If uiLanguage = "Chinese" Then
-                    _Name = "統合小道4號公寓"
-                    Desc = "在這裡，不必擔心手機會斷訊！這間豪華公寓 ~n~ 跟客來停電信總部就在同一棟大樓內，地點更 ~n~ 是位於洛聖都市中心新崛起的熱門住宅區。 ~n~ 這一區真的正在迅速成長，您從窗戶往外看便 ~n~ 可看到林立的工地！ ~n~ 包括可容納十輛車的車庫。"
-                    Garage = "車庫"
-                    HL4IntegrityWay._Name = "統合小道4號公寓"
-                    HL4IntegrityWay.Desc = "住在雲端，而你的銀行存款餘額撒在地板上。 ~n~ 公寓這樣明顯擴張你所有的朋友都會立刻知道 ~n~ 你多少報酬。要基於LC的人誰偷偷想鬧橫向的 ~n~ 生活體驗。包括可容納十輛車的車庫。"
-                Else
-                    _Name = "4 Integrity Way Apt. "
-                    Desc = "No dropped calls here! This luxury condo is located in the same building as Tinkle Mobile's headquarters in the new real estate hotspot of Downtown Los Santos. This is such an up-and-coming neighborhood, you can literally see the construction from your window! Includes 10-car garage."
-                    Garage = " Garage"
-                    HL4IntegrityWay._Name = "4 Integrity Way Apt. "
-                    HL4IntegrityWay.Desc = "Live in the clouds while your bank balance hits the floor. An apartment so conspicuosly expansive all your friends will immediately know how much you paid for it. The downtown lateral living experience for people who secretly want to be LC based. Includes a 10-car garage."
-                End If
+                _Name = ReadCfgValue("4IntegrityName", langFile)
+                Desc = ReadCfgValue("4IntegrityDesc", langFile)
+                HL4IntegrityWay._Name = ReadCfgValue("4IntegrityHLName", langFile)
+                HL4IntegrityWay.Desc = ReadCfgValue("4IntegrityHLDesc", langFile)
+                Garage = ReadCfgValue("Garage", langFile)
+                AptOptions = ReadCfgValue("AptOptions", langFile)
+                ExitApt = ReadCfgValue("ExitApt", langFile)
+                SellApt = ReadCfgValue("SellApt", langFile)
+                EnterGarage = ReadCfgValue("EnterGarage", langFile)
+                GrgOptions = ReadCfgValue("GrgOptions", langFile)
+                ForSale = ReadCfgValue("ForSale", langFile)
+                PropPurchased = ReadCfgValue("PropPurchased", langFile)
+                Maze = ReadCfgValue("Maze", langFile)
+                Fleeca = ReadCfgValue("Fleeca", langFile)
+                BOL = ReadCfgValue("BOL", langFile)
+                InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+                EnterApartment = ReadCfgValue("EnterApartment", langFile)
+                SaveGame = ReadCfgValue("SaveGame", langFile)
+                ExitApartment = ReadCfgValue("ExitApartment", langFile)
+                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+                CannotStore = ReadCfgValue("CannotStore", langFile)
 
                 AddHandler Tick, AddressOf OnTick
                 AddHandler KeyDown, AddressOf OnKeyDown
@@ -86,12 +93,6 @@ Public Class _4IntegrityWay
 
     Public Shared Sub CreateBuyMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                AptOptions = "公寓選項"
-            Else
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             BuyMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -209,18 +210,6 @@ Public Class _4IntegrityWay
 
     Public Shared Sub CreateExitMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             ExitMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -237,14 +226,6 @@ Public Class _4IntegrityWay
 
     Public Shared Sub CreateGarageMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                Garage = "車庫"
-                GrgOptions = "車庫選項"
-            Else
-                Garage = " Garage"
-                GrgOptions = "GARAGE OPTIONS"
-            End If
-
             GarageMenu = New UIMenu("", GrgOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -342,11 +323,7 @@ Public Class _4IntegrityWay
             _Blip.Sprite = BlipSprite.SafehouseForSale
             _Blip.Color = BlipColor.White
             _Blip.IsShortRange = True
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業求售", _Blip)
-            Else
-                SetBlipName("Property For Sale", _Blip)
-            End If
+            SetBlipName(ForSale, _Blip)
         End If
     End Sub
 
@@ -394,7 +371,6 @@ Public Class _4IntegrityWay
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
@@ -430,11 +406,7 @@ Public Class _4IntegrityWay
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -448,29 +420,13 @@ Public Class _4IntegrityWay
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -506,11 +462,7 @@ Public Class _4IntegrityWay
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & HL4IntegrityWay._Name & HL4IntegrityWay.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & HL4IntegrityWay._Name & HL4IntegrityWay.Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & HL4IntegrityWay._Name & HL4IntegrityWay.Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -524,29 +476,13 @@ Public Class _4IntegrityWay
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = HL4IntegrityWay._Name & HL4IntegrityWay.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HL4IntegrityWay.Owner = playerName Then
@@ -578,7 +514,6 @@ Public Class _4IntegrityWay
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -609,7 +544,6 @@ Public Class _4IntegrityWay
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
-            TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -740,7 +674,6 @@ Public Class _4IntegrityWay
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
             TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
@@ -771,7 +704,6 @@ Public Class _4IntegrityWay
             IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
             TenCarGarage.LastLocationName = HL4IntegrityWay._Name & HL4IntegrityWay.Unit
             TenCarGarage.lastLocationVector = HL4IntegrityWay._Exit
@@ -908,43 +840,29 @@ Public Class _4IntegrityWay
 
                 'Enter _4integrity Tower
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
-                    End If
+                    DisplayHelpTextThisFrame(EnterApartment & _Name)
                 End If
 
                 'Save Game
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
-                    End If
+                    DisplayHelpTextThisFrame(SaveGame)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
-                    End If
+                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
-                    End If
+                    DisplayHelpTextThisFrame(ChangeClothes)
                 End If
 
-                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) AndAlso Not playerPed.IsInVehicle Then
+                    DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                ElseIf Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) AndAlso playerPed.IsInVehicle Then
+                    If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        DisplayHelpTextThisFrame(CannotStore)
                     Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
                     End If
                 End If
 
@@ -999,8 +917,12 @@ Public Class _4IntegrityWay
                     End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) Then
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) AndAlso Not playerPed.IsInVehicle Then
                     GarageMenu.Visible = True
+                ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HL4IntegrityWay.Owner = playerName) AndAlso playerPed.IsInVehicle Then
+                    If Not Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        GarageMenu.Visible = True
+                    End If
                 End If
                 'End Control
 

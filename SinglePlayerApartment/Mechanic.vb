@@ -1,13 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports PDMCarShopGUI
@@ -17,8 +11,9 @@ Public Class Mechanic
 
     Public Shared Path As String
     Public Shared playerHash As String
-    Public Shared GarageMenu, GarageMenu2, GrgMoveMenu, MechanicMenu, AS3Menu, IW4Menu, IW4HLMenu, DPHMenu, DPHHLMenu, DTMenu, ETMenu, ETHLMenu, RMMenu, RMHLMenu, TTMenu, TTHLMenu, WPMenu, VBMenu As UIMenu
+    Public Shared GarageMenu, GarageMenu2, GrgMoveMenu, GrgTransMenu, MechanicMenu, PhoneMenu, AS3Menu, IW4Menu, IW4HLMenu, DPHMenu, DPHHLMenu, DTMenu, ETMenu, ETHLMenu, RMMenu, RMHLMenu, TTMenu, TTHLMenu, WPMenu, VBMenu As UIMenu
     Public Shared NC2044Menu, HA2862Menu, HA2868Menu, WO3655Menu, NC2045Menu, MR2117Menu, HA2874Menu, WD3677Menu, MW2113Menu, ETP1Menu, ETP2Menu, ETP3Menu As UIMenu
+    Public Shared MichaelPegasusMenu, FranklinPegasusMenu, TrevorPegasusMenu, Player3PegasusMenu, PegasusConfirmMenu As UIMenu
     Public Shared _menuPool As MenuPool
     Public Shared AS3, IW4, IW4HL, DPH, DPHHL, DT, ET, ETHL, RM, RMHL, TT, TTHL, WP, VB As String
     Public Shared NC2044, HA2862, HA2868, WO3655, NC2045, MR2117, HA2874, WD3677, MW2113, ETP1, ETP2, ETP3 As String
@@ -26,38 +21,77 @@ Public Class Mechanic
     Public Shared FPV0, FPV1, FPV2, FPV3, FPV4, FPV5, FPV6, FPV7, FPV8, FPV9 As Vehicle
     Public Shared TPV0, TPV1, TPV2, TPV3, TPV4, TPV5, TPV6, TPV7, TPV8, TPV9 As Vehicle
     Public Shared PPV0, PPV1, PPV2, PPV3, PPV4, PPV5, PPV6, PPV7, PPV8, PPV9 As Vehicle
+    Public Shared MPV, FPV, TPV, PPV As Vehicle
     Public Shared itemAS3, itemIW4, itemIW4HL, itemDPH, itemDPHHL, itemDT, itemET, itemETHL, itemRM, itemRMHL, itemTT, itemTTHL, itemWP, itemVB As UIMenuItem
     Public Shared itemNC2044, itemHA2862, itemHA2868, itemWO3655, itemNC2045, itemMR2117, itemHA2874, itemWD3677, itemMW2113, itemETP1, itemETP2, itemETP3 As UIMenuItem
     Public Shared GarageMenuItem(10) As UIMenuItem
     Public Shared GrgMoveMenuItem(10) As UIMenuItem
-    Public Shared GarageMenuSelectedItem, GarageMenuSelectedFile, MoveMenuSelectedItem, MoveMenuSelectedFile, MoveMenuSelectedIndex, SelectedGarage As String
+    Public Shared GrgTransMenuItem(10) As UIMenuItem
+    Public Shared GarageMenuSelectedItem, GarageMenuSelectedFile, MoveMenuSelectedItem, MoveMenuSelectedFile, MoveMenuSelectedIndex, SelectedGarage, PegasusSelectedVehicleFile As String
+
+    Public Shared AltaPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
+    Public Shared IntegrityPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
+    Public Shared Integrity2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
+    Public Shared PerroPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
+    Public Shared Perro2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
+    Public Shared DreamPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\"
+    Public Shared EclipsePathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
+    Public Shared Eclipse2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
+    Public Shared RichardPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
+    Public Shared Richard2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
+    Public Shared TinselPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
+    Public Shared Tinsel2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
+    Public Shared WeazelPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
+    Public Shared VespucciPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
+    Public Shared NorthConker2044Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\"
+    Public Shared HillcrestAve2862Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\"
+    Public Shared HillcrestAve2868Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcreast_ave\"
+    Public Shared WildOats3655Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
+    Public Shared NorthConker2045Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
+    Public Shared MiltonRoad2117Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\"
+    Public Shared HillcrestAve2874Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\"
+    Public Shared Whispymound3677Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
+    Public Shared MadWayne2113Dri As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2113_mad_wayne\"
+    Public Shared EclipseP1PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
+    Public Shared EclipseP2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
+    Public Shared EclipseP3PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
+
+    Public Shared MichaelPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Michael\"
+    Public Shared FranklinPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Franklin\"
+    Public Shared TrevorPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Trevor\"
+    Public Shared Player3PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Player3\"
+    Public Shared SoundPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Sounds\"
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
-            If uiLanguage = "Chinese" Then
-                Garage = "車庫"
-                _Mechanic = "機械師"
-                GrgOptions = "管理車輛"
-                GrgRemove = "刪除車輛"
-                GrgRemoveAndDrive = "刪除並且駕駛離開"
-                GrgMove = "重新排序"
-                GrgSell = "出售車輛給改車王"
-                GrgSelectVeh = "選擇車輛"
-                GrgTooHot = "我們暫時不需要這輛車。"
-                ReturnVeh = "返回所有車輛"
-            Else
-                Garage = " Garage"
-                _Mechanic = "Mechanic"
-                GrgOptions = "MANAGE VEHICLES"
-                GrgRemove = "Remove Vehicle"
-                GrgRemoveAndDrive = "Remove and exit Garage"
-                GrgMove = "Rearrange Vehicle"
-                GrgSell = "Sell Vehicle to LSC"
-                GrgSelectVeh = "Select vehicle."
-                GrgTooHot = "This vehicle is too hot to sell."
-                ReturnVeh = "Return all Vehicles"
-            End If
+            'New Language
+            Website.BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
+            Website.DockTease = ReadCfgValue("DockTease", langFile)
+            Website.LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
+            Website.ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
+            Website.PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
+            Website.SouthernSA = ReadCfgValue("SouthernSA", langFile)
+            Website.WarstockCache = ReadCfgValue("WarstockCache", langFile)
+            Garage = ReadCfgValue("Garage", langFile)
+            GrgOptions = ReadCfgValue("GrgOptions", langFile)
+            GrgRemove = ReadCfgValue("GrgRemove", langFile)
+            GrgRemoveAndDrive = ReadCfgValue("GrgRemoveAndDrive", langFile)
+            GrgMove = ReadCfgValue("GrgMove", langFile)
+            GrgSell = ReadCfgValue("GrgSell", langFile)
+            GrgSelectVeh = ReadCfgValue("GrgSelectVeh", langFile)
+            GrgTooHot = ReadCfgValue("GrgTooHot", langFile)
+            GrgPlate = ReadCfgValue("GrgPlate", langFile)
+            GrgRename = ReadCfgValue("GrgRename", langFile)
+            GrgTransfer = ReadCfgValue("GrgTransfer", langFile)
+            _Mechanic = ReadCfgValue("_Mechanic", langFile)
+            _Pegasus = ReadCfgValue("_Pegasus", langFile)
+            PegasusDeliver = ReadCfgValue("PegasusDeliver", langFile)
+            PegasusDelete = ReadCfgValue("PegasusDelete", langFile)
+            _Phone = ReadCfgValue("_Phone", langFile)
+            ChooseVeh = ReadCfgValue("ChooseVeh", langFile)
+            ChooseVehDesc = ReadCfgValue("ChooseVehDesc", langFile)
+            ReturnVeh = ReadCfgValue("ReturnVeh", langFile)
+            'End Language
 
             If playerHash = "225514697" Then
                 playerName = "Michael"
@@ -132,33 +166,187 @@ Public Class Mechanic
             My.Settings.Save()
 
             _menuPool = New MenuPool()
+            CreatePhoneMenu()
             CreateMechanicMenu()
-            CreateVehMenuAlta()
-            CreateVehMenuDream()
-            CreateVehMenuEclipse()
-            CreateVehMenuEclipseHL()
-            CreateVehMenuIntegrity()
-            CreateVehMenuIntegrityHL()
-            CreateVehMenuPerro()
-            CreateVehMenuPerroHL()
-            CreateVehMenuRichard()
-            CreateVehMenuRichardHL()
-            CreateVehMenuTinsel()
-            CreateVehMenuTinselHL()
-            CreateVehMenuWeazel()
+            CreateVehMenuApartments(AS3Menu, itemAS3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+            CreateVehMenuApartments(DTMenu, itemDT, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
+            CreateVehMenuApartments(ETMenu, itemET, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\")
+            CreateVehMenuApartments(ETHLMenu, itemETHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
+            CreateVehMenuApartments(IW4Menu, itemIW4, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+            CreateVehMenuApartments(IW4HLMenu, itemIW4HL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+            CreateVehMenuApartments(DPHMenu, itemDPH, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+            CreateVehMenuApartments(DPHHLMenu, itemDPHHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+            CreateVehMenuApartments(RMMenu, itemRM, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
+            CreateVehMenuApartments(RMHLMenu, itemRMHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+            CreateVehMenuApartments(TTMenu, itemTT, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+            CreateVehMenuApartments(TTHLMenu, itemTTHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+            CreateVehMenuApartments(WPMenu, itemWP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\")
             CreateVehMenuVespucciBlvd()
-            CreateNorthConker2044()
-            CreateHillcrestAve2862()
-            CreateHillcrestAve2868()
-            CreateWildOats3655()
-            CreateNorthConker2045()
-            CreateMiltonRoad2117()
-            CreateHillcrestAve2874()
-            CreateWhispymound3677()
-            CreateMadWayne2113()
-            CreateEclipsePenthouse1()
-            CreateEclipsePenthouse2()
-            CreateEclipsePenthouse3()
+            CreateVehMenuApartments(NC2044Menu, itemNC2044, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\")
+            CreateVehMenuApartments(HA2862Menu, itemHA2862, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\")
+            CreateVehMenuApartments(HA2868Menu, itemHA2868, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcrest_ave\")
+            CreateVehMenuApartments(WO3655Menu, itemWO3655, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
+            CreateVehMenuApartments(NC2045Menu, itemNC2045, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+            CreateVehMenuApartments(MR2117Menu, itemMR2117, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\")
+            CreateVehMenuApartments(HA2874Menu, itemHA2874, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\")
+            CreateVehMenuApartments(WD3677Menu, itemWD3677, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+            CreateVehMenuApartments(MW2113Menu, itemMW2113, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2113_mad_wayne\")
+            CreateVehMenuApartments(ETP1Menu, itemETP1, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+            CreateVehMenuApartments(ETP2Menu, itemETP2, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+            CreateVehMenuApartments(ETP3Menu, itemETP3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+            CreateConfirmPegasusMenu()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateConfirmPegasusMenu()
+        Try
+            PegasusConfirmMenu = New UIMenu("", _Pegasus.ToUpper(), New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            PegasusConfirmMenu.SetBannerType(Rectangle)
+            _menuPool.Add(PegasusConfirmMenu)
+            PegasusConfirmMenu.AddItem(New UIMenuItem(PegasusDeliver))
+            PegasusConfirmMenu.AddItem(New UIMenuItem(PegasusDelete))
+            PegasusConfirmMenu.RefreshIndex()
+            AddHandler PegasusConfirmMenu.OnItemSelect, AddressOf PegasusConfirmItemSelectHandler
+            AddHandler PegasusConfirmMenu.OnMenuClose, AddressOf PegasusConfirmMenuCloseHandler
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateMPegasusMenu()
+        Try
+            MichaelPegasusMenu = New UIMenu("", _Pegasus.ToUpper(), New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            MichaelPegasusMenu.SetBannerType(Rectangle)
+            _menuPool.Add(MichaelPegasusMenu)
+            MichaelPegasusMenu.MenuItems.Clear()
+            For Each File As String In IO.Directory.GetFiles(MichaelPathDir, "*.cfg")
+                Dim VehicleName As String = ReadCfgValue("VehicleName", File)
+                Dim VehicleNick As String = ReadCfgValue("VehicleNick", File)
+                Dim PlateNumber As String = ReadCfgValue("PlateNumber", File)
+                Dim VehDispName As String
+                If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
+                Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
+                With item
+                    .Car = File
+                End With
+                MichaelPegasusMenu.AddItem(item)
+            Next
+            MichaelPegasusMenu.RefreshIndex()
+            AddHandler MichaelPegasusMenu.OnItemSelect, AddressOf PegasusItemSelectHandler
+            AddHandler MichaelPegasusMenu.OnMenuClose, AddressOf PegasusConfirmMenuCloseHandler
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateFPegasusMenu()
+        Try
+            FranklinPegasusMenu = New UIMenu("", _Pegasus.ToUpper(), New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            FranklinPegasusMenu.SetBannerType(Rectangle)
+            _menuPool.Add(FranklinPegasusMenu)
+            FranklinPegasusMenu.MenuItems.Clear()
+            For Each File As String In IO.Directory.GetFiles(FranklinPathDir, "*.cfg")
+                Dim VehicleName As String = ReadCfgValue("VehicleName", File)
+                Dim VehicleNick As String = ReadCfgValue("VehicleNick", File)
+                Dim PlateNumber As String = ReadCfgValue("PlateNumber", File)
+                Dim VehDispName As String
+                If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
+                Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
+                With item
+                    .Car = File
+                End With
+                FranklinPegasusMenu.AddItem(item)
+            Next
+            FranklinPegasusMenu.RefreshIndex()
+            AddHandler FranklinPegasusMenu.OnItemSelect, AddressOf PegasusItemSelectHandler
+            AddHandler FranklinPegasusMenu.OnMenuClose, AddressOf PegasusConfirmMenuCloseHandler
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateTPegasusMenu()
+        Try
+            TrevorPegasusMenu = New UIMenu("", _Pegasus.ToUpper(), New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            TrevorPegasusMenu.SetBannerType(Rectangle)
+            _menuPool.Add(TrevorPegasusMenu)
+            TrevorPegasusMenu.MenuItems.Clear()
+            For Each File As String In IO.Directory.GetFiles(TrevorPathDir, "*.cfg")
+                Dim VehicleName As String = ReadCfgValue("VehicleName", File)
+                Dim VehicleNick As String = ReadCfgValue("VehicleNick", File)
+                Dim PlateNumber As String = ReadCfgValue("PlateNumber", File)
+                Dim VehDispName As String
+                If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
+                Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
+                With item
+                    .Car = File
+                End With
+                TrevorPegasusMenu.AddItem(item)
+            Next
+            TrevorPegasusMenu.RefreshIndex()
+            AddHandler TrevorPegasusMenu.OnItemSelect, AddressOf PegasusItemSelectHandler
+            AddHandler TrevorPegasusMenu.OnMenuClose, AddressOf PegasusConfirmMenuCloseHandler
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreatePPegasusMenu()
+        Try
+            Player3PegasusMenu = New UIMenu("", _Pegasus.ToUpper(), New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            Player3PegasusMenu.SetBannerType(Rectangle)
+            _menuPool.Add(Player3PegasusMenu)
+            Player3PegasusMenu.MenuItems.Clear()
+            For Each File As String In IO.Directory.GetFiles(Player3PathDir, "*.cfg")
+                Dim VehicleName As String = ReadCfgValue("VehicleName", File)
+                Dim VehicleNick As String = ReadCfgValue("VehicleNick", File)
+                Dim PlateNumber As String = ReadCfgValue("PlateNumber", File)
+                Dim VehDispName As String
+                If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
+                Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
+                With item
+                    .Car = File
+                End With
+                Player3PegasusMenu.AddItem(item)
+            Next
+            Player3PegasusMenu.RefreshIndex()
+            AddHandler Player3PegasusMenu.OnItemSelect, AddressOf PegasusItemSelectHandler
+            AddHandler Player3PegasusMenu.OnMenuClose, AddressOf PegasusConfirmMenuCloseHandler
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreatePhoneMenu()
+        Try
+            PhoneMenu = New UIMenu("", _Phone, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            PhoneMenu.SetBannerType(Rectangle)
+            _menuPool.Add(PhoneMenu)
+            PhoneMenu.AddItem(New UIMenuItem(_Mechanic))
+            PhoneMenu.AddItem(New UIMenuItem(_Pegasus))
+            PhoneMenu.AddItem(New UIMenuItem(Website.BennysOriginal))
+            PhoneMenu.AddItem(New UIMenuItem(Website.DockTease))
+            PhoneMenu.AddItem(New UIMenuItem(Website.ElitasTravel))
+            PhoneMenu.AddItem(New UIMenuItem(Website.LegendaryMotorsport))
+            PhoneMenu.AddItem(New UIMenuItem(Website.PedalToMetal))
+            PhoneMenu.AddItem(New UIMenuItem(Website.SouthernSA))
+            PhoneMenu.AddItem(New UIMenuItem(Website.WarstockCache))
+            PhoneMenu.RefreshIndex()
+            AddHandler PhoneMenu.OnItemSelect, AddressOf PhoneMenuItemSelectHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -166,33 +354,6 @@ Public Class Mechanic
 
     Public Shared Sub CreateMechanicMenu()
         Try
-            Dim AltaPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
-            Dim IntegrityPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
-            Dim Integrity2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
-            Dim PerroPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
-            Dim Perro2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
-            Dim DreamPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\"
-            Dim EclipsePathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
-            Dim Eclipse2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
-            Dim RichardPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
-            Dim Richard2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
-            Dim TinselPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
-            Dim Tinsel2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
-            Dim WeazelPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
-            Dim VespucciPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
-            Dim NorthConker2044Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\"
-            Dim HillcrestAve2862Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\"
-            Dim HillcrestAve2868Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcreast_ave\"
-            Dim WildOats3655Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
-            Dim NorthConker2045Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
-            Dim MiltonRoad2117Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\"
-            Dim HillcrestAve2874Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\"
-            Dim Whispymound3677Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
-            Dim MadWayne2113Dri As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2113_mad_wayne\"
-            Dim EclipseP1PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
-            Dim EclipseP2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
-            Dim EclipseP3PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
-
             Dim Alta As Integer = IO.Directory.GetFiles(AltaPathDir, "*.cfg").Count
             Dim Integrity As Integer = IO.Directory.GetFiles(IntegrityPathDir, "*.cfg").Count
             Dim Integrity2 As Integer = IO.Directory.GetFiles(Integrity2PathDir, "*.cfg").Count
@@ -253,1742 +414,266 @@ Public Class Mechanic
             If ETP2 = playerName AndAlso Not EclipseP2 = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP2)
             If ETP3 = playerName AndAlso Not EclipseP3 = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP3)
             MechanicMenu.RefreshIndex()
+            AddHandler MechanicMenu.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
 #Region "Create Apartment"
-    Public Sub CreateVehMenuAlta()
+    Public Shared Sub CreateVehTransMenuApt()
         Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
-            AS3Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
+            Dim Alta As Integer = IO.Directory.GetFiles(AltaPathDir, "*.cfg").Count
+            Dim Integrity As Integer = IO.Directory.GetFiles(IntegrityPathDir, "*.cfg").Count
+            Dim Integrity2 As Integer = IO.Directory.GetFiles(Integrity2PathDir, "*.cfg").Count
+            Dim Perro As Integer = IO.Directory.GetFiles(PerroPathDir, "*.cfg").Count
+            Dim Perro2 As Integer = IO.Directory.GetFiles(Perro2PathDir, "*.cfg").Count
+            Dim Dream As Integer = IO.Directory.GetFiles(DreamPathDir, "*.cfg").Count
+            Dim Eclipse As Integer = IO.Directory.GetFiles(EclipsePathDir, "*.cfg").Count
+            Dim Eclipse2 As Integer = IO.Directory.GetFiles(Eclipse2PathDir, "*.cfg").Count
+            Dim Richard As Integer = IO.Directory.GetFiles(RichardPathDir, "*.cfg").Count
+            Dim Richard2 As Integer = IO.Directory.GetFiles(Richard2PathDir, "*.cfg").Count
+            Dim Tinsel As Integer = IO.Directory.GetFiles(TinselPathDir, "*.cfg").Count
+            Dim Tinsel2 As Integer = IO.Directory.GetFiles(Tinsel2PathDir, "*.cfg").Count
+            Dim Weazel As Integer = IO.Directory.GetFiles(WeazelPathDir, "*.cfg").Count
+            Dim Vespucci As Integer = IO.Directory.GetFiles(VespucciPathDir, "*.cfg").Count
+            Dim NConker2044 As Integer = IO.Directory.GetFiles(NorthConker2044Dir, "*.cfg").Count
+            Dim Hillcrest2862 As Integer = IO.Directory.GetFiles(HillcrestAve2862Dir, "*.cfg").Count
+            Dim Hillcrest2868 As Integer = IO.Directory.GetFiles(HillcrestAve2868Dir, "*.cfg").Count
+            Dim Wild3655 As Integer = IO.Directory.GetFiles(WildOats3655Dir, "*.cfg").Count
+            Dim NConker2045 As Integer = IO.Directory.GetFiles(NorthConker2045Dir, "*.cfg").Count
+            Dim MiltonR2117 As Integer = IO.Directory.GetFiles(MiltonRoad2117Dir, "*.cfg").Count
+            Dim Hillcrest2874 As Integer = IO.Directory.GetFiles(HillcrestAve2874Dir, "*.cfg").Count
+            Dim Whispymound3677 As Integer = IO.Directory.GetFiles(Whispymound3677Dir, "*.cfg").Count
+            Dim MadWayne2113 As Integer = IO.Directory.GetFiles(MadWayne2113Dri, "*.cfg").Count
+            Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
+            Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
+            Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
+
+            GrgTransMenu = New UIMenu("", ChooseApt, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            AS3Menu.SetBannerType(Rectangle)
-            _menuPool.Add(AS3Menu)
-            AS3Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                AS3Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            AS3Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            AS3Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(AS3Menu, itemAS3)
-            AddHandler AS3Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
+            GrgTransMenu.SetBannerType(Rectangle)
+            _menuPool.Add(GrgTransMenu)
+            GrgTransMenu.MenuItems.Clear()
+            If AS3 = playerName AndAlso Not Alta = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemAS3)
+            If IW4 = playerName AndAlso Not Integrity = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemIW4)
+            If IW4HL = playerName AndAlso Not Integrity2 = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemIW4HL)
+            If DPH = playerName AndAlso Not Perro = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemDPH)
+            If DPHHL = playerName AndAlso Not Perro2 = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemDPHHL)
+            If DT = playerName AndAlso Not Dream = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemDT)
+            If ET = playerName AndAlso Not Eclipse = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemET)
+            If ETHL = playerName AndAlso Not Eclipse2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETHL)
+            If RM = playerName AndAlso Not Richard = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemRM)
+            If RMHL = playerName AndAlso Not Richard2 = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemRMHL)
+            If TT = playerName AndAlso Not Tinsel = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTT)
+            If TTHL = playerName AndAlso Not Tinsel2 = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTTHL)
+            If WP = playerName AndAlso Not Weazel = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWP)
+            If VB = playerName AndAlso Not Vespucci = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemVB)
+            If NC2044 = playerName AndAlso Not NConker2044 = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemNC2044)
+            If HA2862 = playerName AndAlso Not Hillcrest2862 = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2862)
+            If HA2868 = playerName AndAlso Not Hillcrest2868 = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2868)
+            If WO3655 = playerName AndAlso Not Wild3655 = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWO3655)
+            If NC2045 = playerName AndAlso Not NConker2045 = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemNC2045)
+            If MR2117 = playerName AndAlso Not MiltonR2117 = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMR2117)
+            If HA2874 = playerName AndAlso Not Hillcrest2874 = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2874)
+            If WD3677 = playerName AndAlso Not Whispymound3677 = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWD3677)
+            If MW2113 = playerName AndAlso Not MadWayne2113 = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMW2113)
+            If ETP1 = playerName AndAlso Not EclipseP1 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP1)
+            If ETP2 = playerName AndAlso Not EclipseP2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP2)
+            If ETP3 = playerName AndAlso Not EclipseP3 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP3)
+            GrgTransMenu.RefreshIndex()
+            AddHandler GrgTransMenu.OnItemSelect, AddressOf TransVehItemSelectHandler
+            AddHandler GrgTransMenu.OnMenuClose, AddressOf MenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Sub CreateVehMenuIntegrity()
+    Public Shared Sub CreateVehMenuApartments(MenuCategory As UIMenu, MenuItem As UIMenuItem, PathDir As String)
         Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
-            IW4Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
+            MenuCategory = New UIMenu("", ChooseVeh, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            IW4Menu.SetBannerType(Rectangle)
-            _menuPool.Add(IW4Menu)
-            IW4Menu.MenuItems.Clear()
+            MenuCategory.SetBannerType(Rectangle)
+            _menuPool.Add(MenuCategory)
+            MenuCategory.MenuItems.Clear()
             Dim item(10) As UIMenuItem
             If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(0))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_0.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(0) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(0))
                 With item(0)
                     .Car = PathDir & "vehicle_0.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(1))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_1.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(1) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(1))
                 With item(1)
                     .Car = PathDir & "vehicle_1.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(2))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_2.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(2) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(2))
                 With item(2)
                     .Car = PathDir & "vehicle_2.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(3))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_3.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(3) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(3))
                 With item(3)
                     .Car = PathDir & "vehicle_3.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(4))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_4.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(4) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(4))
                 With item(4)
                     .Car = PathDir & "vehicle_4.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(5))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_5.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(5) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(5))
                 With item(5)
                     .Car = PathDir & "vehicle_5.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(6))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_6.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(6) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(6))
                 With item(6)
                     .Car = PathDir & "vehicle_6.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(7))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_7.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(7) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(7))
                 With item(7)
                     .Car = PathDir & "vehicle_7.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(8))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_8.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(8) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(8))
                 With item(8)
                     .Car = PathDir & "vehicle_8.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                IW4Menu.AddItem(item(9))
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_9.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(9) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
+                MenuCategory.AddItem(item(9))
                 With item(9)
                     .Car = PathDir & "vehicle_9.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            IW4Menu.AddItem(ReturnVehItem)
+            MenuCategory.AddItem(ReturnVehItem)
             With ReturnVehItem
                 .Car = PathDir
             End With
-            IW4Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(IW4Menu, itemIW4)
-            AddHandler IW4Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
+            MenuCategory.RefreshIndex()
+            MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
+            AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
+            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Sub CreateVehMenuIntegrityHL()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
-            IW4HLMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            IW4HLMenu.SetBannerType(Rectangle)
-            _menuPool.Add(IW4HLMenu)
-            IW4HLMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                IW4HLMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            IW4HLMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            IW4HLMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(IW4HLMenu, itemIW4HL)
-            AddHandler IW4HLMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuPerro()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
-            DPHMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            DPHMenu.SetBannerType(Rectangle)
-            _menuPool.Add(DPHMenu)
-            DPHMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                DPHMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            DPHMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            DPHMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(DPHMenu, itemDPH)
-            AddHandler DPHMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuPerroHL()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
-            DPHHLMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            DPHHLMenu.SetBannerType(Rectangle)
-            _menuPool.Add(DPHHLMenu)
-            DPHHLMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                DPHHLMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            DPHHLMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            DPHHLMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(DPHHLMenu, itemDPHHL)
-            AddHandler DPHHLMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuDream()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\"
-            DTMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            DTMenu.SetBannerType(Rectangle)
-            _menuPool.Add(DTMenu)
-            DTMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                DTMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            DTMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            DTMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(DTMenu, itemDT)
-            AddHandler DTMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuEclipse()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
-            ETMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            ETMenu.SetBannerType(Rectangle)
-            _menuPool.Add(ETMenu)
-            ETMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                ETMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            ETMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            ETMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(ETMenu, itemET)
-            AddHandler ETMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuEclipseHL()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
-            ETHLMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            ETHLMenu.SetBannerType(Rectangle)
-            _menuPool.Add(ETHLMenu)
-            ETHLMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                ETHLMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            ETHLMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            ETHLMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(ETHLMenu, itemETHL)
-            AddHandler ETHLMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuRichard()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
-            RMMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            RMMenu.SetBannerType(Rectangle)
-            _menuPool.Add(RMMenu)
-            RMMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                RMMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            RMMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            RMMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(RMMenu, itemRM)
-            AddHandler RMMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuRichardHL()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
-            RMHLMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            RMHLMenu.SetBannerType(Rectangle)
-            _menuPool.Add(RMHLMenu)
-            RMHLMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                RMHLMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            RMHLMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            RMHLMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(RMHLMenu, itemRMHL)
-            AddHandler RMHLMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuTinsel()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
-            TTMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            TTMenu.SetBannerType(Rectangle)
-            _menuPool.Add(TTMenu)
-            TTMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                TTMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            TTMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            TTMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(TTMenu, itemTT)
-            AddHandler TTMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuTinselHL()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
-            TTHLMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            TTHLMenu.SetBannerType(Rectangle)
-            _menuPool.Add(TTHLMenu)
-            TTHLMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                TTHLMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            TTHLMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            TTHLMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(TTHLMenu, itemTTHL)
-            AddHandler TTHLMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuWeazel()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
-            WPMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            WPMenu.SetBannerType(Rectangle)
-            _menuPool.Add(WPMenu)
-            WPMenu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                WPMenu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            WPMenu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            WPMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(WPMenu, itemWP)
-            AddHandler WPMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateVehMenuVespucciBlvd()
+    Public Shared Sub CreateVehMenuVespucciBlvd()
         Try
             Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
             VBMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
@@ -2000,67 +685,97 @@ Public Class Mechanic
             Dim item(10) As UIMenuItem
             If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_0.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(0) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
                 VBMenu.AddItem(item(0))
                 With item(0)
                     .Car = PathDir & "vehicle_0.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_1.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(1) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
                 VBMenu.AddItem(item(1))
                 With item(1)
                     .Car = PathDir & "vehicle_1.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_2.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(2) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
                 VBMenu.AddItem(item(2))
                 With item(2)
                     .Car = PathDir & "vehicle_2.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_3.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(3) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
                 VBMenu.AddItem(item(3))
                 With item(3)
                     .Car = PathDir & "vehicle_3.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_4.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(4) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
                 VBMenu.AddItem(item(4))
                 With item(4)
                     .Car = PathDir & "vehicle_4.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
             If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg")
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & "vehicle_5.cfg")
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                item(5) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
                 VBMenu.AddItem(item(5))
                 With item(5)
                     .Car = PathDir & "vehicle_5.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             End If
@@ -2072,1602 +787,7 @@ Public Class Mechanic
             VBMenu.RefreshIndex()
             MechanicMenu.BindMenuToItem(VBMenu, itemVB)
             AddHandler VBMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateNorthConker2044()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\"
-            NC2044Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            NC2044Menu.SetBannerType(Rectangle)
-            _menuPool.Add(NC2044Menu)
-            NC2044Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                NC2044Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            NC2044Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            NC2044Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(NC2044Menu, itemNC2044)
-            AddHandler NC2044Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateHillcrestAve2862()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\"
-            HA2862Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            HA2862Menu.SetBannerType(Rectangle)
-            _menuPool.Add(HA2862Menu)
-            HA2862Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                HA2862Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            HA2862Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            HA2862Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(HA2862Menu, itemHA2862)
-            AddHandler HA2862Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateHillcrestAve2868()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcrest_ave\"
-            HA2868Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            HA2868Menu.SetBannerType(Rectangle)
-            _menuPool.Add(HA2868Menu)
-            HA2868Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                HA2868Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            HA2868Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            HA2868Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(HA2868Menu, itemHA2868)
-            AddHandler HA2868Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateWildOats3655()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
-            WO3655Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            WO3655Menu.SetBannerType(Rectangle)
-            _menuPool.Add(WO3655Menu)
-            WO3655Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                WO3655Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            WO3655Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            WO3655Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(WO3655Menu, itemWO3655)
-            AddHandler WO3655Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateMiltonRoad2117()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\"
-            MR2117Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            MR2117Menu.SetBannerType(Rectangle)
-            _menuPool.Add(MR2117Menu)
-            MR2117Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                MR2117Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            MR2117Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            MR2117Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(MR2117Menu, itemMR2117)
-            AddHandler MR2117Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateHillcrestAve2874()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\"
-            HA2874Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            HA2874Menu.SetBannerType(Rectangle)
-            _menuPool.Add(HA2874Menu)
-            HA2874Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                HA2874Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            HA2874Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            HA2874Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(HA2874Menu, itemHA2874)
-            AddHandler HA2874Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateNorthConker2045()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
-            NC2045Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            NC2045Menu.SetBannerType(Rectangle)
-            _menuPool.Add(NC2045Menu)
-            NC2045Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                NC2045Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            NC2045Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            NC2045Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(NC2045Menu, itemNC2045)
-            AddHandler NC2045Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateWhispymound3677()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
-            WD3677Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            WD3677Menu.SetBannerType(Rectangle)
-            _menuPool.Add(WD3677Menu)
-            WD3677Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                WD3677Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            WD3677Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            WD3677Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(WD3677Menu, itemWD3677)
-            AddHandler WD3677Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateMadWayne2113()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2113_mad_wayne\"
-            MW2113Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            MW2113Menu.SetBannerType(Rectangle)
-            _menuPool.Add(MW2113Menu)
-            MW2113Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                MW2113Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            MW2113Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            MW2113Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(MW2113Menu, itemMW2113)
-            AddHandler MW2113Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateEclipsePenthouse1()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
-            ETP1Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            ETP1Menu.SetBannerType(Rectangle)
-            _menuPool.Add(ETP1Menu)
-            ETP1Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                ETP1Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            ETP1Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            ETP1Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(ETP1Menu, itemETP1)
-            AddHandler ETP1Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateEclipsePenthouse2()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
-            ETP2Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            ETP2Menu.SetBannerType(Rectangle)
-            _menuPool.Add(ETP2Menu)
-            ETP2Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                ETP2Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            ETP2Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            ETP2Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(ETP2Menu, itemETP2)
-            AddHandler ETP2Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub CreateEclipsePenthouse3()
-        Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
-            ETP3Menu = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            ETP3Menu.SetBannerType(Rectangle)
-            _menuPool.Add(ETP3Menu)
-            ETP3Menu.MenuItems.Clear()
-            Dim item(10) As UIMenuItem
-            If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
-                item(0) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(0))
-                With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_1.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_1.cfg")
-                item(1) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(1))
-                With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_2.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_2.cfg")
-                item(2) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(2))
-                With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_3.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_3.cfg")
-                item(3) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(3))
-                With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_4.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_4.cfg")
-                item(4) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(4))
-                With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_5.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_5.cfg")
-                item(5) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(5))
-                With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_6.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_6.cfg")
-                item(6) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(6))
-                With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_7.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_7.cfg")
-                item(7) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(7))
-                With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_8.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_8.cfg")
-                item(8) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(8))
-                With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            If IO.File.Exists(PathDir & "vehicle_9.cfg") Then
-                Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_9.cfg")
-                item(9) = New UIMenuItem(ReadCfgValue("VehicleName", PathDir & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
-                ETP3Menu.AddItem(item(9))
-                With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
-                    If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                    End If
-                End With
-            End If
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            ETP3Menu.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .Car = PathDir
-            End With
-            ETP3Menu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(ETP3Menu, itemETP3)
-            AddHandler ETP3Menu.OnItemSelect, AddressOf CategoryItemSelectHandler
+            'AddHandler VBMenu.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -3690,7 +810,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(0)
                         .Car = "vehicle_0.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3707,7 +828,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(1)
                         .Car = "vehicle_1.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3724,7 +846,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(2)
                         .Car = "vehicle_2.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3741,7 +864,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(3)
                         .Car = "vehicle_3.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3758,7 +882,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(4)
                         .Car = "vehicle_4.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3775,7 +900,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(5)
                         .Car = "vehicle_5.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3792,7 +918,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(6)
                         .Car = "vehicle_6.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3809,7 +936,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(7)
                         .Car = "vehicle_7.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3826,7 +954,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(8)
                         .Car = "vehicle_8.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3843,7 +972,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(9)
                         .Car = "vehicle_9.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3861,7 +991,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(0)
                         .Car = "vehicle_0.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3878,7 +1009,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(1)
                         .Car = "vehicle_1.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3895,7 +1027,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(2)
                         .Car = "vehicle_2.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3912,7 +1045,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(3)
                         .Car = "vehicle_3.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3929,7 +1063,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(4)
                         .Car = "vehicle_4.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3946,7 +1081,8 @@ Public Class Mechanic
                     With GrgMoveMenuItem(5)
                         .Car = "vehicle_5.cfg"
                         If Active = "True" Then
-                            .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                            .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                            .Enabled = False
                         End If
                     End With
                 Else
@@ -3976,6 +1112,9 @@ Public Class Mechanic
             GarageMenu2.AddItem(New UIMenuItem(GrgRemoveAndDrive))
             GarageMenu2.AddItem(New UIMenuItem(GrgSell))
             GarageMenu2.AddItem(New UIMenuItem(GrgMove))
+            GarageMenu2.AddItem(New UIMenuItem(GrgTransfer))
+            GarageMenu2.AddItem(New UIMenuItem(GrgPlate))
+            GarageMenu2.AddItem(New UIMenuItem(GrgRename))
             GarageMenu2.RefreshIndex()
             If SixOrTen = "Ten" Then
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(0))
@@ -4014,12 +1153,18 @@ Public Class Mechanic
             GarageMenu.MenuItems.Clear()
             If IO.File.Exists(file & "vehicle_0.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_0.cfg")
-                GarageMenuItem(0) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_0.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(0) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(0) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
                     .Car = "vehicle_0.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4027,16 +1172,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
                     .Car = "vehicle_0.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_1.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_1.cfg")
-                GarageMenuItem(1) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_1.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(1) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(1) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
                     .Car = "vehicle_1.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4044,16 +1196,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
                     .Car = "vehicle_1.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_2.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_2.cfg")
-                GarageMenuItem(2) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_2.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(2) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(2) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
                     .Car = "vehicle_2.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4061,16 +1220,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
                     .Car = "vehicle_2.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_3.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_3.cfg")
-                GarageMenuItem(3) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_3.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(3) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(3) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
                     .Car = "vehicle_3.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4078,16 +1244,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
                     .Car = "vehicle_3.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_4.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_4.cfg")
-                GarageMenuItem(4) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_4.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(4) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(4) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
                     .Car = "vehicle_4.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4095,16 +1268,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
                     .Car = "vehicle_4.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_5.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_5.cfg")
-                GarageMenuItem(5) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_5.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(5) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(5) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
                     .Car = "vehicle_5.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4112,16 +1292,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
                     .Car = "vehicle_5.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_6.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_6.cfg")
-                GarageMenuItem(6) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_6.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_6.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(6) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_6.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(6) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_6.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(6))
                 With GarageMenuItem(6)
                     .Car = "vehicle_6.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4129,16 +1316,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(6))
                 With GarageMenuItem(6)
                     .Car = "vehicle_6.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_7.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_7.cfg")
-                GarageMenuItem(7) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_7.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_7.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(7) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_7.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(7) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_7.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(7))
                 With GarageMenuItem(7)
                     .Car = "vehicle_7.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4146,16 +1340,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(7))
                 With GarageMenuItem(7)
                     .Car = "vehicle_7.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_8.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_8.cfg")
-                GarageMenuItem(8) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_8.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_8.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(8) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_8.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(8) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_8.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(8))
                 With GarageMenuItem(8)
                     .Car = "vehicle_8.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4163,16 +1364,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(8))
                 With GarageMenuItem(8)
                     .Car = "vehicle_8.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_9.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_9.cfg")
-                GarageMenuItem(9) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_9.cfg") & ")", GrgSelectVeh)
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_9.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(9) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_9.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(9) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_9.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(9))
                 With GarageMenuItem(9)
                     .Car = "vehicle_9.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4180,6 +1388,7 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(9))
                 With GarageMenuItem(9)
                     .Car = "vehicle_9.cfg"
+                    .Enabled = False
                 End With
             End If
             GarageMenu.RefreshIndex()
@@ -4200,12 +1409,18 @@ Public Class Mechanic
             GarageMenu.MenuItems.Clear()
             If IO.File.Exists(file & "vehicle_0.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_0.cfg")
-                GarageMenuItem(0) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")")
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_0.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(0) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(0) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
                     .Car = "vehicle_0.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4213,16 +1428,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
                     .Car = "vehicle_0.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_1.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_1.cfg")
-                GarageMenuItem(1) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")")
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_1.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(1) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(1) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
                     .Car = "vehicle_1.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4230,16 +1452,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
                     .Car = "vehicle_1.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_2.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_2.cfg")
-                GarageMenuItem(2) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")")
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_2.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(2) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(2) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
                     .Car = "vehicle_2.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4247,16 +1476,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
                     .Car = "vehicle_2.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_3.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_3.cfg")
-                GarageMenuItem(3) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")")
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_3.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(3) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(3) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
                     .Car = "vehicle_3.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4264,16 +1500,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
                     .Car = "vehicle_3.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_4.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_4.cfg")
-                GarageMenuItem(4) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")")
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_4.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(4) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(4) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
                     .Car = "vehicle_4.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4281,16 +1524,23 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
                     .Car = "vehicle_4.cfg"
+                    .Enabled = False
                 End With
             End If
             If IO.File.Exists(file & "vehicle_5.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", file & "vehicle_5.cfg")
-                GarageMenuItem(5) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")")
+                Dim Nick As String = ReadCfgValue("VehicleNick", file & "vehicle_5.cfg")
+                If Nick <> "" Then
+                    GarageMenuItem(5) = New UIMenuItem(Nick & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
+                Else
+                    GarageMenuItem(5) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
+                End If
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
                     .Car = "vehicle_5.cfg"
                     If Active = "True" Then
-                        .SetLeftBadge(UIMenuItem.BadgeStyle.Car)
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
                     End If
                 End With
             Else
@@ -4298,6 +1548,7 @@ Public Class Mechanic
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
                     .Car = "vehicle_5.cfg"
+                    .Enabled = False
                 End With
             End If
             GarageMenu.RefreshIndex()
@@ -4308,524 +1559,157 @@ Public Class Mechanic
         End Try
     End Sub
 
-    Public Sub CategoryItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+    Public Shared Sub CategoryItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
             If selectedItem.Text = ReturnVeh Then
                 Mechanic2.ReturnVeh(selectedItem.Car)
-            ElseIf Not selectedItem.LeftBadge = UIMenuItem.BadgeStyle.Car AndAlso Not selectedItem.Text = ReturnVeh Then
+            ElseIf Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.Car AndAlso Not selectedItem.Text = ReturnVeh Then
                 Dim VehicleModel As String = ReadCfgValue("VehicleModel", selectedItem.Car)
                 Dim Active As String = ReadCfgValue("Active", selectedItem.Car)
                 Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", selectedItem.Car)
 
                 If playerName = "Michael" AndAlso Active = "False" Then
-                    If MPV1 = Nothing Then
-                        If VehicleModel = "" Then
-                            MPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            MPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
-                        MPV1.AddBlip()
-                        MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        MPV1.CurrentBlip.Color = BlipColor.Blue
-                        MPV1.CurrentBlip.IsShortRange = True
-                        SetBlipName(MPV1.FriendlyName, MPV1.CurrentBlip)
-                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                        WriteCfgValue("Active", "True", selectedItem.Car)
-                        Mechanic2.SetModKit(MPV1, selectedItem.Car)
-                    Else
-                        If MPV2 = Nothing Then
-                            If VehicleModel = "" Then
-                                MPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                MPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
-                            MPV2.AddBlip()
-                            MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            MPV2.CurrentBlip.Color = BlipColor.Blue
-                            MPV2.CurrentBlip.IsShortRange = True
-                            SetBlipName(MPV2.FriendlyName, MPV2.CurrentBlip)
-                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                            WriteCfgValue("Active", "True", selectedItem.Car)
-                            Mechanic2.SetModKit(MPV2, selectedItem.Car)
-                        Else
-                            If MPV3 = Nothing Then
-                                If VehicleModel = "" Then
-                                    MPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    MPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
-                                MPV3.AddBlip()
-                                MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                MPV3.CurrentBlip.Color = BlipColor.Blue
-                                MPV3.CurrentBlip.IsShortRange = True
-                                SetBlipName(MPV3.FriendlyName, MPV3.CurrentBlip)
-                                selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", selectedItem.Car)
-                                Mechanic2.SetModKit(MPV3, selectedItem.Car)
-                            Else
-                                If MPV4 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        MPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        MPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
-                                    MPV4.AddBlip()
-                                    MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    MPV4.CurrentBlip.Color = BlipColor.Blue
-                                    MPV4.CurrentBlip.IsShortRange = True
-                                    SetBlipName(MPV4.FriendlyName, MPV4.CurrentBlip)
-                                    selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", selectedItem.Car)
-                                    Mechanic2.SetModKit(MPV4, selectedItem.Car)
-                                Else
-                                    If MPV5 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            MPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            MPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
-                                        MPV5.AddBlip()
-                                        MPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        MPV5.CurrentBlip.Color = BlipColor.Blue
-                                        MPV5.CurrentBlip.IsShortRange = True
-                                        SetBlipName(MPV5.FriendlyName, MPV5.CurrentBlip)
-                                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", selectedItem.Car)
-                                        Mechanic2.SetModKit(MPV5, selectedItem.Car)
-                                    Else
-                                        If MPV6 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                MPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                MPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
-                                            MPV6.AddBlip()
-                                            MPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            MPV6.CurrentBlip.Color = BlipColor.Blue
-                                            MPV6.CurrentBlip.IsShortRange = True
-                                            SetBlipName(MPV6.FriendlyName, MPV6.CurrentBlip)
-                                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", selectedItem.Car)
-                                            Mechanic2.SetModKit(MPV6, selectedItem.Car)
-                                        Else
-                                            If MPV7 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    MPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    MPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
-                                                MPV7.AddBlip()
-                                                MPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                MPV7.CurrentBlip.Color = BlipColor.Blue
-                                                MPV7.CurrentBlip.IsShortRange = True
-                                                SetBlipName(MPV7.FriendlyName, MPV7.CurrentBlip)
-                                                selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", selectedItem.Car)
-                                                Mechanic2.SetModKit(MPV7, selectedItem.Car)
-                                            Else
-                                                If MPV8 = Nothing Then
-                                                    If VehicleModel = "" Then
-                                                        MPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                    Else
-                                                        MPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                    End If
-                                                    MPV8.AddBlip()
-                                                    MPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                    MPV8.CurrentBlip.Color = BlipColor.Blue
-                                                    MPV8.CurrentBlip.IsShortRange = True
-                                                    SetBlipName(MPV8.FriendlyName, MPV8.CurrentBlip)
-                                                    selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                    WriteCfgValue("Active", "True", selectedItem.Car)
-                                                    Mechanic2.SetModKit(MPV8, selectedItem.Car)
-                                                Else
-                                                    If MPV9 = Nothing Then
-                                                        If VehicleModel = "" Then
-                                                            MPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                        Else
-                                                            MPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                        End If
-                                                        MPV9.AddBlip()
-                                                        MPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                        MPV9.CurrentBlip.Color = BlipColor.Blue
-                                                        MPV9.CurrentBlip.IsShortRange = True
-                                                        SetBlipName(MPV9.FriendlyName, MPV9.CurrentBlip)
-                                                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                        WriteCfgValue("Active", "True", selectedItem.Car)
-                                                        Mechanic2.SetModKit(MPV9, selectedItem.Car)
-                                                    Else
-                                                        If MPV0 = Nothing Then
-                                                            If VehicleModel = "" Then
-                                                                MPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                            Else
-                                                                MPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                            End If
-                                                            MPV0.AddBlip()
-                                                            MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                            MPV0.CurrentBlip.Color = BlipColor.Blue
-                                                            MPV0.CurrentBlip.IsShortRange = True
-                                                            SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
-                                                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                            WriteCfgValue("Active", "True", selectedItem.Car)
-                                                            Mechanic2.SetModKit(MPV0, selectedItem.Car)
-                                                        Else
-                                                            sender.Visible = False
-                                                            If uiLanguage = "Chinese" Then
-                                                                UI.ShowSubtitle("您已达到车辆交付的最大数量。")
-                                                            Else
-                                                                UI.ShowSubtitle("You have reached the maximum number of vehicle delivery.")
-                                                            End If
-                                                            Exit Sub
-                                                        End If
-                                                    End If
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic2.Michael_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
                 ElseIf playerName = "Franklin" AndAlso Active = "False" Then
-                    If FPV1 = Nothing Then
-                        If VehicleModel = "" Then
-                            FPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            FPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
-                        FPV1.AddBlip()
-                        FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        FPV1.CurrentBlip.Color = BlipColor.Green
-                        FPV1.CurrentBlip.IsShortRange = True
-                        SetBlipName(FPV1.FriendlyName, FPV1.CurrentBlip)
-                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                        WriteCfgValue("Active", "True", selectedItem.Car)
-                        Mechanic2.SetModKit(FPV1, selectedItem.Car)
-                    Else
-                        If FPV2 = Nothing Then
-                            If VehicleModel = "" Then
-                                FPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                FPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
-                            FPV2.AddBlip()
-                            FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            FPV2.CurrentBlip.Color = BlipColor.Green
-                            FPV2.CurrentBlip.IsShortRange = True
-                            SetBlipName(FPV2.FriendlyName, FPV2.CurrentBlip)
-                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                            WriteCfgValue("Active", "True", selectedItem.Car)
-                            Mechanic2.SetModKit(FPV2, selectedItem.Car)
-                        Else
-                            If FPV3 = Nothing Then
-                                If VehicleModel = "" Then
-                                    FPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    FPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
-                                FPV3.AddBlip()
-                                FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                FPV3.CurrentBlip.Color = BlipColor.Green
-                                FPV3.CurrentBlip.IsShortRange = True
-                                SetBlipName(FPV3.FriendlyName, FPV3.CurrentBlip)
-                                selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", selectedItem.Car)
-                                Mechanic2.SetModKit(FPV3, selectedItem.Car)
-                            Else
-                                If FPV4 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        FPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        FPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
-                                    FPV4.AddBlip()
-                                    FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    FPV4.CurrentBlip.Color = BlipColor.Green
-                                    FPV4.CurrentBlip.IsShortRange = True
-                                    SetBlipName(FPV4.FriendlyName, FPV4.CurrentBlip)
-                                    selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", selectedItem.Car)
-                                    Mechanic2.SetModKit(FPV4, selectedItem.Car)
-                                Else
-                                    If FPV5 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            FPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            FPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
-                                        FPV5.AddBlip()
-                                        FPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        FPV5.CurrentBlip.Color = BlipColor.Green
-                                        FPV5.CurrentBlip.IsShortRange = True
-                                        SetBlipName(FPV5.FriendlyName, FPV5.CurrentBlip)
-                                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", selectedItem.Car)
-                                        Mechanic2.SetModKit(FPV5, selectedItem.Car)
-                                    Else
-                                        If FPV6 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                FPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                FPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
-                                            FPV6.AddBlip()
-                                            FPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            FPV6.CurrentBlip.Color = BlipColor.Green
-                                            FPV6.CurrentBlip.IsShortRange = True
-                                            SetBlipName(FPV6.FriendlyName, FPV6.CurrentBlip)
-                                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", selectedItem.Car)
-                                            Mechanic2.SetModKit(FPV6, selectedItem.Car)
-                                        Else
-                                            If FPV7 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    FPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    FPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
-                                                FPV7.AddBlip()
-                                                FPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                FPV7.CurrentBlip.Color = BlipColor.Green
-                                                FPV7.CurrentBlip.IsShortRange = True
-                                                SetBlipName(FPV7.FriendlyName, FPV7.CurrentBlip)
-                                                selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", selectedItem.Car)
-                                                Mechanic2.SetModKit(FPV7, selectedItem.Car)
-                                            Else
-                                                If FPV8 = Nothing Then
-                                                    If VehicleModel = "" Then
-                                                        FPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                    Else
-                                                        FPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                    End If
-                                                    FPV8.AddBlip()
-                                                    FPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                    FPV8.CurrentBlip.Color = BlipColor.Green
-                                                    FPV8.CurrentBlip.IsShortRange = True
-                                                    SetBlipName(FPV8.FriendlyName, FPV8.CurrentBlip)
-                                                    selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                    WriteCfgValue("Active", "True", selectedItem.Car)
-                                                    Mechanic2.SetModKit(FPV8, selectedItem.Car)
-                                                Else
-                                                    If FPV9 = Nothing Then
-                                                        If VehicleModel = "" Then
-                                                            FPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                        Else
-                                                            FPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                        End If
-                                                        FPV9.AddBlip()
-                                                        FPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                        FPV9.CurrentBlip.Color = BlipColor.Green
-                                                        FPV9.CurrentBlip.IsShortRange = True
-                                                        SetBlipName(FPV9.FriendlyName, FPV9.CurrentBlip)
-                                                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                        WriteCfgValue("Active", "True", selectedItem.Car)
-                                                        Mechanic2.SetModKit(FPV9, selectedItem.Car)
-                                                    Else
-                                                        If FPV0 = Nothing Then
-                                                            If VehicleModel = "" Then
-                                                                FPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                            Else
-                                                                FPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                            End If
-                                                            FPV0.AddBlip()
-                                                            FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                            FPV0.CurrentBlip.Color = BlipColor.Green
-                                                            FPV0.CurrentBlip.IsShortRange = True
-                                                            SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
-                                                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                            WriteCfgValue("Active", "True", selectedItem.Car)
-                                                            Mechanic2.SetModKit(FPV0, selectedItem.Car)
-                                                        Else
-                                                            sender.Visible = False
-                                                            If uiLanguage = "Chinese" Then
-                                                                UI.ShowSubtitle("您已达到车辆交付的最大数量。")
-                                                            Else
-                                                                UI.ShowSubtitle("You have reached the maximum number of vehicle delivery.")
-                                                            End If
-                                                            Exit Sub
-                                                        End If
-                                                    End If
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic2.Franklin_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
                 ElseIf playerName = “Trevor" AndAlso Active = "False" Then
-                    If TPV1 = Nothing Then
-                        If VehicleModel = "" Then
-                            TPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            TPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
-                        TPV1.AddBlip()
-                        TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        TPV1.CurrentBlip.Color = 17
-                        TPV1.CurrentBlip.IsShortRange = True
-                        SetBlipName(TPV1.FriendlyName, TPV1.CurrentBlip)
-                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                        WriteCfgValue("Active", "True", selectedItem.Car)
-                        Mechanic2.SetModKit(TPV1, selectedItem.Car)
-                    Else
-                        If TPV2 = Nothing Then
-                            If VehicleModel = "" Then
-                                TPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                TPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
-                            TPV2.AddBlip()
-                            TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            TPV2.CurrentBlip.Color = 17
-                            TPV2.CurrentBlip.IsShortRange = True
-                            SetBlipName(TPV2.FriendlyName, TPV2.CurrentBlip)
-                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                            WriteCfgValue("Active", "True", selectedItem.Car)
-                            Mechanic2.SetModKit(TPV2, selectedItem.Car)
-                        Else
-                            If TPV3 = Nothing Then
-                                If VehicleModel = "" Then
-                                    TPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    TPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
-                                TPV3.AddBlip()
-                                TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                TPV3.CurrentBlip.Color = 17
-                                TPV3.CurrentBlip.IsShortRange = True
-                                SetBlipName(TPV3.FriendlyName, TPV3.CurrentBlip)
-                                selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", selectedItem.Car)
-                                Mechanic2.SetModKit(TPV3, selectedItem.Car)
-                            Else
-                                If TPV4 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        TPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        TPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
-                                    TPV4.AddBlip()
-                                    TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    TPV4.CurrentBlip.Color = 17
-                                    TPV4.CurrentBlip.IsShortRange = True
-                                    SetBlipName(TPV4.FriendlyName, TPV4.CurrentBlip)
-                                    selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", selectedItem.Car)
-                                    Mechanic2.SetModKit(TPV4, selectedItem.Car)
-                                Else
-                                    If TPV5 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            TPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            TPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
-                                        TPV5.AddBlip()
-                                        TPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        TPV5.CurrentBlip.Color = 17
-                                        TPV5.CurrentBlip.IsShortRange = True
-                                        SetBlipName(TPV5.FriendlyName, TPV5.CurrentBlip)
-                                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", selectedItem.Car)
-                                        Mechanic2.SetModKit(TPV5, selectedItem.Car)
-                                    Else
-                                        If TPV6 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                TPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                TPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
-                                            TPV6.AddBlip()
-                                            TPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            TPV6.CurrentBlip.Color = 17
-                                            TPV6.CurrentBlip.IsShortRange = True
-                                            SetBlipName(TPV6.FriendlyName, TPV6.CurrentBlip)
-                                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", selectedItem.Car)
-                                            Mechanic2.SetModKit(TPV6, selectedItem.Car)
-                                        Else
-                                            If TPV7 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    TPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    TPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
-                                                TPV7.AddBlip()
-                                                TPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                TPV7.CurrentBlip.Color = 17
-                                                TPV7.CurrentBlip.IsShortRange = True
-                                                SetBlipName(TPV7.FriendlyName, TPV7.CurrentBlip)
-                                                selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", selectedItem.Car)
-                                                Mechanic2.SetModKit(TPV7, selectedItem.Car)
-                                            Else
-                                                If TPV8 = Nothing Then
-                                                    If VehicleModel = "" Then
-                                                        TPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                    Else
-                                                        TPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                    End If
-                                                    TPV8.AddBlip()
-                                                    TPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                    TPV8.CurrentBlip.Color = 17
-                                                    TPV8.CurrentBlip.IsShortRange = True
-                                                    SetBlipName(TPV8.FriendlyName, TPV8.CurrentBlip)
-                                                    selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                    WriteCfgValue("Active", "True", selectedItem.Car)
-                                                    Mechanic2.SetModKit(TPV8, selectedItem.Car)
-                                                Else
-                                                    If TPV9 = Nothing Then
-                                                        If VehicleModel = "" Then
-                                                            TPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                        Else
-                                                            TPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                        End If
-                                                        TPV9.AddBlip()
-                                                        TPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                        TPV9.CurrentBlip.Color = 17
-                                                        TPV9.CurrentBlip.IsShortRange = True
-                                                        SetBlipName(TPV9.FriendlyName, TPV9.CurrentBlip)
-                                                        selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                        WriteCfgValue("Active", "True", selectedItem.Car)
-                                                        Mechanic2.SetModKit(TPV9, selectedItem.Car)
-                                                    Else
-                                                        If TPV0 = Nothing Then
-                                                            If VehicleModel = "" Then
-                                                                TPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                            Else
-                                                                TPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                            End If
-                                                            TPV0.AddBlip()
-                                                            TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                            TPV0.CurrentBlip.Color = 17
-                                                            TPV0.CurrentBlip.IsShortRange = True
-                                                            SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
-                                                            selectedItem.SetLeftBadge(UIMenuItem.BadgeStyle.Car)
-                                                            WriteCfgValue("Active", "True", selectedItem.Car)
-                                                            Mechanic2.SetModKit(TPV0, selectedItem.Car)
-                                                        Else
-                                                            sender.Visible = False
-                                                            If uiLanguage = "Chinese" Then
-                                                                UI.ShowSubtitle("您已达到车辆交付的最大数量。")
-                                                            Else
-                                                                UI.ShowSubtitle("You have reached the maximum number of vehicle delivery.")
-                                                            End If
-                                                            Exit Sub
-                                                        End If
-                                                    End If
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic2.Trevor_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
                 ElseIf playerName = "Player3" AndAlso Active = "False" Then
                     Mechanic2.Player3_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
                 End If
+                My.Computer.Audio.Play(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav", AudioPlayMode.Background)
             End If
             sender.Visible = False
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub PhoneMenuItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        Select Case selectedItem.Text
+            Case _Mechanic
+                Call_Mechanic()
+            Case _Pegasus
+                Call_Pegasus(True)
+            Case Website.BennysOriginal
+                Website.Call_Benny()
+            Case Website.DockTease
+                Website.Call_DockTease()
+            Case Website.ElitasTravel
+                Website.Call_ElitasTravel()
+            Case Website.LegendaryMotorsport
+                Website.Call_Legendary()
+            Case Website.PedalToMetal
+                Website.Call_PedalToMetal()
+            Case Website.SouthernSA
+                Website.Call_SouthernSA()
+            Case Website.WarstockCache
+                Website.Call_Warstock()
+        End Select
+        sender.Visible = False
+    End Sub
+
+    Public Shared Sub TransVehItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        Try
+            Dim TargetPathDir As String = Nothing
+            Select Case selectedItem.Text
+                Case itemAS3.Text
+                    TargetPathDir = AltaPathDir
+                Case itemIW4.Text
+                    TargetPathDir = IntegrityPathDir
+                Case itemIW4HL.Text
+                    TargetPathDir = Integrity2PathDir
+                Case itemDPH.Text
+                    TargetPathDir = PerroPathDir
+                Case itemDPHHL.Text
+                    TargetPathDir = Perro2PathDir
+                Case itemDT.Text
+                    TargetPathDir = DreamPathDir
+                Case itemET.Text
+                    TargetPathDir = EclipsePathDir
+                Case itemETHL.Text
+                    TargetPathDir = Eclipse2PathDir
+                Case itemRM.Text
+                    TargetPathDir = RichardPathDir
+                Case itemRMHL.Text
+                    TargetPathDir = Richard2PathDir
+                Case itemTT.Text
+                    TargetPathDir = TinselPathDir
+                Case itemTTHL.Text
+                    TargetPathDir = Tinsel2PathDir
+                Case itemWP.Text
+                    TargetPathDir = WeazelPathDir
+                Case itemVB.Text
+                    TargetPathDir = VespucciPathDir
+                Case itemNC2044.Text
+                    TargetPathDir = NorthConker2044Dir
+                Case itemHA2862.Text
+                    TargetPathDir = HillcrestAve2862Dir
+                Case itemHA2868.Text
+                    TargetPathDir = HillcrestAve2868Dir
+                Case itemWO3655.Text
+                    TargetPathDir = WildOats3655Dir
+                Case itemNC2045.Text
+                    TargetPathDir = NorthConker2045Dir
+                Case itemMR2117.Text
+                    TargetPathDir = MiltonRoad2117Dir
+                Case itemHA2874.Text
+                    TargetPathDir = HillcrestAve2874Dir
+                Case itemWD3677.Text
+                    TargetPathDir = Whispymound3677Dir
+                Case itemMW2113.Text
+                    TargetPathDir = MadWayne2113Dri
+                Case itemETP1.Text
+                    TargetPathDir = EclipseP1PathDir
+                Case itemETP2.Text
+                    TargetPathDir = EclipseP2PathDir
+                Case itemETP3.Text
+                    TargetPathDir = EclipseP3PathDir
+            End Select
+
+            If IO.File.Exists(TargetPathDir & "vehicle_0.cfg") = False Then
+                IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_0.cfg")
+            Else
+                If IO.File.Exists(TargetPathDir & "vehicle_1.cfg") = False Then
+                    IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_1.cfg")
+                Else
+                    If IO.File.Exists(TargetPathDir & "vehicle_2.cfg") = False Then
+                        IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_2.cfg")
+                    Else
+                        If IO.File.Exists(TargetPathDir & "vehicle_3.cfg") = False Then
+                            IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_3.cfg")
+                        Else
+                            If IO.File.Exists(TargetPathDir & "vehicle_4.cfg") = False Then
+                                IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_4.cfg")
+                            Else
+                                If IO.File.Exists(TargetPathDir & "vehicle_5.cfg") = False Then
+                                    IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_5.cfg")
+                                Else
+                                    If IO.File.Exists(TargetPathDir & "vehicle_6.cfg") = False Then
+                                        IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_6.cfg")
+                                    Else
+                                        If IO.File.Exists(TargetPathDir & "vehicle_7.cfg") = False Then
+                                            IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_7.cfg")
+                                        Else
+                                            If IO.File.Exists(TargetPathDir & "vehicle_8.cfg") = False Then
+                                                IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_8.cfg")
+                                            Else
+                                                If IO.File.Exists(TargetPathDir & "vehicle_9.cfg") = False Then
+                                                    IO.File.Move(Path & GarageMenuSelectedFile, TargetPathDir & "vehicle_9.cfg")
+                                                End If
+                                            End If
+                                        End If
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            End If
+            If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
+            If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
+            sender.Visible = False
+            GarageMenu.Visible = True
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -4862,6 +1746,155 @@ Public Class Mechanic
         End Try
     End Sub
 
+    Public Shared Sub PegasusConfirmItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        If selectedItem.Text = PegasusDeliver Then
+            Dim VehicleModel As String = ReadCfgValue("VehicleModel", PegasusSelectedVehicleFile)
+            Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", PegasusSelectedVehicleFile)
+
+            If playerName = "Michael" Then
+                If Not MPV = Nothing Then
+                    MPV.CurrentBlip.Remove()
+                    MPV.Delete()
+                End If
+                If VehicleModel = "" Then
+                    MPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
+                Else
+                    MPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
+                End If
+                If MPV.ClassType = VehicleClass.Boats Then MPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
+                If MPV.ClassType = VehicleClass.Planes Then MPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
+                If MPV.ClassType = VehicleClass.Helicopters Then MPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                MPV.PlaceOnGround()
+                MPV.AddBlip()
+                If MPV.ClassType = VehicleClass.Boats Then
+                    MPV.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf MPV.ClassType = VehicleClass.Helicopters Then
+                    MPV.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf MPV.ClassType = VehicleClass.Utility
+                    MPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf MPV.ClassType = VehicleClass.Planes Then
+                    MPV.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf MPV.ClassType = VehicleClass.Military Then
+                    MPV.CurrentBlip.Sprite = BlipSprite.Tank
+                Else
+                    MPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                End If
+                MPV.CurrentBlip.Color = BlipColor.Blue
+                SetBlipName(MPV.FriendlyName, MPV.CurrentBlip)
+                Mechanic2.SetModKit(MPV, PegasusSelectedVehicleFile)
+                MPV.FreezePosition = True
+            ElseIf playerName = "Franklin" Then
+                If Not FPV = Nothing Then
+                    FPV.CurrentBlip.Remove()
+                    FPV.Delete()
+                End If
+                If VehicleModel = "" Then
+                    FPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
+                Else
+                    FPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
+                End If
+                If FPV.ClassType = VehicleClass.Boats Then FPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
+                If FPV.ClassType = VehicleClass.Planes Then FPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
+                If FPV.ClassType = VehicleClass.Helicopters Then FPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                FPV.PlaceOnGround()
+                FPV.AddBlip()
+                If FPV.ClassType = VehicleClass.Boats Then
+                    FPV.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf FPV.ClassType = VehicleClass.Helicopters Then
+                    FPV.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf FPV.ClassType = VehicleClass.Utility
+                    FPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf FPV.ClassType = VehicleClass.Planes Then
+                    FPV.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf FPV.ClassType = VehicleClass.Military Then
+                    FPV.CurrentBlip.Sprite = BlipSprite.Tank
+                Else
+                    FPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                End If
+                FPV.CurrentBlip.Color = BlipColor.Green
+                SetBlipName(FPV.FriendlyName, FPV.CurrentBlip)
+                Mechanic2.SetModKit(FPV, PegasusSelectedVehicleFile)
+                FPV.FreezePosition = True
+            ElseIf playerName = “Trevor" Then
+                If Not TPV = Nothing Then
+                    TPV.CurrentBlip.Remove()
+                    TPV.Delete()
+                End If
+                If VehicleModel = "" Then
+                    TPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
+                Else
+                    TPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
+                End If
+                If TPV.ClassType = VehicleClass.Boats Then TPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
+                If TPV.ClassType = VehicleClass.Planes Then TPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
+                If TPV.ClassType = VehicleClass.Helicopters Then TPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                TPV.PlaceOnGround()
+                TPV.AddBlip()
+                If TPV.ClassType = VehicleClass.Boats Then
+                    TPV.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf TPV.ClassType = VehicleClass.Helicopters Then
+                    TPV.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf TPV.ClassType = VehicleClass.Utility
+                    TPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf TPV.ClassType = VehicleClass.Planes Then
+                    TPV.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf TPV.ClassType = VehicleClass.Military Then
+                    TPV.CurrentBlip.Sprite = BlipSprite.Tank
+                Else
+                    TPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                End If
+                TPV.CurrentBlip.Color = 17
+                SetBlipName(TPV.FriendlyName, TPV.CurrentBlip)
+                Mechanic2.SetModKit(TPV, PegasusSelectedVehicleFile)
+                TPV.FreezePosition = True
+            ElseIf playerName = "Player3" Then
+                If Not PPV = Nothing Then
+                    PPV.CurrentBlip.Remove()
+                    PPV.Delete()
+                End If
+                If VehicleModel = "" Then
+                    PPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
+                Else
+                    PPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
+                End If
+                If PPV.ClassType = VehicleClass.Boats Then PPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
+                If PPV.ClassType = VehicleClass.Planes Then PPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
+                If PPV.ClassType = VehicleClass.Helicopters Then PPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                PPV.PlaceOnGround()
+                PPV.AddBlip()
+                If PPV.ClassType = VehicleClass.Boats Then
+                    PPV.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf PPV.ClassType = VehicleClass.Helicopters Then
+                    PPV.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf PPV.ClassType = VehicleClass.Utility
+                    PPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf PPV.ClassType = VehicleClass.Planes Then
+                    PPV.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf PPV.ClassType = VehicleClass.Military Then
+                    PPV.CurrentBlip.Sprite = BlipSprite.Tank
+                Else
+                    PPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                End If
+                PPV.CurrentBlip.Color = BlipColor.Yellow
+                SetBlipName(PPV.FriendlyName, PPV.CurrentBlip)
+                Mechanic2.SetModKit(PPV, PegasusSelectedVehicleFile)
+                PPV.FreezePosition = True
+            End If
+            SinglePlayerApartment.player.Money = (playerCash - 200)
+            My.Computer.Audio.Play(SoundPathDir & "pegasus_we_are_locating_a_suitable_drop_off_location.wav", AudioPlayMode.Background)
+        ElseIf selectedItem.Text = PegasusDelete Then
+            IO.File.Delete(PegasusSelectedVehicleFile)
+            Call_Pegasus(False)
+        End If
+        sender.Visible = False
+    End Sub
+
+    Public Shared Sub PegasusItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        PegasusSelectedVehicleFile = selectedItem.Car
+        sender.Visible = False
+        PegasusConfirmMenu.Visible = Not PegasusConfirmMenu.Visible
+    End Sub
+
     Public Shared Sub ItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
             If sender Is GarageMenu AndAlso Not selectedItem.Text = "Empty" Then
@@ -4870,28 +1903,6 @@ Public Class Mechanic
             End If
 
             If selectedItem.Text = GrgRemove Then
-                Select Case GarageMenuSelectedFile
-                    Case "vehicle_0.cfg"
-                        If SelectedGarage = "Ten" Then TenCarGarage.veh0.Delete() Else SixCarGarage.veh0.Delete()
-                    Case "vehicle_1.cfg"
-                        If SelectedGarage = "Ten" Then TenCarGarage.veh1.Delete() Else SixCarGarage.veh1.Delete()
-                    Case "vehicle_2.cfg"
-                        If SelectedGarage = "Ten" Then TenCarGarage.veh2.Delete() Else SixCarGarage.veh2.Delete()
-                    Case "vehicle_3.cfg"
-                        If SelectedGarage = "Ten" Then TenCarGarage.veh3.Delete() Else SixCarGarage.veh3.Delete()
-                    Case "vehicle_4.cfg"
-                        If SelectedGarage = "Ten" Then TenCarGarage.veh4.Delete() Else SixCarGarage.veh4.Delete()
-                    Case "vehicle_5.cfg"
-                        If SelectedGarage = "Ten" Then TenCarGarage.veh5.Delete() Else SixCarGarage.veh5.Delete()
-                    Case "vehicle_6.cfg"
-                        TenCarGarage.veh6.Delete()
-                    Case "vehicle_7.cfg"
-                        TenCarGarage.veh7.Delete()
-                    Case "vehicle_8.cfg"
-                        TenCarGarage.veh8.Delete()
-                    Case "vehicle_9.cfg"
-                        TenCarGarage.veh9.Delete()
-                End Select
                 IO.File.Delete(Path & GarageMenuSelectedFile)
                 If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                 If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
@@ -4905,7 +1916,7 @@ Public Class Mechanic
                         Dim tempVeh As Vehicle
                         playerPed.Position = TenCarGarage.lastLocationGarageOutVector
                         If ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile) = "" Then
-                            tempVeh = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), TenCarGarage.lastLocationGarageOutVector.X, TenCarGarage.lastLocationGarageOutVector.Y, TenCarGarage.lastLocationGarageOutVector.Z, TenCarGarage.lastLocationGarageOutHeading, False, False)
+                            tempVeh = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile)), TenCarGarage.lastLocationGarageOutVector)
                         Else
                             tempVeh = World.CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), TenCarGarage.lastLocationGarageOutVector)
                         End If
@@ -4919,7 +1930,6 @@ Public Class Mechanic
                         sender.Visible = False
                         Script.Wait(500)
                         Game.FadeScreenIn(500)
-                        TenCarGarage.isInGarage = False
                         TenCarGarage.ShowAllHiddenMapObject()
                         UnLoadMPDLCMap()
                     End If
@@ -4930,7 +1940,7 @@ Public Class Mechanic
                         Dim tempVeh As Vehicle
                         playerPed.Position = SixCarGarage.lastLocationGarageOutVector
                         If ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile) = "" Then
-                            tempVeh = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), SixCarGarage.lastLocationGarageOutVector.X, SixCarGarage.lastLocationGarageOutVector.Y, SixCarGarage.lastLocationGarageOutVector.Z, SixCarGarage.lastLocationGarageOutHeading, False, False)
+                            tempVeh = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile)), TenCarGarage.lastLocationGarageOutVector)
                         Else
                             tempVeh = World.CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), SixCarGarage.lastLocationGarageOutVector)
                         End If
@@ -4944,7 +1954,6 @@ Public Class Mechanic
                         sender.Visible = False
                         Script.Wait(500)
                         Game.FadeScreenIn(500)
-                        SixCarGarage.isInGarage = False
                         UnLoadMPDLCMap()
                     End If
                 End If
@@ -4988,6 +1997,89 @@ Public Class Mechanic
                 CreateMoveMenu(Path, SelectedGarage)
                 sender.Visible = False
                 GrgMoveMenu.Visible = True
+            ElseIf selectedItem.Text = GrgPlate Then
+                Dim VehPlate As String = Game.GetUserInput(ReadCfgValue("PlateNumber", Path & GarageMenuSelectedFile), 9)
+                If VehPlate <> "" Then
+                    Select Case GarageMenuSelectedFile
+                        Case "vehicle_0.cfg"
+                            If SelectedGarage = "Ten" Then
+                                TenCarGarage.veh0.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", TenCarGarage.veh0.NumberPlate, Path & GarageMenuSelectedFile)
+                            Else
+                                SixCarGarage.veh0.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", SixCarGarage.veh0.NumberPlate, Path & GarageMenuSelectedFile)
+                            End If
+                        Case "vehicle_1.cfg"
+                            If SelectedGarage = "Ten" Then
+                                TenCarGarage.veh1.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", TenCarGarage.veh1.NumberPlate, Path & GarageMenuSelectedFile)
+                            Else
+                                SixCarGarage.veh1.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", SixCarGarage.veh1.NumberPlate, Path & GarageMenuSelectedFile)
+                            End If
+                        Case "vehicle_2.cfg"
+                            If SelectedGarage = "Ten" Then
+                                TenCarGarage.veh2.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", TenCarGarage.veh2.NumberPlate, Path & GarageMenuSelectedFile)
+                            Else
+                                SixCarGarage.veh2.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", SixCarGarage.veh2.NumberPlate, Path & GarageMenuSelectedFile)
+                            End If
+                        Case "vehicle_3.cfg"
+                            If SelectedGarage = "Ten" Then
+                                TenCarGarage.veh3.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", TenCarGarage.veh3.NumberPlate, Path & GarageMenuSelectedFile)
+                            Else
+                                SixCarGarage.veh3.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", SixCarGarage.veh3.NumberPlate, Path & GarageMenuSelectedFile)
+                            End If
+                        Case "vehicle_4.cfg"
+                            If SelectedGarage = "Ten" Then
+                                TenCarGarage.veh4.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", TenCarGarage.veh4.NumberPlate, Path & GarageMenuSelectedFile)
+                            Else
+                                SixCarGarage.veh4.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", SixCarGarage.veh4.NumberPlate, Path & GarageMenuSelectedFile)
+                            End If
+                        Case "vehicle_5.cfg"
+                            If SelectedGarage = "Ten" Then
+                                TenCarGarage.veh5.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", TenCarGarage.veh5.NumberPlate, Path & GarageMenuSelectedFile)
+                            Else
+                                SixCarGarage.veh5.NumberPlate = VehPlate
+                                WriteCfgValue("PlateNumber", SixCarGarage.veh5.NumberPlate, Path & GarageMenuSelectedFile)
+                            End If
+                        Case "vehicle_6.cfg"
+                            TenCarGarage.veh6.NumberPlate = VehPlate
+                            WriteCfgValue("PlateNumber", TenCarGarage.veh6.NumberPlate, Path & GarageMenuSelectedFile)
+                        Case "vehicle_7.cfg"
+                            TenCarGarage.veh7.NumberPlate = VehPlate
+                            WriteCfgValue("PlateNumber", TenCarGarage.veh7.NumberPlate, Path & GarageMenuSelectedFile)
+                        Case "vehicle_8.cfg"
+                            TenCarGarage.veh8.NumberPlate = VehPlate
+                            WriteCfgValue("PlateNumber", TenCarGarage.veh8.NumberPlate, Path & GarageMenuSelectedFile)
+                        Case "vehicle_9.cfg"
+                            TenCarGarage.veh9.NumberPlate = VehPlate
+                            WriteCfgValue("PlateNumber", TenCarGarage.veh9.NumberPlate, Path & GarageMenuSelectedFile)
+                    End Select
+                End If
+                If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
+                If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
+                sender.Visible = False
+                GarageMenu.Visible = True
+            ElseIf selectedItem.Text = GrgRename Then
+                Dim VehName As String = Game.GetUserInput(ReadCfgValue("VehicleNick", Path & GarageMenuSelectedFile), 29)
+                If VehName <> "" Then
+                    WriteCfgValue("VehicleNick", VehName, Path & GarageMenuSelectedFile)
+                End If
+                If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
+                If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
+                sender.Visible = False
+                GarageMenu.Visible = True
+            ElseIf selectedItem.Text = GrgTransfer Then
+                CreateVehTransMenuApt()
+                sender.Visible = False
+                GrgTransMenu.Visible = True
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -5019,6 +2111,14 @@ Public Class Mechanic
         End Try
     End Sub
 
+    Public Shared Sub PegasusConfirmMenuCloseHandler(sender As UIMenu)
+        My.Computer.Audio.Play(SoundPathDir & "pegasus_for_your_future_transport_need.wav", AudioPlayMode.Background)
+    End Sub
+
+    Public Shared Sub CategoryMenuCloseHandler(sender As UIMenu)
+        My.Computer.Audio.Play(SoundPathDir & "mechanic_get_back_to_work_then.wav", AudioPlayMode.Background)
+    End Sub
+
     Public Shared Sub GrgMoveMenuCloseHandler(sender As UIMenu)
         GarageMenu2.Visible = True
     End Sub
@@ -5036,90 +2136,120 @@ Public Class Mechanic
         End Try
     End Sub
 
+    Public Shared Sub Call_Mechanic()
+        AS3 = ReadCfgValue("3ASowner", saveFile)
+        IW4 = ReadCfgValue("4IWowner", saveFile)
+        IW4HL = ReadCfgValue("4IWHLowner", saveFile)
+        DPH = ReadCfgValue("DPHwoner", saveFile)
+        DPHHL = ReadCfgValue("DPHHLowner", saveFile)
+        DT = ReadCfgValue("SSowner", saveFile)
+        ET = ReadCfgValue("ETowner", saveFile)
+        ETHL = ReadCfgValue("ETHLowner", saveFile)
+        RM = ReadCfgValue("RMowner", saveFile)
+        RMHL = ReadCfgValue("RMHLowner", saveFile)
+        TT = ReadCfgValue("TTowner", saveFile)
+        TTHL = ReadCfgValue("TTHLowner", saveFile)
+        WP = ReadCfgValue("WPowner", saveFile)
+        VB = ReadCfgValue("VPBowner", saveFile2)
+        NC2044 = ReadCfgValue("2044NCowner", saveFile2)
+        HA2862 = ReadCfgValue("2862HAowner", saveFile2)
+        HA2868 = ReadCfgValue("2868HAowner", saveFile2)
+        WO3655 = ReadCfgValue("3655WODowner", saveFile2)
+        NC2045 = ReadCfgValue("2045NCowner", saveFile2)
+        MR2117 = ReadCfgValue("2117MRowner", saveFile2)
+        HA2874 = ReadCfgValue("2874HAowner", saveFile2)
+        WD3677 = ReadCfgValue("3677WDowner", saveFile2)
+        MW2113 = ReadCfgValue("2113MWTowner", saveFile2)
+        ETP1 = ReadCfgValue("ETP1owner", saveFile2)
+        ETP2 = ReadCfgValue("ETP2owner", saveFile2)
+        ETP3 = ReadCfgValue("ETP3owner", saveFile2)
+
+        itemAS3 = New UIMenuItem(_3AltaStreet._Name & _3AltaStreet.Unit)
+        itemIW4 = New UIMenuItem(_4IntegrityWay._Name & _4IntegrityWay.Unit)
+        itemIW4HL = New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit)
+        itemDPH = New UIMenuItem(DelPerroHeight._Name & DelPerroHeight.Unit)
+        itemDPHHL = New UIMenuItem(HLDelPerro._Name & HLDelPerro.Unit)
+        itemDT = New UIMenuItem(DreamTower._Name & DreamTower.Unit)
+        itemET = New UIMenuItem(EclipseTower._Name & EclipseTower.Unit)
+        itemETHL = New UIMenuItem(HLEclipseTower._Name & HLEclipseTower.Unit)
+        itemRM = New UIMenuItem(RichardMajestic._Name & RichardMajestic.Unit)
+        itemRMHL = New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit)
+        itemTT = New UIMenuItem(TinselTower._Name & TinselTower.Unit)
+        itemTTHL = New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit)
+        itemWP = New UIMenuItem(WeazelPlaza._Name & WeazelPlaza.Unit)
+        itemVB = New UIMenuItem(VespucciBlvd._Name & VespucciBlvd.Unit)
+        itemNC2044 = New UIMenuItem(NorthConker2044._Name & NorthConker2044.Unit)
+        itemHA2862 = New UIMenuItem(HillcrestAve2862._Name & HillcrestAve2862.Unit)
+        itemHA2868 = New UIMenuItem(HillcrestAve2868._Name & HillcrestAve2868.Unit)
+        itemWO3655 = New UIMenuItem(WildOats3655._Name & WildOats3655.Unit)
+        itemNC2045 = New UIMenuItem(NorthConker2045._Name & NorthConker2045.Unit)
+        itemMR2117 = New UIMenuItem(MiltonRd2117._Name & MiltonRd2117.Unit)
+        itemHA2874 = New UIMenuItem(HillcrestAve2874._Name & HillcrestAve2874.Unit)
+        itemWD3677 = New UIMenuItem(Whispymound3677._Name & Whispymound3677.Unit)
+        itemMW2113 = New UIMenuItem(MadWayne2113._Name & MadWayne2113.Unit)
+        itemETP1 = New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit)
+        itemETP2 = New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit)
+        itemETP3 = New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit)
+
+        CreateMechanicMenu()
+        CreateVehMenuApartments(AS3Menu, itemAS3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
+        CreateVehMenuApartments(DTMenu, itemDT, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\dream_tower\")
+        CreateVehMenuApartments(ETMenu, itemET, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\")
+        CreateVehMenuApartments(ETHLMenu, itemETHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
+        CreateVehMenuApartments(IW4Menu, itemIW4, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\")
+        CreateVehMenuApartments(IW4HLMenu, itemIW4HL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\")
+        CreateVehMenuApartments(DPHMenu, itemDPH, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\")
+        CreateVehMenuApartments(DPHHLMenu, itemDPHHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\")
+        CreateVehMenuApartments(RMMenu, itemRM, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\")
+        CreateVehMenuApartments(RMHLMenu, itemRMHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\")
+        CreateVehMenuApartments(TTMenu, itemTT, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+        CreateVehMenuApartments(TTHLMenu, itemTTHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+        CreateVehMenuApartments(WPMenu, itemWP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\")
+        CreateVehMenuVespucciBlvd()
+        CreateVehMenuApartments(NC2044Menu, itemNC2044, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\")
+        CreateVehMenuApartments(HA2862Menu, itemHA2862, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\")
+        CreateVehMenuApartments(HA2868Menu, itemHA2868, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcrest_ave\")
+        CreateVehMenuApartments(WO3655Menu, itemWO3655, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
+        CreateVehMenuApartments(NC2045Menu, itemNC2045, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+        CreateVehMenuApartments(MR2117Menu, itemMR2117, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\")
+        CreateVehMenuApartments(HA2874Menu, itemHA2874, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\")
+        CreateVehMenuApartments(WD3677Menu, itemWD3677, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+        CreateVehMenuApartments(MW2113Menu, itemMW2113, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2113_mad_wayne\")
+        CreateVehMenuApartments(ETP1Menu, itemETP1, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
+        CreateVehMenuApartments(ETP2Menu, itemETP2, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
+        CreateVehMenuApartments(ETP3Menu, itemETP3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+
+        MechanicMenu.Visible = Not MechanicMenu.Visible
+        My.Computer.Audio.Play(SoundPathDir & "mechanic_u_need_something_huh.wav", AudioPlayMode.Background)
+    End Sub
+
+    Public Shared Sub Call_Pegasus(PlaySound As Boolean)
+        Try
+            Select Case playerName
+                Case "Michael"
+                    CreateMPegasusMenu()
+                    MichaelPegasusMenu.Visible = True
+                Case "Franklin"
+                    CreateFPegasusMenu()
+                    FranklinPegasusMenu.Visible = True
+                Case "Trevor"
+                    CreateTPegasusMenu()
+                    TrevorPegasusMenu.Visible = True
+                Case "Player3"
+                    CreatePPegasusMenu()
+                    Player3PegasusMenu.Visible = True
+            End Select
+            If PlaySound = True Then
+                My.Computer.Audio.Play(SoundPathDir & "pegasus_how_can_i_help_u.wav", AudioPlayMode.Background)
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        If e.KeyCode = My.Settings.Mechanic Then
-            AS3 = ReadCfgValue("3ASowner", saveFile)
-            IW4 = ReadCfgValue("4IWowner", saveFile)
-            IW4HL = ReadCfgValue("4IWHLowner", saveFile)
-            DPH = ReadCfgValue("DPHwoner", saveFile)
-            DPHHL = ReadCfgValue("DPHHLowner", saveFile)
-            DT = ReadCfgValue("SSowner", saveFile)
-            ET = ReadCfgValue("ETowner", saveFile)
-            ETHL = ReadCfgValue("ETHLowner", saveFile)
-            RM = ReadCfgValue("RMowner", saveFile)
-            RMHL = ReadCfgValue("RMHLowner", saveFile)
-            TT = ReadCfgValue("TTowner", saveFile)
-            TTHL = ReadCfgValue("TTHLowner", saveFile)
-            WP = ReadCfgValue("WPowner", saveFile)
-            VB = ReadCfgValue("VPBowner", saveFile2)
-            NC2044 = ReadCfgValue("2044NCowner", saveFile2)
-            HA2862 = ReadCfgValue("2862HAowner", saveFile2)
-            HA2868 = ReadCfgValue("2868HAowner", saveFile2)
-            WO3655 = ReadCfgValue("3655WODowner", saveFile2)
-            NC2045 = ReadCfgValue("2045NCowner", saveFile2)
-            MR2117 = ReadCfgValue("2117MRowner", saveFile2)
-            HA2874 = ReadCfgValue("2874HAowner", saveFile2)
-            WD3677 = ReadCfgValue("3677WDowner", saveFile2)
-            MW2113 = ReadCfgValue("2113MWowner", saveFile2)
-            ETP1 = ReadCfgValue("ETP1owner", saveFile2)
-            ETP2 = ReadCfgValue("ETP2owner", saveFile2)
-            ETP3 = ReadCfgValue("ETP3owner", saveFile2)
-
-            itemAS3 = New UIMenuItem(_3AltaStreet._Name & _3AltaStreet.Unit)
-            itemIW4 = New UIMenuItem(_4IntegrityWay._Name & _4IntegrityWay.Unit)
-            itemIW4HL = New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit)
-            itemDPH = New UIMenuItem(DelPerroHeight._Name & DelPerroHeight.Unit)
-            itemDPHHL = New UIMenuItem(HLDelPerro._Name & HLDelPerro.Unit)
-            itemDT = New UIMenuItem(DreamTower._Name & DreamTower.Unit)
-            itemET = New UIMenuItem(EclipseTower._Name & EclipseTower.Unit)
-            itemETHL = New UIMenuItem(HLEclipseTower._Name & HLEclipseTower.Unit)
-            itemRM = New UIMenuItem(RichardMajestic._Name & RichardMajestic.Unit)
-            itemRMHL = New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit)
-            itemTT = New UIMenuItem(TinselTower._Name & TinselTower.Unit)
-            itemTTHL = New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit)
-            itemWP = New UIMenuItem(WeazelPlaza._Name & WeazelPlaza.Unit)
-            itemVB = New UIMenuItem(VespucciBlvd._Name & VespucciBlvd.Unit)
-            itemNC2044 = New UIMenuItem(NorthConker2044._Name & NorthConker2044.Unit)
-            itemHA2862 = New UIMenuItem(HillcrestAve2862._Name & HillcrestAve2862.Unit)
-            itemHA2868 = New UIMenuItem(HillcrestAve2868._Name & HillcrestAve2868.Unit)
-            itemWO3655 = New UIMenuItem(WildOats3655._Name & WildOats3655.Unit)
-            itemNC2045 = New UIMenuItem(NorthConker2045._Name & NorthConker2045.Unit)
-            itemMR2117 = New UIMenuItem(MiltonRd2117._Name & MiltonRd2117.Unit)
-            itemHA2874 = New UIMenuItem(HillcrestAve2874._Name & HillcrestAve2874.Unit)
-            itemWD3677 = New UIMenuItem(Whispymound3677._Name & Whispymound3677.Unit)
-            itemMW2113 = New UIMenuItem(MadWayne2113._Name & MadWayne2113.Unit)
-            itemETP1 = New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit)
-            itemETP2 = New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit)
-            itemETP3 = New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit)
-
-            CreateMechanicMenu()
-            CreateVehMenuAlta()
-            CreateVehMenuDream()
-            CreateVehMenuEclipse()
-            CreateVehMenuEclipseHL()
-            CreateVehMenuIntegrity()
-            CreateVehMenuIntegrityHL()
-            CreateVehMenuPerro()
-            CreateVehMenuPerroHL()
-            CreateVehMenuRichard()
-            CreateVehMenuRichardHL()
-            CreateVehMenuTinsel()
-            CreateVehMenuTinselHL()
-            CreateVehMenuWeazel()
-            CreateVehMenuVespucciBlvd()
-            CreateNorthConker2044()
-            CreateHillcrestAve2862()
-            CreateHillcrestAve2868()
-            CreateWildOats3655()
-            CreateNorthConker2045()
-            CreateMiltonRoad2117()
-            CreateHillcrestAve2874()
-            CreateWhispymound3677()
-            CreateMadWayne2113()
-            CreateEclipsePenthouse1()
-            CreateEclipsePenthouse2()
-            CreateEclipsePenthouse3()
-            MechanicMenu.Visible = Not MechanicMenu.Visible
+        If e.KeyCode = My.Settings.Mechanic AndAlso Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen() Then
+            PhoneMenu.Visible = Not PhoneMenu.Visible
         End If
     End Sub
 
@@ -5166,6 +2296,10 @@ Public Class Mechanic
                 If Not PPV7 = Nothing Then PPV7.Delete()
                 If Not PPV8 = Nothing Then PPV8.Delete()
                 If Not PPV9 = Nothing Then PPV9.Delete()
+                If Not MPV = Nothing Then MPV.Delete()
+                If Not FPV = Nothing Then FPV.Delete()
+                If Not TPV = Nothing Then TPV.Delete()
+                If Not PPV = Nothing Then PPV.Delete()
             Catch ex As Exception
             End Try
         End If

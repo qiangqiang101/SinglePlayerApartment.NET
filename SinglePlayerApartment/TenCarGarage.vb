@@ -1,18 +1,9 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
-Imports System.IO
-Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports AnimationV
-Imports System.Runtime.InteropServices
 
 Public Class TenCarGarage
     Inherits Script
@@ -44,19 +35,19 @@ Public Class TenCarGarage
     Public Shared veh7Pos As Vector3 = New Vector3(232.7, -991, -99.0)
     Public Shared veh8Pos As Vector3 = New Vector3(232.7, -986, -99.0)
     Public Shared veh9Pos As Vector3 = New Vector3(232.7, -981, -99.0)
-    Public Shared vehRot04 As Vector3 = New Vector3(0, 0, -60)
-    Public Shared vehRot59 As Vector3 = New Vector3(0, 0, 60)
+    Public Shared vehRot04 As Vector3 = New Vector3(0, 0, 241.3)
+    Public Shared vehRot59 As Vector3 = New Vector3(0, 0, 116.3)
     Public Shared GarageMarker As New Marker(MarkerType.VerticalCylinder, MenuActivator, Color.LightBlue, AnimationType.Normal)
-    Public Shared isInGarage As Boolean = False
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
-            If uiLanguage = "Chinese" Then
-                Garage = "車庫"
-            Else
-                Garage = " Garage"
-            End If
+            'New Language
+            Garage = ReadCfgValue("Garage", langFile)
+            GrgFull = ReadCfgValue("GrgFull", langFile)
+            EnterElevator = ReadCfgValue("EnterElevator", langFile)
+            ExitGarage = ReadCfgValue("ExitGarage", langFile)
+            ManageGarage = ReadCfgValue("ManageGarage", langFile)
+            'End Language
 
             If playerHash = "225514697" Then
                 playerName = "Michael"
@@ -97,7 +88,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh0, file)
+            SetModKit(veh0, file, False)
             veh0.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh0.Delete()
         Catch ex As Exception
@@ -123,7 +114,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh1, file)
+            SetModKit(veh1, file, False)
             veh1.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh1.Delete()
         Catch ex As Exception
@@ -149,7 +140,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh2, file)
+            SetModKit(veh2, file, False)
             veh2.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh2.Delete()
         Catch ex As Exception
@@ -175,7 +166,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh3, file)
+            SetModKit(veh3, file, False)
             veh3.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh3.Delete()
         Catch ex As Exception
@@ -201,7 +192,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh4, file)
+            SetModKit(veh4, file, False)
             veh4.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh4.Delete()
         Catch ex As Exception
@@ -227,7 +218,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh5, file)
+            SetModKit(veh5, file, False)
             veh5.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh5.Delete()
         Catch ex As Exception
@@ -253,7 +244,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh6, file)
+            SetModKit(veh6, file, False)
             veh6.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh6.Delete()
         Catch ex As Exception
@@ -279,7 +270,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh7, file)
+            SetModKit(veh7, file, False)
             veh7.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh7.Delete()
         Catch ex As Exception
@@ -305,7 +296,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh8, file)
+            SetModKit(veh8, file, False)
             veh8.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh8.Delete()
         Catch ex As Exception
@@ -331,7 +322,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-            SetModKit(veh9, file)
+            SetModKit(veh9, file, False)
             veh9.Rotation = rot
             If ReadCfgValue("Active", file) = "True" Then veh9.Delete()
         Catch ex As Exception
@@ -383,7 +374,7 @@ Public Class TenCarGarage
         End Try
     End Sub
 
-    Public Shared Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String)
+    Public Shared Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String, EngineRunning As Boolean)
         Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, _Vehicle, 0)
         _Vehicle.DirtLevel = 0F
         _Vehicle.PrimaryColor = ReadCfgValue("PrimaryColor", VehicleCfgFile)
@@ -450,6 +441,11 @@ Public Class TenCarGarage
         _Vehicle.TireSmokeColor = Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", VehicleCfgFile), ReadCfgValue("TyreSmokeColorGreen", VehicleCfgFile), ReadCfgValue("TyreSmokeColorBlue", VehicleCfgFile))
         _Vehicle.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", VehicleCfgFile), True)
         If ReadCfgValue("BulletproofTyres", VehicleCfgFile) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, _Vehicle, False)
+        'Added on v1.3.4
+        'Fixed on v1.3.4.2
+        If My.Settings.HasLowriderUpdate = True Then Native.Function.Call(&H6089CDF6A57F326C, _Vehicle.Handle, CInt(ReadCfgValue("DashboardColor", VehicleCfgFile)))
+        If My.Settings.HasLowriderUpdate = True Then Native.Function.Call(&HF40DD601A65F7F19UL, _Vehicle.Handle, CInt(ReadCfgValue("TrimColor", VehicleCfgFile)))
+        'End of Added on v1.3.4
         _Vehicle.RoofState = CInt(ReadCfgValue("VehicleRoof", VehicleCfgFile))
         'Added on v1.3.3
         If ReadCfgValue("ExtraOne", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, -1)
@@ -461,12 +457,13 @@ Public Class TenCarGarage
         If ReadCfgValue("ExtraSeven", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, -1)
         If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
         If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
+        If EngineRunning = True Then _Vehicle.EngineRunning = True
     End Sub
 
     Public Shared Sub SaveGarageVehicle(file As String)
         Try
             If Not IO.File.Exists(file & "vehicle_0.cfg") Then
-                IO.File.WriteAllText(file & "vehicle_0.cfg", My.Resources.vehicle)
+                Resources.CreateFile(file & "vehicle_0.cfg")
                 UpdateGarageVehicle(file & "vehicle_0.cfg", "False")
                 LoadGarageVehicle0(file & "vehicle_0.cfg", veh0Pos, vehRot04, -60)
                 Game.FadeScreenOut(500)
@@ -483,7 +480,7 @@ Public Class TenCarGarage
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
             Else
                 If Not IO.File.Exists(file & "vehicle_1.cfg") Then
-                    IO.File.WriteAllText(file & "vehicle_1.cfg", My.Resources.vehicle)
+                    Resources.CreateFile(file & "vehicle_1.cfg")
                     UpdateGarageVehicle(file & "vehicle_1.cfg", "False")
                     LoadGarageVehicle1(file & "vehicle_1.cfg", veh1Pos, vehRot04, -60)
                     Game.FadeScreenOut(500)
@@ -500,7 +497,7 @@ Public Class TenCarGarage
                     playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Else
                     If Not IO.File.Exists(file & "vehicle_2.cfg") Then
-                        IO.File.WriteAllText(file & "vehicle_2.cfg", My.Resources.vehicle)
+                        Resources.CreateFile(file & "vehicle_2.cfg")
                         UpdateGarageVehicle(file & "vehicle_2.cfg", "False")
                         LoadGarageVehicle2(file & "vehicle_2.cfg", veh2Pos, vehRot04, -60)
                         Game.FadeScreenOut(500)
@@ -517,7 +514,7 @@ Public Class TenCarGarage
                         playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                     Else
                         If Not IO.File.Exists(file & "vehicle_3.cfg") Then
-                            IO.File.WriteAllText(file & "vehicle_3.cfg", My.Resources.vehicle)
+                            Resources.CreateFile(file & "vehicle_3.cfg")
                             UpdateGarageVehicle(file & "vehicle_3.cfg", "False")
                             LoadGarageVehicle3(file & "vehicle_3.cfg", veh3Pos, vehRot04, -60)
                             Game.FadeScreenOut(500)
@@ -534,7 +531,7 @@ Public Class TenCarGarage
                             playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                         Else
                             If Not IO.File.Exists(file & "vehicle_4.cfg") Then
-                                IO.File.WriteAllText(file & "vehicle_4.cfg", My.Resources.vehicle)
+                                Resources.CreateFile(file & "vehicle_4.cfg")
                                 UpdateGarageVehicle(file & "vehicle_4.cfg", "False")
                                 LoadGarageVehicle4(file & "vehicle_4.cfg", veh4Pos, vehRot04, -60)
                                 Game.FadeScreenOut(500)
@@ -551,7 +548,7 @@ Public Class TenCarGarage
                                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                             Else
                                 If Not IO.File.Exists(file & "vehicle_5.cfg") Then
-                                    IO.File.WriteAllText(file & "vehicle_5.cfg", My.Resources.vehicle)
+                                    Resources.CreateFile(file & "vehicle_5.cfg")
                                     UpdateGarageVehicle(file & "vehicle_5.cfg", "False")
                                     LoadGarageVehicle5(file & "vehicle_5.cfg", veh5Pos, vehRot59, -60)
                                     Game.FadeScreenOut(500)
@@ -568,7 +565,7 @@ Public Class TenCarGarage
                                     playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                 Else
                                     If Not IO.File.Exists(file & "vehicle_6.cfg") Then
-                                        IO.File.WriteAllText(file & "vehicle_6.cfg", My.Resources.vehicle)
+                                        Resources.CreateFile(file & "vehicle_6.cfg")
                                         UpdateGarageVehicle(file & "vehicle_6.cfg", "False")
                                         LoadGarageVehicle6(file & "vehicle_6.cfg", veh6Pos, vehRot59, -60)
                                         Game.FadeScreenOut(500)
@@ -585,7 +582,7 @@ Public Class TenCarGarage
                                         playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                     Else
                                         If Not IO.File.Exists(file & "vehicle_7.cfg") Then
-                                            IO.File.WriteAllText(file & "vehicle_7.cfg", My.Resources.vehicle)
+                                            Resources.CreateFile(file & "vehicle_7.cfg")
                                             UpdateGarageVehicle(file & "vehicle_7.cfg", "False")
                                             LoadGarageVehicle7(file & "vehicle_7.cfg", veh7Pos, vehRot59, -60)
                                             Game.FadeScreenOut(500)
@@ -602,7 +599,7 @@ Public Class TenCarGarage
                                             playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                         Else
                                             If Not IO.File.Exists(file & "vehicle_8.cfg") Then
-                                                IO.File.WriteAllText(file & "vehicle_8.cfg", My.Resources.vehicle)
+                                                Resources.CreateFile(file & "vehicle_8.cfg")
                                                 UpdateGarageVehicle(file & "vehicle_8.cfg", "False")
                                                 LoadGarageVehicle8(file & "vehicle_8.cfg", veh8Pos, vehRot59, -60)
                                                 Game.FadeScreenOut(500)
@@ -619,7 +616,7 @@ Public Class TenCarGarage
                                                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                             Else
                                                 If Not IO.File.Exists(file & "vehicle_9.cfg") Then
-                                                    IO.File.WriteAllText(file & "vehicle_9.cfg", My.Resources.vehicle)
+                                                    Resources.CreateFile(file & "vehicle_9.cfg")
                                                     UpdateGarageVehicle(file & "vehicle_9.cfg", "False")
                                                     LoadGarageVehicle9(file & "vehicle_9.cfg", veh9Pos, vehRot59, -60)
                                                     Game.FadeScreenOut(500)
@@ -635,11 +632,7 @@ Public Class TenCarGarage
                                                     Game.FadeScreenIn(500)
                                                     playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                                 Else
-                                                    If uiLanguage = "Chinese" Then
-                                                        UI.ShowSubtitle("車庫~r~已滿~w~。")
-                                                    Else
-                                                        UI.ShowSubtitle("Garage ~r~Full~w~.")
-                                                    End If
+                                                    UI.ShowSubtitle(GrgFull)
                                                     ShowAllHiddenMapObject()
                                                 End If
                                             End If
@@ -656,88 +649,9 @@ Public Class TenCarGarage
         End Try
     End Sub
 
-    <StructLayout(LayoutKind.Explicit)>
-    Public Structure UnionInt32
-        <FieldOffset(0)>
-        Public IntValue As Int32
-        <FieldOffset(0)>
-        Public UIntValue As UInt32
-    End Structure
-
     Public Shared Sub UpdateGarageVehicle(file As String, Active As String)
         WriteCfgValue("VehicleName", playerPed.CurrentVehicle.FriendlyName, file)
-        'Lowriders DLC
-        If playerPed.CurrentVehicle.Model.GetHashCode() = -1013450936 Then
-            WriteCfgValue("VehicleModel", "BUCCANEER2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1361687965 Then
-            WriteCfgValue("VehicleModel", "CHINO2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -2119578145 Then
-            WriteCfgValue("VehicleModel", "FACTION", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1790546981 Then
-            WriteCfgValue("VehicleModel", "FACTION2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 525509695 Then
-            WriteCfgValue("VehicleModel", "MOONBEAM", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 1896491931 Then
-            WriteCfgValue("VehicleModel", "MOONBEAM2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 2006667053 Then
-            WriteCfgValue("VehicleModel", "VOODOO", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -2040426790 Then
-            WriteCfgValue("VehicleModel", "PRIMO2", file)
-            'Halloween Surprise DLC
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 2068293287 Then
-            WriteCfgValue("VehicleModel", "LURCHER", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -831834716 Then
-            WriteCfgValue("VehicleModel", "BTYPE2", file)
-            'Executives and other criminals DLC
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 1102544804 Then
-            WriteCfgValue("VehicleModel", "VERLIERER2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1943285540 Then
-            WriteCfgValue("VehicleModel", "NIGHTSHADE", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1660945322 Then
-            WriteCfgValue("VehicleModel", "MAMBA", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -114627507 Then
-            WriteCfgValue("VehicleModel", "LIMO2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -1485523546 Then
-            WriteCfgValue("VehicleModel", "SCHAFTER3", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 1489967196 Then
-            WriteCfgValue("VehicleModel", "SCHAFTER4", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -888242983 Then
-            WriteCfgValue("VehicleModel", "SCHAFTER5", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 1922255844 Then
-            WriteCfgValue("VehicleModel", "SCHAFTER6", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 906642318 Then
-            WriteCfgValue("VehicleModel", "COG55", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 704435172 Then
-            WriteCfgValue("VehicleModel", "COG552", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -2030171296 Then
-            WriteCfgValue("VehicleModel", "COGNOSCENTI", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = -604842630 Then
-            WriteCfgValue("VehicleModel", "COGNOSCENTI2", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 1878062887 Then
-            WriteCfgValue("VehicleModel", "BALLER3", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 634118882 Then
-            WriteCfgValue("VehicleModel", "BALLER4", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 470404958 Then
-            WriteCfgValue("VehicleModel", "BALLER5", file)
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 666166960 Then
-            WriteCfgValue("VehicleModel", "BALLER6", file)
-            'Christmas 2015 DLC
-        ElseIf playerPed.CurrentVehicle.Model.GetHashCode() = 972671128 Then
-            WriteCfgValue("VehicleModel", "TAMPA", file)
-        Else
-            Dim VhNames As Array = GTA.Native.VehicleHash.GetNames(GetType(VehicleHash))
-            Dim VhHash As Array = GTA.Native.VehicleHash.GetValues(GetType(VehicleHash))
-            Dim tmpUint As UnionInt32
-            tmpUint.IntValue = Game.Player.Character.CurrentVehicle.Model.Hash
-            Dim UIntVal As UInt32 = tmpUint.UIntValue
-
-            For i = 0 To UBound(VhHash)
-                If VhHash(i) = UIntVal Then
-                    WriteCfgValue("VehicleModel", VhNames(i), file)
-                    Exit For
-                End If
-            Next
-        End If
+        'WriteCfgValue("VehicleModel", Resources.GetModelFromHash(playerPed.CurrentVehicle), file)
         WriteCfgValue("PrimaryColor", playerPed.CurrentVehicle.PrimaryColor, file)
         WriteCfgValue("SecondaryColor", playerPed.CurrentVehicle.SecondaryColor, file)
         WriteCfgValue("PearlescentColor", playerPed.CurrentVehicle.PearlescentColor, file)
@@ -829,6 +743,9 @@ Public Class TenCarGarage
         WriteCfgValue("ExtraSeven", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 7), file)
         WriteCfgValue("ExtraEight", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 8), file)
         WriteCfgValue("ExtraNine", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 9), file)
+        'Added on v1.3.4
+        WriteCfgValue("TrimColor", Resources.GetVehicleInteriorTrimColor(playerPed.CurrentVehicle), file)
+        WriteCfgValue("DashboardColor", Resources.GetVehicleInteriorDashboardColor(playerPed.CurrentVehicle), file)
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -839,33 +756,24 @@ Public Class TenCarGarage
             GarageMiddleDistance = World.GetDistance(playerPed.Position, GarageMiddle)
             GarageMarkerDistance = World.GetDistance(playerPed.Position, MenuActivator)
 
-            If isInGarage = True Then
+            If GarageMiddleDistance < 20.0 Then
                 GarageMarker.Flag = RenderFlag.Nearby
                 GarageMarker.Draw()
+                Resources.Disable_Controls(True)
+            Else
+                Resources.Disable_Controls(False)
             End If
 
             If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & LastLocationName & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & LastLocationName)
-                End If
+                DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
             End If
 
             If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & Garage & "。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit" & Garage)
-                End If
+                DisplayHelpTextThisFrame(ExitGarage & Garage)
             End If
 
             If Not playerPed.IsDead AndAlso GarageMarkerDistance < 3.0 Then
-                If uiLanguage = "Chinese" Then
-                    DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 管理車輛。")
-                Else
-                    DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to manage vehicles.")
-                End If
+                DisplayHelpTextThisFrame(ManageGarage)
             End If
 
             ControlsKeyDown()
@@ -877,7 +785,7 @@ Public Class TenCarGarage
 
     Public Sub ControlsKeyDown()
         On Error Resume Next
-        If Game.IsControlJustPressed(0, GTA.Control.VehicleAccelerate) AndAlso playerPed.IsInVehicle AndAlso GarageMiddleDistance < 20.0 Then
+        If playerPed.IsInVehicle AndAlso playerPed.CurrentVehicle.Speed > 1.5 AndAlso GarageMiddleDistance < 20.0 Then
             Dim PPCV As Integer = -1
             If playerPed.CurrentVehicle = veh0 Then
                 WriteCfgValue("Active", "True", CurrentPath & "vehicle_0.cfg")
@@ -917,14 +825,13 @@ Public Class TenCarGarage
             If playerName = "Michael" Then
                 If Mechanic.MPV1 = Nothing Then
                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.MPV1 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                        Mechanic.MPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                     Else
                         Mechanic.MPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                     End If
                     Mechanic.MPV1.Heading = lastLocationGarageOutHeading
-                    SetModKit(Mechanic.MPV1, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Mechanic.MPV1.MarkAsNoLongerNeeded()
-                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV1, True, False)
+                    SetModKit(Mechanic.MPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.MPV1.IsPersistent = True
                     Mechanic.MPV1.AddBlip()
                     Mechanic.MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     Mechanic.MPV1.CurrentBlip.Color = BlipColor.Blue
@@ -934,14 +841,13 @@ Public Class TenCarGarage
                 Else
                     If Mechanic.MPV2 = Nothing Then
                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.MPV2 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                            Mechanic.MPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                         Else
                             Mechanic.MPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                         End If
                         Mechanic.MPV2.Heading = lastLocationGarageOutHeading
-                        SetModKit(Mechanic.MPV2, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Mechanic.MPV2.MarkAsNoLongerNeeded()
-                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV2, True, False)
+                        SetModKit(Mechanic.MPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                        Mechanic.MPV2.IsPersistent = True
                         Mechanic.MPV2.AddBlip()
                         Mechanic.MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         Mechanic.MPV2.CurrentBlip.Color = BlipColor.Blue
@@ -951,14 +857,13 @@ Public Class TenCarGarage
                     Else
                         If Mechanic.MPV3 = Nothing Then
                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.MPV3 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                Mechanic.MPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                             Else
                                 Mechanic.MPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                             End If
                             Mechanic.MPV3.Heading = lastLocationGarageOutHeading
-                            SetModKit(Mechanic.MPV3, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Mechanic.MPV3.MarkAsNoLongerNeeded()
-                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV3, True, False)
+                            SetModKit(Mechanic.MPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                            Mechanic.MPV3.IsPersistent = True
                             Mechanic.MPV3.AddBlip()
                             Mechanic.MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             Mechanic.MPV3.CurrentBlip.Color = BlipColor.Blue
@@ -968,14 +873,13 @@ Public Class TenCarGarage
                         Else
                             If Mechanic.MPV4 = Nothing Then
                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.MPV4 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                    Mechanic.MPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                 Else
                                     Mechanic.MPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                 End If
                                 Mechanic.MPV4.Heading = lastLocationGarageOutHeading
-                                SetModKit(Mechanic.MPV4, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Mechanic.MPV4.MarkAsNoLongerNeeded()
-                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV4, True, False)
+                                SetModKit(Mechanic.MPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                Mechanic.MPV4.IsPersistent = True
                                 Mechanic.MPV4.AddBlip()
                                 Mechanic.MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 Mechanic.MPV4.CurrentBlip.Color = BlipColor.Blue
@@ -985,14 +889,13 @@ Public Class TenCarGarage
                             Else
                                 If Mechanic.MPV5 = Nothing Then
                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.MPV5 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                        Mechanic.MPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                     Else
                                         Mechanic.MPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                     End If
                                     Mechanic.MPV5.Heading = lastLocationGarageOutHeading
-                                    SetModKit(Mechanic.MPV5, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                    Mechanic.MPV5.MarkAsNoLongerNeeded()
-                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV5, True, False)
+                                    SetModKit(Mechanic.MPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                    Mechanic.MPV5.IsPersistent = True
                                     Mechanic.MPV5.AddBlip()
                                     Mechanic.MPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     Mechanic.MPV5.CurrentBlip.Color = BlipColor.Blue
@@ -1002,14 +905,13 @@ Public Class TenCarGarage
                                 Else
                                     If Mechanic.MPV6 = Nothing Then
                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.MPV6 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                            Mechanic.MPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                         Else
                                             Mechanic.MPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                         End If
                                         Mechanic.MPV6.Heading = lastLocationGarageOutHeading
-                                        SetModKit(Mechanic.MPV6, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                        Mechanic.MPV6.MarkAsNoLongerNeeded()
-                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV6, True, False)
+                                        SetModKit(Mechanic.MPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                        Mechanic.MPV6.IsPersistent = True
                                         Mechanic.MPV6.AddBlip()
                                         Mechanic.MPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         Mechanic.MPV6.CurrentBlip.Color = BlipColor.Blue
@@ -1019,14 +921,13 @@ Public Class TenCarGarage
                                     Else
                                         If Mechanic.MPV7 = Nothing Then
                                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.MPV7 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                Mechanic.MPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                             Else
                                                 Mechanic.MPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                             End If
                                             Mechanic.MPV7.Heading = lastLocationGarageOutHeading
-                                            SetModKit(Mechanic.MPV7, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                            Mechanic.MPV7.MarkAsNoLongerNeeded()
-                                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV7, True, False)
+                                            SetModKit(Mechanic.MPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                            Mechanic.MPV7.IsPersistent = True
                                             Mechanic.MPV7.AddBlip()
                                             Mechanic.MPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             Mechanic.MPV7.CurrentBlip.Color = BlipColor.Blue
@@ -1036,14 +937,13 @@ Public Class TenCarGarage
                                         Else
                                             If Mechanic.MPV8 = Nothing Then
                                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.MPV8 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                    Mechanic.MPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                 Else
                                                     Mechanic.MPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                 End If
                                                 Mechanic.MPV8.Heading = lastLocationGarageOutHeading
-                                                SetModKit(Mechanic.MPV8, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                Mechanic.MPV8.MarkAsNoLongerNeeded()
-                                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV8, True, False)
+                                                SetModKit(Mechanic.MPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                Mechanic.MPV8.IsPersistent = True
                                                 Mechanic.MPV8.AddBlip()
                                                 Mechanic.MPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 Mechanic.MPV8.CurrentBlip.Color = BlipColor.Blue
@@ -1053,14 +953,13 @@ Public Class TenCarGarage
                                             Else
                                                 If Mechanic.MPV9 = Nothing Then
                                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.MPV9 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                        Mechanic.MPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                     Else
                                                         Mechanic.MPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                     End If
                                                     Mechanic.MPV9.Heading = lastLocationGarageOutHeading
-                                                    SetModKit(Mechanic.MPV9, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                    Mechanic.MPV9.MarkAsNoLongerNeeded()
-                                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV9, True, False)
+                                                    SetModKit(Mechanic.MPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                    Mechanic.MPV9.IsPersistent = True
                                                     Mechanic.MPV9.AddBlip()
                                                     Mechanic.MPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                     Mechanic.MPV9.CurrentBlip.Color = BlipColor.Blue
@@ -1070,14 +969,13 @@ Public Class TenCarGarage
                                                 Else
                                                     If Mechanic.MPV0 = Nothing Then
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.MPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.MPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.MPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.MPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.MPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV0, True, False)
+                                                        SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.MPV0.IsPersistent = True
                                                         Mechanic.MPV0.AddBlip()
                                                         Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.MPV0.CurrentBlip.Color = BlipColor.Blue
@@ -1087,14 +985,13 @@ Public Class TenCarGarage
                                                     Else
                                                         Mechanic.MPV0.Delete()
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.MPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.MPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.MPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.MPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.MPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.MPV0, True, False)
+                                                        SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.MPV0.IsPersistent = True
                                                         Mechanic.MPV0.AddBlip()
                                                         Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.MPV0.CurrentBlip.Color = BlipColor.Blue
@@ -1114,14 +1011,13 @@ Public Class TenCarGarage
             ElseIf playerName = "Franklin" Then
                 If Mechanic.FPV1 = Nothing Then
                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.FPV1 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                        Mechanic.FPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                     Else
                         Mechanic.FPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                     End If
                     Mechanic.FPV1.Heading = lastLocationGarageOutHeading
-                    SetModKit(Mechanic.FPV1, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Mechanic.FPV1.MarkAsNoLongerNeeded()
-                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV1, True, False)
+                    SetModKit(Mechanic.FPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.FPV1.IsPersistent = True
                     Mechanic.FPV1.AddBlip()
                     Mechanic.FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     Mechanic.FPV1.CurrentBlip.Color = BlipColor.Green
@@ -1131,14 +1027,13 @@ Public Class TenCarGarage
                 Else
                     If Mechanic.FPV2 = Nothing Then
                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.FPV2 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                            Mechanic.FPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                         Else
                             Mechanic.FPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                         End If
                         Mechanic.FPV2.Heading = lastLocationGarageOutHeading
-                        SetModKit(Mechanic.FPV2, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Mechanic.FPV2.MarkAsNoLongerNeeded()
-                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV2, True, False)
+                        SetModKit(Mechanic.FPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                        Mechanic.FPV2.IsPersistent = True
                         Mechanic.FPV2.AddBlip()
                         Mechanic.FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         Mechanic.FPV2.CurrentBlip.Color = BlipColor.Green
@@ -1148,14 +1043,13 @@ Public Class TenCarGarage
                     Else
                         If Mechanic.FPV3 = Nothing Then
                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.FPV3 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                Mechanic.FPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                             Else
                                 Mechanic.FPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                             End If
                             Mechanic.FPV3.Heading = lastLocationGarageOutHeading
-                            SetModKit(Mechanic.FPV3, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Mechanic.FPV3.MarkAsNoLongerNeeded()
-                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV3, True, False)
+                            SetModKit(Mechanic.FPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                            Mechanic.FPV3.IsPersistent = True
                             Mechanic.FPV3.AddBlip()
                             Mechanic.FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             Mechanic.FPV3.CurrentBlip.Color = BlipColor.Green
@@ -1165,14 +1059,13 @@ Public Class TenCarGarage
                         Else
                             If Mechanic.FPV4 = Nothing Then
                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.FPV4 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                    Mechanic.FPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                 Else
                                     Mechanic.FPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                 End If
                                 Mechanic.FPV4.Heading = lastLocationGarageOutHeading
-                                SetModKit(Mechanic.FPV4, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Mechanic.FPV4.MarkAsNoLongerNeeded()
-                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV4, True, False)
+                                SetModKit(Mechanic.FPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                Mechanic.FPV4.IsPersistent = True
                                 Mechanic.FPV4.AddBlip()
                                 Mechanic.FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 Mechanic.FPV4.CurrentBlip.Color = BlipColor.Green
@@ -1182,14 +1075,13 @@ Public Class TenCarGarage
                             Else
                                 If Mechanic.FPV5 = Nothing Then
                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.FPV5 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                        Mechanic.FPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                     Else
                                         Mechanic.FPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                     End If
                                     Mechanic.FPV5.Heading = lastLocationGarageOutHeading
-                                    SetModKit(Mechanic.FPV5, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                    Mechanic.FPV5.MarkAsNoLongerNeeded()
-                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV5, True, False)
+                                    SetModKit(Mechanic.FPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                    Mechanic.FPV5.IsPersistent = True
                                     Mechanic.FPV5.AddBlip()
                                     Mechanic.FPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     Mechanic.FPV5.CurrentBlip.Color = BlipColor.Green
@@ -1199,14 +1091,13 @@ Public Class TenCarGarage
                                 Else
                                     If Mechanic.FPV6 = Nothing Then
                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.FPV6 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                            Mechanic.FPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                         Else
                                             Mechanic.FPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                         End If
                                         Mechanic.FPV6.Heading = lastLocationGarageOutHeading
-                                        SetModKit(Mechanic.FPV6, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                        Mechanic.FPV6.MarkAsNoLongerNeeded()
-                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV6, True, False)
+                                        SetModKit(Mechanic.FPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                        Mechanic.FPV6.IsPersistent = True
                                         Mechanic.FPV6.AddBlip()
                                         Mechanic.FPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         Mechanic.FPV6.CurrentBlip.Color = BlipColor.Green
@@ -1216,14 +1107,13 @@ Public Class TenCarGarage
                                     Else
                                         If Mechanic.FPV7 = Nothing Then
                                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.FPV7 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                Mechanic.FPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                             Else
                                                 Mechanic.FPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                             End If
                                             Mechanic.FPV7.Heading = lastLocationGarageOutHeading
-                                            SetModKit(Mechanic.FPV7, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                            Mechanic.FPV7.MarkAsNoLongerNeeded()
-                                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV7, True, False)
+                                            SetModKit(Mechanic.FPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                            Mechanic.FPV7.IsPersistent = True
                                             Mechanic.FPV7.AddBlip()
                                             Mechanic.FPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             Mechanic.FPV7.CurrentBlip.Color = BlipColor.Green
@@ -1233,14 +1123,13 @@ Public Class TenCarGarage
                                         Else
                                             If Mechanic.FPV8 = Nothing Then
                                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.FPV8 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                    Mechanic.FPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                 Else
                                                     Mechanic.FPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                 End If
                                                 Mechanic.FPV8.Heading = lastLocationGarageOutHeading
-                                                SetModKit(Mechanic.FPV8, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                Mechanic.FPV8.MarkAsNoLongerNeeded()
-                                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV8, True, False)
+                                                SetModKit(Mechanic.FPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                Mechanic.FPV8.IsPersistent = True
                                                 Mechanic.FPV8.AddBlip()
                                                 Mechanic.FPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 Mechanic.FPV8.CurrentBlip.Color = BlipColor.Green
@@ -1250,14 +1139,13 @@ Public Class TenCarGarage
                                             Else
                                                 If Mechanic.FPV9 = Nothing Then
                                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.FPV9 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                        Mechanic.FPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                     Else
                                                         Mechanic.FPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                     End If
                                                     Mechanic.FPV9.Heading = lastLocationGarageOutHeading
-                                                    SetModKit(Mechanic.FPV9, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                    Mechanic.FPV9.MarkAsNoLongerNeeded()
-                                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV9, True, False)
+                                                    SetModKit(Mechanic.FPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                    Mechanic.FPV9.IsPersistent = True
                                                     Mechanic.FPV9.AddBlip()
                                                     Mechanic.FPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                     Mechanic.FPV9.CurrentBlip.Color = BlipColor.Green
@@ -1267,14 +1155,13 @@ Public Class TenCarGarage
                                                 Else
                                                     If Mechanic.FPV0 = Nothing Then
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.FPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.FPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.FPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.FPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.FPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV0, True, False)
+                                                        SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.FPV0.IsPersistent = True
                                                         Mechanic.FPV0.AddBlip()
                                                         Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.FPV0.CurrentBlip.Color = BlipColor.Green
@@ -1284,14 +1171,13 @@ Public Class TenCarGarage
                                                     Else
                                                         Mechanic.FPV0.Delete()
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.FPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.FPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.FPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.FPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.FPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.FPV0, True, False)
+                                                        SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.FPV0.IsPersistent = True
                                                         Mechanic.FPV0.AddBlip()
                                                         Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.FPV0.CurrentBlip.Color = BlipColor.Green
@@ -1311,14 +1197,13 @@ Public Class TenCarGarage
             ElseIf playerName = "Trevor" Then
                 If Mechanic.TPV1 = Nothing Then
                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.TPV1 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                        Mechanic.TPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                     Else
                         Mechanic.TPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                     End If
                     Mechanic.TPV1.Heading = lastLocationGarageOutHeading
-                    SetModKit(Mechanic.TPV1, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Mechanic.TPV1.MarkAsNoLongerNeeded()
-                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV1, True, False)
+                    SetModKit(Mechanic.TPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.TPV1.IsPersistent = True
                     Mechanic.TPV1.AddBlip()
                     Mechanic.TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     Mechanic.TPV1.CurrentBlip.Color = 17
@@ -1328,14 +1213,13 @@ Public Class TenCarGarage
                 Else
                     If Mechanic.TPV2 = Nothing Then
                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.TPV2 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                            Mechanic.TPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                         Else
                             Mechanic.TPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                         End If
                         Mechanic.TPV2.Heading = lastLocationGarageOutHeading
-                        SetModKit(Mechanic.TPV2, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Mechanic.TPV2.MarkAsNoLongerNeeded()
-                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV2, True, False)
+                        SetModKit(Mechanic.TPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                        Mechanic.TPV2.IsPersistent = True
                         Mechanic.TPV2.AddBlip()
                         Mechanic.TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         Mechanic.TPV2.CurrentBlip.Color = 17
@@ -1345,14 +1229,13 @@ Public Class TenCarGarage
                     Else
                         If Mechanic.TPV3 = Nothing Then
                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.TPV3 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                Mechanic.TPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                             Else
                                 Mechanic.TPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                             End If
                             Mechanic.TPV3.Heading = lastLocationGarageOutHeading
-                            SetModKit(Mechanic.TPV3, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Mechanic.TPV3.MarkAsNoLongerNeeded()
-                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV3, True, False)
+                            SetModKit(Mechanic.TPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                            Mechanic.TPV3.IsPersistent = True
                             Mechanic.TPV3.AddBlip()
                             Mechanic.TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             Mechanic.TPV3.CurrentBlip.Color = 17
@@ -1362,14 +1245,13 @@ Public Class TenCarGarage
                         Else
                             If Mechanic.TPV4 = Nothing Then
                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.TPV4 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                    Mechanic.TPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                 Else
                                     Mechanic.TPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                 End If
                                 Mechanic.TPV4.Heading = lastLocationGarageOutHeading
-                                SetModKit(Mechanic.TPV4, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Mechanic.TPV4.MarkAsNoLongerNeeded()
-                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV4, True, False)
+                                SetModKit(Mechanic.TPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                Mechanic.TPV4.IsPersistent = True
                                 Mechanic.TPV4.AddBlip()
                                 Mechanic.TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 Mechanic.TPV4.CurrentBlip.Color = 17
@@ -1379,14 +1261,13 @@ Public Class TenCarGarage
                             Else
                                 If Mechanic.TPV5 = Nothing Then
                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.TPV5 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                        Mechanic.TPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                     Else
                                         Mechanic.TPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                     End If
                                     Mechanic.TPV5.Heading = lastLocationGarageOutHeading
-                                    SetModKit(Mechanic.TPV5, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                    Mechanic.TPV5.MarkAsNoLongerNeeded()
-                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV5, True, False)
+                                    SetModKit(Mechanic.TPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                    Mechanic.TPV5.IsPersistent = True
                                     Mechanic.TPV5.AddBlip()
                                     Mechanic.TPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     Mechanic.TPV5.CurrentBlip.Color = 17
@@ -1396,14 +1277,13 @@ Public Class TenCarGarage
                                 Else
                                     If Mechanic.TPV6 = Nothing Then
                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.TPV6 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                            Mechanic.TPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                         Else
                                             Mechanic.TPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                         End If
                                         Mechanic.TPV6.Heading = lastLocationGarageOutHeading
-                                        SetModKit(Mechanic.TPV6, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                        Mechanic.TPV6.MarkAsNoLongerNeeded()
-                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV6, True, False)
+                                        SetModKit(Mechanic.TPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                        Mechanic.TPV6.IsPersistent = True
                                         Mechanic.TPV6.AddBlip()
                                         Mechanic.TPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         Mechanic.TPV6.CurrentBlip.Color = 17
@@ -1413,14 +1293,13 @@ Public Class TenCarGarage
                                     Else
                                         If Mechanic.TPV7 = Nothing Then
                                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.TPV7 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                Mechanic.TPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                             Else
                                                 Mechanic.TPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                             End If
                                             Mechanic.TPV7.Heading = lastLocationGarageOutHeading
-                                            SetModKit(Mechanic.TPV7, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                            Mechanic.TPV7.MarkAsNoLongerNeeded()
-                                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV7, True, False)
+                                            SetModKit(Mechanic.TPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                            Mechanic.TPV7.IsPersistent = True
                                             Mechanic.TPV7.AddBlip()
                                             Mechanic.TPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             Mechanic.TPV7.CurrentBlip.Color = 17
@@ -1430,14 +1309,13 @@ Public Class TenCarGarage
                                         Else
                                             If Mechanic.TPV8 = Nothing Then
                                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.TPV8 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                    Mechanic.TPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                 Else
                                                     Mechanic.TPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                 End If
                                                 Mechanic.TPV8.Heading = lastLocationGarageOutHeading
-                                                SetModKit(Mechanic.TPV8, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                Mechanic.TPV8.MarkAsNoLongerNeeded()
-                                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV8, True, False)
+                                                SetModKit(Mechanic.TPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                Mechanic.TPV8.IsPersistent = True
                                                 Mechanic.TPV8.AddBlip()
                                                 Mechanic.TPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 Mechanic.TPV8.CurrentBlip.Color = 17
@@ -1447,14 +1325,13 @@ Public Class TenCarGarage
                                             Else
                                                 If Mechanic.TPV9 = Nothing Then
                                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.TPV9 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                        Mechanic.TPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                     Else
                                                         Mechanic.TPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                     End If
                                                     Mechanic.TPV9.Heading = lastLocationGarageOutHeading
-                                                    SetModKit(Mechanic.TPV9, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                    Mechanic.TPV9.MarkAsNoLongerNeeded()
-                                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV9, True, False)
+                                                    SetModKit(Mechanic.TPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                    Mechanic.TPV9.IsPersistent = True
                                                     Mechanic.TPV9.AddBlip()
                                                     Mechanic.TPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                     Mechanic.TPV9.CurrentBlip.Color = 17
@@ -1464,14 +1341,13 @@ Public Class TenCarGarage
                                                 Else
                                                     If Mechanic.TPV0 = Nothing Then
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.TPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.TPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.TPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.TPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.TPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV0, True, False)
+                                                        SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.TPV0.IsPersistent = True
                                                         Mechanic.TPV0.AddBlip()
                                                         Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.TPV0.CurrentBlip.Color = 17
@@ -1481,14 +1357,13 @@ Public Class TenCarGarage
                                                     Else
                                                         Mechanic.TPV0.Delete()
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.TPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.TPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.TPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.TPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.TPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.TPV0, True, False)
+                                                        SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.TPV0.IsPersistent = True
                                                         Mechanic.TPV0.AddBlip()
                                                         Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.TPV0.CurrentBlip.Color = 17
@@ -1508,14 +1383,13 @@ Public Class TenCarGarage
             ElseIf playerName = "Player3" Then
                 If Mechanic.PPV1 = Nothing Then
                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.PPV1 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                        Mechanic.PPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                     Else
                         Mechanic.PPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                     End If
                     Mechanic.PPV1.Heading = lastLocationGarageOutHeading
-                    SetModKit(Mechanic.PPV1, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Mechanic.PPV1.MarkAsNoLongerNeeded()
-                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV1, True, False)
+                    SetModKit(Mechanic.PPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.PPV1.IsPersistent = True
                     Mechanic.PPV1.AddBlip()
                     Mechanic.PPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     Mechanic.PPV1.CurrentBlip.Color = BlipColor.Yellow
@@ -1525,14 +1399,13 @@ Public Class TenCarGarage
                 Else
                     If Mechanic.PPV2 = Nothing Then
                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.PPV2 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                            Mechanic.PPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                         Else
                             Mechanic.PPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                         End If
                         Mechanic.PPV2.Heading = lastLocationGarageOutHeading
-                        SetModKit(Mechanic.PPV2, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Mechanic.PPV2.MarkAsNoLongerNeeded()
-                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV2, True, False)
+                        SetModKit(Mechanic.PPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                        Mechanic.PPV2.IsPersistent = True
                         Mechanic.PPV2.AddBlip()
                         Mechanic.PPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         Mechanic.PPV2.CurrentBlip.Color = BlipColor.Yellow
@@ -1542,14 +1415,13 @@ Public Class TenCarGarage
                     Else
                         If Mechanic.PPV3 = Nothing Then
                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.PPV3 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                Mechanic.PPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                             Else
                                 Mechanic.PPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                             End If
                             Mechanic.PPV3.Heading = lastLocationGarageOutHeading
-                            SetModKit(Mechanic.PPV3, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Mechanic.PPV3.MarkAsNoLongerNeeded()
-                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV3, True, False)
+                            SetModKit(Mechanic.PPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                            Mechanic.PPV3.IsPersistent = True
                             Mechanic.PPV3.AddBlip()
                             Mechanic.PPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             Mechanic.PPV3.CurrentBlip.Color = BlipColor.Yellow
@@ -1559,14 +1431,13 @@ Public Class TenCarGarage
                         Else
                             If Mechanic.PPV4 = Nothing Then
                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.PPV4 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                    Mechanic.PPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                 Else
                                     Mechanic.PPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                 End If
                                 Mechanic.PPV4.Heading = lastLocationGarageOutHeading
-                                SetModKit(Mechanic.PPV4, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Mechanic.PPV4.MarkAsNoLongerNeeded()
-                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV4, True, False)
+                                SetModKit(Mechanic.PPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                Mechanic.PPV4.IsPersistent = True
                                 Mechanic.PPV4.AddBlip()
                                 Mechanic.PPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 Mechanic.PPV4.CurrentBlip.Color = BlipColor.Yellow
@@ -1576,14 +1447,13 @@ Public Class TenCarGarage
                             Else
                                 If Mechanic.PPV5 = Nothing Then
                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.PPV5 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                        Mechanic.PPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                     Else
                                         Mechanic.PPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                     End If
                                     Mechanic.PPV5.Heading = lastLocationGarageOutHeading
-                                    SetModKit(Mechanic.PPV5, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                    Mechanic.PPV5.MarkAsNoLongerNeeded()
-                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV5, True, False)
+                                    SetModKit(Mechanic.PPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                    Mechanic.PPV5.IsPersistent = True
                                     Mechanic.PPV5.AddBlip()
                                     Mechanic.PPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     Mechanic.PPV5.CurrentBlip.Color = BlipColor.Yellow
@@ -1593,14 +1463,13 @@ Public Class TenCarGarage
                                 Else
                                     If Mechanic.PPV6 = Nothing Then
                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.PPV6 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                            Mechanic.PPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                         Else
                                             Mechanic.PPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                         End If
                                         Mechanic.PPV6.Heading = lastLocationGarageOutHeading
-                                        SetModKit(Mechanic.PPV6, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                        Mechanic.PPV6.MarkAsNoLongerNeeded()
-                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV6, True, False)
+                                        SetModKit(Mechanic.PPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                        Mechanic.PPV6.IsPersistent = True
                                         Mechanic.PPV6.AddBlip()
                                         Mechanic.PPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         Mechanic.PPV6.CurrentBlip.Color = BlipColor.Yellow
@@ -1610,14 +1479,13 @@ Public Class TenCarGarage
                                     Else
                                         If Mechanic.PPV7 = Nothing Then
                                             If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.PPV7 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                Mechanic.PPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                             Else
                                                 Mechanic.PPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                             End If
                                             Mechanic.PPV7.Heading = lastLocationGarageOutHeading
-                                            SetModKit(Mechanic.PPV7, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                            Mechanic.PPV7.MarkAsNoLongerNeeded()
-                                            Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV7, True, False)
+                                            SetModKit(Mechanic.PPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                            Mechanic.PPV7.IsPersistent = True
                                             Mechanic.PPV7.AddBlip()
                                             Mechanic.PPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             Mechanic.PPV7.CurrentBlip.Color = BlipColor.Yellow
@@ -1627,14 +1495,13 @@ Public Class TenCarGarage
                                         Else
                                             If Mechanic.PPV8 = Nothing Then
                                                 If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.PPV8 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                    Mechanic.PPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                 Else
                                                     Mechanic.PPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                 End If
                                                 Mechanic.PPV8.Heading = lastLocationGarageOutHeading
-                                                SetModKit(Mechanic.PPV8, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                Mechanic.PPV8.MarkAsNoLongerNeeded()
-                                                Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV8, True, False)
+                                                SetModKit(Mechanic.PPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                Mechanic.PPV8.IsPersistent = True
                                                 Mechanic.PPV8.AddBlip()
                                                 Mechanic.PPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 Mechanic.PPV8.CurrentBlip.Color = BlipColor.Yellow
@@ -1644,14 +1511,13 @@ Public Class TenCarGarage
                                             Else
                                                 If Mechanic.PPV9 = Nothing Then
                                                     If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.PPV9 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                        Mechanic.PPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                     Else
                                                         Mechanic.PPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                     End If
                                                     Mechanic.PPV9.Heading = lastLocationGarageOutHeading
-                                                    SetModKit(Mechanic.PPV9, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                    Mechanic.PPV9.MarkAsNoLongerNeeded()
-                                                    Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV9, True, False)
+                                                    SetModKit(Mechanic.PPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                    Mechanic.PPV9.IsPersistent = True
                                                     Mechanic.PPV9.AddBlip()
                                                     Mechanic.PPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                     Mechanic.PPV9.CurrentBlip.Color = BlipColor.Yellow
@@ -1661,14 +1527,13 @@ Public Class TenCarGarage
                                                 Else
                                                     If Mechanic.PPV0 = Nothing Then
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.PPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.PPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.PPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.PPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.PPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV0, True, False)
+                                                        SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.PPV0.IsPersistent = True
                                                         Mechanic.PPV0.AddBlip()
                                                         Mechanic.PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
@@ -1678,14 +1543,13 @@ Public Class TenCarGarage
                                                     Else
                                                         Mechanic.PPV0.Delete()
                                                         If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.PPV0 = Resources.Create_Vehicle(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector.X, lastLocationGarageOutVector.Y, lastLocationGarageOutVector.Z, lastLocationGarageOutHeading, False, False)
+                                                            Mechanic.PPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
                                                         Else
                                                             Mechanic.PPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
                                                         End If
                                                         Mechanic.PPV0.Heading = lastLocationGarageOutHeading
-                                                        SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                                        Mechanic.PPV0.MarkAsNoLongerNeeded()
-                                                        Native.Function.Call(Hash.SET_ENTITY_AS_MISSION_ENTITY, Mechanic.PPV0, True, False)
+                                                        SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                                                        Mechanic.PPV0.IsPersistent = True
                                                         Mechanic.PPV0.AddBlip()
                                                         Mechanic.PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                         Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
@@ -1707,7 +1571,6 @@ Public Class TenCarGarage
             playerPed.CurrentVehicle.Repair()
             playerPed.CurrentVehicle.Position = lastLocationGarageOutVector
             playerPed.CurrentVehicle.Heading = lastLocationGarageOutHeading
-            isInGarage = False
             ShowAllHiddenMapObject()
             Script.Wait(500)
             Game.FadeScreenIn(500)
@@ -1717,7 +1580,6 @@ Public Class TenCarGarage
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso ElevatorDistance < 3.0 Then
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
-            isInGarage = False
             playerPed.Position = lastLocationVector
             SinglePlayerApartment.player.LastVehicle.Delete()
             Script.Wait(500)
@@ -1727,7 +1589,6 @@ Public Class TenCarGarage
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
-            isInGarage = False
             playerPed.Position = lastLocationGarageVector
             ShowAllHiddenMapObject()
             SinglePlayerApartment.player.LastVehicle.Delete()

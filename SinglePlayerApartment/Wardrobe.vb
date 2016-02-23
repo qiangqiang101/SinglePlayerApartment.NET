@@ -1,13 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports PDMCarShopGUI
@@ -181,142 +175,74 @@ Public Class Wardrobe
 
     Public Sub New()
         Try
-            uiLanguage = Game.Language.ToString
-            If uiLanguage = "Chinese" Then
-                __Clothing = "服裝"
-                __Outfits = "套裝"
-                _Outfits.Text = "套裝"
-                __FullSuit = "套裝"
-                _FullSuits.Text = "套裝"
-                __SuitJacket = "西裝外套"
-                _SuitJackets.Text = "西裝外套"
-                __SuitPants = "西裝褲"
-                _SuitPants.Text = "西裝褲"
-                __Glasses = "眼鏡"
-                _Glasses.Text = "眼鏡"
-                _Glass.Text = "眼鏡"
-                __SuitVest = "西裝背心"
-                _SuitVests.Text = "西裝背心"
-                __Suits = "西裝"
-                _Suits.Text = "西裝"
-                __SportsShades = "運動墨鏡"
-                _SportsShades.Text = "運動墨鏡"
-                __StreetShades = "一般墨鏡"
-                _StreetShades.Text = "一般墨鏡"
-                __Hoodies = "連帽外衣"
-                _Hoodies.Text = "連帽外衣"
-                __Jackets = "外套"
-                _Jackets.Text = "外套"
-                _CasualJacketJackets.Text = "外套"
-                __Pants = "褲子"
-                _Pants.Text = "褲子"
-                __PoloShirts = "馬球衫"
-                _PoloShirt.Text = "馬球衫"
-                __Shoes = "鞋子"
-                _Shoes.Text = "鞋子"
-                __Shirts = "襯衫"
-                _Shirt.Text = "襯衫"
-                _CasualJacketShirts.Text = "襯衫"
-                __TShirts = "T恤"
-                _TShirt.Text = "T恤"
-                _CasualJacketTShirts.Text = "T恤"
-                __Shorts = "短褲"
-                _Shorts.Text = "短褲"
-                __TankTops = "運動背心"
-                _TankTops.Text = "運動背心"
-                __Tops = "上衣"
-                _Tops.Text = "上衣"
-                __SuitJacketbuttoned = "鈕扣西裝外套"
-                _SuitJacketsButtoned.Text = "鈕扣西裝外套"
-                __Ties = "領帶"
-                _SuitTies.Text = "領帶"
-                __Earrings = "耳環"
-                _Earrings.Text = "耳環"
-                __Hats = "帽子"
-                _Hats.Text = "帽子"
-                _HatsTrevor.Text = "帽子"
-                __CapsForward = "棒球帽，正面朝前"
-                _CapsForward.Text = "棒球帽，正面朝前"
-                __CapsBackward = "棒球帽，正面朝後"
-                _CapsBackward.Text = "棒球帽，正面朝後"
-                __SmartShoes = "商務休閒皮鞋"
-                _SmartShoes.Text = "商務休閒皮鞋"
-                __Vests = "西裝背心"
-                _Vests.Text = "西裝背心"
-                __OpenShirts = "開襟襯衫"
-                _OpenShirts.Text = "開襟襯衫"
-                __CasualJackets = "休閒外套"
-                _CasualJackets.Text = "休閒外套"
-                _Chains.Text = "項鍊"
-                __Chains = "項鍊"
-            Else
-                __Clothing = "CLOTHING"
-                __Outfits = "OUTFITS"
-                _Outfits.Text = "Outfits"
-                __FullSuit = "FULL SUITS"
-                _FullSuits.Text = "Full Suits"
-                __SuitJacket = "SUIT JACKETS"
-                _SuitJackets.Text = "Suit Jackets"
-                __SuitPants = "SUIT PANTS"
-                _SuitPants.Text = "Suit Pants"
-                __Glasses = "GLASSES"
-                _Glasses.Text = "Glasses"
-                _Glass.Text = "Glasses"
-                __SuitVest = "SUIT VESTS"
-                _SuitVests.Text = "Suit Vests"
-                __Suits = "SUITS"
-                _Suits.Text = "Suits"
-                __SportsShades = "SPORTS SHADES"
-                _SportsShades.Text = "Sports Shades"
-                __StreetShades = "STREET SHADES"
-                _StreetShades.Text = "Street Shades"
-                __Hoodies = "HOODIES"
-                _Hoodies.Text = "Hoodies"
-                __Jackets = "JACKETS"
-                _Jackets.Text = "Jackets"
-                _CasualJacketJackets.Text = "Jackets"
-                __Pants = "PANTS"
-                _Pants.Text = "Pants"
-                __PoloShirts = "POLO SHIRTS"
-                _PoloShirt.Text = "Polo Shirts"
-                __Shoes = "SHOES"
-                _Shoes.Text = "Shoes"
-                __Shirts = "SHIRTS"
-                _Shirt.Text = "Shirts"
-                _CasualJacketShirts.Text = "Shirts"
-                __TShirts = "T-SHIRTS"
-                _TShirt.Text = "T-Shirts"
-                _CasualJacketTShirts.Text = "T-Shirts"
-                __Shorts = "SHORTS"
-                _Shorts.Text = "Shorts"
-                __TankTops = "TANK TOPS"
-                _TankTops.Text = "Tank Tops"
-                __Tops = "TOPS"
-                _Tops.Text = "Tops"
-                __SuitJacketbuttoned = "SUIT JACKETS, BUTTONED"
-                _SuitJacketsButtoned.Text = "Suit Jackets, Buttoned"
-                __Ties = "SUIT TIES"
-                _SuitTies.Text = "Suit Ties"
-                __Earrings = "EARRINGS"
-                _Earrings.Text = "Earrings"
-                __Hats = "HATS"
-                _Hats.Text = "Hats"
-                _HatsTrevor.Text = "Hats"
-                __CapsForward = "FITTED CAPS, FORWARD"
-                _CapsForward.Text = "Fitted Caps, Forward"
-                __CapsBackward = "FITTED CAPS, BACKWARD"
-                _CapsBackward.Text = "Fitted Caps, Backward"
-                __SmartShoes = "SMART SHOES"
-                _SmartShoes.Text = "Smart Shoes"
-                __Vests = "VESTS"
-                _Vests.Text = "Vests"
-                __OpenShirts = "OPEN SHIRTS"
-                _OpenShirts.Text = "Open Shirts"
-                __CasualJackets = "CASUAL JACKETS"
-                _CasualJackets.Text = "Casual Jackets"
-                _Chains.Text = "Chains"
-                __Chains = "Chains"
-            End If
+            'New Language
+            __Clothing = ReadCfgValue("__Clothing", langFile)
+            __Outfits = ReadCfgValue("__Outfits", langFile)
+            _Outfits.Text = ReadCfgValue("_Outfits", langFile)
+            __FullSuit = ReadCfgValue("__FullSuit", langFile)
+            _FullSuits.Text = ReadCfgValue("_FullSuits", langFile)
+            __SuitJacket = ReadCfgValue("__SuitJacket", langFile)
+            _SuitJackets.Text = ReadCfgValue("_SuitJackets", langFile)
+            __SuitPants = ReadCfgValue("__SuitPants", langFile)
+            _SuitPants.Text = ReadCfgValue("_SuitPants", langFile)
+            __Glasses = ReadCfgValue("__Glasses", langFile)
+            _Glasses.Text = ReadCfgValue("_Glasses", langFile)
+            _Glass.Text = ReadCfgValue("_Glass", langFile)
+            __SuitVest = ReadCfgValue("__SuitVest", langFile)
+            _SuitVests.Text = ReadCfgValue("_SuitVests", langFile)
+            __Suits = ReadCfgValue("__Suits", langFile)
+            _Suits.Text = ReadCfgValue("_Suits", langFile)
+            __SportsShades = ReadCfgValue("__SportsShades", langFile)
+            _SportsShades.Text = ReadCfgValue("_SportsShades", langFile)
+            __StreetShades = ReadCfgValue("__StreetShades", langFile)
+            _StreetShades.Text = ReadCfgValue("_StreetShades", langFile)
+            __Hoodies = ReadCfgValue("__Hoodies", langFile)
+            _Hoodies.Text = ReadCfgValue("_Hoodies", langFile)
+            __Jackets = ReadCfgValue("__Jackets", langFile)
+            _Jackets.Text = ReadCfgValue("_Jackets", langFile)
+            _CasualJacketJackets.Text = ReadCfgValue("_CasualJacketJackets", langFile)
+            __Pants = ReadCfgValue("__Pants", langFile)
+            _Pants.Text = ReadCfgValue("_Pants", langFile)
+            __PoloShirts = ReadCfgValue("__PoloShirts", langFile)
+            _PoloShirt.Text = ReadCfgValue("_PoloShirt", langFile)
+            __Shoes = ReadCfgValue("__Shoes", langFile)
+            _Shoes.Text = ReadCfgValue("_Shoes", langFile)
+            __Shirts = ReadCfgValue("__Shirts", langFile)
+            _Shirt.Text = ReadCfgValue("_Shirt", langFile)
+            _CasualJacketShirts.Text = ReadCfgValue("_CasualJacketShirts", langFile)
+            __TShirts = ReadCfgValue("__TShirts", langFile)
+            _TShirt.Text = ReadCfgValue("_TShirt", langFile)
+            _CasualJacketTShirts.Text = ReadCfgValue("_CasualJacketTShirts", langFile)
+            __Shorts = ReadCfgValue("__Shorts", langFile)
+            _Shorts.Text = ReadCfgValue("_Shorts", langFile)
+            __TankTops = ReadCfgValue("__TankTops", langFile)
+            _TankTops.Text = ReadCfgValue("_TankTops", langFile)
+            __Tops = ReadCfgValue("__Tops", langFile)
+            _Tops.Text = ReadCfgValue("_Tops", langFile)
+            __SuitJacketbuttoned = ReadCfgValue("__SuitJacketbuttoned", langFile)
+            _SuitJacketsButtoned.Text = ReadCfgValue("_SuitJacketsButtoned", langFile)
+            __Ties = ReadCfgValue("__Ties", langFile)
+            _SuitTies.Text = ReadCfgValue("_SuitTies", langFile)
+            __Earrings = ReadCfgValue("__Earrings", langFile)
+            _Earrings.Text = ReadCfgValue("_Earrings", langFile)
+            __Hats = ReadCfgValue("__Hats", langFile)
+            _Hats.Text = ReadCfgValue("_Hats", langFile)
+            _HatsTrevor.Text = ReadCfgValue("_HatsTrevor", langFile)
+            __CapsForward = ReadCfgValue("__CapsForward", langFile)
+            _CapsForward.Text = ReadCfgValue("_CapsForward", langFile)
+            __CapsBackward = ReadCfgValue("__CapsBackward", langFile)
+            _CapsBackward.Text = ReadCfgValue("_CapsBackward", langFile)
+            __SmartShoes = ReadCfgValue("__SmartShoes", langFile)
+            _SmartShoes.Text = ReadCfgValue("_SmartShoes", langFile)
+            __Vests = ReadCfgValue("__Vests", langFile)
+            _Vests.Text = ReadCfgValue("_Vests", langFile)
+            __OpenShirts = ReadCfgValue("__OpenShirts", langFile)
+            _OpenShirts.Text = ReadCfgValue("_OpenShirts", langFile)
+            __CasualJackets = ReadCfgValue("__CasualJackets", langFile)
+            _CasualJackets.Text = ReadCfgValue("_CasualJackets", langFile)
+            _Chains.Text = ReadCfgValue("_Chains", langFile)
+            __Chains = ReadCfgValue("__Chains", langFile)
+            'End Language
 
             If playerHash = "225514697" Then
                 playerName = "Michael"
@@ -444,7 +370,9 @@ Public Class Wardrobe
         WardrobeCam.PointAt(playerPed)
         World.RenderingCamera = WardrobeCam
         DrawSpotLight = True
-        Native.Function.Call(Hash.TASK_START_SCENARIO_IN_PLACE, playerPed, "WORLD_HUMAN_PROSTITUTE_HIGH_CLASS", 0, True)
+        Dim WardrobeScenario As String
+        If ReadCfgValue("WardrobeScenario", settingFile) = "" Then WardrobeScenario = "WORLD_HUMAN_PROSTITUTE_HIGH_CLASS" Else WardrobeScenario = ReadCfgValue("WardrobeScenario", settingFile)
+        Native.Function.Call(Hash.TASK_START_SCENARIO_IN_PLACE, playerPed, WardrobeScenario, 0, True)
         hideHud = True
     End Sub
 

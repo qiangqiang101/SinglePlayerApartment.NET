@@ -35,5 +35,17 @@
     <Setting Name="AlwaysEnableMPMaps" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="HasLowriderUpdate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GameVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.0.671.1</Value>
+    </Setting>
+    <Setting Name="NeverEnableMPMaps" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CreateFileMethod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

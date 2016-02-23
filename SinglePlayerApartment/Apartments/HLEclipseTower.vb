@@ -37,15 +37,26 @@ Public Class HLEclipseTower
     Public Sub New()
         Try
             If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
-                uiLanguage = Game.Language.ToString
-
-                If uiLanguage = "Chinese" Then
-                    _Name = "日蝕大樓公寓"
-                    Desc = "精湛的日蝕大道完美比例，贈送精美橫向生活 ~n~ 的機會這間公寓是獨一無二的，因為新的顴骨 ~n~ 你的醫生只是給了你......通過我們的意思是， ~n~ 你會看到他們全城。 ~n~ 包括可容納十輛車的車庫。"
-                Else
-                    _Name = "Eclipse Tower Apt. "
-                    Desc = "Perfectly proportioned, beautifully presented lateral living opportunity on exquisite Eclipse Blvd. This apartment is as unique as the new cheekbones your surgeon just gave you... by that we mean you'll see them all over town. Includes a 10-car garage."
-                End If
+                _Name = ReadCfgValue("EclipseHLName", langFile)
+                Desc = ReadCfgValue("EclipseHLDesc", langFile)
+                Garage = ReadCfgValue("Garage", langFile)
+                AptOptions = ReadCfgValue("AptOptions", langFile)
+                ExitApt = ReadCfgValue("ExitApt", langFile)
+                SellApt = ReadCfgValue("SellApt", langFile)
+                EnterGarage = ReadCfgValue("EnterGarage", langFile)
+                GrgOptions = ReadCfgValue("GrgOptions", langFile)
+                ForSale = ReadCfgValue("ForSale", langFile)
+                PropPurchased = ReadCfgValue("PropPurchased", langFile)
+                Maze = ReadCfgValue("Maze", langFile)
+                Fleeca = ReadCfgValue("Fleeca", langFile)
+                BOL = ReadCfgValue("BOL", langFile)
+                InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+                EnterApartment = ReadCfgValue("EnterApartment", langFile)
+                SaveGame = ReadCfgValue("SaveGame", langFile)
+                ExitApartment = ReadCfgValue("ExitApartment", langFile)
+                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+                CannotStore = ReadCfgValue("CannotStore", langFile)
 
                 AddHandler Tick, AddressOf OnTick
                 AddHandler KeyDown, AddressOf OnKeyDown
@@ -62,18 +73,6 @@ Public Class HLEclipseTower
 
     Public Shared Sub CreateExitMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             ExitMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -134,7 +133,6 @@ Public Class HLEclipseTower
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
@@ -161,27 +159,15 @@ Public Class HLEclipseTower
 
                 'Save Game
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
-                    End If
+                    DisplayHelpTextThisFrame(SaveGame)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
-                    End If
+                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
-                    End If
+                    DisplayHelpTextThisFrame(ChangeClothes)
                 End If
 
                 'Controls

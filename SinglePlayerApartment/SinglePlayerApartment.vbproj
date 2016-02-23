@@ -54,6 +54,9 @@
     <Reference Include="AnimationV">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\AnimationV.dll</HintPath>
     </Reference>
+    <Reference Include="iFruitAddon">
+      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\iFruitAddon.dll</HintPath>
+    </Reference>
     <Reference Include="PDMCarShopGUI">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\PDMCarShopGUI.dll</HintPath>
     </Reference>
@@ -94,6 +97,7 @@
     <Compile Include="Apartments\TinselTower.vb" />
     <Compile Include="Apartments\VespucciBlvd.vb" />
     <Compile Include="Apartments\WeazelPlaza.vb" />
+    <Compile Include="Brain.vb" />
     <Compile Include="Class\CFGRead.vb" />
     <Compile Include="Class\logger.vb" />
     <Compile Include="Apartments\EclipseTower.vb" />
@@ -120,6 +124,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Class\timer.vb" />
+    <Compile Include="Phone.vb" />
+    <Compile Include="Website.vb" />
     <Compile Include="SinglePlayerApartment.vb" />
     <Compile Include="SixCarGarage.vb" />
     <Compile Include="Stilt Apartments\HillcrestAve2862.vb" />

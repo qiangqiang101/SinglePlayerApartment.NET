@@ -49,17 +49,26 @@ Public Class _3AltaStreet
     Public Sub New()
         Try
             If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then
-                uiLanguage = Game.Language.ToString
-
-                If uiLanguage = "Chinese" Then
-                    _Name = "艾爾塔街3號公寓"
-                    Desc = "這間豪華公寓位於洛聖都市中心的艾爾塔街， ~n~ 一樓就有『冰的咖啡』，往返商業中心區也僅 ~n~ 需很短的時間，對那些拿別人錢賭得不亦樂乎 ~n~ 、開心到不想睡的銀行家，這可是最適合他們 ~n~ 的舒服小窩。包括可容納十輛車的車庫。"
-                    Garage = "車庫"
-                Else
-                    _Name = "3 Alta Street Apt. "
-                    Desc = "With its own Bean Machine outlet in the ground floor and a short commute to the financial center, this luxury condo on Alta Street in Downtown Los Santos is the perfect pad for the banker who never sleeps because he's having too much fun gambling with other people's money. Includes a 10-car garage."
-                    Garage = " Garage"
-                End If
+                _Name = ReadCfgValue("3AltaName", langFile)
+                Desc = ReadCfgValue("3AltaDesc", langFile)
+                Garage = ReadCfgValue("Garage", langFile)
+                AptOptions = ReadCfgValue("AptOptions", langFile)
+                ExitApt = ReadCfgValue("ExitApt", langFile)
+                SellApt = ReadCfgValue("SellApt", langFile)
+                EnterGarage = ReadCfgValue("EnterGarage", langFile)
+                GrgOptions = ReadCfgValue("GrgOptions", langFile)
+                ForSale = ReadCfgValue("ForSale", langFile)
+                PropPurchased = ReadCfgValue("PropPurchased", langFile)
+                Maze = ReadCfgValue("Maze", langFile)
+                Fleeca = ReadCfgValue("Fleeca", langFile)
+                BOL = ReadCfgValue("BOL", langFile)
+                InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+                EnterApartment = ReadCfgValue("EnterApartment", langFile)
+                SaveGame = ReadCfgValue("SaveGame", langFile)
+                ExitApartment = ReadCfgValue("ExitApartment", langFile)
+                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+                CannotStore = ReadCfgValue("CannotStore", langFile)
 
                 AddHandler Tick, AddressOf OnTick
                 AddHandler KeyDown, AddressOf OnKeyDown
@@ -82,12 +91,6 @@ Public Class _3AltaStreet
 
     Public Shared Sub CreateBuyMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                AptOptions = "公寓選項"
-            Else
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             BuyMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -158,18 +161,6 @@ Public Class _3AltaStreet
 
     Public Shared Sub CreateExitMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             ExitMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -186,14 +177,6 @@ Public Class _3AltaStreet
 
     Public Shared Sub CreateGarageMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                Garage = "車庫"
-                GrgOptions = "車庫選項"
-            Else
-                Garage = " Garage"
-                GrgOptions = "GARAGE OPTIONS"
-            End If
-
             GarageMenu = New UIMenu("", GrgOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -266,11 +249,7 @@ Public Class _3AltaStreet
             _Blip.Sprite = BlipSprite.SafehouseForSale
             _Blip.Color = BlipColor.White
             _Blip.IsShortRange = True
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業求售", _Blip)
-            Else
-                SetBlipName("Property For Sale", _Blip)
-            End If
+            SetBlipName(ForSale, _Blip)
         End If
     End Sub
 
@@ -318,7 +297,6 @@ Public Class _3AltaStreet
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
@@ -354,11 +332,7 @@ Public Class _3AltaStreet
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -372,29 +346,13 @@ Public Class _3AltaStreet
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -426,7 +384,6 @@ Public Class _3AltaStreet
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -457,7 +414,6 @@ Public Class _3AltaStreet
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
-            TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -591,74 +547,34 @@ Public Class _3AltaStreet
                 ExitDistance = World.GetDistance(playerPed.Position, _Exit)
                 WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
                 GarageDistance = World.GetDistance(playerPed.Position, _Garage)
-                'BongDistance = World.GetDistance(playerPed.Position, Bong)
 
                 'Enter _3alta Tower
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
-                    End If
+                    DisplayHelpTextThisFrame(EnterApartment & _Name)
                 End If
 
                 'Save Game
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
-                    End If
+                    DisplayHelpTextThisFrame(SaveGame)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
-                    End If
+                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
-                    End If
+                    DisplayHelpTextThisFrame(ChangeClothes)
                 End If
 
-                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName AndAlso Not playerPed.IsInVehicle Then
+                    DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                ElseIf Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso Owner = playerName AndAlso playerPed.IsInVehicle Then
+                    If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        DisplayHelpTextThisFrame(CannotStore)
                     Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & Garage & ".")
+                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
                     End If
                 End If
-
-                'Bong
-                'If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso BongDistance < 3.0 Then
-                'DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to take a hit from bong.")
-                'End If
-
-                'If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso BongDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead Then
-                ' 'Dim CreateBong As Prop = World.CreateProp("prop_sh_bong_01", Bong, True, True)
-                'Dim ObjBong As Prop = Native.Function.Call(Of Prop)(Hash.GET_CLOSEST_OBJECT_OF_TYPE, playerPed.Position.X, playerPed.Position.Y, playerPed.Position.Z, 10, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "prop_sh_bong_01"), 0, 0, 0)
-                'If Not ObjBong = Nothing AndAlso ObjBong.Exists() Then
-                'playerPed.Task.ClearAllImmediately()
-                'Dim PickupBong As TaskSequence = New TaskSequence()
-                'PickupBong.AddTask.RunTo(ObjBong.Position)
-                'PickupBong.AddTask.PlayAnimation("pickup_object", "pickup_low", 8, -1, False, 0)
-                'PickupBong.Close()
-                'playerPed.Task.PerformSequence(PickupBong)
-                'Script.Wait(750)
-                'End If
-                'ObjBong.AttachTo(playerPed, playerPed.GetBoneIndex(Bone.SKEL_R_Hand), New Vector3(0.085, 0, -0.03), New Vector3(0, 0, -110))
-                'Native.Function.Call(Hash.TASK_START_SCENARIO_IN_PLACE, playerPed, "WORLD_HUMAN_SMOKING_POT", 0, True)
-                'Script.Wait(250)
-                'playerPed.Task.ClearAllImmediately()
-                'ObjBong.Detach()
-                '    ObjBong.Delete()
-                'End If
 
                 ' Controls
                 If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
@@ -711,8 +627,12 @@ Public Class _3AltaStreet
                     End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName AndAlso Not playerPed.IsInVehicle Then
                     GarageMenu.Visible = True
+                ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName AndAlso playerPed.IsInVehicle Then
+                    If Not Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        GarageMenu.Visible = True
+                    End If
                 End If
                 'End Control
 

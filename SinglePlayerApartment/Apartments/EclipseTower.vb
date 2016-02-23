@@ -49,29 +49,34 @@ Public Class EclipseTower
     Public Sub New()
         Try
             If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
-                uiLanguage = Game.Language.ToString
-
-                If uiLanguage = "Chinese" Then
-                    _Name = "日蝕大樓公寓"
-                    Desc = "這間豪華的三屋房地產隨時可以搬進去住！ ~n~ 之前的屋主太有錢了，所以留下了所有的家具。 ~n~ 你只要人過來就行，等別人發現你住在羅克福 ~n~ 德山日蝕大道上時，你就會突然有很多膚淺的 ~n~ 新朋友了。包括可容納十輛車的車庫。"
-                    Garage = "車庫"
-                    EclipseTowerPS1._Name = "日蝕大樓，閣樓套房 "
-                    EclipseTowerPS1.Desc = "這間豪華閣樓公寓套房位於城裡的最佳地點， ~n~ 售價有多貴呢？底層生活的老百姓若想購買， ~n~ 絕對會陷入經濟困境，只能巴望下任聯邦政府 ~n~ 祭出舒困政策。我們提供當日翻修服務作為購 ~n~ 屋標準配備。包括可容納十輛車的車庫。"
-                    EclipseTowerPS2._Name = "日蝕大樓，閣樓套房 "
-                    EclipseTowerPS2.Desc = "住在閣樓的生活並非只是種沒頭沒腦的奢侈行 ~n~ 為，而是讓您每天在總價50萬元的廁所裡，盡 ~n~ 情釋放體內不必要的東西，再痛快地衝出你的 ~n~ 居所，這可是只有金錢才能辦到的事。我們提 ~n~ 供當日翻修服務作為購物標準配備。 ~n~ 包括可容納十輛車的車庫。"
-                    EclipseTowerPS3._Name = "日蝕大樓，閣樓套房 "
-                    EclipseTowerPS3.Desc = "面對真相吧：價格才是重中之重。這棟公寓剛 ~n~ 好是方圓百里內最奢華墮落的生活空間，不過 ~n~ 這完全不是重點。昂貴並不代表一定要 ~n~ 『美觀』或是『有用處』，這點和他的新主人 ~n~ 可是如出一轍。而你就是成為新主人的最佳人 ~n~ 選。還有什麼好猶豫的呢？我們提供當日翻修 ~n~ 服務作為購物標準配備。 ~n~ 包括可容納十輛車的車庫。"
-                Else
-                    _Name = "Eclipse Tower Apt. "
-                    Desc = "This luxury triplex is move-in ready! The previous owner was so rich he just left all his furniture. Just bring yourself and be ready for lots of new superficial friends when people find out you live on Eclipse Boulevard in Rockford Hills. Includes 10 parking spaces."
-                    Garage = " Garage"
-                    EclipseTowerPS1._Name = "Eclipse Tower, Penthouse Suite "
-                    EclipseTowerPS1.Desc = "This lavish penthouse suite at the best address in town is expensive enough to keep the riff raff at bay until at least the next federal bailout. Access to our same-day redecorating service included as standard. Includes a 10-car garage."
-                    EclipseTowerPS2._Name = "Eclipse Tower, Penthouse Suite "
-                    EclipseTowerPS2.Desc = "Penthouse living isn't just about mindless luxury. It's about knowing that when you flush a dump you're literally crapping through every single one of the $500K hovels beneath you - and that's something that only money can buy. Access to our same-day redecorating service included as standard. Includes a 10-car garage."
-                    EclipseTowerPS3._Name = "Eclipse Tower, Penthouse Suite "
-                    EclipseTowerPS3.Desc = "Let's face it: we had you at the price tag. The fact that this happens to be one of the most decadent living spaces for hundreds of miles doesn't really matter. Just like its new owner, something this expensive doesn't need to be 'nice' or 'useful'... Access to our same-day redecorating service included as standard. Includes a 10-car garage."
-                End If
+                _Name = ReadCfgValue("EclipseName", langFile)
+                Desc = ReadCfgValue("EclipseDesc", langFile)
+                HLEclipseTower._Name = ReadCfgValue("EclipseHLName", langFile)
+                HLEclipseTower.Desc = ReadCfgValue("EclipseHLDesc", langFile)
+                EclipseTowerPS1._Name = ReadCfgValue("EclipsePS1Name", langFile)
+                EclipseTowerPS1.Desc = ReadCfgValue("EclipsePS1Desc", langFile)
+                EclipseTowerPS2._Name = ReadCfgValue("EclipsePS2Name", langFile)
+                EclipseTowerPS2.Desc = ReadCfgValue("EclipsePS2Desc", langFile)
+                EclipseTowerPS3._Name = ReadCfgValue("EclipsePS3Name", langFile)
+                EclipseTowerPS3.Desc = ReadCfgValue("EclipsePS3Desc", langFile)
+                Garage = ReadCfgValue("Garage", langFile)
+                AptOptions = ReadCfgValue("AptOptions", langFile)
+                ExitApt = ReadCfgValue("ExitApt", langFile)
+                SellApt = ReadCfgValue("SellApt", langFile)
+                EnterGarage = ReadCfgValue("EnterGarage", langFile)
+                GrgOptions = ReadCfgValue("GrgOptions", langFile)
+                ForSale = ReadCfgValue("ForSale", langFile)
+                PropPurchased = ReadCfgValue("PropPurchased", langFile)
+                Maze = ReadCfgValue("Maze", langFile)
+                Fleeca = ReadCfgValue("Fleeca", langFile)
+                BOL = ReadCfgValue("BOL", langFile)
+                InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+                EnterApartment = ReadCfgValue("EnterApartment", langFile)
+                SaveGame = ReadCfgValue("SaveGame", langFile)
+                ExitApartment = ReadCfgValue("ExitApartment", langFile)
+                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+                CannotStore = ReadCfgValue("CannotStore", langFile)
 
                 AddHandler Tick, AddressOf OnTick
                 AddHandler KeyDown, AddressOf OnKeyDown
@@ -94,12 +99,6 @@ Public Class EclipseTower
 
     Public Shared Sub CreateBuyMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                AptOptions = "公寓選項"
-            Else
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             BuyMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -358,18 +357,6 @@ Public Class EclipseTower
 
     Public Shared Sub CreateExitMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             ExitMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -386,14 +373,6 @@ Public Class EclipseTower
 
     Public Shared Sub CreateGarageMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                Garage = "車庫"
-                GrgOptions = "車庫選項"
-            Else
-                Garage = " Garage"
-                GrgOptions = "GARAGE OPTIONS"
-            End If
-
             GarageMenu = New UIMenu("", GrgOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -536,11 +515,7 @@ Public Class EclipseTower
             _Blip.Sprite = BlipSprite.SafehouseForSale
             _Blip.Color = BlipColor.White
             _Blip.IsShortRange = True
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業求售", _Blip)
-            Else
-                SetBlipName("Property For Sale", _Blip)
-            End If
+            SetBlipName(ForSale, _Blip)
         End If
     End Sub
 
@@ -588,7 +563,6 @@ Public Class EclipseTower
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
@@ -625,11 +599,7 @@ Public Class EclipseTower
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -643,29 +613,13 @@ Public Class EclipseTower
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -701,11 +655,7 @@ Public Class EclipseTower
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & HLEclipseTower._Name & HLEclipseTower.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & HLEclipseTower._Name & HLEclipseTower.Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & HLEclipseTower._Name & HLEclipseTower.Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -719,29 +669,13 @@ Public Class EclipseTower
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = HLEclipseTower._Name & HLEclipseTower.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HLEclipseTower.Owner = playerName Then
@@ -777,11 +711,7 @@ Public Class EclipseTower
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & EclipseTowerPS1._Name & EclipseTowerPS1.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & EclipseTowerPS1._Name & EclipseTowerPS1.Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & EclipseTowerPS1._Name & EclipseTowerPS1.Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -795,29 +725,13 @@ Public Class EclipseTower
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = EclipseTowerPS1._Name & EclipseTowerPS1.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS1.Owner = playerName Then
@@ -854,11 +768,7 @@ Public Class EclipseTower
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & EclipseTowerPS2._Name & EclipseTowerPS2.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & EclipseTowerPS2._Name & EclipseTowerPS2.Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & EclipseTowerPS2._Name & EclipseTowerPS2.Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -872,29 +782,13 @@ Public Class EclipseTower
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = EclipseTowerPS2._Name & EclipseTowerPS2.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS2.Owner = playerName Then
@@ -931,11 +825,7 @@ Public Class EclipseTower
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & EclipseTowerPS3._Name & EclipseTowerPS3.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & EclipseTowerPS3._Name & EclipseTowerPS3.Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & EclipseTowerPS3._Name & EclipseTowerPS3.Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -949,29 +839,13 @@ Public Class EclipseTower
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = EclipseTowerPS3._Name & EclipseTowerPS3.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso EclipseTowerPS3.Owner = playerName Then
@@ -1005,7 +879,6 @@ Public Class EclipseTower
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -1036,7 +909,6 @@ Public Class EclipseTower
             IsAtHome = True
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
-            TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -1166,7 +1038,6 @@ Public Class EclipseTower
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = HLEclipseTower._Name & HLEclipseTower.Unit
             TenCarGarage.lastLocationVector = HLEclipseTower._Exit
@@ -1196,7 +1067,6 @@ Public Class EclipseTower
 
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\")
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
             TenCarGarage.LastLocationName = HLEclipseTower._Name & HLEclipseTower.Unit
@@ -1329,7 +1199,6 @@ Public Class EclipseTower
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = EclipseTowerPS1._Name & EclipseTowerPS1.Unit
             TenCarGarage.lastLocationVector = EclipseTowerPS1._Exit
@@ -1360,7 +1229,6 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             ToggleIPL(ReadCfgValue("ETP1ipl", saveFile2))
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
 
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
@@ -1494,7 +1362,6 @@ Public Class EclipseTower
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = EclipseTowerPS2._Name & EclipseTowerPS2.Unit
             TenCarGarage.lastLocationVector = EclipseTowerPS2._Exit
@@ -1525,7 +1392,6 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             ToggleIPL(ReadCfgValue("ETP2ipl", saveFile2))
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
 
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
@@ -1659,7 +1525,6 @@ Public Class EclipseTower
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = EclipseTowerPS3._Name & EclipseTowerPS3.Unit
             TenCarGarage.lastLocationVector = EclipseTowerPS3._Exit
@@ -1690,7 +1555,6 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             ToggleIPL(ReadCfgValue("ETP3ipl", saveFile2))
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
 
             TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
@@ -1829,43 +1693,29 @@ Public Class EclipseTower
 
                 'Enter Eclipse Tower
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
-                    End If
+                    DisplayHelpTextThisFrame(EnterApartment & _Name)
                 End If
 
                 'Save Game
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
-                    End If
+                    DisplayHelpTextThisFrame(SaveGame)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
-                    End If
+                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
-                    End If
+                    DisplayHelpTextThisFrame(ChangeClothes)
                 End If
 
-                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) AndAlso Not playerPed.IsInVehicle Then
+                    DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                ElseIf Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) AndAlso playerPed.IsInVehicle Then
+                    If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        DisplayHelpTextThisFrame(CannotStore)
                     Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
                     End If
                 End If
 
@@ -1920,8 +1770,12 @@ Public Class EclipseTower
                     End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) Then
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) AndAlso Not playerPed.IsInVehicle Then
                     GarageMenu.Visible = True
+                ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLEclipseTower.Owner = playerName Or EclipseTowerPS1.Owner = playerName Or EclipseTowerPS2.Owner = playerName Or EclipseTowerPS3.Owner = playerName) AndAlso playerPed.IsInVehicle Then
+                    If Not Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        GarageMenu.Visible = True
+                    End If
                 End If
                 'End Controls
 

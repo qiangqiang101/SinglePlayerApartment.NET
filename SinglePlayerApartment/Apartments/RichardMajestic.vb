@@ -49,21 +49,28 @@ Public Class RichardMajestic
     Public Sub New()
         Try
             If ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then
-                uiLanguage = Game.Language.ToString
-
-                If uiLanguage = "Chinese" Then
-                    _Name = "李察尊爵公寓"
-                    Desc = "這個每到冒泡的豪華公寓位於羅克福德山的 ~n~ 明星路上，距離理查尊爵電影片場、AKAN唱片 ~n~ 公司和捐精診所都只有幾步之處。 ~n~ 對夕陽產業來說，這裡可是一箭三雕的絕佳 ~n~ 地點！包括可容納十輛車的車庫。"
-                    Garage = "車庫"
-                    HLRichardMajestic._Name = "李察尊爵公寓"
-                    HLRichardMajestic.Desc = "擁有一塊美艷舊Vinewood，儘管這是被做看起 ~n~ 來就像洛斯桑托斯的其他超級富豪的角落一個 ~n~ 非常小的和昂貴的。與以往一隻腳一個現代的 ~n~ 橫向的生活體驗。包括可容納十輛車的車庫。"
-                Else
-                    _Name = "Richards Majestic Apt. "
-                    Desc = "This breathtaking luxury condo on Movie Star Way in Rockford Hills is a stone's throw from Richards Majestic Movie Studios, AKAN Records and a Sperm Donor Clinic. The Ultimate trifecta of dying industries! Includes a 10-car garage."
-                    Garage = " Garage"
-                    HLRichardMajestic._Name = "Richards Majestic Apt. "
-                    HLRichardMajestic.Desc = "Own a piece of glamorous old Vinewood, albeit a very small and expensive piece that's been made to look just like the other super-rich corners of Los Santos. A contemporary lateral living experience with one foot in the past. Includes a 10-car garage."
-                End If
+                _Name = ReadCfgValue("RichardName", langFile)
+                Desc = ReadCfgValue("RichardDesc", langFile)
+                HLRichardMajestic._Name = ReadCfgValue("RichardHLName", langFile)
+                HLRichardMajestic.Desc = ReadCfgValue("RichardHLDesc", langFile)
+                Garage = ReadCfgValue("Garage", langFile)
+                AptOptions = ReadCfgValue("AptOptions", langFile)
+                ExitApt = ReadCfgValue("ExitApt", langFile)
+                SellApt = ReadCfgValue("SellApt", langFile)
+                EnterGarage = ReadCfgValue("EnterGarage", langFile)
+                GrgOptions = ReadCfgValue("GrgOptions", langFile)
+                ForSale = ReadCfgValue("ForSale", langFile)
+                PropPurchased = ReadCfgValue("PropPurchased", langFile)
+                Maze = ReadCfgValue("Maze", langFile)
+                Fleeca = ReadCfgValue("Fleeca", langFile)
+                BOL = ReadCfgValue("BOL", langFile)
+                InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+                EnterApartment = ReadCfgValue("EnterApartment", langFile)
+                SaveGame = ReadCfgValue("SaveGame", langFile)
+                ExitApartment = ReadCfgValue("ExitApartment", langFile)
+                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+                CannotStore = ReadCfgValue("CannotStore", langFile)
 
                 AddHandler Tick, AddressOf OnTick
                 AddHandler KeyDown, AddressOf OnKeyDown
@@ -86,12 +93,6 @@ Public Class RichardMajestic
 
     Public Shared Sub CreateBuyMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                AptOptions = "公寓選項"
-            Else
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             BuyMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -209,18 +210,6 @@ Public Class RichardMajestic
 
     Public Shared Sub CreateExitMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             ExitMenu = New UIMenu("", AptOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -237,14 +226,6 @@ Public Class RichardMajestic
 
     Public Shared Sub CreateGarageMenu()
         Try
-            If uiLanguage = "Chinese" Then
-                Garage = "車庫"
-                GrgOptions = "車庫選項"
-            Else
-                Garage = " Garage"
-                GrgOptions = "GARAGE OPTIONS"
-            End If
-
             GarageMenu = New UIMenu("", GrgOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
@@ -332,11 +313,7 @@ Public Class RichardMajestic
             _Blip.Sprite = BlipSprite.SafehouseForSale
             _Blip.Color = BlipColor.White
             _Blip.IsShortRange = True
-            If uiLanguage = "Chinese" Then
-                SetBlipName("產業求售", _Blip)
-            Else
-                SetBlipName("Property For Sale", _Blip)
-            End If
+            SetBlipName(ForSale, _Blip)
         End If
     End Sub
 
@@ -384,7 +361,6 @@ Public Class RichardMajestic
                 Game.FadeScreenOut(500)
                 Script.Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-                TenCarGarage.isInGarage = True
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
                 TenCarGarage.lastLocationVector = _Exit
@@ -420,11 +396,7 @@ Public Class RichardMajestic
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -438,29 +410,13 @@ Public Class RichardMajestic
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
@@ -496,11 +452,7 @@ Public Class RichardMajestic
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    If uiLanguage = "Chinese" Then
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("已購買" & vbLf & "~w~" & HLRichardMajestic._Name & HLRichardMajestic.Unit), "", 100, True, 0, True)
-                    Else
-                        _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format("Property Purchased" & vbLf & "~w~" & HLRichardMajestic._Name & HLRichardMajestic.Unit), "", 100, True, 0, True)
-                    End If
+                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & HLRichardMajestic._Name & HLRichardMajestic.Unit), "", 100, True, 0, True)
                     _displayTimer.Start()
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
@@ -514,29 +466,13 @@ Public Class RichardMajestic
                     selectedItem.SetRightLabel("")
                 Else
                     If playerName = "Michael" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Fleeca Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Fleeca Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Trevor" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Bank of Liberty", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Bank of Liberty", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Player3" Then
-                        If uiLanguage = "Chinese" Then
-                            DisplayNotificationThisFrame("Maze Bank", "資金不足", "您沒有足夠的資金購買該產業。", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        Else
-                            DisplayNotificationThisFrame("Maze Bank", "Insufficient Funds", "You have insufficient funds to purchase this property.", "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                        End If
+                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
             ElseIf selectedItem.Text = HLRichardMajestic._Name & HLRichardMajestic.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HLRichardMajestic.Owner = playerName Then
@@ -568,7 +504,6 @@ Public Class RichardMajestic
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -599,7 +534,6 @@ Public Class RichardMajestic
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
-            TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
             TenCarGarage.LastLocationName = _Name & Unit
             TenCarGarage.lastLocationVector = _Exit
@@ -730,7 +664,6 @@ Public Class RichardMajestic
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = HLRichardMajestic._Name & HLRichardMajestic.Unit
             TenCarGarage.lastLocationVector = HLRichardMajestic._Exit
@@ -761,7 +694,6 @@ Public Class RichardMajestic
             IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.isInGarage = True
             TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
             TenCarGarage.LastLocationName = HLRichardMajestic._Name & HLRichardMajestic.Unit
             TenCarGarage.lastLocationVector = HLRichardMajestic._Exit
@@ -898,43 +830,29 @@ Public Class RichardMajestic
 
                 'Enter richard Tower
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 3.0 Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & _Name & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter " & _Name)
-                    End If
+                    DisplayHelpTextThisFrame(EnterApartment & _Name)
                 End If
 
                 'Save Game
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 儲存遊戲。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get into bed.")
-                    End If
+                    DisplayHelpTextThisFrame(SaveGame)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 離開" & _Name & Unit & "。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to exit " & _Name & Unit & ".")
-                    End If
+                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 更換服裝。")
-                    Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to change clothes.")
-                    End If
+                    DisplayHelpTextThisFrame(ChangeClothes)
                 End If
 
-                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
-                    If uiLanguage = "Chinese" Then
-                        DisplayHelpTextThisFrame("按 ~INPUT_CONTEXT~ 進入" & Garage & "。")
+                If Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) AndAlso Not playerPed.IsInVehicle Then
+                    DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                ElseIf Not playerPed.IsDead AndAlso GarageDistance < 5.0 AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) AndAlso playerPed.IsInVehicle Then
+                    If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        DisplayHelpTextThisFrame(CannotStore)
                     Else
-                        DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to enter" & Garage & ".")
+                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
                     End If
                 End If
 
@@ -989,8 +907,12 @@ Public Class RichardMajestic
                     End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) Then
+                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) AndAlso Not playerPed.IsInVehicle Then
                     GarageMenu.Visible = True
+                ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 5.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso (Owner = playerName Or HLRichardMajestic.Owner = playerName) AndAlso playerPed.IsInVehicle Then
+                    If Not Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                        GarageMenu.Visible = True
+                    End If
                 End If
                 'End Controls
 

@@ -21,15 +21,17 @@ Public Class SinglePlayerApartment
     Public Shared saveFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save.cfg"
     Public Shared saveFile2 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save2.cfg"
     Public Shared settingFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\setting.cfg"
-    Public Shared uiLanguage As String
+    Public Shared langFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Languages\" & Game.Language.ToString & ".cfg"
     Public Shared playerMap As String
     Public Shared Debug As String = ReadCfgValue("Debug", settingFile)
 
     'Translate
-    Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, GrgRemove, GrgRemoveAndDrive, GrgMove, GrgSell, GrgSelectVeh, GrgTooHot, _Mechanic, ChooseApt, ChooseVeh, ChooseVehDesc, ReturnVeh, AptStyle As String
-    Public Shared ModernStyle, MoodyStyle, VibrantStyle, SharpStyle, MonochromeStyle, SeductiveStyle, RegalStyle, AquaStyle As String
+    Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, GrgRemove, GrgRemoveAndDrive, GrgMove, GrgSell, GrgSelectVeh, GrgTooHot, GrgPlate, GrgRename, GrgTransfer, _Mechanic, _Pegasus, ChooseApt As String
+    Public Shared ModernStyle, MoodyStyle, VibrantStyle, SharpStyle, MonochromeStyle, SeductiveStyle, RegalStyle, AquaStyle, ChooseVeh, ChooseVehDesc, ReturnVeh, AptStyle, _Phone, PegasusDeliver, PegasusDelete, CannotStore As String
+    Public Shared GrgFull, Reach10, MechanicBill, EnterElevator, ExitGarage, ManageGarage, Maze, Fleeca, BOL, ForSale, PropPurchased, InsFundApartment, EnterApartment, SaveGame, ExitApartment, ChangeClothes, _EnterGarage As String
 
     Private teleported As Boolean = False
+    Public tvOn As Boolean = False
     Private franklinSafeHouse As Vector3 = New Vector3(7.1190319061279, 536.61511230469, 176.02365112305)
     Private michaelSafeHouse As Vector3 = New Vector3(-813.60302734375, 179.47380065918, 72.158325195313)
     Private trevorSafeHouse As Vector3 = New Vector3(1972.6002197266, 3817.0407714844, 33.426822662354)
@@ -64,47 +66,58 @@ Public Class SinglePlayerApartment
                 playerCash = player.Money
             End If
 
-            uiLanguage = Game.Language.ToString
-
-            If uiLanguage = "Chinese" Then
-                ExitApt = "離開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-                Garage = "車庫"
-                GrgOptions = "管理車輛"
-                GrgRemove = "刪除車輛"
-                GrgRemoveAndDrive = "刪除並且駕駛離開"
-                GrgMove = "車輛重新排序"
-                GrgSell = "出售車輛給改車王"
-                GrgSelectVeh = "選擇車輛"
-                GrgTooHot = "我們暫時不需要這輛車。"
-                _Mechanic = "機械師"
-                ChooseApt = "選擇公寓"
-                ChooseVeh = "選擇車輛"
-                ChooseVehDesc = "請求交付？"
-                ReturnVeh = "返回所有車輛"
-                AptStyle = "公寓樣式"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-                Garage = " Garage"
-                GrgOptions = "MANAGE VEHICLES"
-                GrgRemove = "Remove Vehicle"
-                GrgRemoveAndDrive = "Remove and exit Garage"
-                GrgMove = "Rearrange Vehicle"
-                GrgSell = "Sell Vehicle to LSC"
-                GrgSelectVeh = "Select vehicle."
-                GrgTooHot = "This vehicle is too hot to sell."
-                _Mechanic = "Mechanic"
-                ChooseApt = "SELECT APARTMENT"
-                ChooseVeh = "SELECT VEHICLE FOR DELIVERY"
-                ChooseVehDesc = "Request Delivery?"
-                ReturnVeh = "Return all Vehicles"
-                AptStyle = "Apartment Style"
-            End If
+            'New Language
+            Website.BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
+            Website.DockTease = ReadCfgValue("DockTease", langFile)
+            Website.LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
+            Website.ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
+            Website.PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
+            Website.SouthernSA = ReadCfgValue("SouthernSA", langFile)
+            Website.WarstockCache = ReadCfgValue("WarstockCache", langFile)
+            ExitApt = ReadCfgValue("ExitApt", langFile)
+            SellApt = ReadCfgValue("SellApt", langFile)
+            EnterGarage = ReadCfgValue("EnterGarage", langFile)
+            AptOptions = ReadCfgValue("AptOptions", langFile)
+            Garage = ReadCfgValue("Garage", langFile)
+            GrgOptions = ReadCfgValue("GrgOptions", langFile)
+            GrgRemove = ReadCfgValue("GrgRemove", langFile)
+            GrgRemoveAndDrive = ReadCfgValue("GrgRemoveAndDrive", langFile)
+            GrgMove = ReadCfgValue("GrgMove", langFile)
+            GrgSell = ReadCfgValue("GrgSell", langFile)
+            GrgSelectVeh = ReadCfgValue("GrgSelectVeh", langFile)
+            GrgTooHot = ReadCfgValue("GrgTooHot", langFile)
+            GrgPlate = ReadCfgValue("GrgPlate", langFile)
+            GrgRename = ReadCfgValue("GrgRename", langFile)
+            GrgTransfer = ReadCfgValue("GrgTransfer", langFile)
+            _Mechanic = ReadCfgValue("_Mechanic", langFile)
+            _Pegasus = ReadCfgValue("_Pegasus", langFile)
+            PegasusDeliver = ReadCfgValue("PegasusDeliver", langFile)
+            PegasusDelete = ReadCfgValue("PegasusDelete", langFile)
+            _Phone = ReadCfgValue("_Phone", langFile)
+            ChooseApt = ReadCfgValue("ChooseApt", langFile)
+            ChooseVeh = ReadCfgValue("ChooseVeh", langFile)
+            ChooseVehDesc = ReadCfgValue("ChooseVehDesc", langFile)
+            ReturnVeh = ReadCfgValue("ReturnVeh", langFile)
+            AptStyle = ReadCfgValue("AptStyle", langFile)
+            Reach10 = ReadCfgValue("Reach10", langFile)
+            MechanicBill = ReadCfgValue("MechanicBill", langFile)
+            GrgFull = ReadCfgValue("GrgFull", langFile)
+            EnterElevator = ReadCfgValue("EnterElevator", langFile)
+            ExitGarage = ReadCfgValue("ExitGarage", langFile)
+            ManageGarage = ReadCfgValue("ManageGarage", langFile)
+            Maze = ReadCfgValue("Maze", langFile)
+            Fleeca = ReadCfgValue("Fleeca", langFile)
+            BOL = ReadCfgValue("BOL", langFile)
+            ForSale = ReadCfgValue("ForSale", langFile)
+            PropPurchased = ReadCfgValue("PropPurchased", langFile)
+            InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+            EnterApartment = ReadCfgValue("EnterApartment", langFile)
+            SaveGame = ReadCfgValue("SaveGame", langFile)
+            ExitApartment = ReadCfgValue("ExitApartment", langFile)
+            ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+            _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+            CannotStore = ReadCfgValue("CannotStore", langFile)
+            'End Language
 
             AddHandler Tick, AddressOf OnTick
             AddHandler KeyDown, AddressOf OnKeyDown
@@ -170,9 +183,11 @@ Public Class SinglePlayerApartment
 
     Public Shared Sub LoadMPDLCMap()
         Try
-            Native.Function.Call(Hash._LOAD_MP_DLC_MAPS, New InputArgument(0 - 1) {})
-            Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {1})
-            LoadMPDLCMapMissingObjects()
+            If My.Settings.NeverEnableMPMaps = False Then
+                Native.Function.Call(Hash._LOAD_MP_DLC_MAPS, New InputArgument(0 - 1) {})
+                Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {1})
+                LoadMPDLCMapMissingObjects()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -247,10 +262,12 @@ Public Class SinglePlayerApartment
 
     Public Shared Sub UnLoadMPDLCMap()
         Try
-            If My.Settings.AlwaysEnableMPMaps = False Then
-                Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {0})
-                Native.Function.Call(Hash._UNLOAD_MP_DLC_MAPS)
-                Native.Function.Call(Hash._0xD7C10C4A637992C9)
+            If My.Settings.NeverEnableMPMaps = False Then
+                If My.Settings.AlwaysEnableMPMaps = False Then
+                    Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {0})
+                    Native.Function.Call(Hash._UNLOAD_MP_DLC_MAPS)
+                    Native.Function.Call(Hash._0xD7C10C4A637992C9)
+                End If
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -447,6 +464,7 @@ Public Class SinglePlayerApartment
 
     Private Sub LoadSettingFromCFG()
         Try
+            My.Settings.CreateFileMethod = ReadCfgValue("CreateFileMethod", settingFile)
             My.Settings.MlastPosX = Convert.ToSingle(ReadCfgValue("MlastPosX", saveFile))
             My.Settings.MlastPosY = Convert.ToSingle(ReadCfgValue("MlastPosY", saveFile))
             My.Settings.MlastPosZ = Convert.ToSingle(ReadCfgValue("MlastPosZ", saveFile))
@@ -461,6 +479,18 @@ Public Class SinglePlayerApartment
                 My.Settings.AlwaysEnableMPMaps = True
             Else
                 My.Settings.AlwaysEnableMPMaps = False
+            End If
+            Dim HasLowriderUpdate As Integer = Game.Version
+            If HasLowriderUpdate < 13 Then
+                My.Settings.HasLowriderUpdate = False
+            Else
+                My.Settings.HasLowriderUpdate = True
+            End If
+            Dim NeverEnableMPMaps As String = ReadCfgValue("NeverEnableMPMaps", settingFile)
+            If NeverEnableMPMaps = "True" Then
+                My.Settings.NeverEnableMPMaps = True
+            Else
+                My.Settings.NeverEnableMPMaps = False
             End If
             My.Settings.Save()
         Catch ex As Exception
@@ -638,19 +668,6 @@ Public Class SinglePlayerApartment
                 playerCash = player.Money
             End If
 
-
-            If uiLanguage = "Chinese" Then
-                ExitApt = "离開公寓"
-                SellApt = "出售產業"
-                EnterGarage = "進入車庫"
-                AptOptions = "公寓選項"
-            Else
-                ExitApt = "Exit Apartment"
-                SellApt = "Sell Property"
-                EnterGarage = "Enter Garage"
-                AptOptions = "APARTMENT OPTIONS"
-            End If
-
             If _displayTimer.Enabled Then
                 _scaleform.Render2D()
 
@@ -700,6 +717,8 @@ Public Class SinglePlayerApartment
             If Debug = "True" Then
                 Resources.DrawText(("Position X: " & GameplayCamera.Position.X & " Y: " & GameplayCamera.Position.Y & " Z: " & GameplayCamera.Position.Z & " Rotation X: " & GameplayCamera.Rotation.X & " Y: " & GameplayCamera.Rotation.Y & " Z: " & GameplayCamera.Rotation.Z), New Point(640, 700), 0.3, Color.White, Resources.GTAFont.UIDefault, Resources.GTAFontAlign.Right, Resources.GTAFontStyleOptions.Outline)
             End If
+
+            If tvOn = True Then Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 0.5, 0.5, 0.0, 255, 255, 255, 255)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -709,6 +728,16 @@ Public Class SinglePlayerApartment
         Try
             If Debug = True AndAlso e.KeyCode = Keys.Z Then
                 UI.ShowSubtitle(playerHash.ToString & " " & playerName)
+            End If
+
+            If e.KeyCode = Keys.D8 And tvOn = False Then
+                Dim channel As Integer = Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "movie_arthouse")
+                Native.Function.Call(Hash._0x0AD973CA1E077B60, channel)
+                Native.Function.Call(Hash.SET_TV_CHANNEL, 1)
+                Native.Function.Call(Hash.SET_TV_VOLUME, 10)
+                tvOn = True
+            Else
+                tvOn = False
             End If
         Catch ex As Exception
             UI.ShowSubtitle(ex.Message)

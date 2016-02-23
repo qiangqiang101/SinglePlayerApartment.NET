@@ -185,6 +185,54 @@ Namespace My
                 Me("AlwaysEnableMPMaps") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property HasLowriderUpdate() As Boolean
+            Get
+                Return CType(Me("HasLowriderUpdate"),Boolean)
+            End Get
+            Set
+                Me("HasLowriderUpdate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1.0.671.1")>  _
+        Public Property GameVersion() As String
+            Get
+                Return CType(Me("GameVersion"),String)
+            End Get
+            Set
+                Me("GameVersion") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property NeverEnableMPMaps() As Boolean
+            Get
+                Return CType(Me("NeverEnableMPMaps"),Boolean)
+            End Get
+            Set
+                Me("NeverEnableMPMaps") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property CreateFileMethod() As Integer
+            Get
+                Return CType(Me("CreateFileMethod"),Integer)
+            End Get
+            Set
+                Me("CreateFileMethod") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
