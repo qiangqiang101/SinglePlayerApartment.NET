@@ -1,16 +1,10 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports PDMCarShopGUI
+Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
 
 Public Class EclipseTowerPS2
@@ -73,7 +67,6 @@ Public Class EclipseTowerPS2
                 AquaStyle = ReadCfgValue("AquaStyle", langFile)
 
                 AddHandler Tick, AddressOf OnTick
-                AddHandler KeyDown, AddressOf OnKeyDown
 
                 _menuPool = New MenuPool()
                 CreateExitMenu()
@@ -143,9 +136,9 @@ Public Class EclipseTowerPS2
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 Game.Player.Character.Position = Teleport2
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
                 EclipseTower.IsAtHome = False
@@ -155,14 +148,14 @@ Public Class EclipseTowerPS2
                 WriteCfgValue("ETP2owner", "None", saveFile2)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 SinglePlayerApartment.player.Money = (playerCash + Cost)
                 Owner = "None"
                 EclipseTower._Blip.Remove()
                 If Not EclipseTower.Blip2 Is Nothing Then EclipseTower.Blip2.Remove()
                 EclipseTower.CreateEclipseTower()
                 Game.Player.Character.Position = Teleport2
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 EclipseTower.RefreshMenu()
                 EclipseTower.RefreshGarageMenu()
@@ -171,7 +164,7 @@ Public Class EclipseTowerPS2
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = _Name & Unit
@@ -182,25 +175,25 @@ Public Class EclipseTowerPS2
                 TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
                 TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
                 ExitMenu.Visible = False
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf selectedItem.Text = AptStyle Then
                 ExitMenu.Visible = False
                 StyleMenu.Visible = True
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 World.RenderingCamera = World.CreateCamera(StyleCameraPos, StyleCameraRot, StyleCameraFov)
                 hideHud = True
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             End If
 
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_01_b", saveFile2)
                 IPL = "apa_v_mp_h_01_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -208,10 +201,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_02_b", saveFile2)
                 IPL = "apa_v_mp_h_02_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -219,10 +212,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_03_b", saveFile2)
                 IPL = "apa_v_mp_h_03_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -230,10 +223,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_04_b", saveFile2)
                 IPL = "apa_v_mp_h_04_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -241,10 +234,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_05_b", saveFile2)
                 IPL = "apa_v_mp_h_05_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -252,10 +245,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_06_b", saveFile2)
                 IPL = "apa_v_mp_h_06_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -263,10 +256,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_07_b", saveFile2)
                 IPL = "apa_v_mp_h_07_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -274,10 +267,10 @@ Public Class EclipseTowerPS2
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_08_b", saveFile2)
                 IPL = "apa_v_mp_h_08_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 StyleMenu.Visible = False
                 hideHud = False
@@ -293,59 +286,59 @@ Public Class EclipseTowerPS2
         Try
             If sender.MenuItems(index).Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_01_b")
                 LastIPL = "apa_v_mp_h_01_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_02_b")
                 LastIPL = "apa_v_mp_h_02_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_03_b")
                 LastIPL = "apa_v_mp_h_03_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_04_b")
                 LastIPL = "apa_v_mp_h_04_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_05_b")
                 LastIPL = "apa_v_mp_h_05_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_06_b")
                 LastIPL = "apa_v_mp_h_06_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_07_b")
                 LastIPL = "apa_v_mp_h_07_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 ChangeIPL(LastIPL, "apa_v_mp_h_08_b")
                 LastIPL = "apa_v_mp_h_08_b"
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             End If
             IPL = LastIPL
@@ -356,87 +349,66 @@ Public Class EclipseTowerPS2
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
+            If My.Settings.EclipseTower = "Enable" Then
                 SaveDistance = World.GetDistance(playerPed.Position, Save)
                 ExitDistance = World.GetDistance(playerPed.Position, _Exit)
                 WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
 
                 'Save Game
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 3.0 AndAlso Owner = playerName Then
+                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso SaveDistance < 3.0 Then
                     DisplayHelpTextThisFrame(SaveGame)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        playerMap = "EclipsePS2"
+                        Game.FadeScreenOut(500)
+                        Wait(&H3E8)
+                        TimeLapse(8)
+                        Game.ShowSaveMenu()
+                        SavePosition()
+                        Wait(500)
+                        Game.FadeScreenIn(500)
+                    End If
                 End If
 
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
+                'Exit Apartment
+                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso ExitDistance < 2.0 Then
                     DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        ExitMenu.Visible = True
+                    End If
                 End If
 
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
+                'Wardrobe
+                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso WardrobeDistance < 1.0 Then
                     DisplayHelpTextThisFrame(ChangeClothes)
-                End If
-
-                'Controls
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                    ExitMenu.Visible = True
-                End If
-
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                    'Press E on hleclipse Bed
-                    playerMap = "EclipsePS2"
-                    Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    TimeLapse(8)
-                    Game.ShowSaveMenu()
-                    SavePosition()
-                    WriteCfgValue("ETP2ipl", IPL, saveFile2)
-                    Script.Wait(500)
-                    Game.FadeScreenIn(500)
-                End If
-
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                    WardrobeVector = Wardrobe
-                    WardrobeHead = WardrobeHeading
-                    If playerName = "Michael" Then
-                        Player0W.Visible = True
-                        MakeACamera()
-                    ElseIf playerName = "Franklin" Then
-                        Player1W.Visible = True
-                        MakeACamera()
-                    ElseIf playerName = “Trevor"
-                        Player2W.Visible = True
-                        MakeACamera()
-                    ElseIf playerName = "Player3" Then
-                        If playerHash = "1885233650" Then
-                            Player3_MW.Visible = True
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        WardrobeVector = Wardrobe
+                        WardrobeHead = WardrobeHeading
+                        WardrobeScriptStatus = 0
+                        If playerName = "Michael" Then
+                            Player0W.Visible = True
                             MakeACamera()
-                        ElseIf playerHash = "-1667301416" Then
-                            Player3_FW.Visible = True
+                        ElseIf playerName = "Franklin" Then
+                            Player1W.Visible = True
                             MakeACamera()
+                        ElseIf playerName = “Trevor"
+                            Player2W.Visible = True
+                            MakeACamera()
+                        ElseIf playerName = "Player3" Then
+                            If playerHash = "1885233650" Then
+                                Player3_MW.Visible = True
+                                MakeACamera()
+                            ElseIf playerHash = "-1667301416" Then
+                                Player3_FW.Visible = True
+                                MakeACamera()
+                            End If
                         End If
                     End If
                 End If
-                'End Controls
 
                 _menuPool.ProcessMenus()
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
-
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-
-            Catch ex As Exception
-            End Try
-        End If
     End Sub
 End Class

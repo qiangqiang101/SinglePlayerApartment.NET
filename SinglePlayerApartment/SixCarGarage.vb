@@ -1,9 +1,8 @@
-﻿Imports System.Drawing
-Imports GTA
+﻿Imports GTA
 Imports GTA.Native
 Imports GTA.Math
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports AnimationV
+Imports SinglePlayerApartment.Resources
 
 Public Class SixCarGarage
     Inherits Script
@@ -19,7 +18,7 @@ Public Class SixCarGarage
     Public Shared GarageDoorL As Vector3 = New Vector3(202.2906, -1007.7249, -98.9992)
     Public Shared GarageDoorR As Vector3 = New Vector3(194.4465, -1007.7326, -98.9999)
     Public Shared GarageMiddle As Vector3 = New Vector3(197.9781, -1000.8287, -98.9999)
-    Public Shared MenuActivator As Vector3 = New Vector3(204.6184, -994.6097, -99.9999)
+    Public Shared MenuActivator As Vector3 = New Vector3(204.1768, -995.3179, -99.9999)
     Public Shared ElevatorDistance As Single
     Public Shared GarageDoorLDistance As Single
     Public Shared GarageDoorRDistance As Single
@@ -33,7 +32,6 @@ Public Class SixCarGarage
     Public Shared veh5Pos As Vector3 = New Vector3(203.9257, -999.1467, -99.99999)
     Public Shared vehRot02 As Vector3 = New Vector3(0.0001003991, 4.043804, -4.035995)
     Public Shared vehRot35 As Vector3 = New Vector3(9.383157, -5.855135, -146.2832)
-    Public Shared GarageMarker As New Marker(MarkerType.VerticalCylinder, MenuActivator, Color.LightBlue, AnimationType.Normal)
 
     Public Sub New()
         Try
@@ -67,20 +65,11 @@ Public Class SixCarGarage
 #Region "LoadGarageVehicles"
     Public Shared Sub LoadGarageVehicle0(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
-            If ReadCfgValue("VehicleModel", file) = "" Then
-                If veh0 = Nothing Then
-                    veh0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                Else
-                    veh0.Delete()
-                    veh0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                End If
+            If veh0 = Nothing Then
+                veh0 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             Else
-                If veh0 = Nothing Then
-                    veh0 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                Else
-                    veh0.Delete()
-                    veh0 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                End If
+                veh0.Delete()
+                veh0 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             End If
 
             SetModKit(veh0, file, False)
@@ -93,20 +82,11 @@ Public Class SixCarGarage
 
     Public Shared Sub LoadGarageVehicle1(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
-            If ReadCfgValue("VehicleModel", file) = "" Then
-                If veh1 = Nothing Then
-                    veh1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                Else
-                    veh1.Delete()
-                    veh1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                End If
+            If veh1 = Nothing Then
+                veh1 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             Else
-                If veh1 = Nothing Then
-                    veh1 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                Else
-                    veh1.Delete()
-                    veh1 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                End If
+                veh1.Delete()
+                veh1 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             End If
 
             SetModKit(veh1, file, False)
@@ -119,20 +99,11 @@ Public Class SixCarGarage
 
     Public Shared Sub LoadGarageVehicle2(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
-            If ReadCfgValue("VehicleModel", file) = "" Then
-                If veh2 = Nothing Then
-                    veh2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                Else
-                    veh2.Delete()
-                    veh2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                End If
+            If veh2 = Nothing Then
+                veh2 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             Else
-                If veh2 = Nothing Then
-                    veh2 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                Else
-                    veh2.Delete()
-                    veh2 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                End If
+                veh2.Delete()
+                veh2 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             End If
 
             SetModKit(veh2, file, False)
@@ -145,20 +116,11 @@ Public Class SixCarGarage
 
     Public Shared Sub LoadGarageVehicle3(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
-            If ReadCfgValue("VehicleModel", file) = "" Then
-                If veh3 = Nothing Then
-                    veh3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                Else
-                    veh3.Delete()
-                    veh3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                End If
+            If veh3 = Nothing Then
+                veh3 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             Else
-                If veh3 = Nothing Then
-                    veh3 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                Else
-                    veh3.Delete()
-                    veh3 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                End If
+                veh3.Delete()
+                veh3 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             End If
 
             SetModKit(veh3, file, False)
@@ -171,20 +133,11 @@ Public Class SixCarGarage
 
     Public Shared Sub LoadGarageVehicle4(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
-            If ReadCfgValue("VehicleModel", file) = "" Then
-                If veh4 = Nothing Then
-                    veh4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                Else
-                    veh4.Delete()
-                    veh4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                End If
+            If veh4 = Nothing Then
+                veh4 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             Else
-                If veh4 = Nothing Then
-                    veh4 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                Else
-                    veh4.Delete()
-                    veh4 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                End If
+                veh4.Delete()
+                veh4 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             End If
 
             SetModKit(veh4, file, False)
@@ -197,20 +150,11 @@ Public Class SixCarGarage
 
     Public Shared Sub LoadGarageVehicle5(file As String, pos As Vector3, rot As Vector3, head As Single)
         Try
-            If ReadCfgValue("VehicleModel", file) = "" Then
-                If veh5 = Nothing Then
-                    veh5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                Else
-                    veh5.Delete()
-                    veh5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", file)), pos, head)
-                End If
+            If veh5 = Nothing Then
+                veh5 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             Else
-                If veh5 = Nothing Then
-                    veh5 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                Else
-                    veh5.Delete()
-                    veh5 = World.CreateVehicle(ReadCfgValue("VehicleModel", file), pos, head)
-                End If
+                veh5.Delete()
+                veh5 = CreateVehicle(ReadCfgValue("VehicleModel", file), ReadCfgValue("VehicleHash", file), pos, head)
             End If
 
             SetModKit(veh5, file, False)
@@ -259,14 +203,14 @@ Public Class SixCarGarage
         _Vehicle.PrimaryColor = ReadCfgValue("PrimaryColor", VehicleCfgFile)
         _Vehicle.SecondaryColor = ReadCfgValue("SecondaryColor", VehicleCfgFile)
         _Vehicle.PearlescentColor = ReadCfgValue("PearlescentColor", VehicleCfgFile)
-        If ReadCfgValue("HasCustomPrimaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomPrimaryColor = Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorBlue", VehicleCfgFile))
-        If ReadCfgValue("HasCustomSecondaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomSecondaryColor = Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorBlue", VehicleCfgFile))
+        If ReadCfgValue("HasCustomPrimaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomPrimaryColor = Drawing.Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorBlue", VehicleCfgFile))
+        If ReadCfgValue("HasCustomSecondaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomSecondaryColor = Drawing.Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorBlue", VehicleCfgFile))
         _Vehicle.RimColor = ReadCfgValue("RimColor", VehicleCfgFile)
         If ReadCfgValue("HasNeonLightBack", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Back, True)
         If ReadCfgValue("HasNeonLightFront", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Front, True)
         If ReadCfgValue("HasNeonLightLeft", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Left, True)
         If ReadCfgValue("HasNeonLightRight", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Right, True)
-        _Vehicle.NeonLightsColor = Color.FromArgb(ReadCfgValue("NeonColorRed", VehicleCfgFile), ReadCfgValue("NeonColorGreen", VehicleCfgFile), ReadCfgValue("NeonColorBlue", VehicleCfgFile))
+        _Vehicle.NeonLightsColor = Drawing.Color.FromArgb(ReadCfgValue("NeonColorRed", VehicleCfgFile), ReadCfgValue("NeonColorGreen", VehicleCfgFile), ReadCfgValue("NeonColorBlue", VehicleCfgFile))
         _Vehicle.WheelType = ReadCfgValue("WheelType", VehicleCfgFile)
         _Vehicle.Livery = ReadCfgValue("Livery", VehicleCfgFile)
         Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, _Vehicle, CInt(ReadCfgValue("PlateType", VehicleCfgFile)))
@@ -286,7 +230,7 @@ Public Class SixCarGarage
         If ReadCfgValue("FrontTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), False)
         If ReadCfgValue("BackTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), False)
         _Vehicle.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
         _Vehicle.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", VehicleCfgFile), True)
         _Vehicle.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", VehicleCfgFile), True)
         _Vehicle.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", VehicleCfgFile), True)
@@ -317,7 +261,7 @@ Public Class SixCarGarage
         If ReadCfgValue("XenonHeadlights", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
         If ReadCfgValue("Turbo", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.Turbo, True)
         _Vehicle.ToggleMod(VehicleToggleMod.TireSmoke, True)
-        _Vehicle.TireSmokeColor = Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", VehicleCfgFile), ReadCfgValue("TyreSmokeColorGreen", VehicleCfgFile), ReadCfgValue("TyreSmokeColorBlue", VehicleCfgFile))
+        _Vehicle.TireSmokeColor = Drawing.Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", VehicleCfgFile), ReadCfgValue("TyreSmokeColorGreen", VehicleCfgFile), ReadCfgValue("TyreSmokeColorBlue", VehicleCfgFile))
         _Vehicle.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", VehicleCfgFile), True)
         If ReadCfgValue("BulletproofTyres", VehicleCfgFile) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, _Vehicle, False)
         'Added on v1.3.4
@@ -337,16 +281,33 @@ Public Class SixCarGarage
         If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
         If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
         If EngineRunning = True Then _Vehicle.EngineRunning = True
+        'Make sure it is set to correct Engine
+        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
+        'Added on v1.5.1
+        '_Vehicle.SetMod(49, ReadCfgValue("ForthyNine", VehicleCfgFile), True)
+        '_Vehicle.SetMod(50, ReadCfgValue("FiftyZero", VehicleCfgFile), True)
+        '_Vehicle.SetMod(51, ReadCfgValue("FiftyOne", VehicleCfgFile), True)
+        '_Vehicle.SetMod(52, ReadCfgValue("FiftyTwo", VehicleCfgFile), True)
+        '_Vehicle.SetMod(53, ReadCfgValue("FiftyThree", VehicleCfgFile), True)
+        '_Vehicle.SetMod(54, ReadCfgValue("FiftyFour", VehicleCfgFile), True)
+        '_Vehicle.SetMod(55, ReadCfgValue("FiftyFive", VehicleCfgFile), True)
+        '_Vehicle.SetMod(56, ReadCfgValue("FiftySix", VehicleCfgFile), True)
+        '_Vehicle.SetMod(57, ReadCfgValue("FiftySeven", VehicleCfgFile), True)
+        '_Vehicle.SetMod(58, ReadCfgValue("FiftyEight", VehicleCfgFile), True)
+        '_Vehicle.SetMod(59, ReadCfgValue("FiftyNine", VehicleCfgFile), True)
+        '_Vehicle.SetMod(60, ReadCfgValue("SixtyZero", VehicleCfgFile), True)
+        '_Vehicle.SetMod(61, ReadCfgValue("SixtyOne", VehicleCfgFile), True)
+        '_Vehicle.SetMod(62, ReadCfgValue("SixtyTwo", VehicleCfgFile), True)
     End Sub
 
     Public Shared Sub SaveGarageVehicle(file As String)
         Try
             If Not IO.File.Exists(file & "vehicle_0.cfg") Then
-                Resources.CreateFile(file & "vehicle_0.cfg")
+                CreateFile(file & "vehicle_0.cfg")
                 UpdateGarageVehicle(file & "vehicle_0.cfg", "False")
                 LoadGarageVehicle0(file & "vehicle_0.cfg", veh0Pos, vehRot02, -60)
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 playerPed.CurrentVehicle.Delete()
                 If Not veh0 = Nothing Then
                     playerPed.Position = veh0Pos
@@ -354,16 +315,16 @@ Public Class SixCarGarage
                 Else
                     playerPed.Position = veh0Pos
                 End If
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
             Else
                 If Not IO.File.Exists(file & "vehicle_1.cfg") Then
-                    Resources.CreateFile(file & "vehicle_1.cfg")
+                    CreateFile(file & "vehicle_1.cfg")
                     UpdateGarageVehicle(file & "vehicle_1.cfg", "False")
                     LoadGarageVehicle1(file & "vehicle_1.cfg", veh1Pos, vehRot02, -60)
                     Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
+                    Wait(&H3E8)
                     playerPed.CurrentVehicle.Delete()
                     If Not veh1 = Nothing Then
                         playerPed.Position = veh1Pos
@@ -371,16 +332,16 @@ Public Class SixCarGarage
                     Else
                         playerPed.Position = veh1Pos
                     End If
-                    Script.Wait(500)
+                    Wait(500)
                     Game.FadeScreenIn(500)
                     playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Else
                     If Not IO.File.Exists(file & "vehicle_2.cfg") Then
-                        Resources.CreateFile(file & "vehicle_2.cfg")
+                        CreateFile(file & "vehicle_2.cfg")
                         UpdateGarageVehicle(file & "vehicle_2.cfg", "False")
                         LoadGarageVehicle2(file & "vehicle_2.cfg", veh2Pos, vehRot02, -60)
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         playerPed.CurrentVehicle.Delete()
                         If Not veh2 = Nothing Then
                             playerPed.Position = veh2Pos
@@ -388,16 +349,16 @@ Public Class SixCarGarage
                         Else
                             playerPed.Position = veh2Pos
                         End If
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                         playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                     Else
                         If Not IO.File.Exists(file & "vehicle_3.cfg") Then
-                            Resources.CreateFile(file & "vehicle_3.cfg")
+                            CreateFile(file & "vehicle_3.cfg")
                             UpdateGarageVehicle(file & "vehicle_3.cfg", "False")
                             LoadGarageVehicle3(file & "vehicle_3.cfg", veh3Pos, vehRot35, -60)
                             Game.FadeScreenOut(500)
-                            Script.Wait(&H3E8)
+                            Wait(&H3E8)
                             playerPed.CurrentVehicle.Delete()
                             If Not veh3 = Nothing Then
                                 playerPed.Position = veh3Pos
@@ -405,16 +366,16 @@ Public Class SixCarGarage
                             Else
                                 playerPed.Position = veh3Pos
                             End If
-                            Script.Wait(500)
+                            Wait(500)
                             Game.FadeScreenIn(500)
                             playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                         Else
                             If Not IO.File.Exists(file & "vehicle_4.cfg") Then
-                                Resources.CreateFile(file & "vehicle_4.cfg")
+                                CreateFile(file & "vehicle_4.cfg")
                                 UpdateGarageVehicle(file & "vehicle_4.cfg", "False")
                                 LoadGarageVehicle4(file & "vehicle_4.cfg", veh4Pos, vehRot35, -60)
                                 Game.FadeScreenOut(500)
-                                Script.Wait(&H3E8)
+                                Wait(&H3E8)
                                 playerPed.CurrentVehicle.Delete()
                                 If Not veh4 = Nothing Then
                                     playerPed.Position = veh4Pos
@@ -422,16 +383,16 @@ Public Class SixCarGarage
                                 Else
                                     playerPed.Position = veh4Pos
                                 End If
-                                Script.Wait(500)
+                                Wait(500)
                                 Game.FadeScreenIn(500)
                                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                             Else
                                 If Not IO.File.Exists(file & "vehicle_5.cfg") Then
-                                    Resources.CreateFile(file & "vehicle_5.cfg")
+                                    CreateFile(file & "vehicle_5.cfg")
                                     UpdateGarageVehicle(file & "vehicle_5.cfg", "False")
                                     LoadGarageVehicle5(file & "vehicle_5.cfg", veh5Pos, vehRot35, -60)
                                     Game.FadeScreenOut(500)
-                                    Script.Wait(&H3E8)
+                                    Wait(&H3E8)
                                     playerPed.CurrentVehicle.Delete()
                                     If Not veh5 = Nothing Then
                                         playerPed.Position = veh5Pos
@@ -439,11 +400,12 @@ Public Class SixCarGarage
                                     Else
                                         playerPed.Position = veh5Pos
                                     End If
-                                    Script.Wait(500)
+                                    Wait(500)
                                     Game.FadeScreenIn(500)
                                     playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                                 Else
                                     UI.ShowSubtitle(GrgFull)
+                                    ShowAllHiddenMapObject()
                                 End If
                             End If
                         End If
@@ -457,7 +419,7 @@ Public Class SixCarGarage
 
     Public Shared Sub UpdateGarageVehicle(file As String, Active As String)
         WriteCfgValue("VehicleName", playerPed.CurrentVehicle.FriendlyName, file)
-        'WriteCfgValue("VehicleModel", Resources.GetModelFromHash(playerPed.CurrentVehicle), file)
+        'WriteCfgValue("VehicleModel", GetModelFromHash(playerPed.CurrentVehicle), file)
         WriteCfgValue("PrimaryColor", playerPed.CurrentVehicle.PrimaryColor, file)
         WriteCfgValue("SecondaryColor", playerPed.CurrentVehicle.SecondaryColor, file)
         WriteCfgValue("PearlescentColor", playerPed.CurrentVehicle.PearlescentColor, file)
@@ -550,8 +512,23 @@ Public Class SixCarGarage
         WriteCfgValue("ExtraEight", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 8), file)
         WriteCfgValue("ExtraNine", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 9), file)
         'Added on v1.3.4
-        WriteCfgValue("TrimColor", Resources.GetVehicleInteriorTrimColor(playerPed.CurrentVehicle), file)
-        WriteCfgValue("DashboardColor", Resources.GetVehicleInteriorDashboardColor(playerPed.CurrentVehicle), file)
+        WriteCfgValue("TrimColor", GetVehicleInteriorTrimColor(playerPed.CurrentVehicle), file)
+        WriteCfgValue("DashboardColor", GetVehicleInteriorDashboardColor(playerPed.CurrentVehicle), file)
+        'Added on v1.5.1
+        'WriteCfgValue("ForthyNine", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 49), file)
+        'WriteCfgValue("FiftyZero", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 50), file)
+        'WriteCfgValue("FiftyOne", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 51), file)
+        'WriteCfgValue("FiftyTwo", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 52), file)
+        'WriteCfgValue("FiftyThree", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 53), file)
+        'WriteCfgValue("FiftyFour", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 54), file)
+        'WriteCfgValue("FiftyFive", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 55), file)
+        'WriteCfgValue("FiftySix", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 56), file)
+        'WriteCfgValue("FiftySeven", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 57), file)
+        'WriteCfgValue("FiftyEight", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 58), file)
+        'WriteCfgValue("FiftyNine", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 59), file)
+        'WriteCfgValue("SixtyZero", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 60), file)
+        'WriteCfgValue("SixtyOne", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 61), file)
+        'WriteCfgValue("SixtyTwo", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 62), file)
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -563,11 +540,8 @@ Public Class SixCarGarage
             GarageMarkerDistance = World.GetDistance(playerPed.Position, MenuActivator)
 
             If GarageMiddleDistance < 20.0 Then
-                GarageMarker.Flag = RenderFlag.Nearby
-                GarageMarker.Draw()
-                Resources.Disable_Controls(True)
-            Else
-                Resources.Disable_Controls(False)
+                World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
+                Disable_Controls()
             End If
 
             If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
@@ -578,7 +552,7 @@ Public Class SixCarGarage
                 DisplayHelpTextThisFrame(ExitGarage & Garage)
             End If
 
-            If Not playerPed.IsDead AndAlso GarageMarkerDistance < 3.0 Then
+            If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
                 DisplayHelpTextThisFrame(ManageGarage)
             End If
 
@@ -591,7 +565,7 @@ Public Class SixCarGarage
 
     Public Sub ControlsKeyDown()
         On Error Resume Next
-        If playerPed.IsInVehicle AndAlso playerPed.CurrentVehicle.Speed > 1.5 AndAlso GarageMiddleDistance < 20.0 Then
+        If playerPed.IsInVehicle AndAlso playerPed.CurrentVehicle.Speed > 1.5 AndAlso GarageMiddleDistance < 20.0 AndAlso IsInGarageVehicle(playerPed) = True Then
             Dim PPCV As Integer = -1
             If playerPed.CurrentVehicle = veh0 Then
                 WriteCfgValue("Active", "True", CurrentPath & "vehicle_0.cfg")
@@ -613,17 +587,12 @@ Public Class SixCarGarage
                 PPCV = 5
             End If
             Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
+            Wait(&H3E8)
 
             playerPed.CurrentVehicle.Delete()
             If playerName = "Michael" Then
                 If Mechanic.MPV1 = Nothing Then
-                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.MPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                    Else
-                        Mechanic.MPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                    End If
-                    Mechanic.MPV1.Heading = lastLocationGarageOutHeading
+                    Mechanic.MPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.MPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                     Mechanic.MPV1.IsPersistent = True
                     Mechanic.MPV1.AddBlip()
@@ -634,12 +603,7 @@ Public Class SixCarGarage
                     playerPed.SetIntoVehicle(Mechanic.MPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.MPV2 = Nothing Then
-                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.MPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                        Else
-                            Mechanic.MPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                        End If
-                        Mechanic.MPV2.Heading = lastLocationGarageOutHeading
+                        Mechanic.MPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                         SetModKit(Mechanic.MPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                         Mechanic.MPV2.IsPersistent = True
                         Mechanic.MPV2.AddBlip()
@@ -650,12 +614,7 @@ Public Class SixCarGarage
                         playerPed.SetIntoVehicle(Mechanic.MPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.MPV3 = Nothing Then
-                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.MPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                            Else
-                                Mechanic.MPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                            End If
-                            Mechanic.MPV3.Heading = lastLocationGarageOutHeading
+                            Mechanic.MPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                             SetModKit(Mechanic.MPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                             Mechanic.MPV3.IsPersistent = True
                             Mechanic.MPV3.AddBlip()
@@ -666,12 +625,7 @@ Public Class SixCarGarage
                             playerPed.SetIntoVehicle(Mechanic.MPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.MPV4 = Nothing Then
-                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.MPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                Else
-                                    Mechanic.MPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                End If
-                                Mechanic.MPV4.Heading = lastLocationGarageOutHeading
+                                Mechanic.MPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                 SetModKit(Mechanic.MPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                 Mechanic.MPV4.IsPersistent = True
                                 Mechanic.MPV4.AddBlip()
@@ -682,12 +636,7 @@ Public Class SixCarGarage
                                 playerPed.SetIntoVehicle(Mechanic.MPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.MPV5 = Nothing Then
-                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.MPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                    Else
-                                        Mechanic.MPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                    End If
-                                    Mechanic.MPV5.Heading = lastLocationGarageOutHeading
+                                    Mechanic.MPV5 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                     SetModKit(Mechanic.MPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                     Mechanic.MPV5.IsPersistent = True
                                     Mechanic.MPV5.AddBlip()
@@ -698,12 +647,7 @@ Public Class SixCarGarage
                                     playerPed.SetIntoVehicle(Mechanic.MPV5, VehicleSeat.Driver)
                                 Else
                                     If Mechanic.MPV6 = Nothing Then
-                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.MPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                        Else
-                                            Mechanic.MPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                        End If
-                                        Mechanic.MPV6.Heading = lastLocationGarageOutHeading
+                                        Mechanic.MPV6 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                         SetModKit(Mechanic.MPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                         Mechanic.MPV6.IsPersistent = True
                                         Mechanic.MPV6.AddBlip()
@@ -714,12 +658,7 @@ Public Class SixCarGarage
                                         playerPed.SetIntoVehicle(Mechanic.MPV6, VehicleSeat.Driver)
                                     Else
                                         If Mechanic.MPV7 = Nothing Then
-                                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.MPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                            Else
-                                                Mechanic.MPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                            End If
-                                            Mechanic.MPV7.Heading = lastLocationGarageOutHeading
+                                            Mechanic.MPV7 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                             SetModKit(Mechanic.MPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                             Mechanic.MPV7.IsPersistent = True
                                             Mechanic.MPV7.AddBlip()
@@ -730,12 +669,7 @@ Public Class SixCarGarage
                                             playerPed.SetIntoVehicle(Mechanic.MPV7, VehicleSeat.Driver)
                                         Else
                                             If Mechanic.MPV8 = Nothing Then
-                                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.MPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                Else
-                                                    Mechanic.MPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                End If
-                                                Mechanic.MPV8.Heading = lastLocationGarageOutHeading
+                                                Mechanic.MPV8 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                 SetModKit(Mechanic.MPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                 Mechanic.MPV8.IsPersistent = True
                                                 Mechanic.MPV8.AddBlip()
@@ -746,12 +680,7 @@ Public Class SixCarGarage
                                                 playerPed.SetIntoVehicle(Mechanic.MPV8, VehicleSeat.Driver)
                                             Else
                                                 If Mechanic.MPV9 = Nothing Then
-                                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.MPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                    Else
-                                                        Mechanic.MPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                    End If
-                                                    Mechanic.MPV9.Heading = lastLocationGarageOutHeading
+                                                    Mechanic.MPV9 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                     SetModKit(Mechanic.MPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                     Mechanic.MPV9.IsPersistent = True
                                                     Mechanic.MPV9.AddBlip()
@@ -762,12 +691,7 @@ Public Class SixCarGarage
                                                     playerPed.SetIntoVehicle(Mechanic.MPV9, VehicleSeat.Driver)
                                                 Else
                                                     If Mechanic.MPV0 = Nothing Then
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.MPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.MPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.MPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.MPV0.IsPersistent = True
                                                         Mechanic.MPV0.AddBlip()
@@ -778,12 +702,7 @@ Public Class SixCarGarage
                                                         playerPed.SetIntoVehicle(Mechanic.MPV0, VehicleSeat.Driver)
                                                     Else
                                                         Mechanic.MPV0.Delete()
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.MPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.MPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.MPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.MPV0.IsPersistent = True
                                                         Mechanic.MPV0.AddBlip()
@@ -804,12 +723,7 @@ Public Class SixCarGarage
                 End If
             ElseIf playerName = "Franklin" Then
                 If Mechanic.FPV1 = Nothing Then
-                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.FPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                    Else
-                        Mechanic.FPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                    End If
-                    Mechanic.FPV1.Heading = lastLocationGarageOutHeading
+                    Mechanic.FPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.FPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                     Mechanic.FPV1.IsPersistent = True
                     Mechanic.FPV1.AddBlip()
@@ -820,12 +734,7 @@ Public Class SixCarGarage
                     playerPed.SetIntoVehicle(Mechanic.FPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.FPV2 = Nothing Then
-                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.FPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                        Else
-                            Mechanic.FPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                        End If
-                        Mechanic.FPV2.Heading = lastLocationGarageOutHeading
+                        Mechanic.FPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                         SetModKit(Mechanic.FPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                         Mechanic.FPV2.IsPersistent = True
                         Mechanic.FPV2.AddBlip()
@@ -836,12 +745,7 @@ Public Class SixCarGarage
                         playerPed.SetIntoVehicle(Mechanic.FPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.FPV3 = Nothing Then
-                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.FPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                            Else
-                                Mechanic.FPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                            End If
-                            Mechanic.FPV3.Heading = lastLocationGarageOutHeading
+                            Mechanic.FPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                             SetModKit(Mechanic.FPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                             Mechanic.FPV3.IsPersistent = True
                             Mechanic.FPV3.AddBlip()
@@ -852,12 +756,7 @@ Public Class SixCarGarage
                             playerPed.SetIntoVehicle(Mechanic.FPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.FPV4 = Nothing Then
-                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.FPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                Else
-                                    Mechanic.FPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                End If
-                                Mechanic.FPV4.Heading = lastLocationGarageOutHeading
+                                Mechanic.FPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                 SetModKit(Mechanic.FPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                 Mechanic.FPV4.IsPersistent = True
                                 Mechanic.FPV4.AddBlip()
@@ -868,12 +767,7 @@ Public Class SixCarGarage
                                 playerPed.SetIntoVehicle(Mechanic.FPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.FPV5 = Nothing Then
-                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.FPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                    Else
-                                        Mechanic.FPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                    End If
-                                    Mechanic.FPV5.Heading = lastLocationGarageOutHeading
+                                    Mechanic.FPV5 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                     SetModKit(Mechanic.FPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                     Mechanic.FPV5.IsPersistent = True
                                     Mechanic.FPV5.AddBlip()
@@ -884,12 +778,7 @@ Public Class SixCarGarage
                                     playerPed.SetIntoVehicle(Mechanic.FPV5, VehicleSeat.Driver)
                                 Else
                                     If Mechanic.FPV6 = Nothing Then
-                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.FPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                        Else
-                                            Mechanic.FPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                        End If
-                                        Mechanic.FPV6.Heading = lastLocationGarageOutHeading
+                                        Mechanic.FPV6 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                         SetModKit(Mechanic.FPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                         Mechanic.FPV6.IsPersistent = True
                                         Mechanic.FPV6.AddBlip()
@@ -900,12 +789,7 @@ Public Class SixCarGarage
                                         playerPed.SetIntoVehicle(Mechanic.FPV6, VehicleSeat.Driver)
                                     Else
                                         If Mechanic.FPV7 = Nothing Then
-                                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.FPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                            Else
-                                                Mechanic.FPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                            End If
-                                            Mechanic.FPV7.Heading = lastLocationGarageOutHeading
+                                            Mechanic.FPV7 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                             SetModKit(Mechanic.FPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                             Mechanic.FPV7.IsPersistent = True
                                             Mechanic.FPV7.AddBlip()
@@ -916,12 +800,7 @@ Public Class SixCarGarage
                                             playerPed.SetIntoVehicle(Mechanic.FPV7, VehicleSeat.Driver)
                                         Else
                                             If Mechanic.FPV8 = Nothing Then
-                                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.FPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                Else
-                                                    Mechanic.FPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                End If
-                                                Mechanic.FPV8.Heading = lastLocationGarageOutHeading
+                                                Mechanic.FPV8 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                 SetModKit(Mechanic.FPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                 Mechanic.FPV8.IsPersistent = True
                                                 Mechanic.FPV8.AddBlip()
@@ -932,12 +811,7 @@ Public Class SixCarGarage
                                                 playerPed.SetIntoVehicle(Mechanic.FPV8, VehicleSeat.Driver)
                                             Else
                                                 If Mechanic.FPV9 = Nothing Then
-                                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.FPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                    Else
-                                                        Mechanic.FPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                    End If
-                                                    Mechanic.FPV9.Heading = lastLocationGarageOutHeading
+                                                    Mechanic.FPV9 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                     SetModKit(Mechanic.FPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                     Mechanic.FPV9.IsPersistent = True
                                                     Mechanic.FPV9.AddBlip()
@@ -948,12 +822,7 @@ Public Class SixCarGarage
                                                     playerPed.SetIntoVehicle(Mechanic.FPV9, VehicleSeat.Driver)
                                                 Else
                                                     If Mechanic.FPV0 = Nothing Then
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.FPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.FPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.FPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.FPV0.IsPersistent = True
                                                         Mechanic.FPV0.AddBlip()
@@ -964,12 +833,7 @@ Public Class SixCarGarage
                                                         playerPed.SetIntoVehicle(Mechanic.FPV0, VehicleSeat.Driver)
                                                     Else
                                                         Mechanic.FPV0.Delete()
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.FPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.FPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.FPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.FPV0.IsPersistent = True
                                                         Mechanic.FPV0.AddBlip()
@@ -990,12 +854,7 @@ Public Class SixCarGarage
                 End If
             ElseIf playerName = "Trevor" Then
                 If Mechanic.TPV1 = Nothing Then
-                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.TPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                    Else
-                        Mechanic.TPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                    End If
-                    Mechanic.TPV1.Heading = lastLocationGarageOutHeading
+                    Mechanic.TPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.TPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                     Mechanic.TPV1.IsPersistent = True
                     Mechanic.TPV1.AddBlip()
@@ -1006,12 +865,7 @@ Public Class SixCarGarage
                     playerPed.SetIntoVehicle(Mechanic.TPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.TPV2 = Nothing Then
-                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.TPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                        Else
-                            Mechanic.TPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                        End If
-                        Mechanic.TPV2.Heading = lastLocationGarageOutHeading
+                        Mechanic.TPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                         SetModKit(Mechanic.TPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                         Mechanic.TPV2.IsPersistent = True
                         Mechanic.TPV2.AddBlip()
@@ -1022,12 +876,7 @@ Public Class SixCarGarage
                         playerPed.SetIntoVehicle(Mechanic.TPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.TPV3 = Nothing Then
-                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.TPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                            Else
-                                Mechanic.TPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                            End If
-                            Mechanic.TPV3.Heading = lastLocationGarageOutHeading
+                            Mechanic.TPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                             SetModKit(Mechanic.TPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                             Mechanic.TPV3.IsPersistent = True
                             Mechanic.TPV3.AddBlip()
@@ -1038,12 +887,7 @@ Public Class SixCarGarage
                             playerPed.SetIntoVehicle(Mechanic.TPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.TPV4 = Nothing Then
-                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.TPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                Else
-                                    Mechanic.TPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                End If
-                                Mechanic.TPV4.Heading = lastLocationGarageOutHeading
+                                Mechanic.TPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                 SetModKit(Mechanic.TPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                 Mechanic.TPV4.IsPersistent = True
                                 Mechanic.TPV4.AddBlip()
@@ -1054,12 +898,7 @@ Public Class SixCarGarage
                                 playerPed.SetIntoVehicle(Mechanic.TPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.TPV5 = Nothing Then
-                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.TPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                    Else
-                                        Mechanic.TPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                    End If
-                                    Mechanic.TPV5.Heading = lastLocationGarageOutHeading
+                                    Mechanic.TPV5 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                     SetModKit(Mechanic.TPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                     Mechanic.TPV5.IsPersistent = True
                                     Mechanic.TPV5.AddBlip()
@@ -1070,12 +909,7 @@ Public Class SixCarGarage
                                     playerPed.SetIntoVehicle(Mechanic.TPV5, VehicleSeat.Driver)
                                 Else
                                     If Mechanic.TPV6 = Nothing Then
-                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.TPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                        Else
-                                            Mechanic.TPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                        End If
-                                        Mechanic.TPV6.Heading = lastLocationGarageOutHeading
+                                        Mechanic.TPV6 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                         SetModKit(Mechanic.TPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                         Mechanic.TPV6.IsPersistent = True
                                         Mechanic.TPV6.AddBlip()
@@ -1086,12 +920,7 @@ Public Class SixCarGarage
                                         playerPed.SetIntoVehicle(Mechanic.TPV6, VehicleSeat.Driver)
                                     Else
                                         If Mechanic.TPV7 = Nothing Then
-                                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.TPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                            Else
-                                                Mechanic.TPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                            End If
-                                            Mechanic.TPV7.Heading = lastLocationGarageOutHeading
+                                            Mechanic.TPV7 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                             SetModKit(Mechanic.TPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                             Mechanic.TPV7.IsPersistent = True
                                             Mechanic.TPV7.AddBlip()
@@ -1102,12 +931,7 @@ Public Class SixCarGarage
                                             playerPed.SetIntoVehicle(Mechanic.TPV7, VehicleSeat.Driver)
                                         Else
                                             If Mechanic.TPV8 = Nothing Then
-                                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.TPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                Else
-                                                    Mechanic.TPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                End If
-                                                Mechanic.TPV8.Heading = lastLocationGarageOutHeading
+                                                Mechanic.TPV8 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                 SetModKit(Mechanic.TPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                 Mechanic.TPV8.IsPersistent = True
                                                 Mechanic.TPV8.AddBlip()
@@ -1118,12 +942,7 @@ Public Class SixCarGarage
                                                 playerPed.SetIntoVehicle(Mechanic.TPV8, VehicleSeat.Driver)
                                             Else
                                                 If Mechanic.TPV9 = Nothing Then
-                                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.TPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                    Else
-                                                        Mechanic.TPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                    End If
-                                                    Mechanic.TPV9.Heading = lastLocationGarageOutHeading
+                                                    Mechanic.TPV9 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                     SetModKit(Mechanic.TPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                     Mechanic.TPV9.IsPersistent = True
                                                     Mechanic.TPV9.AddBlip()
@@ -1134,12 +953,7 @@ Public Class SixCarGarage
                                                     playerPed.SetIntoVehicle(Mechanic.TPV9, VehicleSeat.Driver)
                                                 Else
                                                     If Mechanic.TPV0 = Nothing Then
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.TPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.TPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.TPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.TPV0.IsPersistent = True
                                                         Mechanic.TPV0.AddBlip()
@@ -1150,12 +964,7 @@ Public Class SixCarGarage
                                                         playerPed.SetIntoVehicle(Mechanic.TPV0, VehicleSeat.Driver)
                                                     Else
                                                         Mechanic.TPV0.Delete()
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.TPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.TPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.TPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.TPV0.IsPersistent = True
                                                         Mechanic.TPV0.AddBlip()
@@ -1176,12 +985,7 @@ Public Class SixCarGarage
                 End If
             ElseIf playerName = "Player3" Then
                 If Mechanic.PPV1 = Nothing Then
-                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                        Mechanic.PPV1 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                    Else
-                        Mechanic.PPV1 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                    End If
-                    Mechanic.PPV1.Heading = lastLocationGarageOutHeading
+                    Mechanic.PPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.PPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                     Mechanic.PPV1.IsPersistent = True
                     Mechanic.PPV1.AddBlip()
@@ -1192,12 +996,7 @@ Public Class SixCarGarage
                     playerPed.SetIntoVehicle(Mechanic.PPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.PPV2 = Nothing Then
-                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                            Mechanic.PPV2 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                        Else
-                            Mechanic.PPV2 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                        End If
-                        Mechanic.PPV2.Heading = lastLocationGarageOutHeading
+                        Mechanic.PPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                         SetModKit(Mechanic.PPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                         Mechanic.PPV2.IsPersistent = True
                         Mechanic.PPV2.AddBlip()
@@ -1208,12 +1007,7 @@ Public Class SixCarGarage
                         playerPed.SetIntoVehicle(Mechanic.PPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.PPV3 = Nothing Then
-                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                Mechanic.PPV3 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                            Else
-                                Mechanic.PPV3 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                            End If
-                            Mechanic.PPV3.Heading = lastLocationGarageOutHeading
+                            Mechanic.PPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                             SetModKit(Mechanic.PPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                             Mechanic.PPV3.IsPersistent = True
                             Mechanic.PPV3.AddBlip()
@@ -1224,12 +1018,7 @@ Public Class SixCarGarage
                             playerPed.SetIntoVehicle(Mechanic.PPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.PPV4 = Nothing Then
-                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                    Mechanic.PPV4 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                Else
-                                    Mechanic.PPV4 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                End If
-                                Mechanic.PPV4.Heading = lastLocationGarageOutHeading
+                                Mechanic.PPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                 SetModKit(Mechanic.PPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                 Mechanic.PPV4.IsPersistent = True
                                 Mechanic.PPV4.AddBlip()
@@ -1240,12 +1029,7 @@ Public Class SixCarGarage
                                 playerPed.SetIntoVehicle(Mechanic.PPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.PPV5 = Nothing Then
-                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                        Mechanic.PPV5 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                    Else
-                                        Mechanic.PPV5 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                    End If
-                                    Mechanic.PPV5.Heading = lastLocationGarageOutHeading
+                                    Mechanic.PPV5 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                     SetModKit(Mechanic.PPV5, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                     Mechanic.PPV5.IsPersistent = True
                                     Mechanic.PPV5.AddBlip()
@@ -1256,12 +1040,7 @@ Public Class SixCarGarage
                                     playerPed.SetIntoVehicle(Mechanic.PPV5, VehicleSeat.Driver)
                                 Else
                                     If Mechanic.PPV6 = Nothing Then
-                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                            Mechanic.PPV6 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                        Else
-                                            Mechanic.PPV6 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                        End If
-                                        Mechanic.PPV6.Heading = lastLocationGarageOutHeading
+                                        Mechanic.PPV6 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                         SetModKit(Mechanic.PPV6, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                         Mechanic.PPV6.IsPersistent = True
                                         Mechanic.PPV6.AddBlip()
@@ -1272,12 +1051,7 @@ Public Class SixCarGarage
                                         playerPed.SetIntoVehicle(Mechanic.PPV6, VehicleSeat.Driver)
                                     Else
                                         If Mechanic.PPV7 = Nothing Then
-                                            If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                Mechanic.PPV7 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                            Else
-                                                Mechanic.PPV7 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                            End If
-                                            Mechanic.PPV7.Heading = lastLocationGarageOutHeading
+                                            Mechanic.PPV7 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                             SetModKit(Mechanic.PPV7, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                             Mechanic.PPV7.IsPersistent = True
                                             Mechanic.PPV7.AddBlip()
@@ -1288,12 +1062,7 @@ Public Class SixCarGarage
                                             playerPed.SetIntoVehicle(Mechanic.PPV7, VehicleSeat.Driver)
                                         Else
                                             If Mechanic.PPV8 = Nothing Then
-                                                If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                    Mechanic.PPV8 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                Else
-                                                    Mechanic.PPV8 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                End If
-                                                Mechanic.PPV8.Heading = lastLocationGarageOutHeading
+                                                Mechanic.PPV8 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                 SetModKit(Mechanic.PPV8, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                 Mechanic.PPV8.IsPersistent = True
                                                 Mechanic.PPV8.AddBlip()
@@ -1304,12 +1073,7 @@ Public Class SixCarGarage
                                                 playerPed.SetIntoVehicle(Mechanic.PPV8, VehicleSeat.Driver)
                                             Else
                                                 If Mechanic.PPV9 = Nothing Then
-                                                    If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                        Mechanic.PPV9 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                    Else
-                                                        Mechanic.PPV9 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                    End If
-                                                    Mechanic.PPV9.Heading = lastLocationGarageOutHeading
+                                                    Mechanic.PPV9 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                     SetModKit(Mechanic.PPV9, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                     Mechanic.PPV9.IsPersistent = True
                                                     Mechanic.PPV9.AddBlip()
@@ -1320,12 +1084,7 @@ Public Class SixCarGarage
                                                     playerPed.SetIntoVehicle(Mechanic.PPV9, VehicleSeat.Driver)
                                                 Else
                                                     If Mechanic.PPV0 = Nothing Then
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.PPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.PPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.PPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.PPV0.IsPersistent = True
                                                         Mechanic.PPV0.AddBlip()
@@ -1336,12 +1095,7 @@ Public Class SixCarGarage
                                                         playerPed.SetIntoVehicle(Mechanic.PPV0, VehicleSeat.Driver)
                                                     Else
                                                         Mechanic.PPV0.Delete()
-                                                        If ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg") = "" Then
-                                                            Mechanic.PPV0 = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg")), lastLocationGarageOutVector)
-                                                        Else
-                                                            Mechanic.PPV0 = World.CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector)
-                                                        End If
-                                                        Mechanic.PPV0.Heading = lastLocationGarageOutHeading
+                                                        Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                                                         SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
                                                         Mechanic.PPV0.IsPersistent = True
                                                         Mechanic.PPV0.AddBlip()
@@ -1365,36 +1119,48 @@ Public Class SixCarGarage
             playerPed.CurrentVehicle.Repair()
             playerPed.CurrentVehicle.Position = lastLocationGarageOutVector
             playerPed.CurrentVehicle.Heading = lastLocationGarageOutHeading
-            Script.Wait(500)
+            ShowAllHiddenMapObject()
+            LowEndLastLocationName = Nothing
+            Wait(500)
             Game.FadeScreenIn(500)
             UnLoadMPDLCMap()
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso ElevatorDistance < 3.0 Then
             Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
+            Wait(&H3E8)
             playerPed.Position = lastLocationVector
             SinglePlayerApartment.player.LastVehicle.Delete()
-            Script.Wait(500)
+            Wait(500)
             Game.FadeScreenIn(500)
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
             Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
+            Wait(&H3E8)
             playerPed.Position = lastLocationGarageVector
+            ShowAllHiddenMapObject()
+            LowEndLastLocationName = Nothing
             SinglePlayerApartment.player.LastVehicle.Delete()
-            Script.Wait(500)
+            Wait(500)
             Game.FadeScreenIn(500)
             UnLoadMPDLCMap()
         End If
 
-        If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 3.0 Then
+        If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 1.5 Then
             Mechanic.CreateGarageMenu6CarGarage(CurrentPath)
             Mechanic.CreateGarageMenu2("Six")
             Mechanic.GarageMenu.Visible = True
             World.RenderingCamera = World.CreateCamera(New Vector3(190.1158, -993.1951, -97.41743), New Vector3(-17.44125, 0, -130.9189), 50)
         End If
+    End Sub
+
+    Public Shared Sub ShowAllHiddenMapObject()
+        GrapeseedAve.IsAtHome = False
+        PaletoBlvd.IsAtHome = False
+        SouthRockfordDr0112.IsAtHome = False
+        VespucciBlvd.IsAtHome = False
+        ZancudoAve.IsAtHome = False
     End Sub
 
     Protected Overrides Sub Dispose(A_0 As Boolean)

@@ -47,5 +47,128 @@
     <Setting Name="CreateFileMethod" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
+    <Setting Name="ThreeAltaStreet" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="FourIntegrityWay" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="DelPerroHeight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="DreamTower" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="EclipseTower" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="RichardMajestic" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="TinselTower" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="VespucciBlvd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="WeazelPlaza" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="Hillcrest2862" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="Hillcrest2868" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="Hillcrest2874" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="MadWayne2113" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="MiltonRd2117" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="NorthConker2044" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="NorthConker2045" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="Whispymound3677" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="WildOats3655" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="CougarAve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="BayCityAve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="MiltonRd0184" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="SouthRockfordDr0325" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="SouthMoMiltonDr" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="LasLagunasBlvd0604" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="SpanishAve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="BlvdDelPerro" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="PowerSt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="ProsperitySt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="SanVitasSt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="LasLagunasBlvd2143" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="TheRoyale" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="HangmanAve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="SustanciaRd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="ProcopioDr4401" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="ProcopioDr4584" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="SouthRockfordDr0112" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="ZancudoAve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="PaletoBlvd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="GrapeseedAve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
+    <Setting Name="PreviewPointX" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PreviewPointY" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

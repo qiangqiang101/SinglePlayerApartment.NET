@@ -1,11 +1,11 @@
 ﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
-Imports GTA.Math
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.Mechanic
-Imports PDMCarShopGUI
+Imports INMNativeUI
+Imports SinglePlayerApartment.Resources
 
 Public Class Mechanic2
     Inherits Script
@@ -36,6 +36,27 @@ Public Class Mechanic2
     Public HLTinselTowerPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
     Public VespucciBlvdPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
     Public WeazelPlazaPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
+    Public BayCityAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\bay_city_ave\"
+    Public BlvdDelPerroPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\blvd_del_perro\"
+    Public CougarAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\cougar_ave\"
+    Public HangmanAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\hangman_ave\"
+    Public LasLagunas0604Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0604_las_lagunas_blvd\"
+    Public LasLagunas2143Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2143_las_lagunas_blvd\"
+    Public MiltonRd0184Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0184_milton_road\"
+    Public PowerStPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\power_st\"
+    Public ProcopioDr4401Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4401_procopio_dr\"
+    Public ProcopioDr4584Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4584_procopio_dr\"
+    Public ProsperityStPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\prosperity_st\"
+    Public SanVitasStPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\san_vitas_st\"
+    Public SouthMoMiltonPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\south_mo_milton_dr\"
+    Public SouthRockford0325Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0325_south_rockford_dr\"
+    Public SpanishAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\spanish_ave\"
+    Public SustanciaRdPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\sustancia_rd\"
+    Public TheRoyalePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\the_royale\"
+    Public GrapeseedAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\grapeseed_ave\"
+    Public PaletoBlvdPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\paleto_blvd\"
+    Public SouthRockford0012Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0112_south_rockford_dr\"
+    Public ZancudoAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\zancudo_ave\"
 
     Public Sub New()
         'New Language
@@ -69,17 +90,34 @@ Public Class Mechanic2
         ReturnAllVehiclesToGarage(HLTinselTowerPath)
         ReturnAllVehiclesToGarage(VespucciBlvdPath)
         ReturnAllVehiclesToGarage(WeazelPlazaPath)
+        ReturnAllVehiclesToGarage(BayCityAvePath)
+        ReturnAllVehiclesToGarage(BlvdDelPerroPath)
+        ReturnAllVehiclesToGarage(CougarAvePath)
+        ReturnAllVehiclesToGarage(HangmanAvePath)
+        ReturnAllVehiclesToGarage(LasLagunas0604Path)
+        ReturnAllVehiclesToGarage(LasLagunas2143Path)
+        ReturnAllVehiclesToGarage(MiltonRd0184Path)
+        ReturnAllVehiclesToGarage(PowerStPath)
+        ReturnAllVehiclesToGarage(ProcopioDr4401Path)
+        ReturnAllVehiclesToGarage(ProcopioDr4584Path)
+        ReturnAllVehiclesToGarage(ProsperityStPath)
+        ReturnAllVehiclesToGarage(SanVitasStPath)
+        ReturnAllVehiclesToGarage(SouthMoMiltonPath)
+        ReturnAllVehiclesToGarage(SouthRockford0325Path)
+        ReturnAllVehiclesToGarage(SpanishAvePath)
+        ReturnAllVehiclesToGarage(SustanciaRdPath)
+        ReturnAllVehiclesToGarage(TheRoyalePath)
+        ReturnAllVehiclesToGarage(GrapeseedAvePath)
+        ReturnAllVehiclesToGarage(PaletoBlvdPath)
+        ReturnAllVehiclesToGarage(SouthRockford0012Path)
+        ReturnAllVehiclesToGarage(ZancudoAvePath)
 
         AddHandler Tick, AddressOf OnTick
     End Sub
 
     Public Shared Sub Michael_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If MPV1 = Nothing Then
-            If VehicleModel = "" Then
-                MPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-            Else
-                MPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-            End If
+            MPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
             MPV1.AddBlip()
             MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             MPV1.CurrentBlip.Color = BlipColor.Blue
@@ -90,11 +128,7 @@ Public Class Mechanic2
             SetModKit(MPV1, SelectedItem_Car)
         Else
             If MPV2 = Nothing Then
-                If VehicleModel = "" Then
-                    MPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    MPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
+                MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                 MPV2.AddBlip()
                 MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 MPV2.CurrentBlip.Color = BlipColor.Blue
@@ -105,11 +139,7 @@ Public Class Mechanic2
                 SetModKit(MPV2, SelectedItem_Car)
             Else
                 If MPV3 = Nothing Then
-                    If VehicleModel = "" Then
-                        MPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                    Else
-                        MPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                    End If
+                    MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                     MPV3.AddBlip()
                     MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     MPV3.CurrentBlip.Color = BlipColor.Blue
@@ -120,11 +150,7 @@ Public Class Mechanic2
                     SetModKit(MPV3, SelectedItem_Car)
                 Else
                     If MPV4 = Nothing Then
-                        If VehicleModel = "" Then
-                            MPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            MPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
+                        MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                         MPV4.AddBlip()
                         MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         MPV4.CurrentBlip.Color = BlipColor.Blue
@@ -135,11 +161,7 @@ Public Class Mechanic2
                         SetModKit(MPV4, SelectedItem_Car)
                     Else
                         If MPV5 = Nothing Then
-                            If VehicleModel = "" Then
-                                MPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                MPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
+                            MPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                             MPV5.AddBlip()
                             MPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             MPV5.CurrentBlip.Color = BlipColor.Blue
@@ -150,11 +172,7 @@ Public Class Mechanic2
                             SetModKit(MPV5, SelectedItem_Car)
                         Else
                             If MPV6 = Nothing Then
-                                If VehicleModel = "" Then
-                                    MPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    MPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
+                                MPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                 MPV6.AddBlip()
                                 MPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 MPV6.CurrentBlip.Color = BlipColor.Blue
@@ -165,11 +183,7 @@ Public Class Mechanic2
                                 SetModKit(MPV6, SelectedItem_Car)
                             Else
                                 If MPV7 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        MPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        MPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
+                                    MPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                     MPV7.AddBlip()
                                     MPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     MPV7.CurrentBlip.Color = BlipColor.Blue
@@ -180,11 +194,7 @@ Public Class Mechanic2
                                     SetModKit(MPV7, SelectedItem_Car)
                                 Else
                                     If MPV8 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            MPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            MPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
+                                        MPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                         MPV8.AddBlip()
                                         MPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         MPV8.CurrentBlip.Color = BlipColor.Blue
@@ -195,11 +205,7 @@ Public Class Mechanic2
                                         SetModKit(MPV8, SelectedItem_Car)
                                     Else
                                         If MPV9 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                MPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                MPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
+                                            MPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                             MPV9.AddBlip()
                                             MPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             MPV9.CurrentBlip.Color = BlipColor.Blue
@@ -210,11 +216,7 @@ Public Class Mechanic2
                                             SetModKit(MPV9, SelectedItem_Car)
                                         Else
                                             If MPV0 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    MPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    MPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
+                                                MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                                 MPV0.AddBlip()
                                                 MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 MPV0.CurrentBlip.Color = BlipColor.Blue
@@ -241,11 +243,7 @@ Public Class Mechanic2
 
     Public Shared Sub Franklin_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If FPV1 = Nothing Then
-            If VehicleModel = "" Then
-                FPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-            Else
-                FPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-            End If
+            FPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
             FPV1.AddBlip()
             FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             FPV1.CurrentBlip.Color = BlipColor.Green
@@ -256,11 +254,7 @@ Public Class Mechanic2
             SetModKit(FPV1, SelectedItem_Car)
         Else
             If FPV2 = Nothing Then
-                If VehicleModel = "" Then
-                    FPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    FPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
+                FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                 FPV2.AddBlip()
                 FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 FPV2.CurrentBlip.Color = BlipColor.Green
@@ -271,11 +265,7 @@ Public Class Mechanic2
                 SetModKit(FPV2, SelectedItem_Car)
             Else
                 If FPV3 = Nothing Then
-                    If VehicleModel = "" Then
-                        FPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                    Else
-                        FPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                    End If
+                    FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                     FPV3.AddBlip()
                     FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     FPV3.CurrentBlip.Color = BlipColor.Green
@@ -286,11 +276,7 @@ Public Class Mechanic2
                     SetModKit(FPV3, SelectedItem_Car)
                 Else
                     If FPV4 = Nothing Then
-                        If VehicleModel = "" Then
-                            FPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            FPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
+                        FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                         FPV4.AddBlip()
                         FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         FPV4.CurrentBlip.Color = BlipColor.Green
@@ -301,11 +287,7 @@ Public Class Mechanic2
                         SetModKit(FPV4, SelectedItem_Car)
                     Else
                         If FPV5 = Nothing Then
-                            If VehicleModel = "" Then
-                                FPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                FPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
+                            FPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                             FPV5.AddBlip()
                             FPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             FPV5.CurrentBlip.Color = BlipColor.Green
@@ -316,11 +298,7 @@ Public Class Mechanic2
                             SetModKit(FPV5, SelectedItem_Car)
                         Else
                             If FPV6 = Nothing Then
-                                If VehicleModel = "" Then
-                                    FPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    FPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
+                                FPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                 FPV6.AddBlip()
                                 FPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 FPV6.CurrentBlip.Color = BlipColor.Green
@@ -331,11 +309,7 @@ Public Class Mechanic2
                                 SetModKit(FPV6, SelectedItem_Car)
                             Else
                                 If FPV7 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        FPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        FPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
+                                    FPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                     FPV7.AddBlip()
                                     FPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     FPV7.CurrentBlip.Color = BlipColor.Green
@@ -346,11 +320,7 @@ Public Class Mechanic2
                                     SetModKit(FPV7, SelectedItem_Car)
                                 Else
                                     If FPV8 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            FPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            FPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
+                                        FPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                         FPV8.AddBlip()
                                         FPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         FPV8.CurrentBlip.Color = BlipColor.Green
@@ -361,11 +331,7 @@ Public Class Mechanic2
                                         SetModKit(FPV8, SelectedItem_Car)
                                     Else
                                         If FPV9 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                FPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                FPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
+                                            FPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                             FPV9.AddBlip()
                                             FPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             FPV9.CurrentBlip.Color = BlipColor.Green
@@ -376,11 +342,7 @@ Public Class Mechanic2
                                             SetModKit(FPV9, SelectedItem_Car)
                                         Else
                                             If FPV0 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    FPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    FPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
+                                                FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                                 FPV0.AddBlip()
                                                 FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 FPV0.CurrentBlip.Color = BlipColor.Green
@@ -407,11 +369,7 @@ Public Class Mechanic2
 
     Public Shared Sub Trevor_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If TPV1 = Nothing Then
-            If VehicleModel = "" Then
-                TPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-            Else
-                TPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-            End If
+            TPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
             TPV1.AddBlip()
             TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             TPV1.CurrentBlip.Color = 17
@@ -422,11 +380,7 @@ Public Class Mechanic2
             SetModKit(TPV1, SelectedItem_Car)
         Else
             If TPV2 = Nothing Then
-                If VehicleModel = "" Then
-                    TPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    TPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
+                TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                 TPV2.AddBlip()
                 TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 TPV2.CurrentBlip.Color = 17
@@ -437,11 +391,7 @@ Public Class Mechanic2
                 SetModKit(TPV2, SelectedItem_Car)
             Else
                 If TPV3 = Nothing Then
-                    If VehicleModel = "" Then
-                        TPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                    Else
-                        TPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                    End If
+                    TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                     TPV3.AddBlip()
                     TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     TPV3.CurrentBlip.Color = 17
@@ -452,11 +402,7 @@ Public Class Mechanic2
                     SetModKit(TPV3, SelectedItem_Car)
                 Else
                     If TPV4 = Nothing Then
-                        If VehicleModel = "" Then
-                            TPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            TPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
+                        TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                         TPV4.AddBlip()
                         TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         TPV4.CurrentBlip.Color = 17
@@ -467,11 +413,7 @@ Public Class Mechanic2
                         SetModKit(TPV4, SelectedItem_Car)
                     Else
                         If TPV5 = Nothing Then
-                            If VehicleModel = "" Then
-                                TPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                TPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
+                            TPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                             TPV5.AddBlip()
                             TPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             TPV5.CurrentBlip.Color = 17
@@ -482,11 +424,7 @@ Public Class Mechanic2
                             SetModKit(TPV5, SelectedItem_Car)
                         Else
                             If TPV6 = Nothing Then
-                                If VehicleModel = "" Then
-                                    TPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    TPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
+                                TPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                 TPV6.AddBlip()
                                 TPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 TPV6.CurrentBlip.Color = 17
@@ -497,11 +435,7 @@ Public Class Mechanic2
                                 SetModKit(TPV6, SelectedItem_Car)
                             Else
                                 If TPV7 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        TPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        TPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
+                                    TPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                     TPV7.AddBlip()
                                     TPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     TPV7.CurrentBlip.Color = 17
@@ -512,11 +446,7 @@ Public Class Mechanic2
                                     SetModKit(TPV7, SelectedItem_Car)
                                 Else
                                     If TPV8 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            TPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            TPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
+                                        TPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                         TPV8.AddBlip()
                                         TPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         TPV8.CurrentBlip.Color = 17
@@ -527,11 +457,7 @@ Public Class Mechanic2
                                         SetModKit(TPV8, SelectedItem_Car)
                                     Else
                                         If TPV9 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                TPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                TPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
+                                            TPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                             TPV9.AddBlip()
                                             TPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             TPV9.CurrentBlip.Color = 17
@@ -542,11 +468,7 @@ Public Class Mechanic2
                                             SetModKit(TPV9, SelectedItem_Car)
                                         Else
                                             If TPV0 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    TPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    TPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
+                                                TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                                 TPV0.AddBlip()
                                                 TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 TPV0.CurrentBlip.Color = 17
@@ -573,11 +495,7 @@ Public Class Mechanic2
 
     Public Shared Sub Player3_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If PPV1 = Nothing Then
-            If VehicleModel = "" Then
-                PPV1 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-            Else
-                PPV1 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-            End If
+            PPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
             PPV1.AddBlip()
             PPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             PPV1.CurrentBlip.Color = BlipColor.Yellow
@@ -588,11 +506,7 @@ Public Class Mechanic2
             SetModKit(PPV1, SelectedItem_Car)
         Else
             If PPV2 = Nothing Then
-                If VehicleModel = "" Then
-                    PPV2 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    PPV2 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
+                PPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                 PPV2.AddBlip()
                 PPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 PPV2.CurrentBlip.Color = BlipColor.Yellow
@@ -603,11 +517,7 @@ Public Class Mechanic2
                 SetModKit(PPV2, SelectedItem_Car)
             Else
                 If PPV3 = Nothing Then
-                    If VehicleModel = "" Then
-                        PPV3 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                    Else
-                        PPV3 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                    End If
+                    PPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                     PPV3.AddBlip()
                     PPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     PPV3.CurrentBlip.Color = BlipColor.Yellow
@@ -618,11 +528,7 @@ Public Class Mechanic2
                     SetModKit(PPV3, SelectedItem_Car)
                 Else
                     If PPV4 = Nothing Then
-                        If VehicleModel = "" Then
-                            PPV4 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                        Else
-                            PPV4 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                        End If
+                        PPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                         PPV4.AddBlip()
                         PPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         PPV4.CurrentBlip.Color = BlipColor.Yellow
@@ -633,11 +539,7 @@ Public Class Mechanic2
                         SetModKit(PPV4, SelectedItem_Car)
                     Else
                         If PPV5 = Nothing Then
-                            If VehicleModel = "" Then
-                                PPV5 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                            Else
-                                PPV5 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                            End If
+                            PPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                             PPV5.AddBlip()
                             PPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             PPV5.CurrentBlip.Color = BlipColor.Yellow
@@ -648,11 +550,7 @@ Public Class Mechanic2
                             SetModKit(PPV5, SelectedItem_Car)
                         Else
                             If PPV6 = Nothing Then
-                                If VehicleModel = "" Then
-                                    PPV6 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                Else
-                                    PPV6 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                End If
+                                PPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                 PPV6.AddBlip()
                                 PPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 PPV6.CurrentBlip.Color = BlipColor.Yellow
@@ -663,11 +561,7 @@ Public Class Mechanic2
                                 SetModKit(PPV6, SelectedItem_Car)
                             Else
                                 If PPV7 = Nothing Then
-                                    If VehicleModel = "" Then
-                                        PPV7 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                    Else
-                                        PPV7 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                    End If
+                                    PPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                     PPV7.AddBlip()
                                     PPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     PPV7.CurrentBlip.Color = BlipColor.Yellow
@@ -678,11 +572,7 @@ Public Class Mechanic2
                                     SetModKit(PPV7, SelectedItem_Car)
                                 Else
                                     If PPV8 = Nothing Then
-                                        If VehicleModel = "" Then
-                                            PPV8 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                        Else
-                                            PPV8 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                        End If
+                                        PPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                         PPV8.AddBlip()
                                         PPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         PPV8.CurrentBlip.Color = BlipColor.Yellow
@@ -693,11 +583,7 @@ Public Class Mechanic2
                                         SetModKit(PPV8, SelectedItem_Car)
                                     Else
                                         If PPV9 = Nothing Then
-                                            If VehicleModel = "" Then
-                                                PPV9 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                            Else
-                                                PPV9 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                            End If
+                                            PPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                             PPV9.AddBlip()
                                             PPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             PPV9.CurrentBlip.Color = BlipColor.Yellow
@@ -708,11 +594,7 @@ Public Class Mechanic2
                                             SetModKit(PPV9, SelectedItem_Car)
                                         Else
                                             If PPV0 = Nothing Then
-                                                If VehicleModel = "" Then
-                                                    PPV0 = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                                                Else
-                                                    PPV0 = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                                                End If
+                                                PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
                                                 PPV0.AddBlip()
                                                 PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 PPV0.CurrentBlip.Color = BlipColor.Yellow
@@ -739,7 +621,7 @@ Public Class Mechanic2
 
     Public Shared Sub ReturnVeh(PathDir As String)
         Game.FadeScreenOut(500)
-        Script.Wait(&H3E8)
+        Wait(&H3E8)
         If IO.File.Exists(PathDir & "vehicle_0.cfg") Then WriteCfgValue("Active", "False", PathDir & "vehicle_0.cfg")
         If IO.File.Exists(PathDir & "vehicle_1.cfg") Then WriteCfgValue("Active", "False", PathDir & "vehicle_1.cfg")
         If IO.File.Exists(PathDir & "vehicle_2.cfg") Then WriteCfgValue("Active", "False", PathDir & "vehicle_2.cfg")
@@ -750,7 +632,7 @@ Public Class Mechanic2
         If IO.File.Exists(PathDir & "vehicle_7.cfg") Then WriteCfgValue("Active", "False", PathDir & "vehicle_7.cfg")
         If IO.File.Exists(PathDir & "vehicle_8.cfg") Then WriteCfgValue("Active", "False", PathDir & "vehicle_8.cfg")
         If IO.File.Exists(PathDir & "vehicle_9.cfg") Then WriteCfgValue("Active", "False", PathDir & "vehicle_9.cfg")
-        Script.Wait(500)
+        Wait(500)
         Game.FadeScreenIn(500)
 
         If playerName = "Michael" Then
@@ -873,7 +755,7 @@ Public Class Mechanic2
         If ReadCfgValue("FrontTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), False)
         If ReadCfgValue("BackTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), False)
         _Vehicle.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
         _Vehicle.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", VehicleCfgFile), True)
         _Vehicle.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", VehicleCfgFile), True)
         _Vehicle.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", VehicleCfgFile), True)
@@ -924,6 +806,21 @@ Public Class Mechanic2
         If ReadCfgValue("ExtraSeven", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, -1)
         If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
         If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
+        'Added on v1.5.1
+        '_Vehicle.SetMod(49, ReadCfgValue("ForthyNine", VehicleCfgFile), True)
+        '_Vehicle.SetMod(50, ReadCfgValue("FiftyZero", VehicleCfgFile), True)
+        '_Vehicle.SetMod(51, ReadCfgValue("FiftyOne", VehicleCfgFile), True)
+        '_Vehicle.SetMod(52, ReadCfgValue("FiftyTwo", VehicleCfgFile), True)
+        '_Vehicle.SetMod(53, ReadCfgValue("FiftyThree", VehicleCfgFile), True)
+        '_Vehicle.SetMod(54, ReadCfgValue("FiftyFour", VehicleCfgFile), True)
+        '_Vehicle.SetMod(55, ReadCfgValue("FiftyFive", VehicleCfgFile), True)
+        '_Vehicle.SetMod(56, ReadCfgValue("FiftySix", VehicleCfgFile), True)
+        '_Vehicle.SetMod(57, ReadCfgValue("FiftySeven", VehicleCfgFile), True)
+        '_Vehicle.SetMod(58, ReadCfgValue("FiftyEight", VehicleCfgFile), True)
+        '_Vehicle.SetMod(59, ReadCfgValue("FiftyNine", VehicleCfgFile), True)
+        '_Vehicle.SetMod(60, ReadCfgValue("SixtyZero", VehicleCfgFile), True)
+        '_Vehicle.SetMod(61, ReadCfgValue("SixtyOne", VehicleCfgFile), True)
+        '_Vehicle.SetMod(62, ReadCfgValue("SixtyTwo", VehicleCfgFile), True)
     End Sub
 
     Public Shared Sub ReturnAllVehiclesToGarage(PathDir As String)

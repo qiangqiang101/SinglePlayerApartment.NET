@@ -1,20 +1,18 @@
-﻿Imports System
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.Windows.Forms
 Imports GTA
 Imports GTA.Native
-Imports GTA.Math
-Imports PDMCarShopGUI
-Imports System.Reflection
+Imports INMNativeUI
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.Mechanic
 
 Public Class Website
     Inherits Script
 
-    Public Shared Player As Player
-    Public Shared PlayerPed As Ped
-    Public Shared PlayerCash, VehiclePrice As Integer
+    'Public Shared Player As Player
+    'Public Shared PlayerPed As Ped
+    'Public Shared PlayerCash As Integer
+    Public Shared VehiclePrice As Integer
     Public Shared SelectedVehicle As String
     Public Shared VehPreview As Vehicle
     Public Shared Price As Decimal = 0
@@ -41,9 +39,9 @@ Public Class Website
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
-        Player = Game.Player
-        PlayerPed = Game.Player.Character
-        PlayerCash = SinglePlayerApartment.playerCash
+        'Player = Game.Player
+        'PlayerPed = Game.Player.Character
+        'PlayerCash = SinglePlayerApartment.playerCash
 
         'New Language
         ChooseApt = ReadCfgValue("ChooseApt", langFile)
@@ -73,6 +71,7 @@ Public Class Website
         ReadPedalToMetal()
         ReadSouthernSA()
         ReadWarstock()
+        CreateDeliveryMenu()
     End Sub
 
     Public Shared Sub ReadWarstock()
@@ -89,9 +88,9 @@ Public Class Website
                 WarstockMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             WarstockMenu.RefreshIndex()
@@ -117,9 +116,9 @@ Public Class Website
                 SouthernMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             SouthernMenu.RefreshIndex()
@@ -145,9 +144,9 @@ Public Class Website
                 PedalMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             PedalMenu.RefreshIndex()
@@ -173,9 +172,9 @@ Public Class Website
                 LegendaryMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             LegendaryMenu.RefreshIndex()
@@ -201,9 +200,9 @@ Public Class Website
                 ElitasMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             ElitasMenu.RefreshIndex()
@@ -229,9 +228,9 @@ Public Class Website
                 DockMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             DockMenu.RefreshIndex()
@@ -257,9 +256,9 @@ Public Class Website
                 BennyMenu.AddItem(item)
                 With item
                     .SetRightLabel("$" & Price.ToString("N"))
-                    .Model = Format(i)("model")
-                    .Price = Format(i)("price")
-                    .Car = Format(i)("category")
+                    .SubString1 = Format(i)("model")
+                    .SubInteger1 = Format(i)("price")
+                    .SubString2 = Format(i)("category")
                 End With
             Next
             BennyMenu.RefreshIndex()
@@ -272,6 +271,21 @@ Public Class Website
     End Sub
 
     Public Shared Sub CreateDeliveryMenu()
+        Try
+            DeliveryMenu = New UIMenu("", ChooseApt, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            DeliveryMenu.SetBannerType(Rectangle)
+            _menuPool.Add(DeliveryMenu)
+            DeliveryMenu.RefreshIndex()
+            AddHandler DeliveryMenu.OnItemSelect, AddressOf DeliveryItemSelectHandler
+            AddHandler DeliveryMenu.OnMenuClose, AddressOf DeliveryMenuCloseHandler
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub UpdateDeliveryMenu()
         Try
             Dim Alta As Integer = IO.Directory.GetFiles(AltaPathDir, "*.cfg").Count
             Dim Integrity As Integer = IO.Directory.GetFiles(IntegrityPathDir, "*.cfg").Count
@@ -299,13 +313,78 @@ Public Class Website
             Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
             Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
             Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
+            Dim BayCity As Integer = IO.Directory.GetFiles(BayCityAveDir, "*.cfg").Count
+            Dim BlvdDP As Integer = IO.Directory.GetFiles(BlvdDelPerroDir, "*.cfg").Count
+            Dim Cougar As Integer = IO.Directory.GetFiles(CougarAveDir, "*.cfg").Count
+            Dim Hangman As Integer = IO.Directory.GetFiles(HangmanAveDir, "*.cfg").Count
+            Dim Lagunas0604 As Integer = IO.Directory.GetFiles(LasLagunas0604Dir, "*.cfg").Count
+            Dim Lagunas2143 As Integer = IO.Directory.GetFiles(LasLagunas2143Dir, "*.cfg").Count
+            Dim MiltonR0184 As Integer = IO.Directory.GetFiles(MiltonRd0184Dir, "*.cfg").Count
+            Dim PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
+            Dim Procopio4401 As Integer = IO.Directory.GetFiles(ProcopioDr4401Dir, "*.cfg").Count
+            Dim Procopio4584 As Integer = IO.Directory.GetFiles(ProcopioDr4584Dir, "*.cfg").Count
+            Dim Prosperity As Integer = IO.Directory.GetFiles(ProsperityStDir, "*.cfg").Count
+            Dim SanVitas As Integer = IO.Directory.GetFiles(SanVitasStDir, "*.cfg").Count
+            Dim SouthMo As Integer = IO.Directory.GetFiles(SouthMoMiltonDir, "*.cfg").Count
+            Dim Rockford0325 As Integer = IO.Directory.GetFiles(SouthRockford0325Dir, "*.cfg").Count
+            Dim Spanish As Integer = IO.Directory.GetFiles(SpanishAveDir, "*.cfg").Count
+            Dim Sustancia As Integer = IO.Directory.GetFiles(SustanciaRdDir, "*.cfg").Count
+            Dim Royale As Integer = IO.Directory.GetFiles(TheRoyaleDir, "*.cfg").Count
+            Dim Grapeseed As Integer = IO.Directory.GetFiles(GrapeseedAveDir, "*.cfg").Count
+            Dim PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
+            Dim Rockford0112 As Integer = IO.Directory.GetFiles(SouthRockford0012Dir, "*.cfg").Count
+            Dim Zancudo As Integer = IO.Directory.GetFiles(ZancudoAveDir, "*.cfg").Count
 
-            DeliveryMenu = New UIMenu("", ChooseApt, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            DeliveryMenu.SetBannerType(Rectangle)
-            _menuPool.Add(DeliveryMenu)
             DeliveryMenu.MenuItems.Clear()
+
+            AS3 = ReadCfgValue("3ASowner", saveFile)
+            IW4 = ReadCfgValue("4IWowner", saveFile)
+            IW4HL = ReadCfgValue("4IWHLowner", saveFile)
+            DPH = ReadCfgValue("DPHwoner", saveFile)
+            DPHHL = ReadCfgValue("DPHHLowner", saveFile)
+            DT = ReadCfgValue("SSowner", saveFile)
+            ET = ReadCfgValue("ETowner", saveFile)
+            ETHL = ReadCfgValue("ETHLowner", saveFile)
+            RM = ReadCfgValue("RMowner", saveFile)
+            RMHL = ReadCfgValue("RMHLowner", saveFile)
+            TT = ReadCfgValue("TTowner", saveFile)
+            TTHL = ReadCfgValue("TTHLowner", saveFile)
+            WP = ReadCfgValue("WPowner", saveFile)
+            VB = ReadCfgValue("VPBowner", saveFile2)
+            NC2044 = ReadCfgValue("2044NCowner", saveFile2)
+            HA2862 = ReadCfgValue("2862HAowner", saveFile2)
+            HA2868 = ReadCfgValue("2868HAowner", saveFile2)
+            WO3655 = ReadCfgValue("3655WODowner", saveFile2)
+            NC2045 = ReadCfgValue("2045NCowner", saveFile2)
+            MR2117 = ReadCfgValue("2117MRowner", saveFile2)
+            HA2874 = ReadCfgValue("2874HAowner", saveFile2)
+            WD3677 = ReadCfgValue("3677WMDowner", saveFile2)
+            MW2113 = ReadCfgValue("2113MWTowner", saveFile2)
+            ETP1 = ReadCfgValue("ETP1owner", saveFile2)
+            ETP2 = ReadCfgValue("ETP2owner", saveFile2)
+            ETP3 = ReadCfgValue("ETP3owner", saveFile2)
+            BCA = ReadCfgValue("BCAowner", saveFile3)
+            BDP = ReadCfgValue("BDPowner", saveFile3)
+            CA = ReadCfgValue("CAowner", saveFile3)
+            HA = ReadCfgValue("HAowner", saveFile3)
+            LLB0604 = ReadCfgValue("0604LLBowner", saveFile3)
+            LLB2143 = ReadCfgValue("2143LLBowner", saveFile3)
+            MR0184 = ReadCfgValue("0184MRowner", saveFile3)
+            POWER = ReadCfgValue("PSowner", saveFile3)
+            PD4401 = ReadCfgValue("4401PDowner", saveFile3)
+            PD4584 = ReadCfgValue("4584PDowner", saveFile3)
+            PPS = ReadCfgValue("PPSowner", saveFile3)
+            SVS = ReadCfgValue("SVSowner", saveFile3)
+            SMMD = ReadCfgValue("SMMowner", saveFile3)
+            SRD0325 = ReadCfgValue("0325SRDowner", saveFile3)
+            SA = ReadCfgValue("SAonwer", saveFile3)
+            SR = ReadCfgValue("SRowner", saveFile3)
+            TR = ReadCfgValue("TRowner", saveFile3)
+            GA = ReadCfgValue("GAowner", saveFile3)
+            PB = ReadCfgValue("PBowner", saveFile3)
+            SRD0112 = ReadCfgValue("0112SRDowner", saveFile3)
+            ZA = ReadCfgValue("ZAowner", saveFile3)
+
             If AS3 = playerName AndAlso Not Alta = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
             If IW4 = playerName AndAlso Not Integrity = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
             If IW4HL = playerName AndAlso Not Integrity2 = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4HL)
@@ -332,9 +411,29 @@ Public Class Website
             If ETP1 = playerName AndAlso Not EclipseP1 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
             If ETP2 = playerName AndAlso Not EclipseP2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
             If ETP3 = playerName AndAlso Not EclipseP3 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
+            If BCA = playerName AndAlso Not BayCity = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBCA)
+            If BDP = playerName AndAlso Not BlvdDP = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBDP)
+            If CA = playerName AndAlso Not Cougar = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemCA)
+            If HA = playerName AndAlso Not Hangman = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA)
+            If LLB0604 = playerName AndAlso Not Lagunas0604 = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
+            If LLB2143 = playerName AndAlso Not Lagunas2143 = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
+            If MR0184 = playerName AndAlso Not MiltonR0184 = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
+            If POWER = playerName AndAlso Not PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
+            If PD4401 = playerName AndAlso Not Procopio4401 = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
+            If PD4584 = playerName AndAlso Not Procopio4584 = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
+            If PPS = playerName AndAlso Not Prosperity = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
+            If SVS = playerName AndAlso Not SanVitas = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSVS)
+            If SMMD = playerName AndAlso Not SouthMo = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSMMD)
+            If SRD0325 = playerName AndAlso Not Rockford0325 = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0325)
+            If SA = playerName AndAlso Not Spanish = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSA)
+            If SR = playerName AndAlso Not Sustancia = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
+            If TR = playerName AndAlso Not Royale = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
+            If GA = playerName AndAlso Not Grapeseed = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
+            If PB = playerName AndAlso Not PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
+            If SRD0112 = playerName AndAlso Not Rockford0112 = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
+            If ZA = playerName AndAlso Not Zancudo = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
+
             DeliveryMenu.RefreshIndex()
-            AddHandler DeliveryMenu.OnItemSelect, AddressOf DeliveryItemSelectHandler
-            AddHandler DeliveryMenu.OnMenuClose, AddressOf DeliveryMenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -415,73 +514,115 @@ Public Class Website
                     TargetPathDir = EclipseP2PathDir
                 Case itemETP3.Text
                     TargetPathDir = EclipseP3PathDir
+                Case itemBCA.Text
+                    TargetPathDir = BayCityAveDir
+                Case itemBDP.Text
+                    TargetPathDir = BlvdDelPerroDir
+                Case itemCA.Text
+                    TargetPathDir = CougarAveDir
+                Case itemHA.Text
+                    TargetPathDir = HangmanAveDir
+                Case itemLLB0604.Text
+                    TargetPathDir = LasLagunas0604Dir
+                Case itemLLB2143.Text
+                    TargetPathDir = LasLagunas2143Dir
+                Case itemMR0184.Text
+                    TargetPathDir = MiltonRd0184Dir
+                Case itemPower.Text
+                    TargetPathDir = PowerStDir
+                Case itemPD4401.Text
+                    TargetPathDir = ProcopioDr4401Dir
+                Case itemPD4584.Text
+                    TargetPathDir = ProcopioDr4584Dir
+                Case itemProsperity.Text
+                    TargetPathDir = ProsperityStDir
+                Case itemSVS.Text
+                    TargetPathDir = SanVitasStDir
+                Case itemSMMD.Text
+                    TargetPathDir = SouthMoMiltonDir
+                Case itemSRD0325.Text
+                    TargetPathDir = SouthRockford0325Dir
+                Case itemSA.Text
+                    TargetPathDir = SpanishAveDir
+                Case itemSR.Text
+                    TargetPathDir = SustanciaRdDir
+                Case itemTR.Text
+                    TargetPathDir = TheRoyaleDir
+                Case itemGA.Text
+                    TargetPathDir = GrapeseedAveDir
+                Case itemPB.Text
+                    TargetPathDir = PaletoBlvdDir
+                Case itemSRD0112.Text
+                    TargetPathDir = SouthRockford0012Dir
+                Case itemZA.Text
+                    TargetPathDir = ZancudoAveDir
             End Select
 
             If IO.File.Exists(TargetPathDir & "vehicle_0.cfg") = False Then
-                Player.Money = (PlayerCash - VehiclePrice)
+                Game.Player.Money = (playerCash - VehiclePrice)
                 Resources.CreateFile(TargetPathDir & "vehicle_0.cfg")
                 SavePegasusVehicle(TargetPathDir & "vehicle_0.cfg")
                 VehPreview.Delete()
                 DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
             Else
                 If IO.File.Exists(TargetPathDir & "vehicle_1.cfg") = False Then
-                    Player.Money = (PlayerCash - VehiclePrice)
+                    Game.Player.Money = (playerCash - VehiclePrice)
                     Resources.CreateFile(TargetPathDir & "vehicle_1.cfg")
                     SavePegasusVehicle(TargetPathDir & "vehicle_1.cfg")
                     VehPreview.Delete()
                     DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                 Else
                     If IO.File.Exists(TargetPathDir & "vehicle_2.cfg") = False Then
-                        Player.Money = (PlayerCash - VehiclePrice)
+                        Game.Player.Money = (playerCash - VehiclePrice)
                         Resources.CreateFile(TargetPathDir & "vehicle_2.cfg")
                         SavePegasusVehicle(TargetPathDir & "vehicle_2.cfg")
                         VehPreview.Delete()
                         DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                     Else
                         If IO.File.Exists(TargetPathDir & "vehicle_3.cfg") = False Then
-                            Player.Money = (PlayerCash - VehiclePrice)
+                            Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(TargetPathDir & "vehicle_3.cfg")
                             SavePegasusVehicle(TargetPathDir & "vehicle_3.cfg")
                             VehPreview.Delete()
                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                         Else
                             If IO.File.Exists(TargetPathDir & "vehicle_4.cfg") = False Then
-                                Player.Money = (PlayerCash - VehiclePrice)
+                                Game.Player.Money = (playerCash - VehiclePrice)
                                 Resources.CreateFile(TargetPathDir & "vehicle_4.cfg")
                                 SavePegasusVehicle(TargetPathDir & "vehicle_4.cfg")
                                 VehPreview.Delete()
                                 DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                             Else
                                 If IO.File.Exists(TargetPathDir & "vehicle_5.cfg") = False Then
-                                    Player.Money = (PlayerCash - VehiclePrice)
+                                    Game.Player.Money = (playerCash - VehiclePrice)
                                     Resources.CreateFile(TargetPathDir & "vehicle_5.cfg")
                                     SavePegasusVehicle(TargetPathDir & "vehicle_5.cfg")
                                     VehPreview.Delete()
                                     DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                 Else
                                     If IO.File.Exists(TargetPathDir & "vehicle_6.cfg") = False Then
-                                        Player.Money = (PlayerCash - VehiclePrice)
+                                        Game.Player.Money = (playerCash - VehiclePrice)
                                         Resources.CreateFile(TargetPathDir & "vehicle_6.cfg")
                                         SavePegasusVehicle(TargetPathDir & "vehicle_6.cfg")
                                         VehPreview.Delete()
                                         DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                     Else
                                         If IO.File.Exists(TargetPathDir & "vehicle_7.cfg") = False Then
-                                            Player.Money = (PlayerCash - VehiclePrice)
+                                            Game.Player.Money = (playerCash - VehiclePrice)
                                             Resources.CreateFile(TargetPathDir & "vehicle_7.cfg")
                                             SavePegasusVehicle(TargetPathDir & "vehicle_7.cfg")
                                             VehPreview.Delete()
                                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                         Else
                                             If IO.File.Exists(TargetPathDir & "vehicle_8.cfg") = False Then
-                                                Player.Money = (PlayerCash - VehiclePrice)
+                                                Game.Player.Money = (playerCash - VehiclePrice)
                                                 Resources.CreateFile(TargetPathDir & "vehicle_8.cfg")
                                                 SavePegasusVehicle(TargetPathDir & "vehicle_8.cfg")
                                                 VehPreview.Delete()
                                                 DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                             Else
                                                 If IO.File.Exists(TargetPathDir & "vehicle_9.cfg") = False Then
-                                                    Player.Money = (PlayerCash - VehiclePrice)
+                                                    Game.Player.Money = (playerCash - VehiclePrice)
                                                     Resources.CreateFile(TargetPathDir & "vehicle_9.cfg")
                                                     SavePegasusVehicle(TargetPathDir & "vehicle_9.cfg")
                                                     VehPreview.Delete()
@@ -507,9 +648,9 @@ Public Class Website
 
     Public Shared Sub VehicleIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            image = sender.MenuItems(index).Model & ".jpg"
-            pointX = sender.MenuItems(index).Offset.X + 300
-            pointY = sender.MenuItems(index).Offset.Y + 120
+            image = sender.MenuItems(index).SubString1 & ".jpg"
+            pointX = sender.MenuItems(index).Offset.X + My.Settings.PreviewPointX
+            pointY = sender.MenuItems(index).Offset.Y + My.Settings.PreviewPointY
             'UI.DrawTexture(ImagePathDir & image, 0, 0, 2000, New Point(290, 0), New Size(600, 333), 0.0, Color.White)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -549,23 +690,23 @@ Public Class Website
                 CallerImg = "char_milsite"
         End Select
 
-        VehiclePrice = selectedItem.Price
+        VehiclePrice = selectedItem.SubInteger1
         If VehPreview = Nothing Then
-            VehPreview = World.CreateVehicle(selectedItem.Model, PlayerPed.Position, PlayerPed.Heading)
+            VehPreview = Resources.CreateVehicle(selectedItem.SubString1, Nothing, playerPed.Position, playerPed.Heading)
         Else
             VehPreview.Delete()
-            VehPreview = World.CreateVehicle(selectedItem.Model, PlayerPed.Position, PlayerPed.Heading)
+            VehPreview = Resources.CreateVehicle(selectedItem.SubString1, Nothing, playerPed.Position, playerPed.Heading)
         End If
         SelectedVehicle = VehPreview.FriendlyName
         VehPreview.Alpha = 0
         VehPreview.HasCollision = False
-        Category = selectedItem.Car
+        Category = selectedItem.SubString2
         If Category = "Pegasus" Then
             Select Case playerName
                 Case "Michael"
-                    If PlayerCash > VehiclePrice Then
+                    If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(MichaelPathDir & VehPreview.NumberPlate & ".cfg") Then
-                            Player.Money = (PlayerCash - VehiclePrice)
+                            Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
@@ -576,9 +717,9 @@ Public Class Website
                         DisplayNotificationThisFrame(Maze, "", InsFundVehicle, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 Case "Franklin"
-                    If PlayerCash > VehiclePrice Then
+                    If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(FranklinPathDir & VehPreview.NumberPlate & ".cfg") Then
-                            Player.Money = (PlayerCash - VehiclePrice)
+                            Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
@@ -589,9 +730,9 @@ Public Class Website
                         DisplayNotificationThisFrame(Fleeca, "", InsFundVehicle, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
                     End If
                 Case "Trevor"
-                    If PlayerCash > VehiclePrice Then
+                    If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(TrevorPathDir & VehPreview.NumberPlate & ".cfg") Then
-                            Player.Money = (PlayerCash - VehiclePrice)
+                            Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
@@ -616,7 +757,7 @@ Public Class Website
             End Select
         Else
             If PlayerCash > VehiclePrice Then
-                CreateDeliveryMenu()
+                UpdateDeliveryMenu()
                 DeliveryMenu.Visible = Not DeliveryMenu.Visible
                 sender.Visible = False
             Else
@@ -636,12 +777,7 @@ Public Class Website
 
     Public Shared Sub OnTick(o As Object, e As EventArgs)
         Try
-            Player = Game.Player
-            PlayerPed = Game.Player.Character
-            PlayerCash = SinglePlayerApartment.playerCash
-
             _menuPool.ProcessMenus()
-
             DrawTexture()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

@@ -4,24 +4,34 @@ Imports System.Windows.Forms
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
+Imports System.Text
 
 Public Class Resources
+
+    Public Enum PedComponentsVars
+        COMPONET_FACE = 0
+        COMPONET_HEAD = 1
+        COMPONET_HAIR = 2
+        COMPONET_TORSO = 3
+        COMPONET_LEGS = 4
+        COMPONET_HANDS = 5
+        COMPONET_FEET = 6
+        COMPONET_EYES = 7
+        COMPONET_ACCESSORIES = 8
+        COMPONET_TASKS = 9
+        COMPONET_TEXTURES = 10
+        COMPONET_TORSO2 = 11
+    End Enum
+
+    Public Enum PedPropsVars
+        PROP_HATS = 0
+        PROP_GLASSES = 1
+        PROP_EARS = 2
+    End Enum
 
     Public Shared Function GetHashKey(ByVal s As String) As Integer
         Dim Args As InputArgument() = New InputArgument() {s}
         Return Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, Args)
-    End Function
-
-    Public Shared Function Create_Vehicle(vh As Integer, x As Single, y As Single, z As Single, h As Single, retNetHandle As Boolean, retHandle As Boolean) As Vehicle
-        Dim vhModel = New Model(vh)
-        vhModel.Request(500)
-        If (vhModel.IsInCdImage AndAlso vhModel.IsValid) Then
-            While (Not vhModel.IsLoaded)
-                Script.Wait(100)
-            End While
-            Return Native.Function.Call(Of Vehicle)(Hash.CREATE_VEHICLE, vhModel.Hash, x, y, z, h, retNetHandle, retHandle)
-        End If
-        vhModel.MarkAsNoLongerNeeded()
     End Function
 
     Public Shared Function GetVehiclePrice(file As String) As Integer
@@ -257,24 +267,20 @@ Public Class Resources
     End Structure
 
     Public Shared Function GetModelFromHash(Vehicle As Vehicle) As String
-        Try
-            Dim Result As String = Nothing
-            Dim VhNames As Array = GTA.Native.VehicleHash.GetNames(GetType(VehicleHash))
-            Dim VhHash As Array = GTA.Native.VehicleHash.GetValues(GetType(VehicleHash))
-            Dim tmpUint As UnionInt32
-            tmpUint.IntValue = Game.Player.Character.CurrentVehicle.Model.Hash
-            Dim UIntVal As UInt32 = tmpUint.UIntValue
+        Dim Result As String = Nothing
+        Dim VhNames As Array = GTA.Native.VehicleHash.GetNames(GetType(VehicleHash))
+        Dim VhHash As Array = GTA.Native.VehicleHash.GetValues(GetType(VehicleHash))
+        Dim tmpUint As UnionInt32
+        tmpUint.IntValue = Game.Player.Character.CurrentVehicle.Model.Hash
+        Dim UIntVal As UInt32 = tmpUint.UIntValue
 
-            For i = 0 To UBound(VhHash)
-                If VhHash(i) = UIntVal Then
-                    Result = VhNames(i)
-                    Exit For
-                End If
-            Next
-            Return Result
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
+        For i = 0 To UBound(VhHash)
+            If VhHash(i) = UIntVal Then
+                Result = VhNames(i)
+                Exit For
+            End If
+        Next
+        Return Result
     End Function
 
     Public Shared Function GetVehicleInteriorTrimColor(Vehicle As Vehicle) As Integer
@@ -299,14 +305,18 @@ Public Class Resources
 
     Public Shared Function GetVehicleClass(Vehicle As Vehicle) As String
         Dim Result As String = Nothing
-        Select Case Vehicle.ClassType
-            Case VehicleClass.Boats, VehicleClass.Helicopters, VehicleClass.Planes, VehicleClass.Military, VehicleClass.Service, VehicleClass.Industrial, VehicleClass.Commercial
-                Result = "Pegasus"
-            Case VehicleClass.Cycles
-                Result = "BikeRack"
-            Case VehicleClass.Utility, VehicleClass.Vans, VehicleClass.OffRoad, VehicleClass.Motorcycles, VehicleClass.Emergency, VehicleClass.Super, VehicleClass.SUVs, VehicleClass.Compacts, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.Sedans, VehicleClass.SportsClassics, VehicleClass.Sports
-                Result = "Garage"
-        End Select
+        Try
+            Select Case Vehicle.ClassType
+                Case VehicleClass.Boats, VehicleClass.Helicopters, VehicleClass.Planes, VehicleClass.Military, VehicleClass.Service, VehicleClass.Industrial, VehicleClass.Commercial
+                    Result = "Pegasus"
+                Case VehicleClass.Cycles
+                    Result = "BikeRack"
+                Case VehicleClass.Utility, VehicleClass.Vans, VehicleClass.OffRoad, VehicleClass.Motorcycles, VehicleClass.Emergency, VehicleClass.Super, VehicleClass.SUVs, VehicleClass.Compacts, VehicleClass.Coupes, VehicleClass.Muscle, VehicleClass.Sedans, VehicleClass.SportsClassics, VehicleClass.Sports
+                    Result = "Garage"
+            End Select
+        Catch ex As Exception
+            SinglePlayerApartment.DisplayHelpTextThisFrame("Update your fucking ScriptHookV.NET!!!")
+        End Try
         Return Result
     End Function
 
@@ -340,23 +350,21 @@ Label_005C:
         Native.Function.Call(Hash._0xEA47FE3719165B94, New InputArgument() {ped, animDict, animFile, 8.0, -4.0, duration, 9, 0, 0, 0, 0})
     End Sub
 
-    Public Shared Sub Disable_Controls(Yes As Boolean)
-        If Yes = True Then
-            Game.DisableControl(0, GTA.Control.Jump)
-            Game.DisableControl(0, GTA.Control.Attack)
-            Game.DisableControl(0, GTA.Control.Attack2)
-            Game.DisableControl(0, GTA.Control.Aim)
-            Game.DisableControl(0, GTA.Control.NextWeapon)
-            Game.DisableControl(0, GTA.Control.PrevWeapon)
-            Game.DisableControl(0, GTA.Control.MeleeAttack1)
-            Game.DisableControl(0, GTA.Control.MeleeAttack2)
-            Game.DisableControl(0, GTA.Control.MeleeAttackAlternate)
-            Game.DisableControl(0, GTA.Control.MeleeAttackHeavy)
-            Game.DisableControl(0, GTA.Control.MeleeAttackLight)
-            SinglePlayerApartment.playerPed.CanSwitchWeapons = False
-        Else
-            SinglePlayerApartment.playerPed.CanSwitchWeapons = True
-        End If
+    Public Shared Sub Disable_Controls()
+        Game.DisableControlThisFrame(0, GTA.Control.Jump)
+        Game.DisableControlThisFrame(0, GTA.Control.Attack)
+        Game.DisableControlThisFrame(0, GTA.Control.Attack2)
+        Game.DisableControlThisFrame(0, GTA.Control.Aim)
+        Game.DisableControlThisFrame(0, GTA.Control.NextWeapon)
+        Game.DisableControlThisFrame(0, GTA.Control.PrevWeapon)
+        Game.DisableControlThisFrame(0, GTA.Control.MeleeAttack1)
+        Game.DisableControlThisFrame(0, GTA.Control.MeleeAttack2)
+        Game.DisableControlThisFrame(0, GTA.Control.MeleeAttackAlternate)
+        Game.DisableControlThisFrame(0, GTA.Control.MeleeAttackHeavy)
+        Game.DisableControlThisFrame(0, GTA.Control.MeleeAttackLight)
+        Game.DisableControlThisFrame(0, GTA.Control.CharacterWheel)
+        Game.DisableControlThisFrame(0, GTA.Control.SelectWeapon)
+        Native.Function.Call(Hash.SET_CURRENT_PED_WEAPON, Game.Player.Character, WeaponHash.Unarmed, True)
     End Sub
 
     Public Shared Function GetPlayerZoneForPlane(PlayerPed As Ped) As Vector3
@@ -492,4 +500,71 @@ Label_005C:
                 IO.File.WriteAllText(vehFileName, My.Resources.vehicle)
         End Select
     End Sub
+
+    Public Shared Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As Vehicle
+        Dim Result As Vehicle = Nothing
+        If VehicleModel = "" Then
+            Dim model = New Model(VehicleHash)
+            model.Request(250)
+            If model.IsInCdImage AndAlso model.IsValid Then
+                While Not model.IsLoaded
+                    Script.Wait(50)
+                End While
+                Result = World.CreateVehicle(model, Position, Heading)
+            End If
+            model.MarkAsNoLongerNeeded()
+        Else
+            Dim model = New Model(VehicleModel)
+            model.Request(250)
+            If model.IsInCdImage AndAlso model.IsValid Then
+                While Not model.IsLoaded
+                    Script.Wait(50)
+                End While
+                Result = World.CreateVehicle(model, Position, Heading)
+            End If
+            model.MarkAsNoLongerNeeded()
+        End If
+        Return Result
+    End Function
+
+    Public Shared Function IsInGarageVehicle(PlayerPed As Ped) As Boolean
+        Dim Result As Boolean
+        Select Case PlayerPed.CurrentVehicle
+            Case TenCarGarage.veh0, TenCarGarage.veh1, TenCarGarage.veh2, TenCarGarage.veh3, TenCarGarage.veh4, TenCarGarage.veh5, TenCarGarage.veh6, TenCarGarage.veh7, TenCarGarage.veh8, TenCarGarage.veh9
+                Result = True
+            Case SixCarGarage.veh0, SixCarGarage.veh1, SixCarGarage.veh2, SixCarGarage.veh3, SixCarGarage.veh4, SixCarGarage.veh5
+                Result = True
+            Case Else
+                Result = False
+        End Select
+        Return Result
+    End Function
+
+    Public Shared Sub ptfx_triggerOnEntity(ByVal ent As Entity, ByVal sPTFX As String, ByVal sAsset As String, ByVal Optional offset As Vector3 = Nothing, ByVal Optional rot As Vector3 = Nothing, ByVal Optional size As Double = 1)
+        If (sAsset <> "") Then
+            Native.Function.Call(Hash._0x6C38AF3693A69A91, New InputArgument() {sAsset})
+        End If
+        Native.Function.Call(Hash._0x0D53A3B8DA0809D2, New InputArgument() {sPTFX, ent, offset.X, offset.Y, offset.Z, rot.X, rot.Y, rot.Z, size, 0, 0, 0})
+    End Sub
+
+    Public Shared Sub PlayPTFX(Entity As Entity, PTFX As String, Asset As String, Offset As Vector3, Rotation As Vector3)
+        Native.Function.Call(Hash.REQUEST_NAMED_PTFX_ASSET, Asset)
+        Native.Function.Call(Hash._SET_PTFX_ASSET_NEXT_CALL, Asset)
+        Native.Function.Call(Hash.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY, PTFX, Entity, Offset.X, Offset.Y, Offset.Z, Rotation.X, Rotation.Y, Rotation.Z, False, False, False)
+    End Sub
+
+    Public Shared Sub PlayPTFXLoop(ptfx As String, effectname As String, heading As Single, pitch As Single, offset As Vector3)
+        If Native.Function.Call(Of Boolean)(Hash.HAS_NAMED_PTFX_ASSET_LOADED, ptfx) Then
+            Native.Function.Call(Hash._SET_PTFX_ASSET_NEXT_CALL, ptfx)
+            Native.Function.Call(Of Integer)(Hash.START_PARTICLE_FX_NON_LOOPED_AT_COORD, effectname, offset.X, offset.Y, offset.Z, 0, pitch, heading - 90, 1, False, False, False)
+        Else
+            Native.Function.Call(Hash.REQUEST_NAMED_PTFX_ASSET, ptfx)
+        End If
+    End Sub
+
+    Public Shared Function Decode(String2Decode As String) As String
+        Dim decodedBytes As Byte()
+        decodedBytes = Convert.FromBase64String(String2Decode)
+        Return Encoding.UTF8.GetString(decodedBytes)
+    End Function
 End Class

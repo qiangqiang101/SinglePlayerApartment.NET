@@ -4,7 +4,7 @@ Imports GTA.Native
 Imports GTA.Math
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports PDMCarShopGUI
+Imports INMNativeUI
 
 Public Class Wardrobe
     Inherits Script
@@ -14,7 +14,7 @@ Public Class Wardrobe
     Public Shared DrawSpotLight As Boolean = False
     Public Shared WardrobeCam As Camera
     Public Shared WardrobeHead As Single
-    Public Shared Debug As String = ReadCfgValue("Debug", settingFile)
+    Public Shared WardrobeScriptStatus As Integer = -1
 
     Public Shared Player0W, Player1W, Player2W, Player3_MW, Player3_FW As UIMenu
     Public Shared Outfit0, Suit0, FullSuit0, SuitJackets0, SuitPants0, SuitVests0, CasualJackets0, CasualJacketJackets0 As UIMenu
@@ -257,7 +257,6 @@ Public Class Wardrobe
             End If
 
             AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
 
             _menuPool = New MenuPool()
 
@@ -522,8 +521,8 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
-                    .Car = format(i)("set2")
+                    .SubString1 = format(i)("set1")
+                    .SubString2 = format(i)("set2")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -547,8 +546,8 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
-                    .Car = format(i)("set2")
+                    .SubString1 = format(i)("set1")
+                    .SubString2 = format(i)("set2")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -572,7 +571,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -596,7 +595,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -620,7 +619,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -644,7 +643,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -668,7 +667,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -692,7 +691,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -716,7 +715,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -740,7 +739,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -764,7 +763,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -788,7 +787,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -812,7 +811,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -836,7 +835,7 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
+                    .SubString1 = format(i)("set1")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -860,8 +859,8 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
-                    .Car = format(i)("set2")
+                    .SubString1 = format(i)("set1")
+                    .SubString2 = format(i)("set2")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -885,8 +884,8 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
-                    .Car = format(i)("set2")
+                    .SubString1 = format(i)("set1")
+                    .SubString2 = format(i)("set2")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -910,8 +909,8 @@ Public Class Wardrobe
                 Dim item As New UIMenuItem(format(i)("name"))
                 MenuCategory.AddItem(item)
                 With item
-                    .Model = format(i)("set1")
-                    .Car = format(i)("set2")
+                    .SubString1 = format(i)("set1")
+                    .SubString2 = format(i)("set2")
                 End With
             Next
             MenuCategory.RefreshIndex()
@@ -1081,6 +1080,7 @@ Public Class Wardrobe
         DrawSpotLight = False
         playerPed.Task.ClearAll()
         hideHud = False
+        WardrobeScriptStatus = -1
     End Sub
 
     Public Sub ItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
@@ -1090,7 +1090,7 @@ Public Class Wardrobe
     Public Sub UpperbodyIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
             If playerName = "Franklin" Then
-                Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+                Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
 
@@ -1099,7 +1099,7 @@ Public Class Wardrobe
                 Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2) 'Vest
                 Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2) 'Logo
             Else
-                Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+                Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
 
@@ -1116,7 +1116,7 @@ Public Class Wardrobe
 
     Public Sub ShoesIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d6 As Integer = Set1(1).Trim
             Dim t6 As Integer = Set1(2).Trim
 
@@ -1128,7 +1128,7 @@ Public Class Wardrobe
 
     Public Sub CapsIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d0 As Integer = Set1(1).Trim
             Dim t0 As Integer = Set1(2).Trim
 
@@ -1144,7 +1144,7 @@ Public Class Wardrobe
 
     Public Sub ChainsIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d7 As Integer = Set1(1).Trim
             Dim t7 As Integer = Set1(2).Trim
 
@@ -1156,7 +1156,7 @@ Public Class Wardrobe
 
     Public Sub ShadesIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d1 As Integer = Set1(1).Trim
             Dim t1 As Integer = Set1(2).Trim
 
@@ -1172,7 +1172,7 @@ Public Class Wardrobe
 
     Public Sub EarringIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d2 As Integer = Set1(1).Trim
             Dim t2 As Integer = Set1(2).Trim
 
@@ -1188,7 +1188,7 @@ Public Class Wardrobe
 
     Public Sub CasualTShirtIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d11 As Integer = Set1(1).Trim
             Dim t11 As Integer = Set1(2).Trim
 
@@ -1201,7 +1201,7 @@ Public Class Wardrobe
     Public Sub SuitVestIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
             If playerName = "Franklin" Then
-                Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+                Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d11 As Integer = Set1(1).Trim
                 Dim t11 As Integer = Set1(2).Trim
 
@@ -1214,7 +1214,7 @@ Public Class Wardrobe
                     Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, d11, t11, 2)
                 End If
             Else
-                Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+                Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d11 As Integer = Set1(1).Trim
                 Dim t11 As Integer = Set1(2).Trim
 
@@ -1227,7 +1227,7 @@ Public Class Wardrobe
 
     Public Sub PantswithShoesIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d4 As Integer = Set1(1).Trim
             Dim t4 As Integer = Set1(2).Trim
             Dim d6 As Integer = Set1(4).Trim
@@ -1242,7 +1242,7 @@ Public Class Wardrobe
 
     Public Sub PantsIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d4 As Integer = Set1(1).Trim
             Dim t4 As Integer = Set1(2).Trim
 
@@ -1254,7 +1254,7 @@ Public Class Wardrobe
 
     Public Sub CasualJacketIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
             Dim d3 As Integer = Set1(1).Trim
             Dim t3 As Integer = Set1(2).Trim
             Dim d11 As Integer = Set1(4).Trim
@@ -1270,7 +1270,7 @@ Public Class Wardrobe
     Public Sub SuitJacketIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
             If playerName = "Franklin" Then
-                Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+                Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
 
@@ -1285,7 +1285,7 @@ Public Class Wardrobe
                     Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, d3, t3, 2)
                 End If
             Else 'If playerName = "Michael" Then
-                Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
+                Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
                 Dim d11 As Integer = Set1(4).Trim
@@ -1301,8 +1301,8 @@ Public Class Wardrobe
 
     Public Sub VestIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
-            Dim Set2() As String = sender.MenuItems(index).Car.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
+            Dim Set2() As String = sender.MenuItems(index).SubString2.Split("#"c)
             Dim d3 As Integer = Set1(1).Trim
             Dim t3 As Integer = Set1(2).Trim
             Dim d11_withouttie As Integer = Set1(4).Trim
@@ -1326,8 +1326,8 @@ Public Class Wardrobe
 
     Public Sub TieIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
-            Dim Set2() As String = sender.MenuItems(index).Car.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
+            Dim Set2() As String = sender.MenuItems(index).SubString2.Split("#"c)
             Dim d8_withoutvest As Integer = Set1(1).Trim
             Dim t8_withoutvest As Integer = Set1(2).Trim
             Dim d8_withvest As Integer = Set2(1).Trim
@@ -1352,8 +1352,8 @@ Public Class Wardrobe
 
     Public Sub FullSuitIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
-            Dim Set2() As String = sender.MenuItems(index).Car.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
+            Dim Set2() As String = sender.MenuItems(index).SubString2.Split("#"c)
             Dim d3 As Integer = Set1(1).Trim
             Dim t3 As Integer = Set1(2).Trim
             Dim d4 As Integer = Set1(4).Trim
@@ -1383,8 +1383,8 @@ Public Class Wardrobe
 
     Public Sub OutfitIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
-            Dim Set2() As String = sender.MenuItems(index).Car.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
+            Dim Set2() As String = sender.MenuItems(index).SubString2.Split("#"c)
             Dim d3 As Integer = Set1(1).Trim
             Dim t3 As Integer = Set1(2).Trim
             Dim d4 As Integer = Set1(4).Trim
@@ -1427,8 +1427,8 @@ Public Class Wardrobe
 
     Public Sub MPOutfitIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            Dim Set1() As String = sender.MenuItems(index).Model.Split("#"c)
-            Dim Set2() As String = sender.MenuItems(index).Car.Split("#"c)
+            Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
+            Dim Set2() As String = sender.MenuItems(index).SubString2.Split("#"c)
             Dim a_d1 As Integer = Set1(1).Trim
             Dim a_t1 As Integer = Set1(2).Trim
             Dim a_d3 As Integer = Set1(4).Trim
@@ -1490,46 +1490,5 @@ Public Class Wardrobe
         'End Control
 
         _menuPool.ProcessMenus()
-
-        If Debug = "True" Then
-            Dim a_d0 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_FACE)
-            Dim a_d1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_HEAD)
-            Dim a_d2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_HAIR)
-            Dim a_d3 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_TORSO)
-            Dim a_d4 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_LEGS)
-            Dim a_d5 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_HANDS)
-            Dim a_d6 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_FEET)
-            Dim a_d7 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_EYES)
-            Dim a_d8 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_ACCESSORIES)
-            Dim a_d9 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_TASKS)
-            Dim a_d10 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_TEXTURES)
-            Dim a_d11 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_DRAWABLE_VARIATION, playerPed, PedComponentsVars.COMPONET_TORSO2)
-            Dim a_t0 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_FACE)
-            Dim a_t1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_HEAD)
-            Dim a_t2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_HAIR)
-            Dim a_t3 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_TORSO)
-            Dim a_t4 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_LEGS)
-            Dim a_t5 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_HANDS)
-            Dim a_t6 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_FEET)
-            Dim a_t7 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_EYES)
-            Dim a_t8 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_ACCESSORIES)
-            Dim a_t9 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_TASKS)
-            Dim a_t10 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_TEXTURES)
-            Dim a_t11 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_TEXTURE_VARIATION, playerPed, PedComponentsVars.COMPONET_TORSO2)
-            Dim b_d0 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_PROP_INDEX, playerPed, PedPropsVars.PROP_HATS)
-            Dim b_d1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_PROP_INDEX, playerPed, PedPropsVars.PROP_GLASSES)
-            Dim b_d2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_PROP_INDEX, playerPed, PedPropsVars.PROP_EARS)
-            Dim b_t0 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_PROP_TEXTURE_INDEX, playerPed, PedPropsVars.PROP_HATS)
-            Dim b_t1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_PROP_TEXTURE_INDEX, playerPed, PedPropsVars.PROP_GLASSES)
-            Dim b_t2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_PED_PROP_TEXTURE_INDEX, playerPed, PedPropsVars.PROP_EARS)
-
-            Resources.DrawText(("Face: 0," & a_d0 & "," & a_t0 & " Head: 1," & a_d1 & "," & a_t1 & " Hair: 2," & a_d2 & "," & a_t2 & " Torso: 3," & a_d3 & "," & a_t3 & " Legs: 4," & a_d4 & "," & a_t4 &
-                           " Hands: 5," & a_d5 & "," & a_t5 & " Feet: 6," & a_d6 & "," & a_t6 & " Eyes: 7," & a_d7 & "," & a_t7 & " Acces: 8," & a_d8 & "," & a_t8 & " Task: 9," & a_d9 & "," & a_t9 &
-                           " Texture: 10," & a_d10 & "," & a_t10 & " Torso2: 11," & a_d11 & "," & a_t11 & " Hats: 0," & b_d0 & "," & b_t0 & " Glasses: 1," & b_d1 & "," & b_t1 & " Ears: 2," & b_d2 & "," & b_t2), New Point(640, 685), 0.3, Color.White, Resources.GTAFont.UIDefault, Resources.GTAFontAlign.Right, Resources.GTAFontStyleOptions.Outline)
-        End If
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-
     End Sub
 End Class

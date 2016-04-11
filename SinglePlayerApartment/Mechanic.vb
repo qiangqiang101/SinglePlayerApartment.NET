@@ -1,10 +1,9 @@
 ﻿Imports System.Drawing
 Imports GTA
-Imports GTA.Native
-Imports GTA.Math
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports PDMCarShopGUI
+Imports INMNativeUI
+Imports SinglePlayerApartment.Resources
 
 Public Class Mechanic
     Inherits Script
@@ -13,10 +12,12 @@ Public Class Mechanic
     Public Shared playerHash As String
     Public Shared GarageMenu, GarageMenu2, GrgMoveMenu, GrgTransMenu, MechanicMenu, PhoneMenu, AS3Menu, IW4Menu, IW4HLMenu, DPHMenu, DPHHLMenu, DTMenu, ETMenu, ETHLMenu, RMMenu, RMHLMenu, TTMenu, TTHLMenu, WPMenu, VBMenu As UIMenu
     Public Shared NC2044Menu, HA2862Menu, HA2868Menu, WO3655Menu, NC2045Menu, MR2117Menu, HA2874Menu, WD3677Menu, MW2113Menu, ETP1Menu, ETP2Menu, ETP3Menu As UIMenu
+    Public Shared BCAMenu, BDPMenu, CAMenu, HAMenu, LLB0604Menu, LLB2143Menu, MR0184Menu, PowerMenu, PD4401Menu, PD4584Menu, ProsperityMenu, SVSMenu, SMMDMenu, SRD0325Menu, SAMenu, SRMenu, TRMenu As UIMenu
+    Public Shared GAMenu, PBMenu, SRD0112Menu, ZAMenu As UIMenu
     Public Shared MichaelPegasusMenu, FranklinPegasusMenu, TrevorPegasusMenu, Player3PegasusMenu, PegasusConfirmMenu As UIMenu
     Public Shared _menuPool As MenuPool
     Public Shared AS3, IW4, IW4HL, DPH, DPHHL, DT, ET, ETHL, RM, RMHL, TT, TTHL, WP, VB As String
-    Public Shared NC2044, HA2862, HA2868, WO3655, NC2045, MR2117, HA2874, WD3677, MW2113, ETP1, ETP2, ETP3 As String
+    Public Shared NC2044, HA2862, HA2868, WO3655, NC2045, MR2117, HA2874, WD3677, MW2113, ETP1, ETP2, ETP3, BCA, BDP, CA, HA, LLB0604, LLB2143, MR0184, POWER, PD4401, PD4584, PPS, SVS, SMMD, SRD0325, SA, SR, TR, GA, PB, SRD0112, ZA As String
     Public Shared MPV0, MPV1, MPV2, MPV3, MPV4, MPV5, MPV6, MPV7, MPV8, MPV9 As Vehicle
     Public Shared FPV0, FPV1, FPV2, FPV3, FPV4, FPV5, FPV6, FPV7, FPV8, FPV9 As Vehicle
     Public Shared TPV0, TPV1, TPV2, TPV3, TPV4, TPV5, TPV6, TPV7, TPV8, TPV9 As Vehicle
@@ -24,6 +25,8 @@ Public Class Mechanic
     Public Shared MPV, FPV, TPV, PPV As Vehicle
     Public Shared itemAS3, itemIW4, itemIW4HL, itemDPH, itemDPHHL, itemDT, itemET, itemETHL, itemRM, itemRMHL, itemTT, itemTTHL, itemWP, itemVB As UIMenuItem
     Public Shared itemNC2044, itemHA2862, itemHA2868, itemWO3655, itemNC2045, itemMR2117, itemHA2874, itemWD3677, itemMW2113, itemETP1, itemETP2, itemETP3 As UIMenuItem
+    Public Shared itemBCA, itemBDP, itemCA, itemHA, itemLLB0604, itemLLB2143, itemMR0184, itemPower, itemPD4401, itemPD4584, itemProsperity, itemSVS, itemSMMD, itemSRD0325, itemSA, itemSR, itemTR As UIMenuItem
+    Public Shared itemGA, itemPB, itemSRD0112, itemZA As UIMenuItem
     Public Shared GarageMenuItem(10) As UIMenuItem
     Public Shared GrgMoveMenuItem(10) As UIMenuItem
     Public Shared GrgTransMenuItem(10) As UIMenuItem
@@ -55,6 +58,27 @@ Public Class Mechanic
     Public Shared EclipseP1PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
     Public Shared EclipseP2PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
     Public Shared EclipseP3PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
+    Public Shared BayCityAveDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\bay_city_ave\"
+    Public Shared BlvdDelPerroDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\blvd_del_perro\"
+    Public Shared CougarAveDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\cougar_ave\"
+    Public Shared HangmanAveDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\hangman_ave\"
+    Public Shared LasLagunas0604Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0604_las_lagunas_blvd\"
+    Public Shared LasLagunas2143Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2143_las_lagunas_blvd\"
+    Public Shared MiltonRd0184Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0184_milton_road\"
+    Public Shared PowerStDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\power_st\"
+    Public Shared ProcopioDr4401Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4401_procopio_dr\"
+    Public Shared ProcopioDr4584Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4584_procopio_dr\"
+    Public Shared ProsperityStDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\prosperity_st\"
+    Public Shared SanVitasStDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\san_vitas_st\"
+    Public Shared SouthMoMiltonDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\south_mo_milton_dr\"
+    Public Shared SouthRockford0325Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0325_south_rockford_dr\"
+    Public Shared SpanishAveDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\spanish_ave\"
+    Public Shared SustanciaRdDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\sustancia_rd\"
+    Public Shared TheRoyaleDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\the_royale\"
+    Public Shared GrapeseedAveDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\grapeseed_ave\"
+    Public Shared PaletoBlvdDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\paleto_blvd\"
+    Public Shared SouthRockford0012Dir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0112_south_rockford_dr\"
+    Public Shared ZancudoAveDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\zancudo_ave\"
 
     Public Shared MichaelPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Michael\"
     Public Shared FranklinPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Franklin\"
@@ -126,11 +150,32 @@ Public Class Mechanic
             NC2045 = ReadCfgValue("2045NCowner", saveFile2)
             MR2117 = ReadCfgValue("2117MRowner", saveFile2)
             HA2874 = ReadCfgValue("2874HAowner", saveFile2)
-            WD3677 = ReadCfgValue("3677WDowner", saveFile2)
+            WD3677 = ReadCfgValue("3677WMDowner", saveFile2)
             MW2113 = ReadCfgValue("2113MWowner", saveFile2)
             ETP1 = ReadCfgValue("ETP1owner", saveFile2)
             ETP2 = ReadCfgValue("ETP2owner", saveFile2)
             ETP3 = ReadCfgValue("ETP3owner", saveFile2)
+            BCA = ReadCfgValue("BCAowner", saveFile3)
+            BDP = ReadCfgValue("BDPowner", saveFile3)
+            CA = ReadCfgValue("CAowner", saveFile3)
+            HA = ReadCfgValue("HAowner", saveFile3)
+            LLB0604 = ReadCfgValue("0604LLBowner", saveFile3)
+            LLB2143 = ReadCfgValue("2143LLBowner", saveFile3)
+            MR0184 = ReadCfgValue("0184MRowner", saveFile3)
+            POWER = ReadCfgValue("PSowner", saveFile3)
+            PD4401 = ReadCfgValue("4401PDowner", saveFile3)
+            PD4584 = ReadCfgValue("4584PDowner", saveFile3)
+            PPS = ReadCfgValue("PPSowner", saveFile3)
+            SVS = ReadCfgValue("SVSowner", saveFile3)
+            SMMD = ReadCfgValue("SMMowner", saveFile3)
+            SRD0325 = ReadCfgValue("0325SRDowner", saveFile3)
+            SA = ReadCfgValue("SAonwer", saveFile3)
+            SR = ReadCfgValue("SRowner", saveFile3)
+            TR = ReadCfgValue("TRowner", saveFile3)
+            GA = ReadCfgValue("GAowner", saveFile3)
+            PB = ReadCfgValue("PBowner", saveFile3)
+            SRD0112 = ReadCfgValue("0112SRDowner", saveFile3)
+            ZA = ReadCfgValue("ZAowner", saveFile3)
 
             itemAS3 = New UIMenuItem(_3AltaStreet._Name & _3AltaStreet.Unit)
             itemIW4 = New UIMenuItem(_4IntegrityWay._Name & _4IntegrityWay.Unit)
@@ -158,6 +203,27 @@ Public Class Mechanic
             itemETP1 = New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit)
             itemETP2 = New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit)
             itemETP3 = New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit)
+            itemBCA = New UIMenuItem(BayCityAve._Name & BayCityAve.Unit)
+            itemBDP = New UIMenuItem(BlvdDelPerro._Name & BlvdDelPerro.Unit)
+            itemCA = New UIMenuItem(CougarAve._Name & CougarAve.Unit)
+            itemHA = New UIMenuItem(HangmanAve._Name & HangmanAve.Unit)
+            itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604._Name & LasLagunasBlvd0604.Unit)
+            itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143._Name & LasLagunasBlvd2143.Unit)
+            itemMR0184 = New UIMenuItem(MiltonRd0184._Name & MiltonRd0184.Unit)
+            itemPower = New UIMenuItem(PowerSt._Name & PowerSt.Unit)
+            itemPD4401 = New UIMenuItem(ProcopioDr4401._Name & ProcopioDr4401.Unit)
+            itemPD4584 = New UIMenuItem(ProcopioDr4584._Name & ProcopioDr4584.Unit)
+            itemProsperity = New UIMenuItem(ProsperitySt._Name & ProsperitySt.Unit)
+            itemSVS = New UIMenuItem(SanVitasSt._Name & SanVitasSt.Unit)
+            itemSMMD = New UIMenuItem(SouthMoMiltonDr._Name & SouthMoMiltonDr.Unit)
+            itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325._Name & SouthRockfordDrive0325.Unit)
+            itemSA = New UIMenuItem(SpanishAve._Name & SpanishAve.Unit)
+            itemSR = New UIMenuItem(SustanciaRd._Name & SustanciaRd.Unit)
+            itemTR = New UIMenuItem(TheRoyale._Name & TheRoyale.Unit)
+            itemGA = New UIMenuItem(GrapeseedAve._Name & GrapeseedAve.Unit)
+            itemPB = New UIMenuItem(PaletoBlvd._Name & PaletoBlvd.Unit)
+            itemSRD0112 = New UIMenuItem(SouthRockfordDr0112._Name & SouthRockfordDr0112.Unit)
+            itemZA = New UIMenuItem(ZancudoAve._Name & ZancudoAve.Unit)
 
             AddHandler Tick, AddressOf OnTick
             AddHandler KeyDown, AddressOf OnKeyDown
@@ -181,7 +247,6 @@ Public Class Mechanic
             CreateVehMenuApartments(TTMenu, itemTT, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
             CreateVehMenuApartments(TTHLMenu, itemTTHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
             CreateVehMenuApartments(WPMenu, itemWP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\")
-            CreateVehMenuVespucciBlvd()
             CreateVehMenuApartments(NC2044Menu, itemNC2044, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\")
             CreateVehMenuApartments(HA2862Menu, itemHA2862, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\")
             CreateVehMenuApartments(HA2868Menu, itemHA2868, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcrest_ave\")
@@ -194,6 +259,28 @@ Public Class Mechanic
             CreateVehMenuApartments(ETP1Menu, itemETP1, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
             CreateVehMenuApartments(ETP2Menu, itemETP2, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
             CreateVehMenuApartments(ETP3Menu, itemETP3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+            CreateVehMenuApartments(BCAMenu, itemBCA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\bay_city_ave\")
+            CreateVehMenuApartments(BDPMenu, itemBDP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\blvd_del_perro\")
+            CreateVehMenuApartments(CAMenu, itemCA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\cougar_ave\")
+            CreateVehMenuApartments(HAMenu, itemHA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\hangman_ave\")
+            CreateVehMenuApartments(LLB0604Menu, itemLLB0604, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0604_las_lagunas_blvd\")
+            CreateVehMenuApartments(LLB2143Menu, itemLLB2143, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2143_las_lagunas_blvd\")
+            CreateVehMenuApartments(MR0184Menu, itemMR0184, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0184_milton_road\")
+            CreateVehMenuApartments(PowerMenu, itemPower, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\power_st\")
+            CreateVehMenuApartments(PD4401Menu, itemPD4401, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4401_procopio_dr\")
+            CreateVehMenuApartments(PD4584Menu, itemPD4584, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4584_procopio_dr\")
+            CreateVehMenuApartments(ProsperityMenu, itemProsperity, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\prosperity_st\")
+            CreateVehMenuApartments(SVSMenu, itemSVS, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\san_vitas_st\")
+            CreateVehMenuApartments(SMMDMenu, itemSMMD, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\south_mo_milton_dr\")
+            CreateVehMenuApartments(SRD0325Menu, itemSRD0325, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0325_south_rockford_dr\")
+            CreateVehMenuApartments(SAMenu, itemSA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\spanish_ave\")
+            CreateVehMenuApartments(SRMenu, itemSR, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\sustancia_rd\")
+            CreateVehMenuApartments(TRMenu, itemTR, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\the_royale\")
+            CreateVehMenuApartments6(VBMenu, itemVB, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
+            CreateVehMenuApartments6(GAMenu, itemGA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\grapeseed_ave\")
+            CreateVehMenuApartments6(PBMenu, itemPB, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\paleto_blvd\")
+            CreateVehMenuApartments6(SRD0112Menu, itemSRD0112, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0112_south_rockford_dr\")
+            CreateVehMenuApartments6(ZAMenu, itemZA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\zancudo_ave\")
             CreateConfirmPegasusMenu()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -233,7 +320,7 @@ Public Class Mechanic
                 If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
                 Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
                 With item
-                    .Car = File
+                    .SubString1 = File
                 End With
                 MichaelPegasusMenu.AddItem(item)
             Next
@@ -261,7 +348,7 @@ Public Class Mechanic
                 If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
                 Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
                 With item
-                    .Car = File
+                    .SubString1 = File
                 End With
                 FranklinPegasusMenu.AddItem(item)
             Next
@@ -289,7 +376,7 @@ Public Class Mechanic
                 If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
                 Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
                 With item
-                    .Car = File
+                    .SubString1 = File
                 End With
                 TrevorPegasusMenu.AddItem(item)
             Next
@@ -317,7 +404,7 @@ Public Class Mechanic
                 If VehicleNick = "" Then VehDispName = VehicleName Else VehDispName = VehicleNick
                 Dim item As New UIMenuItem(VehDispName & " (" & PlateNumber & ")", ChooseVehDesc)
                 With item
-                    .Car = File
+                    .SubString1 = File
                 End With
                 Player3PegasusMenu.AddItem(item)
             Next
@@ -380,6 +467,27 @@ Public Class Mechanic
             Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
             Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
             Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
+            Dim BayCity As Integer = IO.Directory.GetFiles(BayCityAveDir, "*.cfg").Count
+            Dim BlvdDP As Integer = IO.Directory.GetFiles(BlvdDelPerroDir, "*.cfg").Count
+            Dim Cougar As Integer = IO.Directory.GetFiles(CougarAveDir, "*.cfg").Count
+            Dim Hangman As Integer = IO.Directory.GetFiles(HangmanAveDir, "*.cfg").Count
+            Dim Lagunas0604 As Integer = IO.Directory.GetFiles(LasLagunas0604Dir, "*.cfg").Count
+            Dim Lagunas2143 As Integer = IO.Directory.GetFiles(LasLagunas2143Dir, "*.cfg").Count
+            Dim MiltonR0184 As Integer = IO.Directory.GetFiles(MiltonRd0184Dir, "*.cfg").Count
+            Dim PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
+            Dim Procopio4401 As Integer = IO.Directory.GetFiles(ProcopioDr4401Dir, "*.cfg").Count
+            Dim Procopio4584 As Integer = IO.Directory.GetFiles(ProcopioDr4584Dir, "*.cfg").Count
+            Dim Prosperity As Integer = IO.Directory.GetFiles(ProsperityStDir, "*.cfg").Count
+            Dim SanVitas As Integer = IO.Directory.GetFiles(SanVitasStDir, "*.cfg").Count
+            Dim SouthMo As Integer = IO.Directory.GetFiles(SouthMoMiltonDir, "*.cfg").Count
+            Dim Rockford0325 As Integer = IO.Directory.GetFiles(SouthRockford0325Dir, "*.cfg").Count
+            Dim Spanish As Integer = IO.Directory.GetFiles(SpanishAveDir, "*.cfg").Count
+            Dim Sustancia As Integer = IO.Directory.GetFiles(SustanciaRdDir, "*.cfg").Count
+            Dim Royale As Integer = IO.Directory.GetFiles(TheRoyaleDir, "*.cfg").Count
+            Dim Grapeseed As Integer = IO.Directory.GetFiles(GrapeseedAveDir, "*.cfg").Count
+            Dim PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
+            Dim Rockford0112 As Integer = IO.Directory.GetFiles(SouthRockford0012Dir, "*.cfg").Count
+            Dim Zancudo As Integer = IO.Directory.GetFiles(ZancudoAveDir, "*.cfg").Count
 
             MechanicMenu = New UIMenu("", ChooseApt, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
@@ -413,6 +521,28 @@ Public Class Mechanic
             If ETP1 = playerName AndAlso Not EclipseP1 = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP1)
             If ETP2 = playerName AndAlso Not EclipseP2 = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP2)
             If ETP3 = playerName AndAlso Not EclipseP3 = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP3)
+            If BCA = playerName AndAlso Not BayCity = 0 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemBCA)
+            If BDP = playerName AndAlso Not BlvdDP = 0 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then MechanicMenu.AddItem(itemBDP)
+            If CA = playerName AndAlso Not Cougar = 0 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemCA)
+            If HA = playerName AndAlso Not Hangman = 0 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemHA)
+            If LLB0604 = playerName AndAlso Not Lagunas0604 = 0 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemLLB0604)
+            If LLB2143 = playerName AndAlso Not Lagunas2143 = 0 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemLLB2143)
+            If MR0184 = playerName AndAlso Not MiltonR0184 = 0 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMR0184)
+            If POWER = playerName AndAlso Not PowerSt = 0 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPower)
+            If PD4401 = playerName AndAlso Not Procopio4401 = 0 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPD4401)
+            If PD4584 = playerName AndAlso Not Procopio4584 = 0 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPD4584)
+            If PPS = playerName AndAlso Not Prosperity = 0 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then MechanicMenu.AddItem(itemProsperity)
+            If SVS = playerName AndAlso Not SanVitas = 0 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSVS)
+            If SMMD = playerName AndAlso Not SouthMo = 0 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSMMD)
+            If SRD0325 = playerName AndAlso Not Rockford0325 = 0 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSRD0325)
+            If SA = playerName AndAlso Not Spanish = 0 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSA)
+            If SR = playerName AndAlso Not Sustancia = 0 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSR)
+            If TR = playerName AndAlso Not Royale = 0 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then MechanicMenu.AddItem(itemTR)
+            If GA = playerName AndAlso Not Grapeseed = 0 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemGA)
+            If PB = playerName AndAlso Not PaletoBlvd = 0 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPB)
+            If SRD0112 = playerName AndAlso Not Rockford0112 = 0 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSRD0112)
+            If ZA = playerName AndAlso Not Zancudo = 0 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemZA)
+
             MechanicMenu.RefreshIndex()
             AddHandler MechanicMenu.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
@@ -449,6 +579,27 @@ Public Class Mechanic
             Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
             Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
             Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
+            Dim BayCity As Integer = IO.Directory.GetFiles(BayCityAveDir, "*.cfg").Count
+            Dim BlvdDP As Integer = IO.Directory.GetFiles(BlvdDelPerroDir, "*.cfg").Count
+            Dim Cougar As Integer = IO.Directory.GetFiles(CougarAveDir, "*.cfg").Count
+            Dim Hangman As Integer = IO.Directory.GetFiles(HangmanAveDir, "*.cfg").Count
+            Dim Lagunas0604 As Integer = IO.Directory.GetFiles(LasLagunas0604Dir, "*.cfg").Count
+            Dim Lagunas2143 As Integer = IO.Directory.GetFiles(LasLagunas2143Dir, "*.cfg").Count
+            Dim MiltonR0184 As Integer = IO.Directory.GetFiles(MiltonRd0184Dir, "*.cfg").Count
+            Dim PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
+            Dim Procopio4401 As Integer = IO.Directory.GetFiles(ProcopioDr4401Dir, "*.cfg").Count
+            Dim Procopio4584 As Integer = IO.Directory.GetFiles(ProcopioDr4584Dir, "*.cfg").Count
+            Dim Prosperity As Integer = IO.Directory.GetFiles(ProsperityStDir, "*.cfg").Count
+            Dim SanVitas As Integer = IO.Directory.GetFiles(SanVitasStDir, "*.cfg").Count
+            Dim SouthMo As Integer = IO.Directory.GetFiles(SouthMoMiltonDir, "*.cfg").Count
+            Dim Rockford0325 As Integer = IO.Directory.GetFiles(SouthRockford0325Dir, "*.cfg").Count
+            Dim Spanish As Integer = IO.Directory.GetFiles(SpanishAveDir, "*.cfg").Count
+            Dim Sustancia As Integer = IO.Directory.GetFiles(SustanciaRdDir, "*.cfg").Count
+            Dim Royale As Integer = IO.Directory.GetFiles(TheRoyaleDir, "*.cfg").Count
+            Dim Grapeseed As Integer = IO.Directory.GetFiles(GrapeseedAveDir, "*.cfg").Count
+            Dim PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
+            Dim Rockford0112 As Integer = IO.Directory.GetFiles(SouthRockford0012Dir, "*.cfg").Count
+            Dim Zancudo As Integer = IO.Directory.GetFiles(ZancudoAveDir, "*.cfg").Count
 
             GrgTransMenu = New UIMenu("", ChooseApt, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
@@ -482,6 +633,28 @@ Public Class Mechanic
             If ETP1 = playerName AndAlso Not EclipseP1 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP1)
             If ETP2 = playerName AndAlso Not EclipseP2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP2)
             If ETP3 = playerName AndAlso Not EclipseP3 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP3)
+            If BCA = playerName AndAlso Not BayCity = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemBCA)
+            If BDP = playerName AndAlso Not BlvdDP = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemBDP)
+            If CA = playerName AndAlso Not Cougar = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemCA)
+            If HA = playerName AndAlso Not Hangman = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA)
+            If LLB0604 = playerName AndAlso Not Lagunas0604 = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemLLB0604)
+            If LLB2143 = playerName AndAlso Not Lagunas2143 = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemLLB2143)
+            If MR0184 = playerName AndAlso Not MiltonR0184 = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMR0184)
+            If POWER = playerName AndAlso Not PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPower)
+            If PD4401 = playerName AndAlso Not Procopio4401 = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPD4401)
+            If PD4584 = playerName AndAlso Not Procopio4584 = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPD4584)
+            If PPS = playerName AndAlso Not Prosperity = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemProsperity)
+            If SVS = playerName AndAlso Not SanVitas = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSVS)
+            If SMMD = playerName AndAlso Not SouthMo = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSMMD)
+            If SRD0325 = playerName AndAlso Not Rockford0325 = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSRD0325)
+            If SA = playerName AndAlso Not Spanish = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSA)
+            If SR = playerName AndAlso Not Sustancia = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSR)
+            If TR = playerName AndAlso Not Royale = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTR)
+            If GA = playerName AndAlso Not Grapeseed = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemGA)
+            If PB = playerName AndAlso Not PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPB)
+            If SRD0112 = playerName AndAlso Not Rockford0112 = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSRD0112)
+            If ZA = playerName AndAlso Not Zancudo = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemZA)
+
             GrgTransMenu.RefreshIndex()
             AddHandler GrgTransMenu.OnItemSelect, AddressOf TransVehItemSelectHandler
             AddHandler GrgTransMenu.OnMenuClose, AddressOf MenuCloseHandler
@@ -508,7 +681,7 @@ Public Class Mechanic
                 item(0) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(0))
                 With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
+                    .SubString1 = PathDir & "vehicle_0.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -524,7 +697,7 @@ Public Class Mechanic
                 item(1) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(1))
                 With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
+                    .SubString1 = PathDir & "vehicle_1.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -540,7 +713,7 @@ Public Class Mechanic
                 item(2) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(2))
                 With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
+                    .SubString1 = PathDir & "vehicle_2.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -556,7 +729,7 @@ Public Class Mechanic
                 item(3) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(3))
                 With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
+                    .SubString1 = PathDir & "vehicle_3.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -572,7 +745,7 @@ Public Class Mechanic
                 item(4) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(4))
                 With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
+                    .SubString1 = PathDir & "vehicle_4.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -588,7 +761,7 @@ Public Class Mechanic
                 item(5) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(5))
                 With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
+                    .SubString1 = PathDir & "vehicle_5.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -604,7 +777,7 @@ Public Class Mechanic
                 item(6) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_6.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(6))
                 With item(6)
-                    .Car = PathDir & "vehicle_6.cfg"
+                    .SubString1 = PathDir & "vehicle_6.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -620,7 +793,7 @@ Public Class Mechanic
                 item(7) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_7.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(7))
                 With item(7)
-                    .Car = PathDir & "vehicle_7.cfg"
+                    .SubString1 = PathDir & "vehicle_7.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -636,7 +809,7 @@ Public Class Mechanic
                 item(8) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_8.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(8))
                 With item(8)
-                    .Car = PathDir & "vehicle_8.cfg"
+                    .SubString1 = PathDir & "vehicle_8.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -652,7 +825,7 @@ Public Class Mechanic
                 item(9) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_9.cfg") & ")", ChooseVehDesc)
                 MenuCategory.AddItem(item(9))
                 With item(9)
-                    .Car = PathDir & "vehicle_9.cfg"
+                    .SubString1 = PathDir & "vehicle_9.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -662,7 +835,7 @@ Public Class Mechanic
             Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
             MenuCategory.AddItem(ReturnVehItem)
             With ReturnVehItem
-                .Car = PathDir
+                .SubString1 = PathDir
             End With
             MenuCategory.RefreshIndex()
             MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
@@ -673,15 +846,14 @@ Public Class Mechanic
         End Try
     End Sub
 
-    Public Shared Sub CreateVehMenuVespucciBlvd()
+    Public Shared Sub CreateVehMenuApartments6(MenuCategory As UIMenu, MenuItem As UIMenuItem, PathDir As String)
         Try
-            Dim PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
-            VBMenu = New UIMenu("", ChooseVeh, New Point(0, -107))
+            MenuCategory = New UIMenu("", ChooseVeh, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            VBMenu.SetBannerType(Rectangle)
-            _menuPool.Add(VBMenu)
-            VBMenu.MenuItems.Clear()
+            MenuCategory.SetBannerType(Rectangle)
+            _menuPool.Add(MenuCategory)
+            MenuCategory.MenuItems.Clear()
             Dim item(10) As UIMenuItem
             If IO.File.Exists(PathDir & "vehicle_0.cfg") Then
                 Dim Active As String = ReadCfgValue("Active", PathDir & "vehicle_0.cfg")
@@ -690,9 +862,9 @@ Public Class Mechanic
                 Dim VehDispName As String
                 If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
                 item(0) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_0.cfg") & ")", ChooseVehDesc)
-                VBMenu.AddItem(item(0))
+                MenuCategory.AddItem(item(0))
                 With item(0)
-                    .Car = PathDir & "vehicle_0.cfg"
+                    .SubString1 = PathDir & "vehicle_0.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -706,9 +878,9 @@ Public Class Mechanic
                 Dim VehDispName As String
                 If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
                 item(1) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_1.cfg") & ")", ChooseVehDesc)
-                VBMenu.AddItem(item(1))
+                MenuCategory.AddItem(item(1))
                 With item(1)
-                    .Car = PathDir & "vehicle_1.cfg"
+                    .SubString1 = PathDir & "vehicle_1.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -722,9 +894,9 @@ Public Class Mechanic
                 Dim VehDispName As String
                 If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
                 item(2) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_2.cfg") & ")", ChooseVehDesc)
-                VBMenu.AddItem(item(2))
+                MenuCategory.AddItem(item(2))
                 With item(2)
-                    .Car = PathDir & "vehicle_2.cfg"
+                    .SubString1 = PathDir & "vehicle_2.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -738,9 +910,9 @@ Public Class Mechanic
                 Dim VehDispName As String
                 If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
                 item(3) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_3.cfg") & ")", ChooseVehDesc)
-                VBMenu.AddItem(item(3))
+                MenuCategory.AddItem(item(3))
                 With item(3)
-                    .Car = PathDir & "vehicle_3.cfg"
+                    .SubString1 = PathDir & "vehicle_3.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -754,9 +926,9 @@ Public Class Mechanic
                 Dim VehDispName As String
                 If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
                 item(4) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_4.cfg") & ")", ChooseVehDesc)
-                VBMenu.AddItem(item(4))
+                MenuCategory.AddItem(item(4))
                 With item(4)
-                    .Car = PathDir & "vehicle_4.cfg"
+                    .SubString1 = PathDir & "vehicle_4.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -770,9 +942,9 @@ Public Class Mechanic
                 Dim VehDispName As String
                 If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
                 item(5) = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & "vehicle_5.cfg") & ")", ChooseVehDesc)
-                VBMenu.AddItem(item(5))
+                MenuCategory.AddItem(item(5))
                 With item(5)
-                    .Car = PathDir & "vehicle_5.cfg"
+                    .SubString1 = PathDir & "vehicle_5.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -780,14 +952,14 @@ Public Class Mechanic
                 End With
             End If
             Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            VBMenu.AddItem(ReturnVehItem)
+            MenuCategory.AddItem(ReturnVehItem)
             With ReturnVehItem
-                .Car = PathDir
+                .SubString1 = PathDir
             End With
-            VBMenu.RefreshIndex()
-            MechanicMenu.BindMenuToItem(VBMenu, itemVB)
-            AddHandler VBMenu.OnItemSelect, AddressOf CategoryItemSelectHandler
-            'AddHandler VBMenu.OnMenuClose, AddressOf CategoryMenuCloseHandler
+            MenuCategory.RefreshIndex()
+            MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
+            AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
+            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -808,7 +980,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(0) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(0))
                     With GrgMoveMenuItem(0)
-                        .Car = "vehicle_0.cfg"
+                        .SubString1 = "vehicle_0.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -818,7 +990,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(0) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(0))
                     With GrgMoveMenuItem(0)
-                        .Car = "vehicle_0.cfg"
+                        .SubString1 = "vehicle_0.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_1.cfg") Then
@@ -826,7 +998,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(1) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(1))
                     With GrgMoveMenuItem(1)
-                        .Car = "vehicle_1.cfg"
+                        .SubString1 = "vehicle_1.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -836,7 +1008,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(1) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(1))
                     With GrgMoveMenuItem(1)
-                        .Car = "vehicle_1.cfg"
+                        .SubString1 = "vehicle_1.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_2.cfg") Then
@@ -844,7 +1016,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(2) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(2))
                     With GrgMoveMenuItem(2)
-                        .Car = "vehicle_2.cfg"
+                        .SubString1 = "vehicle_2.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -854,7 +1026,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(2) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(2))
                     With GrgMoveMenuItem(2)
-                        .Car = "vehicle_2.cfg"
+                        .SubString1 = "vehicle_2.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_3.cfg") Then
@@ -862,7 +1034,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(3) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(3))
                     With GrgMoveMenuItem(3)
-                        .Car = "vehicle_3.cfg"
+                        .SubString1 = "vehicle_3.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -872,7 +1044,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(3) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(3))
                     With GrgMoveMenuItem(3)
-                        .Car = "vehicle_3.cfg"
+                        .SubString1 = "vehicle_3.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_4.cfg") Then
@@ -880,7 +1052,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(4) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(4))
                     With GrgMoveMenuItem(4)
-                        .Car = "vehicle_4.cfg"
+                        .SubString1 = "vehicle_4.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -890,7 +1062,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(4) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(4))
                     With GrgMoveMenuItem(4)
-                        .Car = "vehicle_4.cfg"
+                        .SubString1 = "vehicle_4.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_5.cfg") Then
@@ -898,7 +1070,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(5) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(5))
                     With GrgMoveMenuItem(5)
-                        .Car = "vehicle_5.cfg"
+                        .SubString1 = "vehicle_5.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -908,7 +1080,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(5) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(5))
                     With GrgMoveMenuItem(5)
-                        .Car = "vehicle_5.cfg"
+                        .SubString1 = "vehicle_5.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_6.cfg") Then
@@ -916,7 +1088,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(6) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_6.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_6.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(6))
                     With GrgMoveMenuItem(6)
-                        .Car = "vehicle_6.cfg"
+                        .SubString1 = "vehicle_6.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -926,7 +1098,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(6) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(6))
                     With GrgMoveMenuItem(6)
-                        .Car = "vehicle_6.cfg"
+                        .SubString1 = "vehicle_6.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_7.cfg") Then
@@ -934,7 +1106,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(7) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_7.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_7.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(7))
                     With GrgMoveMenuItem(7)
-                        .Car = "vehicle_7.cfg"
+                        .SubString1 = "vehicle_7.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -944,7 +1116,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(7) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(7))
                     With GrgMoveMenuItem(7)
-                        .Car = "vehicle_7.cfg"
+                        .SubString1 = "vehicle_7.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_8.cfg") Then
@@ -952,7 +1124,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(8) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_8.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_8.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(8))
                     With GrgMoveMenuItem(8)
-                        .Car = "vehicle_8.cfg"
+                        .SubString1 = "vehicle_8.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -962,7 +1134,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(8) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(8))
                     With GrgMoveMenuItem(8)
-                        .Car = "vehicle_8.cfg"
+                        .SubString1 = "vehicle_8.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_9.cfg") Then
@@ -970,7 +1142,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(9) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_9.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_9.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(9))
                     With GrgMoveMenuItem(9)
-                        .Car = "vehicle_9.cfg"
+                        .SubString1 = "vehicle_9.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -980,7 +1152,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(9) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(9))
                     With GrgMoveMenuItem(9)
-                        .Car = "vehicle_9.cfg"
+                        .SubString1 = "vehicle_9.cfg"
                     End With
                 End If
             ElseIf SelectedGarage = "Six"
@@ -989,7 +1161,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(0) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_0.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_0.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(0))
                     With GrgMoveMenuItem(0)
-                        .Car = "vehicle_0.cfg"
+                        .SubString1 = "vehicle_0.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -999,7 +1171,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(0) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(0))
                     With GrgMoveMenuItem(0)
-                        .Car = "vehicle_0.cfg"
+                        .SubString1 = "vehicle_0.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_1.cfg") Then
@@ -1007,7 +1179,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(1) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_1.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_1.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(1))
                     With GrgMoveMenuItem(1)
-                        .Car = "vehicle_1.cfg"
+                        .SubString1 = "vehicle_1.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -1017,7 +1189,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(1) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(1))
                     With GrgMoveMenuItem(1)
-                        .Car = "vehicle_1.cfg"
+                        .SubString1 = "vehicle_1.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_2.cfg") Then
@@ -1025,7 +1197,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(2) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_2.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_2.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(2))
                     With GrgMoveMenuItem(2)
-                        .Car = "vehicle_2.cfg"
+                        .SubString1 = "vehicle_2.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -1035,7 +1207,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(2) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(2))
                     With GrgMoveMenuItem(2)
-                        .Car = "vehicle_2.cfg"
+                        .SubString1 = "vehicle_2.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_3.cfg") Then
@@ -1043,7 +1215,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(3) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_3.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_3.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(3))
                     With GrgMoveMenuItem(3)
-                        .Car = "vehicle_3.cfg"
+                        .SubString1 = "vehicle_3.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -1053,7 +1225,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(3) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(3))
                     With GrgMoveMenuItem(3)
-                        .Car = "vehicle_3.cfg"
+                        .SubString1 = "vehicle_3.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_4.cfg") Then
@@ -1061,7 +1233,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(4) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_4.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_4.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(4))
                     With GrgMoveMenuItem(4)
-                        .Car = "vehicle_4.cfg"
+                        .SubString1 = "vehicle_4.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -1071,7 +1243,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(4) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(4))
                     With GrgMoveMenuItem(4)
-                        .Car = "vehicle_4.cfg"
+                        .SubString1 = "vehicle_4.cfg"
                     End With
                 End If
                 If IO.File.Exists(file & "vehicle_5.cfg") Then
@@ -1079,7 +1251,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(5) = New UIMenuItem(ReadCfgValue("VehicleName", file & "vehicle_5.cfg") & " (" & ReadCfgValue("PlateNumber", file & "vehicle_5.cfg") & ")", GrgSelectVeh)
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(5))
                     With GrgMoveMenuItem(5)
-                        .Car = "vehicle_5.cfg"
+                        .SubString1 = "vehicle_5.cfg"
                         If Active = "True" Then
                             .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             .Enabled = False
@@ -1089,7 +1261,7 @@ Public Class Mechanic
                     GrgMoveMenuItem(5) = New UIMenuItem("Empty")
                     GrgMoveMenu.AddItem(GrgMoveMenuItem(5))
                     With GrgMoveMenuItem(5)
-                        .Car = "vehicle_5.cfg"
+                        .SubString1 = "vehicle_5.cfg"
                     End With
                 End If
             End If
@@ -1161,7 +1333,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
-                    .Car = "vehicle_0.cfg"
+                    .SubString1 = "vehicle_0.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1171,7 +1343,7 @@ Public Class Mechanic
                 GarageMenuItem(0) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
-                    .Car = "vehicle_0.cfg"
+                    .SubString1 = "vehicle_0.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1185,7 +1357,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
-                    .Car = "vehicle_1.cfg"
+                    .SubString1 = "vehicle_1.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1195,7 +1367,7 @@ Public Class Mechanic
                 GarageMenuItem(1) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
-                    .Car = "vehicle_1.cfg"
+                    .SubString1 = "vehicle_1.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1209,7 +1381,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
-                    .Car = "vehicle_2.cfg"
+                    .SubString1 = "vehicle_2.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1219,7 +1391,7 @@ Public Class Mechanic
                 GarageMenuItem(2) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
-                    .Car = "vehicle_2.cfg"
+                    .SubString1 = "vehicle_2.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1233,7 +1405,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
-                    .Car = "vehicle_3.cfg"
+                    .SubString1 = "vehicle_3.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1243,7 +1415,7 @@ Public Class Mechanic
                 GarageMenuItem(3) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
-                    .Car = "vehicle_3.cfg"
+                    .SubString1 = "vehicle_3.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1257,7 +1429,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
-                    .Car = "vehicle_4.cfg"
+                    .SubString1 = "vehicle_4.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1267,7 +1439,7 @@ Public Class Mechanic
                 GarageMenuItem(4) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
-                    .Car = "vehicle_4.cfg"
+                    .SubString1 = "vehicle_4.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1281,7 +1453,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
-                    .Car = "vehicle_5.cfg"
+                    .SubString1 = "vehicle_5.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1291,7 +1463,7 @@ Public Class Mechanic
                 GarageMenuItem(5) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
-                    .Car = "vehicle_5.cfg"
+                    .SubString1 = "vehicle_5.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1305,7 +1477,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(6))
                 With GarageMenuItem(6)
-                    .Car = "vehicle_6.cfg"
+                    .SubString1 = "vehicle_6.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1315,7 +1487,7 @@ Public Class Mechanic
                 GarageMenuItem(6) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(6))
                 With GarageMenuItem(6)
-                    .Car = "vehicle_6.cfg"
+                    .SubString1 = "vehicle_6.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1329,7 +1501,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(7))
                 With GarageMenuItem(7)
-                    .Car = "vehicle_7.cfg"
+                    .SubString1 = "vehicle_7.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1339,7 +1511,7 @@ Public Class Mechanic
                 GarageMenuItem(7) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(7))
                 With GarageMenuItem(7)
-                    .Car = "vehicle_7.cfg"
+                    .SubString1 = "vehicle_7.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1353,7 +1525,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(8))
                 With GarageMenuItem(8)
-                    .Car = "vehicle_8.cfg"
+                    .SubString1 = "vehicle_8.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1363,7 +1535,7 @@ Public Class Mechanic
                 GarageMenuItem(8) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(8))
                 With GarageMenuItem(8)
-                    .Car = "vehicle_8.cfg"
+                    .SubString1 = "vehicle_8.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1377,7 +1549,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(9))
                 With GarageMenuItem(9)
-                    .Car = "vehicle_9.cfg"
+                    .SubString1 = "vehicle_9.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1387,7 +1559,7 @@ Public Class Mechanic
                 GarageMenuItem(9) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(9))
                 With GarageMenuItem(9)
-                    .Car = "vehicle_9.cfg"
+                    .SubString1 = "vehicle_9.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1417,7 +1589,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
-                    .Car = "vehicle_0.cfg"
+                    .SubString1 = "vehicle_0.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1427,7 +1599,7 @@ Public Class Mechanic
                 GarageMenuItem(0) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(0))
                 With GarageMenuItem(0)
-                    .Car = "vehicle_0.cfg"
+                    .SubString1 = "vehicle_0.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1441,7 +1613,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
-                    .Car = "vehicle_1.cfg"
+                    .SubString1 = "vehicle_1.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1451,7 +1623,7 @@ Public Class Mechanic
                 GarageMenuItem(1) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(1))
                 With GarageMenuItem(1)
-                    .Car = "vehicle_1.cfg"
+                    .SubString1 = "vehicle_1.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1465,7 +1637,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
-                    .Car = "vehicle_2.cfg"
+                    .SubString1 = "vehicle_2.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1475,7 +1647,7 @@ Public Class Mechanic
                 GarageMenuItem(2) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(2))
                 With GarageMenuItem(2)
-                    .Car = "vehicle_2.cfg"
+                    .SubString1 = "vehicle_2.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1489,7 +1661,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
-                    .Car = "vehicle_3.cfg"
+                    .SubString1 = "vehicle_3.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1499,7 +1671,7 @@ Public Class Mechanic
                 GarageMenuItem(3) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(3))
                 With GarageMenuItem(3)
-                    .Car = "vehicle_3.cfg"
+                    .SubString1 = "vehicle_3.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1513,7 +1685,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
-                    .Car = "vehicle_4.cfg"
+                    .SubString1 = "vehicle_4.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1523,7 +1695,7 @@ Public Class Mechanic
                 GarageMenuItem(4) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(4))
                 With GarageMenuItem(4)
-                    .Car = "vehicle_4.cfg"
+                    .SubString1 = "vehicle_4.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1537,7 +1709,7 @@ Public Class Mechanic
                 End If
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
-                    .Car = "vehicle_5.cfg"
+                    .SubString1 = "vehicle_5.cfg"
                     If Active = "True" Then
                         .SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         .Enabled = False
@@ -1547,7 +1719,7 @@ Public Class Mechanic
                 GarageMenuItem(5) = New UIMenuItem("Empty")
                 GarageMenu.AddItem(GarageMenuItem(5))
                 With GarageMenuItem(5)
-                    .Car = "vehicle_5.cfg"
+                    .SubString1 = "vehicle_5.cfg"
                     .Enabled = False
                 End With
             End If
@@ -1562,20 +1734,20 @@ Public Class Mechanic
     Public Shared Sub CategoryItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
             If selectedItem.Text = ReturnVeh Then
-                Mechanic2.ReturnVeh(selectedItem.Car)
+                Mechanic2.ReturnVeh(selectedItem.SubString1)
             ElseIf Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.Car AndAlso Not selectedItem.Text = ReturnVeh Then
-                Dim VehicleModel As String = ReadCfgValue("VehicleModel", selectedItem.Car)
-                Dim Active As String = ReadCfgValue("Active", selectedItem.Car)
-                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", selectedItem.Car)
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", selectedItem.SubString1)
+                Dim Active As String = ReadCfgValue("Active", selectedItem.SubString1)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", selectedItem.SubString1)
 
                 If playerName = "Michael" AndAlso Active = "False" Then
-                    Mechanic2.Michael_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
+                    Mechanic2.Michael_SendVehicle(selectedItem.SubString1, VehicleModel, VehicleHash, selectedItem, sender)
                 ElseIf playerName = "Franklin" AndAlso Active = "False" Then
-                    Mechanic2.Franklin_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
+                    Mechanic2.Franklin_SendVehicle(selectedItem.SubString1, VehicleModel, VehicleHash, selectedItem, sender)
                 ElseIf playerName = “Trevor" AndAlso Active = "False" Then
-                    Mechanic2.Trevor_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
+                    Mechanic2.Trevor_SendVehicle(selectedItem.SubString1, VehicleModel, VehicleHash, selectedItem, sender)
                 ElseIf playerName = "Player3" AndAlso Active = "False" Then
-                    Mechanic2.Player3_SendVehicle(selectedItem.Car, VehicleModel, VehicleHash, selectedItem, sender)
+                    Mechanic2.Player3_SendVehicle(selectedItem.SubString1, VehicleModel, VehicleHash, selectedItem, sender)
                 End If
                 My.Computer.Audio.Play(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav", AudioPlayMode.Background)
             End If
@@ -1665,6 +1837,48 @@ Public Class Mechanic
                     TargetPathDir = EclipseP2PathDir
                 Case itemETP3.Text
                     TargetPathDir = EclipseP3PathDir
+                Case itemBCA.Text
+                    TargetPathDir = BayCityAveDir
+                Case itemBDP.Text
+                    TargetPathDir = BlvdDelPerroDir
+                Case itemCA.Text
+                    TargetPathDir = CougarAveDir
+                Case itemHA.Text
+                    TargetPathDir = HangmanAveDir
+                Case itemLLB0604.Text
+                    TargetPathDir = LasLagunas0604Dir
+                Case itemLLB2143.Text
+                    TargetPathDir = LasLagunas2143Dir
+                Case itemMR0184.Text
+                    TargetPathDir = MiltonRd0184Dir
+                Case itemPower.Text
+                    TargetPathDir = PowerStDir
+                Case itemPD4401.Text
+                    TargetPathDir = ProcopioDr4401Dir
+                Case itemPD4584.Text
+                    TargetPathDir = ProcopioDr4584Dir
+                Case itemProsperity.Text
+                    TargetPathDir = ProsperityStDir
+                Case itemSVS.Text
+                    TargetPathDir = SanVitasStDir
+                Case itemSMMD.Text
+                    TargetPathDir = SouthMoMiltonDir
+                Case itemSRD0325.Text
+                    TargetPathDir = SouthRockford0325Dir
+                Case itemSA.Text
+                    TargetPathDir = SpanishAveDir
+                Case itemSR.Text
+                    TargetPathDir = SustanciaRdDir
+                Case itemTR.Text
+                    TargetPathDir = TheRoyaleDir
+                Case itemGA.Text
+                    TargetPathDir = GrapeseedAveDir
+                Case itemPB.Text
+                    TargetPathDir = PaletoBlvdDir
+                Case itemSRD0112.Text
+                    TargetPathDir = SouthRockford0012Dir
+                Case itemZA.Text
+                    TargetPathDir = ZancudoAveDir
             End Select
 
             If IO.File.Exists(TargetPathDir & "vehicle_0.cfg") = False Then
@@ -1718,7 +1932,7 @@ Public Class Mechanic
     Public Shared Sub GrgMoveItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
             MoveMenuSelectedItem = selectedItem.Text
-            MoveMenuSelectedFile = selectedItem.Car
+            MoveMenuSelectedFile = selectedItem.SubString1
             MoveMenuSelectedIndex = index
 
             If selectedItem.Text <> GarageMenuSelectedItem Then
@@ -1756,14 +1970,10 @@ Public Class Mechanic
                     MPV.CurrentBlip.Remove()
                     MPV.Delete()
                 End If
-                If VehicleModel = "" Then
-                    MPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    MPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
-                If MPV.ClassType = VehicleClass.Boats Then MPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
-                If MPV.ClassType = VehicleClass.Planes Then MPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
-                If MPV.ClassType = VehicleClass.Helicopters Then MPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                MPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                If MPV.ClassType = VehicleClass.Boats Then MPV.Position = GetPlayerZoneForBoat(playerPed)
+                If MPV.ClassType = VehicleClass.Planes Then MPV.Position = GetPlayerZoneForPlane(playerPed)
+                If MPV.ClassType = VehicleClass.Helicopters Then MPV.Position = GetPlayerZoneForHeli(playerPed)
                 MPV.PlaceOnGround()
                 MPV.AddBlip()
                 If MPV.ClassType = VehicleClass.Boats Then
@@ -1788,14 +1998,10 @@ Public Class Mechanic
                     FPV.CurrentBlip.Remove()
                     FPV.Delete()
                 End If
-                If VehicleModel = "" Then
-                    FPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    FPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
-                If FPV.ClassType = VehicleClass.Boats Then FPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
-                If FPV.ClassType = VehicleClass.Planes Then FPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
-                If FPV.ClassType = VehicleClass.Helicopters Then FPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                FPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                If FPV.ClassType = VehicleClass.Boats Then FPV.Position = GetPlayerZoneForBoat(playerPed)
+                If FPV.ClassType = VehicleClass.Planes Then FPV.Position = GetPlayerZoneForPlane(playerPed)
+                If FPV.ClassType = VehicleClass.Helicopters Then FPV.Position = GetPlayerZoneForHeli(playerPed)
                 FPV.PlaceOnGround()
                 FPV.AddBlip()
                 If FPV.ClassType = VehicleClass.Boats Then
@@ -1820,14 +2026,10 @@ Public Class Mechanic
                     TPV.CurrentBlip.Remove()
                     TPV.Delete()
                 End If
-                If VehicleModel = "" Then
-                    TPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    TPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
-                If TPV.ClassType = VehicleClass.Boats Then TPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
-                If TPV.ClassType = VehicleClass.Planes Then TPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
-                If TPV.ClassType = VehicleClass.Helicopters Then TPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                TPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                If TPV.ClassType = VehicleClass.Boats Then TPV.Position = GetPlayerZoneForBoat(playerPed)
+                If TPV.ClassType = VehicleClass.Planes Then TPV.Position = GetPlayerZoneForPlane(playerPed)
+                If TPV.ClassType = VehicleClass.Helicopters Then TPV.Position = GetPlayerZoneForHeli(playerPed)
                 TPV.PlaceOnGround()
                 TPV.AddBlip()
                 If TPV.ClassType = VehicleClass.Boats Then
@@ -1852,14 +2054,10 @@ Public Class Mechanic
                     PPV.CurrentBlip.Remove()
                     PPV.Delete()
                 End If
-                If VehicleModel = "" Then
-                    PPV = World.CreateVehicle(CInt(VehicleHash), World.GetNextPositionOnStreet(playerPed.Position))
-                Else
-                    PPV = World.CreateVehicle(VehicleModel, World.GetNextPositionOnStreet(playerPed.Position))
-                End If
-                If PPV.ClassType = VehicleClass.Boats Then PPV.Position = Resources.GetPlayerZoneForBoat(playerPed)
-                If PPV.ClassType = VehicleClass.Planes Then PPV.Position = Resources.GetPlayerZoneForPlane(playerPed)
-                If PPV.ClassType = VehicleClass.Helicopters Then PPV.Position = Resources.GetPlayerZoneForHeli(playerPed)
+                PPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                If PPV.ClassType = VehicleClass.Boats Then PPV.Position = GetPlayerZoneForBoat(playerPed)
+                If PPV.ClassType = VehicleClass.Planes Then PPV.Position = GetPlayerZoneForPlane(playerPed)
+                If PPV.ClassType = VehicleClass.Helicopters Then PPV.Position = GetPlayerZoneForHeli(playerPed)
                 PPV.PlaceOnGround()
                 PPV.AddBlip()
                 If PPV.ClassType = VehicleClass.Boats Then
@@ -1890,7 +2088,7 @@ Public Class Mechanic
     End Sub
 
     Public Shared Sub PegasusItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        PegasusSelectedVehicleFile = selectedItem.Car
+        PegasusSelectedVehicleFile = selectedItem.SubString1
         sender.Visible = False
         PegasusConfirmMenu.Visible = Not PegasusConfirmMenu.Visible
     End Sub
@@ -1899,7 +2097,7 @@ Public Class Mechanic
         Try
             If sender Is GarageMenu AndAlso Not selectedItem.Text = "Empty" Then
                 GarageMenuSelectedItem = selectedItem.Text
-                GarageMenuSelectedFile = selectedItem.Car
+                GarageMenuSelectedFile = selectedItem.SubString1
             End If
 
             If selectedItem.Text = GrgRemove Then
@@ -1912,15 +2110,10 @@ Public Class Mechanic
                 If SelectedGarage = "Ten" Then
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         Dim tempVeh As Vehicle
                         playerPed.Position = TenCarGarage.lastLocationGarageOutVector
-                        If ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile) = "" Then
-                            tempVeh = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile)), TenCarGarage.lastLocationGarageOutVector)
-                        Else
-                            tempVeh = World.CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), TenCarGarage.lastLocationGarageOutVector)
-                        End If
-                        tempVeh.Heading = TenCarGarage.lastLocationGarageOutHeading
+                        tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), TenCarGarage.lastLocationGarageOutVector, TenCarGarage.lastLocationGarageOutHeading)
                         Mechanic2.SetModKit(tempVeh, Path & GarageMenuSelectedFile)
                         tempVeh.MarkAsNoLongerNeeded()
                         playerPed.SetIntoVehicle(tempVeh, VehicleSeat.Driver)
@@ -1928,7 +2121,7 @@ Public Class Mechanic
                         World.DestroyAllCameras()
                         World.RenderingCamera = Nothing
                         sender.Visible = False
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                         TenCarGarage.ShowAllHiddenMapObject()
                         UnLoadMPDLCMap()
@@ -1936,15 +2129,10 @@ Public Class Mechanic
                 ElseIf SelectedGarage = "Six" Then
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         Dim tempVeh As Vehicle
                         playerPed.Position = SixCarGarage.lastLocationGarageOutVector
-                        If ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile) = "" Then
-                            tempVeh = World.CreateVehicle(CInt(ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile)), TenCarGarage.lastLocationGarageOutVector)
-                        Else
-                            tempVeh = World.CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), SixCarGarage.lastLocationGarageOutVector)
-                        End If
-                        tempVeh.Heading = SixCarGarage.lastLocationGarageOutHeading
+                        tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), SixCarGarage.lastLocationGarageOutVector, SixCarGarage.lastLocationGarageOutHeading)
                         Mechanic2.SetModKit(tempVeh, Path & GarageMenuSelectedFile)
                         tempVeh.MarkAsNoLongerNeeded()
                         playerPed.SetIntoVehicle(tempVeh, VehicleSeat.Driver)
@@ -1952,14 +2140,14 @@ Public Class Mechanic
                         World.DestroyAllCameras()
                         World.RenderingCamera = Nothing
                         sender.Visible = False
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                         UnLoadMPDLCMap()
                     End If
                 End If
             ElseIf selectedItem.Text = GrgSell Then
                 Dim VehModel As String = ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile)
-                Dim VehPrice As Integer = Resources.GetVehiclePrice(Path & GarageMenuSelectedFile)
+                Dim VehPrice As Integer = GetVehiclePrice(Path & GarageMenuSelectedFile)
                 If VehPrice = 0 Then
                     UI.ShowSubtitle(GrgTooHot)
                 Else
@@ -2089,7 +2277,7 @@ Public Class Mechanic
     Public Shared Sub ItemSelectHandler6CarGarage(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
             If Not selectedItem.Text = "Empty" Then
-                Select Case selectedItem.Car
+                Select Case selectedItem.SubString1
                     Case "vehicle_0.cfg"
                         SixCarGarage.veh0.Delete()
                     Case "vehicle_1.cfg"
@@ -2103,7 +2291,7 @@ Public Class Mechanic
                     Case "vehicle_5.cfg"
                         SixCarGarage.veh5.Delete()
                 End Select
-                IO.File.Delete(Path & selectedItem.Car)
+                IO.File.Delete(Path & selectedItem.SubString1)
                 selectedItem.Text = "Empty"
             End If
         Catch ex As Exception
@@ -2112,7 +2300,15 @@ Public Class Mechanic
     End Sub
 
     Public Shared Sub PegasusConfirmMenuCloseHandler(sender As UIMenu)
-        My.Computer.Audio.Play(SoundPathDir & "pegasus_for_your_future_transport_need.wav", AudioPlayMode.Background)
+        Dim r As Random = New Random
+        Dim rd As Integer = r.Next(1, 5)
+        Select Case rd
+            Case 1, 2
+                My.Computer.Audio.Play(SoundPathDir & "pegasus_for_your_future_transport_need.wav", AudioPlayMode.Background)
+            Case 3, 4
+                My.Computer.Audio.Play(SoundPathDir & "pegasus_call_again.wav", AudioPlayMode.Background)
+        End Select
+
     End Sub
 
     Public Shared Sub CategoryMenuCloseHandler(sender As UIMenu)
@@ -2158,11 +2354,32 @@ Public Class Mechanic
         NC2045 = ReadCfgValue("2045NCowner", saveFile2)
         MR2117 = ReadCfgValue("2117MRowner", saveFile2)
         HA2874 = ReadCfgValue("2874HAowner", saveFile2)
-        WD3677 = ReadCfgValue("3677WDowner", saveFile2)
+        WD3677 = ReadCfgValue("3677WMDowner", saveFile2)
         MW2113 = ReadCfgValue("2113MWTowner", saveFile2)
         ETP1 = ReadCfgValue("ETP1owner", saveFile2)
         ETP2 = ReadCfgValue("ETP2owner", saveFile2)
         ETP3 = ReadCfgValue("ETP3owner", saveFile2)
+        BCA = ReadCfgValue("BCAowner", saveFile3)
+        BDP = ReadCfgValue("BDPowner", saveFile3)
+        CA = ReadCfgValue("CAowner", saveFile3)
+        HA = ReadCfgValue("HAowner", saveFile3)
+        LLB0604 = ReadCfgValue("0604LLBowner", saveFile3)
+        LLB2143 = ReadCfgValue("2143LLBowner", saveFile3)
+        MR0184 = ReadCfgValue("0184MRowner", saveFile3)
+        POWER = ReadCfgValue("PSowner", saveFile3)
+        PD4401 = ReadCfgValue("4401PDowner", saveFile3)
+        PD4584 = ReadCfgValue("4584PDowner", saveFile3)
+        PPS = ReadCfgValue("PPSowner", saveFile3)
+        SVS = ReadCfgValue("SVSowner", saveFile3)
+        SMMD = ReadCfgValue("SMMowner", saveFile3)
+        SRD0325 = ReadCfgValue("0325SRDowner", saveFile3)
+        SA = ReadCfgValue("SAonwer", saveFile3)
+        SR = ReadCfgValue("SRowner", saveFile3)
+        TR = ReadCfgValue("TRowner", saveFile3)
+        GA = ReadCfgValue("GAowner", saveFile3)
+        PB = ReadCfgValue("PBowner", saveFile3)
+        SRD0112 = ReadCfgValue("0112SRDowner", saveFile3)
+        ZA = ReadCfgValue("ZAowner", saveFile3)
 
         itemAS3 = New UIMenuItem(_3AltaStreet._Name & _3AltaStreet.Unit)
         itemIW4 = New UIMenuItem(_4IntegrityWay._Name & _4IntegrityWay.Unit)
@@ -2190,6 +2407,27 @@ Public Class Mechanic
         itemETP1 = New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit)
         itemETP2 = New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit)
         itemETP3 = New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit)
+        itemBCA = New UIMenuItem(BayCityAve._Name & BayCityAve.Unit)
+        itemBDP = New UIMenuItem(BlvdDelPerro._Name & BlvdDelPerro.Unit)
+        itemCA = New UIMenuItem(CougarAve._Name & CougarAve.Unit)
+        itemHA = New UIMenuItem(HangmanAve._Name & HangmanAve.Unit)
+        itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604._Name & LasLagunasBlvd0604.Unit)
+        itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143._Name & LasLagunasBlvd2143.Unit)
+        itemMR0184 = New UIMenuItem(MiltonRd0184._Name & MiltonRd0184.Unit)
+        itemPower = New UIMenuItem(PowerSt._Name & PowerSt.Unit)
+        itemPD4401 = New UIMenuItem(ProcopioDr4401._Name & ProcopioDr4401.Unit)
+        itemPD4584 = New UIMenuItem(ProcopioDr4584._Name & ProcopioDr4584.Unit)
+        itemProsperity = New UIMenuItem(ProsperitySt._Name & ProsperitySt.Unit)
+        itemSVS = New UIMenuItem(SanVitasSt._Name & SanVitasSt.Unit)
+        itemSMMD = New UIMenuItem(SouthMoMiltonDr._Name & SouthMoMiltonDr.Unit)
+        itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325._Name & SouthRockfordDrive0325.Unit)
+        itemSA = New UIMenuItem(SpanishAve._Name & SpanishAve.Unit)
+        itemSR = New UIMenuItem(SustanciaRd._Name & SustanciaRd.Unit)
+        itemTR = New UIMenuItem(TheRoyale._Name & TheRoyale.Unit)
+        itemGA = New UIMenuItem(GrapeseedAve._Name & GrapeseedAve.Unit)
+        itemPB = New UIMenuItem(PaletoBlvd._Name & PaletoBlvd.Unit)
+        itemSRD0112 = New UIMenuItem(SouthRockfordDr0112._Name & SouthRockfordDr0112.Unit)
+        itemZA = New UIMenuItem(ZancudoAve._Name & ZancudoAve.Unit)
 
         CreateMechanicMenu()
         CreateVehMenuApartments(AS3Menu, itemAS3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
@@ -2205,7 +2443,6 @@ Public Class Mechanic
         CreateVehMenuApartments(TTMenu, itemTT, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
         CreateVehMenuApartments(TTHLMenu, itemTTHL, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
         CreateVehMenuApartments(WPMenu, itemWP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\")
-        CreateVehMenuVespucciBlvd()
         CreateVehMenuApartments(NC2044Menu, itemNC2044, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\")
         CreateVehMenuApartments(HA2862Menu, itemHA2862, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\")
         CreateVehMenuApartments(HA2868Menu, itemHA2868, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcrest_ave\")
@@ -2218,9 +2455,40 @@ Public Class Mechanic
         CreateVehMenuApartments(ETP1Menu, itemETP1, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\")
         CreateVehMenuApartments(ETP2Menu, itemETP2, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\")
         CreateVehMenuApartments(ETP3Menu, itemETP3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\")
+        CreateVehMenuApartments(BCAMenu, itemBCA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\bay_city_ave\")
+        CreateVehMenuApartments(BDPMenu, itemBDP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\blvd_del_perro\")
+        CreateVehMenuApartments(CAMenu, itemCA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\cougar_ave\")
+        CreateVehMenuApartments(HAMenu, itemHA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\hangman_ave\")
+        CreateVehMenuApartments(LLB0604Menu, itemLLB0604, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0604_las_lagunas_blvd\")
+        CreateVehMenuApartments(LLB2143Menu, itemLLB2143, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2143_las_lagunas_blvd\")
+        CreateVehMenuApartments(MR0184Menu, itemMR0184, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0184_milton_road\")
+        CreateVehMenuApartments(PowerMenu, itemPower, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\power_st\")
+        CreateVehMenuApartments(PD4401Menu, itemPD4401, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4401_procopio_dr\")
+        CreateVehMenuApartments(PD4584Menu, itemPD4584, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4584_procopio_dr\")
+        CreateVehMenuApartments(ProsperityMenu, itemProsperity, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\prosperity_st\")
+        CreateVehMenuApartments(SVSMenu, itemSVS, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\san_vitas_st\")
+        CreateVehMenuApartments(SMMDMenu, itemSMMD, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\south_mo_milton_dr\")
+        CreateVehMenuApartments(SRD0325Menu, itemSRD0325, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0325_south_rockford_dr\")
+        CreateVehMenuApartments(SAMenu, itemSA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\spanish_ave\")
+        CreateVehMenuApartments(SRMenu, itemSR, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\sustancia_rd\")
+        CreateVehMenuApartments(TRMenu, itemTR, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\the_royale\")
+        CreateVehMenuApartments6(VBMenu, itemVB, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\")
+        CreateVehMenuApartments6(GAMenu, itemGA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\grapeseed_ave\")
+        CreateVehMenuApartments6(PBMenu, itemPB, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\paleto_blvd\")
+        CreateVehMenuApartments6(SRD0112Menu, itemSRD0112, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0112_south_rockford_dr\")
+        CreateVehMenuApartments6(ZAMenu, itemZA, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\zancudo_ave\")
 
         MechanicMenu.Visible = Not MechanicMenu.Visible
-        My.Computer.Audio.Play(SoundPathDir & "mechanic_u_need_something_huh.wav", AudioPlayMode.Background)
+
+        Dim r As Random = New Random
+        Dim rd As Integer = r.Next(1, 5)
+        Select Case rd
+            Case 1, 2
+                My.Computer.Audio.Play(SoundPathDir & "mechanic_u_need_something_huh.wav", AudioPlayMode.Background)
+            Case 3, 4
+                My.Computer.Audio.Play(SoundPathDir & "mechanic_on_the_clock_some_wheels.wav", AudioPlayMode.Background)
+        End Select
+
     End Sub
 
     Public Shared Sub Call_Pegasus(PlaySound As Boolean)
@@ -2240,7 +2508,15 @@ Public Class Mechanic
                     Player3PegasusMenu.Visible = True
             End Select
             If PlaySound = True Then
-                My.Computer.Audio.Play(SoundPathDir & "pegasus_how_can_i_help_u.wav", AudioPlayMode.Background)
+                Dim r As Random = New Random
+                Dim rd As Integer = r.Next(1, 5)
+                Select Case rd
+                    Case 1, 2
+                        My.Computer.Audio.Play(SoundPathDir & "pegasus_how_can_i_help_u.wav", AudioPlayMode.Background)
+                    Case 3, 4
+                        My.Computer.Audio.Play(SoundPathDir & "pegasus_how_can_i_help_u.wav", AudioPlayMode.Background)
+                End Select
+
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

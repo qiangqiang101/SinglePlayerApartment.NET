@@ -51,14 +51,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AnimationV">
-      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\AnimationV.dll</HintPath>
-    </Reference>
     <Reference Include="iFruitAddon">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\iFruitAddon.dll</HintPath>
     </Reference>
-    <Reference Include="PDMCarShopGUI">
-      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\PDMCarShopGUI.dll</HintPath>
+    <Reference Include="INMNativeUI">
+      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\INMNativeUI.dll</HintPath>
     </Reference>
     <Reference Include="ScriptHookVDotNet">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\ScriptHookVDotNet.dll</HintPath>
@@ -84,23 +81,32 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Apartments\3AltaStreet.vb" />
-    <Compile Include="Apartments\4IntegrityWay.vb" />
-    <Compile Include="Apartments\DelPerroHeight.vb" />
-    <Compile Include="Apartments\HL4IntegrityWay.vb" />
-    <Compile Include="Apartments\HLDelPerro.vb" />
-    <Compile Include="Apartments\HLEclipseTower.vb" />
-    <Compile Include="Apartments\HLRichardMajestic.vb" />
-    <Compile Include="Apartments\HLTinselTower.vb" />
-    <Compile Include="Apartments\RichardMajestic.vb" />
-    <Compile Include="Apartments\DreamTower.vb" />
-    <Compile Include="Apartments\TinselTower.vb" />
-    <Compile Include="Apartments\VespucciBlvd.vb" />
-    <Compile Include="Apartments\WeazelPlaza.vb" />
+    <Compile Include="Class\VersionChecker.vb" />
+    <Compile Include="Medium End Apartment\HangmanAve.vb" />
+    <Compile Include="High End Apartments\3AltaStreet.vb" />
+    <Compile Include="High End Apartments\4IntegrityWay.vb" />
+    <Compile Include="High End Apartments\DelPerroHeight.vb" />
+    <Compile Include="High End Apartments\HL4IntegrityWay.vb" />
+    <Compile Include="High End Apartments\HLDelPerro.vb" />
+    <Compile Include="High End Apartments\HLEclipseTower.vb" />
+    <Compile Include="High End Apartments\HLRichardMajestic.vb" />
+    <Compile Include="High End Apartments\HLTinselTower.vb" />
+    <Compile Include="High End Apartments\RichardMajestic.vb" />
+    <Compile Include="Low End Apartment\GrapeseedAve.vb" />
+    <Compile Include="Low End Apartment\PaletoBlvd.vb" />
+    <Compile Include="Low End Apartment\SouthRockfordDr0112.vb" />
+    <Compile Include="Low End Apartment\ZancudoAve.vb" />
+    <Compile Include="Medium End Apartment\BayCityAve.vb" />
+    <Compile Include="Medium End Apartment\BlvdDelPerro.vb" />
+    <Compile Include="Medium End Apartment\CougarAve.vb" />
+    <Compile Include="Medium End Apartment\DreamTower.vb" />
+    <Compile Include="High End Apartments\TinselTower.vb" />
+    <Compile Include="Low End Apartment\VespucciBlvd.vb" />
+    <Compile Include="High End Apartments\WeazelPlaza.vb" />
     <Compile Include="Brain.vb" />
     <Compile Include="Class\CFGRead.vb" />
     <Compile Include="Class\logger.vb" />
-    <Compile Include="Apartments\EclipseTower.vb" />
+    <Compile Include="High End Apartments\EclipseTower.vb" />
     <Compile Include="Class\Reader.vb" />
     <Compile Include="Class\Resources.vb" />
     <Compile Include="Custom Apartments\EclipseTowerPS1.vb" />
@@ -108,6 +114,16 @@
     <Compile Include="Custom Apartments\EclipseTowerPS3.vb" />
     <Compile Include="Mechanic.vb" />
     <Compile Include="Mechanic2.vb" />
+    <Compile Include="Medium End Apartment\LasLagunasBlvd0604.vb" />
+    <Compile Include="Medium End Apartment\LasLagunasBlvd2143.vb" />
+    <Compile Include="Medium End Apartment\MiltonRd0184.vb" />
+    <Compile Include="Medium End Apartment\PowerSt.vb" />
+    <Compile Include="Medium End Apartment\ProsperitySt.vb" />
+    <Compile Include="Medium End Apartment\SanVitasSt.vb" />
+    <Compile Include="Medium End Apartment\SouthMoMiltonDr.vb" />
+    <Compile Include="Medium End Apartment\SouthRockfordDr0325.vb" />
+    <Compile Include="Medium End Apartment\SpanishAve.vb" />
+    <Compile Include="Medium End Apartment\TheRoyale.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -125,6 +141,9 @@
     </Compile>
     <Compile Include="Class\timer.vb" />
     <Compile Include="Phone.vb" />
+    <Compile Include="Medium End Apartment\ProcopioDr4401.vb" />
+    <Compile Include="Medium End Apartment\ProcopioDr4584.vb" />
+    <Compile Include="Medium End Apartment\SustanciaRd.vb" />
     <Compile Include="Website.vb" />
     <Compile Include="SinglePlayerApartment.vb" />
     <Compile Include="SixCarGarage.vb" />
@@ -151,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Low End Apartment\app.config" />
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -165,7 +185,6 @@
     </None>
     <None Include="Resources\vehicle.cfg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>COPY "$(TargetDir)$(TargetFileName)" "F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts"</PostBuildEvent>

@@ -10,7 +10,7 @@ Imports System.Threading.Tasks
 Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports PDMCarShopGUI
+Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
 
 Public Class MiltonRd2117
@@ -71,7 +71,6 @@ Public Class MiltonRd2117
                 CannotStore = ReadCfgValue("CannotStore", langFile)
 
                 AddHandler Tick, AddressOf OnTick
-                AddHandler KeyDown, AddressOf OnKeyDown
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -336,8 +335,7 @@ Public Class MiltonRd2117
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    _scaleform.CallFunction("SHOW_MISSION_PASSED_MESSAGE", String.Format(PropPurchased & vbLf & "~w~" & _Name & Unit), "", 100, True, 0, True)
-                    _displayTimer.Start()
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & _Name & Unit, Nothing)
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf playerName = "Franklin" Then
@@ -548,103 +546,103 @@ Public Class MiltonRd2117
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            If ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then
+            If My.Settings.MiltonRd2117 = "Enable" Then
                 DoorDistance = World.GetDistance(playerPed.Position, Entrance)
                 SaveDistance = World.GetDistance(playerPed.Position, Save)
                 ExitDistance = World.GetDistance(playerPed.Position, _Exit)
                 WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
                 GarageDistance = World.GetDistance(playerPed.Position, _Garage)
 
-                'Enter _3alta Tower
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso DoorDistance < 2.0 Then
+                'Enter Apartment
+                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso DoorDistance < 3.0 Then
                     DisplayHelpTextThisFrame(EnterApartment & _Name)
-                End If
-
-                'Save Game
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso SaveDistance < 1.0 AndAlso Owner = playerName Then
-                    DisplayHelpTextThisFrame(SaveGame)
-                End If
-
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ExitDistance < 2.0 AndAlso Owner = playerName Then
-                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
-                End If
-
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso WardrobeDistance < 1.0 AndAlso Owner = playerName Then
-                    DisplayHelpTextThisFrame(ChangeClothes)
-                End If
-
-                If Not playerPed.IsDead AndAlso GarageDistance < 3.0 AndAlso Owner = playerName AndAlso Not playerPed.IsInVehicle Then
-                    DisplayHelpTextThisFrame(_EnterGarage & Garage)
-                ElseIf Not playerPed.IsDead AndAlso GarageDistance < 3.0 AndAlso Owner = playerName AndAlso playerPed.IsInVehicle Then
-                    If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
-                        DisplayHelpTextThisFrame(CannotStore)
-                    Else
-                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        Game.FadeScreenOut(500)
+                        Script.Wait(&H3E8)
+                        BuyMenu.Visible = True
+                        World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                        hideHud = True
+                        Script.Wait(500)
+                        Game.FadeScreenIn(500)
                     End If
                 End If
 
-                ' Controls
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso DoorDistance < 2.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                    'Press E on Vespucci Blvd Door
-                    Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    BuyMenu.Visible = True
-                    World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
-                    hideHud = True
-                    Script.Wait(500)
-                    Game.FadeScreenIn(500)
+                'Save Game
+                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso SaveDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(SaveGame)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        playerMap = "MiltonR2117"
+                        Game.FadeScreenOut(500)
+                        Script.Wait(&H3E8)
+                        TimeLapse(8)
+                        Game.ShowSaveMenu()
+                        SavePosition()
+                        Script.Wait(500)
+                        Game.FadeScreenIn(500)
+                    End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso ExitDistance < 3.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead Then
-                    ExitMenu.Visible = True
+                'Exit Apartment
+                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso ExitDistance < 2.0 Then
+                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        ExitMenu.Visible = True
+                    End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso SaveDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                    'Press E on vespucci blvd Bed
-                    playerMap = "MiltonR2117"
-                    Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    TimeLapse(8)
-                    Game.ShowSaveMenu()
-                    SavePosition()
-                    Script.Wait(500)
-                    Game.FadeScreenIn(500)
-                End If
-
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso WardrobeDistance < 1.0 AndAlso Not playerPed.IsInVehicle AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName Then
-                    WardrobeVector = Wardrobe
-                    WardrobeHead = WardrobeHeading
-                    If playerName = "Michael" Then
-                        Player0W.Visible = True
-                        MakeACamera()
-                    ElseIf playerName = "Franklin" Then
-                        Player1W.Visible = True
-                        MakeACamera()
-                    ElseIf playerName = “Trevor"
-                        Player2W.Visible = True
-                        MakeACamera()
-                    ElseIf playerName = "Player3" Then
-                        If playerHash = "1885233650" Then
-                            Player3_MW.Visible = True
+                'Wardrobe
+                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso WardrobeDistance < 1.0 Then
+                    DisplayHelpTextThisFrame(ChangeClothes)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        WardrobeVector = Wardrobe
+                        WardrobeHead = WardrobeHeading
+                        WardrobeScriptStatus = 0
+                        If playerName = "Michael" Then
+                            Player0W.Visible = True
                             MakeACamera()
-                        ElseIf playerHash = "-1667301416" Then
-                            Player3_FW.Visible = True
+                        ElseIf playerName = "Franklin" Then
+                            Player1W.Visible = True
                             MakeACamera()
+                        ElseIf playerName = “Trevor"
+                            Player2W.Visible = True
+                            MakeACamera()
+                        ElseIf playerName = "Player3" Then
+                            If playerHash = "1885233650" Then
+                                Player3_MW.Visible = True
+                                MakeACamera()
+                            ElseIf playerHash = "-1667301416" Then
+                                Player3_FW.Visible = True
+                                MakeACamera()
+                            End If
                         End If
                     End If
                 End If
 
-                If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 3.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName AndAlso Not playerPed.IsInVehicle Then
-                    GarageMenu.Visible = True
-                ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageDistance < 3.0 AndAlso Not SinglePlayerApartment.player.IsDead AndAlso Owner = playerName AndAlso playerPed.IsInVehicle Then
-                    If Not Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
-                        GarageMenu.Visible = True
+                'Enter Garage
+                If (Not playerPed.IsDead AndAlso Owner = playerName) AndAlso GarageDistance < 5.0 Then
+                    If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
+                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                            GarageMenu.Visible = True
+                        End If
+                    ElseIf playerPed.IsInVehicle Then
+                        If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                            DisplayHelpTextThisFrame(CannotStore)
+                        ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
+                            DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                            If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                                GarageMenu.Visible = True
+                            End If
+                        End If
                     End If
                 End If
-                'End Control
 
-                If IsAtHome = True Then
+                If IsAtHome Then
                     HIDE_MAP_OBJECT_THIS_FRAME()
+                    Resources.Disable_Controls()
+                    Brain.BrainEnable = True
+                Else
+                    Brain.BrainEnable = False
                 End If
 
                 _menuPool.ProcessMenus()
@@ -663,14 +661,6 @@ Public Class MiltonRd2117
         Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_09c_hs07_details"))
         Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "CH2_09c_Emissive_07"))
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
-
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
     End Sub
 
     Protected Overrides Sub Dispose(A_0 As Boolean)

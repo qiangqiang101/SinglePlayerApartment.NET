@@ -1,13 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
 Imports System.Windows.Forms
 
 Public Class SinglePlayerApartment
@@ -20,10 +14,12 @@ Public Class SinglePlayerApartment
     Public Shared playerHash As String
     Public Shared saveFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save.cfg"
     Public Shared saveFile2 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save2.cfg"
+    Public Shared saveFile3 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save3.cfg"
     Public Shared settingFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\setting.cfg"
     Public Shared langFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Languages\" & Game.Language.ToString & ".cfg"
     Public Shared playerMap As String
-    Public Shared Debug As String = ReadCfgValue("Debug", settingFile)
+    Public Shared MediumEndLastLocationName As String = Nothing
+    Public Shared LowEndLastLocationName As String = Nothing
 
     'Translate
     Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, GrgRemove, GrgRemoveAndDrive, GrgMove, GrgSell, GrgSelectVeh, GrgTooHot, GrgPlate, GrgRename, GrgTransfer, _Mechanic, _Pegasus, ChooseApt As String
@@ -38,11 +34,7 @@ Public Class SinglePlayerApartment
     Private trevorSafeHouse2 As Vector3 = New Vector3(96.154197692871, -1290.7312011719, 29.266660690308)
     Private franklinSafeHouseDist, michaelSafeHouseDist, trevorSafeHouseDist, trevorSafeHouseDist2 As Single
 
-    'Public Shared _menuPool As MenuPool
     Public Shared hideHud As Boolean = False
-    Public Shared _scaleform As Scaleform
-    Public Shared _displayTimer As Timer
-    Public Shared _fadeTimer As Timer
 
     Public Sub New()
         Try
@@ -134,10 +126,6 @@ Public Class SinglePlayerApartment
             'SetInteriorActive2(-1477.14, -538.75, 55.5264) 'del perro 7
             'SetInteriorActive2(343.85, -999.08, -99.198) 'midrange apartment
             'SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-
-            _displayTimer = New Timer(2200)
-            _fadeTimer = New Timer(2000)
-            _scaleform = New Scaleform([Function].[Call](Of Integer)(Hash.REQUEST_SCALEFORM_MOVIE, "MP_BIG_MESSAGE_FREEMODE"))
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -492,6 +480,47 @@ Public Class SinglePlayerApartment
             Else
                 My.Settings.NeverEnableMPMaps = False
             End If
+            My.Settings.PreviewPointX = ReadCfgValue("PointX", settingFile)
+            My.Settings.PreviewPointY = ReadCfgValue("PointY", settingFile)
+            My.Settings.ThreeAltaStreet = ReadCfgValue("3AltaStreet", settingFile)
+            My.Settings.FourIntegrityWay = ReadCfgValue("4IntegrityWay", settingFile)
+            My.Settings.DelPerroHeight = ReadCfgValue("DelPerroHeights", settingFile)
+            My.Settings.DreamTower = ReadCfgValue("DreamTower", settingFile)
+            My.Settings.EclipseTower = ReadCfgValue("EclipseTower", settingFile)
+            My.Settings.RichardMajestic = ReadCfgValue("RichardMajestic", settingFile)
+            My.Settings.TinselTower = ReadCfgValue("TinselTower", settingFile)
+            My.Settings.VespucciBlvd = ReadCfgValue("VespucciBlvd", settingFile)
+            My.Settings.WeazelPlaza = ReadCfgValue("WeazelPlaza", settingFile)
+            My.Settings.Hillcrest2862 = ReadCfgValue("2862Hillcrest", settingFile)
+            My.Settings.Hillcrest2868 = ReadCfgValue("2868Hillcrest", settingFile)
+            My.Settings.Hillcrest2874 = ReadCfgValue("2874Hillcrest", settingFile)
+            My.Settings.MadWayne2113 = ReadCfgValue("2113MadWayne", settingFile)
+            My.Settings.MiltonRd2117 = ReadCfgValue("2117MiltonRd", settingFile)
+            My.Settings.NorthConker2044 = ReadCfgValue("2044NorthConker", settingFile)
+            My.Settings.NorthConker2045 = ReadCfgValue("2045NorthConker", settingFile)
+            My.Settings.Whispymound3677 = ReadCfgValue("3677Whispymound", settingFile)
+            My.Settings.WildOats3655 = ReadCfgValue("3655WildOats", settingFile)
+            My.Settings.CougarAve = ReadCfgValue("CougarAve", settingFile)
+            My.Settings.BayCityAve = ReadCfgValue("BayCityAve", settingFile)
+            My.Settings.MiltonRd0184 = ReadCfgValue("0184MiltonRd", settingFile)
+            My.Settings.SouthRockfordDr0325 = ReadCfgValue("0325SouthRockfordDr", settingFile)
+            My.Settings.SouthMoMiltonDr = ReadCfgValue("SouthMoMiltonDr", settingFile)
+            My.Settings.LasLagunasBlvd0604 = ReadCfgValue("0604LasLagunasBlvd", settingFile)
+            My.Settings.SpanishAve = ReadCfgValue("SpanishAve", settingFile)
+            My.Settings.BlvdDelPerro = ReadCfgValue("BlvdDelPerro", settingFile)
+            My.Settings.PowerSt = ReadCfgValue("PowerSt", settingFile)
+            My.Settings.ProsperitySt = ReadCfgValue("ProsperitySt", settingFile)
+            My.Settings.SanVitasSt = ReadCfgValue("SanVitasSt", settingFile)
+            My.Settings.LasLagunasBlvd2143 = ReadCfgValue("2143LasLagunasBlvd", settingFile)
+            My.Settings.TheRoyale = ReadCfgValue("TheRoyale", settingFile)
+            My.Settings.HangmanAve = ReadCfgValue("HangmanAve", settingFile)
+            My.Settings.SustanciaRd = ReadCfgValue("SustanciaRd", settingFile)
+            My.Settings.ProcopioDr4401 = ReadCfgValue("4401ProcopioDr", settingFile)
+            My.Settings.ProcopioDr4584 = ReadCfgValue("4584ProcopioDr", settingFile)
+            My.Settings.SouthRockfordDr0112 = ReadCfgValue("0112SouthRockfordDr", settingFile)
+            My.Settings.ZancudoAve = ReadCfgValue("ZancudoAve", settingFile)
+            My.Settings.PaletoBlvd = ReadCfgValue("PaletoBlvd", settingFile)
+            My.Settings.GrapeseedAve = ReadCfgValue("GrapeseedAve", settingFile)
             My.Settings.Save()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -500,7 +529,7 @@ Public Class SinglePlayerApartment
 
     Private Sub LoadPosition()
         Try
-            Dim lastInterior As String
+            Dim lastInterior As String = Nothing
             Dim lastPosX, lastPosY, lastPosZ As Single
             If playerName = "Michael" Then
                 lastInterior = ReadCfgValue("MlastInterior", saveFile)
@@ -566,7 +595,7 @@ Public Class SinglePlayerApartment
                     RichardMajestic.IsAtHome = True
                 Case "Richman"
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                Case "SinnerSt"
+                Case "SinnerSt", "CougarAve", "BayCityAve", "0184MiltonRd", "0325SouthRockfordDr", "SouthMoMiltonDr", "0604LasLagunasBlvd", "SpanishAve", "BlvdDelPerro", "PowerSt", "ProsperitySt", "SanVitasSt", "2143LasLagunasBlvd", "TheRoyale", "HangmanAve", "SustanciaRd", "4401ProcopioDr", "4584ProcopioDr"
                     SetInteriorActive2(343.85, -999.08, -99.198) 'midrange apartment
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "Tinsel"
@@ -577,7 +606,7 @@ Public Class SinglePlayerApartment
                     SetInteriorActive2(-909.054, -441.466, 120.205) 'weazel plaza 70
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     WeazelPlaza.IsAtHome = True
-                Case "VespucciBlvd"
+                Case "VespucciBlvd", "0112SouthRockfordDr", "ZancudoAve", "PaletoBlvd", "GrapeseedAve"
                     SetInteriorActive2(263.86999, -998.78002, -99.010002) 'low end apartment
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "NConker2044"
@@ -668,24 +697,6 @@ Public Class SinglePlayerApartment
                 playerCash = player.Money
             End If
 
-            If _displayTimer.Enabled Then
-                _scaleform.Render2D()
-
-                If Game.GameTime > _displayTimer.Waiter Then
-                    _scaleform.CallFunction("TRANSITION_OUT")
-                    _displayTimer.Enabled = False
-                    _fadeTimer.Start()
-                End If
-            End If
-
-            If _fadeTimer.Enabled Then
-                _scaleform.Render2D()
-
-                If Game.GameTime > _fadeTimer.Waiter Then
-                    _fadeTimer.Enabled = False
-                End If
-            End If
-
             If hideHud Then
                 Native.Function.Call(Hash.HIDE_HUD_AND_RADAR_THIS_FRAME)
             End If
@@ -694,16 +705,16 @@ Public Class SinglePlayerApartment
             michaelSafeHouseDist = World.GetDistance(playerPed.Position, michaelSafeHouse)
             trevorSafeHouseDist = World.GetDistance(playerPed.Position, trevorSafeHouse)
             trevorSafeHouseDist2 = World.GetDistance(playerPed.Position, trevorSafeHouse2)
-            If franklinSafeHouseDist < 0.1 AndAlso teleported = False Then
+            If franklinSafeHouseDist < 0.1 AndAlso Not teleported Then
                 LoadPosition()
                 teleported = True
-            ElseIf michaelSafeHouseDist < 0.1 AndAlso teleported = False Then
+            ElseIf michaelSafeHouseDist < 0.1 AndAlso Not teleported Then
                 LoadPosition()
                 teleported = True
-            ElseIf trevorSafeHouseDist < 0.1 AndAlso teleported = False Then
+            ElseIf trevorSafeHouseDist < 0.1 AndAlso Not teleported Then
                 LoadPosition()
                 teleported = True
-            ElseIf trevorSafeHouseDist2 < 0.1 AndAlso teleported = False Then
+            ElseIf trevorSafeHouseDist2 < 0.1 AndAlso Not teleported Then
                 LoadPosition()
                 teleported = True
             End If
@@ -714,11 +725,7 @@ Public Class SinglePlayerApartment
             End If
             'End Control
 
-            If Debug = "True" Then
-                Resources.DrawText(("Position X: " & GameplayCamera.Position.X & " Y: " & GameplayCamera.Position.Y & " Z: " & GameplayCamera.Position.Z & " Rotation X: " & GameplayCamera.Rotation.X & " Y: " & GameplayCamera.Rotation.Y & " Z: " & GameplayCamera.Rotation.Z), New Point(640, 700), 0.3, Color.White, Resources.GTAFont.UIDefault, Resources.GTAFontAlign.Right, Resources.GTAFontStyleOptions.Outline)
-            End If
-
-            If tvOn = True Then Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 0.5, 0.5, 0.0, 255, 255, 255, 255)
+            'If tvOn = True Then Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 0.5, 0.5, 0.0, 255, 255, 255, 255)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -726,28 +733,17 @@ Public Class SinglePlayerApartment
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
         Try
-            If Debug = True AndAlso e.KeyCode = Keys.Z Then
-                UI.ShowSubtitle(playerHash.ToString & " " & playerName)
-            End If
-
-            If e.KeyCode = Keys.D8 And tvOn = False Then
-                Dim channel As Integer = Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "movie_arthouse")
-                Native.Function.Call(Hash._0x0AD973CA1E077B60, channel)
-                Native.Function.Call(Hash.SET_TV_CHANNEL, 1)
-                Native.Function.Call(Hash.SET_TV_VOLUME, 10)
-                tvOn = True
-            Else
-                tvOn = False
-            End If
+            'If e.KeyCode = Keys.D8 And tvOn = False Then
+            '    Dim channel As Integer = Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "movie_arthouse")
+            '    Native.Function.Call(Hash._0x0AD973CA1E077B60, channel)
+            '    Native.Function.Call(Hash.SET_TV_CHANNEL, 1)
+            '    Native.Function.Call(Hash.SET_TV_VOLUME, 10)
+            '    tvOn = True
+            'Else
+            '    tvOn = False
+            'End If
         Catch ex As Exception
             UI.ShowSubtitle(ex.Message)
         End Try
     End Sub
-
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-
-        End If
-    End Sub
-
 End Class

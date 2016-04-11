@@ -233,6 +233,498 @@ Namespace My
                 Me("CreateFileMethod") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property ThreeAltaStreet() As String
+            Get
+                Return CType(Me("ThreeAltaStreet"),String)
+            End Get
+            Set
+                Me("ThreeAltaStreet") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property FourIntegrityWay() As String
+            Get
+                Return CType(Me("FourIntegrityWay"),String)
+            End Get
+            Set
+                Me("FourIntegrityWay") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property DelPerroHeight() As String
+            Get
+                Return CType(Me("DelPerroHeight"),String)
+            End Get
+            Set
+                Me("DelPerroHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property DreamTower() As String
+            Get
+                Return CType(Me("DreamTower"),String)
+            End Get
+            Set
+                Me("DreamTower") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property EclipseTower() As String
+            Get
+                Return CType(Me("EclipseTower"),String)
+            End Get
+            Set
+                Me("EclipseTower") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property RichardMajestic() As String
+            Get
+                Return CType(Me("RichardMajestic"),String)
+            End Get
+            Set
+                Me("RichardMajestic") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property TinselTower() As String
+            Get
+                Return CType(Me("TinselTower"),String)
+            End Get
+            Set
+                Me("TinselTower") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property VespucciBlvd() As String
+            Get
+                Return CType(Me("VespucciBlvd"),String)
+            End Get
+            Set
+                Me("VespucciBlvd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property WeazelPlaza() As String
+            Get
+                Return CType(Me("WeazelPlaza"),String)
+            End Get
+            Set
+                Me("WeazelPlaza") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property Hillcrest2862() As String
+            Get
+                Return CType(Me("Hillcrest2862"),String)
+            End Get
+            Set
+                Me("Hillcrest2862") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property Hillcrest2868() As String
+            Get
+                Return CType(Me("Hillcrest2868"),String)
+            End Get
+            Set
+                Me("Hillcrest2868") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property Hillcrest2874() As String
+            Get
+                Return CType(Me("Hillcrest2874"),String)
+            End Get
+            Set
+                Me("Hillcrest2874") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property MadWayne2113() As String
+            Get
+                Return CType(Me("MadWayne2113"),String)
+            End Get
+            Set
+                Me("MadWayne2113") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property MiltonRd2117() As String
+            Get
+                Return CType(Me("MiltonRd2117"),String)
+            End Get
+            Set
+                Me("MiltonRd2117") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property NorthConker2044() As String
+            Get
+                Return CType(Me("NorthConker2044"),String)
+            End Get
+            Set
+                Me("NorthConker2044") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property NorthConker2045() As String
+            Get
+                Return CType(Me("NorthConker2045"),String)
+            End Get
+            Set
+                Me("NorthConker2045") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property Whispymound3677() As String
+            Get
+                Return CType(Me("Whispymound3677"),String)
+            End Get
+            Set
+                Me("Whispymound3677") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property WildOats3655() As String
+            Get
+                Return CType(Me("WildOats3655"),String)
+            End Get
+            Set
+                Me("WildOats3655") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property CougarAve() As String
+            Get
+                Return CType(Me("CougarAve"),String)
+            End Get
+            Set
+                Me("CougarAve") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property BayCityAve() As String
+            Get
+                Return CType(Me("BayCityAve"),String)
+            End Get
+            Set
+                Me("BayCityAve") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property MiltonRd0184() As String
+            Get
+                Return CType(Me("MiltonRd0184"),String)
+            End Get
+            Set
+                Me("MiltonRd0184") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property SouthRockfordDr0325() As String
+            Get
+                Return CType(Me("SouthRockfordDr0325"),String)
+            End Get
+            Set
+                Me("SouthRockfordDr0325") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property SouthMoMiltonDr() As String
+            Get
+                Return CType(Me("SouthMoMiltonDr"),String)
+            End Get
+            Set
+                Me("SouthMoMiltonDr") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property LasLagunasBlvd0604() As String
+            Get
+                Return CType(Me("LasLagunasBlvd0604"),String)
+            End Get
+            Set
+                Me("LasLagunasBlvd0604") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property SpanishAve() As String
+            Get
+                Return CType(Me("SpanishAve"),String)
+            End Get
+            Set
+                Me("SpanishAve") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property BlvdDelPerro() As String
+            Get
+                Return CType(Me("BlvdDelPerro"),String)
+            End Get
+            Set
+                Me("BlvdDelPerro") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property PowerSt() As String
+            Get
+                Return CType(Me("PowerSt"),String)
+            End Get
+            Set
+                Me("PowerSt") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property ProsperitySt() As String
+            Get
+                Return CType(Me("ProsperitySt"),String)
+            End Get
+            Set
+                Me("ProsperitySt") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property SanVitasSt() As String
+            Get
+                Return CType(Me("SanVitasSt"),String)
+            End Get
+            Set
+                Me("SanVitasSt") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property LasLagunasBlvd2143() As String
+            Get
+                Return CType(Me("LasLagunasBlvd2143"),String)
+            End Get
+            Set
+                Me("LasLagunasBlvd2143") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property TheRoyale() As String
+            Get
+                Return CType(Me("TheRoyale"),String)
+            End Get
+            Set
+                Me("TheRoyale") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property HangmanAve() As String
+            Get
+                Return CType(Me("HangmanAve"),String)
+            End Get
+            Set
+                Me("HangmanAve") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property SustanciaRd() As String
+            Get
+                Return CType(Me("SustanciaRd"),String)
+            End Get
+            Set
+                Me("SustanciaRd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property ProcopioDr4401() As String
+            Get
+                Return CType(Me("ProcopioDr4401"),String)
+            End Get
+            Set
+                Me("ProcopioDr4401") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property ProcopioDr4584() As String
+            Get
+                Return CType(Me("ProcopioDr4584"),String)
+            End Get
+            Set
+                Me("ProcopioDr4584") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property SouthRockfordDr0112() As String
+            Get
+                Return CType(Me("SouthRockfordDr0112"),String)
+            End Get
+            Set
+                Me("SouthRockfordDr0112") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property ZancudoAve() As String
+            Get
+                Return CType(Me("ZancudoAve"),String)
+            End Get
+            Set
+                Me("ZancudoAve") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property PaletoBlvd() As String
+            Get
+                Return CType(Me("PaletoBlvd"),String)
+            End Get
+            Set
+                Me("PaletoBlvd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property GrapeseedAve() As String
+            Get
+                Return CType(Me("GrapeseedAve"),String)
+            End Get
+            Set
+                Me("GrapeseedAve") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property PreviewPointX() As Integer
+            Get
+                Return CType(Me("PreviewPointX"),Integer)
+            End Get
+            Set
+                Me("PreviewPointX") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("120")>  _
+        Public Property PreviewPointY() As Integer
+            Get
+                Return CType(Me("PreviewPointY"),Integer)
+            End Get
+            Set
+                Me("PreviewPointY") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
