@@ -1,56 +1,48 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
+Imports SinglePlayerApartment.INMNative
 
 Public Class NorthConker2045
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("2045NCowner", saveFile2)
-    Public Shared _Name As String = "North Conker Avenue "
-    Public Shared Desc As String = "Designed and constructed in direct violation of every building law in the state, this luxury apartment is a testament to the power of a can-do attitude and utter disregard for standards of health, safety and common sense. Time to pour yourself a drink, forgot about the forty foot drop, and congratulate yourself on keeping that pioneer spirit alive. Includes 10-car garage."
-    Public Shared Unit As String = "2045"
-    Public Shared Cost As Integer = 727000
-    Public Shared _Blip As Blip
-    Public Shared Blip2 As Blip
-    Public Shared Entrance As Vector3 = New Vector3(373.8461, 427.7975, 145.6839)
-    Public Shared Save As Vector3 = New Vector3(377.2632, 407.4584, 142.1256)
-    Public Shared Teleport As Vector3 = New Vector3(373.2864, 420.6612, 145.9045)
-    Public Shared Teleport2 As Vector3 = New Vector3(371.9392, 430.4312, 145.1107)
-    Public Shared _Exit As Vector3 = New Vector3(373.7533, 423.8348, 145.9078)
-    Public Shared Wardrobe As Vector3 = New Vector3(374.4273, 411.5888, 142.1002)
-    Public Shared _Garage As Vector3 = New Vector3(391.3488, 430.2205, 143.1705)
-    Public Shared GarageOut As Vector3 = New Vector3(392.482, 430.467, 143.0165)
-    Public Shared GarageOutHeading As Single = 298.54
-    Public Shared GarageDistance As String
-    Public Shared DoorDistance As Single
-    Public Shared SaveDistance As Single
-    Public Shared ExitDistance As Single
-    Public Shared WardrobeDistance As Single
-    Public Shared CameraPos As Vector3 = New Vector3(366.7971, 447.0355, 148.0793)
-    Public Shared CameraRot As Vector3 = New Vector3(-8.704479, -2.1593, -156.5936)
-    Public Shared CameraFov As Single = 50.0
-    Public Shared WardrobeHeading As Single = 166.7329
-    Public Shared IsAtHome As Boolean = False
-
+    Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
+
+            Apartment = New Apartment("North Conker Avenue ", "2045", 727000)
+                Apartment.Name = ReadCfgValue("2045Name", langFile)
+                Apartment.Description = ReadCfgValue("2045Desc", langFile)
+                Apartment.Owner = ReadCfgValue("2045NCowner", saveFile)
+                Apartment.Entrance = New Vector3(373.8461, 427.7975, 145.6839)
+                Apartment.Save = New Vector3(377.2632, 407.4584, 142.1256)
+                Apartment.TeleportInside = New Vector3(373.2864, 420.6612, 145.9045)
+                Apartment.TeleportOutside = New Vector3(371.9392, 430.4312, 145.1107)
+                Apartment.ApartmentExit = New Vector3(373.7533, 423.8348, 145.9078)
+                Apartment.Wardrobe = New Vector3(374.4273, 411.5888, 142.1002)
+                Apartment.GarageEntrance = New Vector3(391.3488, 430.2205, 143.1705)
+                Apartment.GarageOutside = New Vector3(392.482, 430.467, 143.0165)
+                Apartment.GarageOutHeading = 298.54
+                Apartment.CameraPosition = New Vector3(366.7971, 447.0355, 148.0793)
+                Apartment.CameraRotation = New Vector3(-8.704479, -2.1593, -156.5936)
+                Apartment.CameraFOV = 50.0
+                Apartment.WardrobeHeading = 166.7329
+                Apartment.IsAtHome = False
+                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
+                Apartment.SaveFile = "2045NCowner"
+                Apartment.PlayerMap = "NConker2045"
+                Apartment.IPL = "apa_stilt_ch2_04_ext2"
+                Apartment.Enabled = True
+
             If ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then
-                _Name = ReadCfgValue("2045Name", langFile)
-                Desc = ReadCfgValue("2045Desc", langFile)
                 Garage = ReadCfgValue("Garage", langFile)
                 AptOptions = ReadCfgValue("AptOptions", langFile)
                 ExitApt = ReadCfgValue("ExitApt", langFile)
@@ -95,18 +87,18 @@ Public Class NorthConker2045
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             BuyMenu.SetBannerType(Rectangle)
             _menuPool.Add(BuyMenu)
-            Dim item As New UIMenuItem(_Name & Unit, Desc)
+            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
             With item
-                If Owner = "Michael" Then
+                If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Owner = "Franklin" Then
+                ElseIf Apartment.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Owner = "Trevor" Then
+                ElseIf Apartment.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Owner = "Player3" Then
+                ElseIf Apartment.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
-                    .SetRightLabel("$" & Cost.ToString("N"))
+                    .SetRightLabel("$" & Apartment.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
@@ -119,18 +111,18 @@ Public Class NorthConker2045
 
     Public Shared Sub RefreshMenu()
         BuyMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Name & Unit, Desc)
+        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
         With item
-            If Owner = "Michael" Then
+            If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Owner = "Franklin" Then
+            ElseIf Apartment.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Owner = "Trevor" Then
+            ElseIf Apartment.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Owner = "Player3" Then
+            ElseIf Apartment.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
-                .SetRightLabel("$" & Cost.ToString("N"))
+                .SetRightLabel("$" & Apartment.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
@@ -140,15 +132,15 @@ Public Class NorthConker2045
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Name & Unit & Garage)
+        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
         With item
-            If Owner = "Michael" Then
+            If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Owner = "Franklin" Then
+            ElseIf Apartment.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Owner = "Trevor" Then
+            ElseIf Apartment.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Owner = "Player3" Then
+            ElseIf Apartment.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -181,15 +173,15 @@ Public Class NorthConker2045
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(_Name & Unit & Garage)
+            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
             With item
-                If Owner = "Michael" Then
+                If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Owner = "Franklin" Then
+                ElseIf Apartment.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Owner = "Trevor" Then
+                ElseIf Apartment.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Owner = "Player3" Then
+                ElseIf Apartment.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -203,53 +195,7 @@ Public Class NorthConker2045
     End Sub
 
     Public Shared Sub CreateNorthConker2045()
-        _Blip = World.CreateBlip(Entrance)
-        If Owner = "Michael" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Blue
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Blue
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        ElseIf Owner = "Franklin" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Green
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Green
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        ElseIf Owner = "Trevor" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = 17
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = 17
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        ElseIf Owner = "Player3" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Yellow
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Yellow
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        Else
-            _Blip.Sprite = BlipSprite.SafehouseForSale
-            _Blip.Color = BlipColor.White
-            _Blip.IsShortRange = True
-            SetBlipName(ForSale, _Blip)
-        End If
+        Apartment.CreateStilt(Apartment)
     End Sub
 
     Public Sub MenuCloseHandler(sender As UIMenu)
@@ -268,48 +214,51 @@ Public Class NorthConker2045
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = Teleport2
-                Script.Wait(500)
+                Wait(&H3E8)
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
+                Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
-                IsAtHome = False
-                RemoveIPL("apa_stilt_ch2_04_ext2")
+                Apartment.IsAtHome = False
+                RemoveIPL(Apartment.IPL)
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("2045NCowner", "None", saveFile2)
+                WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                SinglePlayerApartment.player.Money = (playerCash + Cost)
-                Owner = "None"
-                _Blip.Remove()
-                If Not Blip2 Is Nothing Then Blip2.Remove()
+                Wait(&H3E8)
+                SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
+                Apartment.Owner = "None"
+                Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateNorthConker2045()
-                Game.Player.Character.Position = Teleport2
-                Script.Wait(500)
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
+                Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
                 UnLoadMPDLCMap()
-                IsAtHome = False
-                RemoveIPL("apa_stilt_ch2_04_ext2")
+                Apartment.IsAtHome = False
+                RemoveIPL(Apartment.IPL)
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+                Brain.TVOn = False
                 playerPed.Position = TenCarGarage.Elevator
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
-                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
+                TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+                TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+                TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+                TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+                TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                TenCarGarage.CurrentPath = Apartment.GaragePath
                 ExitMenu.Visible = False
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             End If
         Catch ex As Exception
@@ -319,23 +268,23 @@ Public Class NorthConker2045
 
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
-            If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
+            If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
                 'Buy Apartment
-                If playerCash > Cost Then
-                    WriteCfgValue("2045NCowner", playerName, saveFile2)
+                If playerCash > Apartment.Cost Then
+                    WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Cost)
-                    Owner = playerName
-                    _Blip.Remove()
-                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    Wait(&H3E8)
+                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    Apartment.Owner = playerName
+                    Apartment.AptBlip.Remove()
+                    If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateNorthConker2045()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
-                    Script.Wait(500)
+                    Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & _Name & Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf playerName = "Franklin" Then
@@ -357,20 +306,20 @@ Public Class NorthConker2045
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
+            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = playerName Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                IsAtHome = True
-                ToggleIPL("apa_stilt_ch2_04_ext2")
+                Apartment.IsAtHome = True
+                ToggleIPL(Apartment.IPL)
 
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = Teleport
-                Script.Wait(500)
+                Wait(&H3E8)
+                Game.Player.Character.Position = Apartment.TeleportInside
+                Wait(500)
                 Game.FadeScreenIn(500)
             End If
         Catch ex As Exception
@@ -379,167 +328,166 @@ Public Class NorthConker2045
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            IsAtHome = True
-            ToggleIPL("apa_stilt_ch2_04_ext2")
+            Apartment.IsAtHome = True
+            ToggleIPL(Apartment.IPL)
 
             Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
+            Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
+            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+            TenCarGarage.CurrentPath = Apartment.GaragePath
             GarageMenu.Visible = False
-            Script.Wait(500)
+            Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
-            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
-            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
-            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
-            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
-            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
-            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
-            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
-            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
-            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
-            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            IsAtHome = True
-            ToggleIPL("apa_stilt_ch2_04_ext2")
+            Apartment.IsAtHome = True
+            ToggleIPL(Apartment.IPL)
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            TenCarGarage.CurrentPath = Apartment.GaragePath
+            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             GarageMenu.Visible = False
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                TenCarGarage.SaveGarageVehicle(Apartment.GaragePath)
             End If
         End If
     End Sub
@@ -547,55 +495,49 @@ Public Class NorthConker2045
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
             If My.Settings.NorthConker2045 = "Enable" Then
-                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-                SaveDistance = World.GetDistance(playerPed.Position, Save)
-                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
-
                 'Enter Apartment
-                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso DoorDistance < 3.0 Then
-                    DisplayHelpTextThisFrame(EnterApartment & _Name)
+                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         BuyMenu.Visible = True
-                        World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                        World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                         hideHud = True
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                     End If
                 End If
 
                 'Save Game
-                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso SaveDistance < 3.0 Then
+                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.SaveDistance < 3.0 Then
                     DisplayHelpTextThisFrame(SaveGame)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        playerMap = "NConker2045"
+                        playerMap = Apartment.PlayerMap
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         TimeLapse(8)
                         Game.ShowSaveMenu()
                         SavePosition()
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                     End If
                 End If
 
                 'Exit Apartment
-                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso ExitDistance < 2.0 Then
-                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
+                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.ExitDistance < 2.0 Then
+                    DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         ExitMenu.Visible = True
                     End If
                 End If
 
                 'Wardrobe
-                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso WardrobeDistance < 1.0 Then
+                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.WardrobeDistance < 1.0 Then
                     DisplayHelpTextThisFrame(ChangeClothes)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        WardrobeVector = Wardrobe
-                        WardrobeHead = WardrobeHeading
+                        WardrobeVector = Apartment.Wardrobe
+                        WardrobeHead = Apartment.WardrobeHeading
                         WardrobeScriptStatus = 0
                         If playerName = "Michael" Then
                             Player0W.Visible = True
@@ -619,7 +561,7 @@ Public Class NorthConker2045
                 End If
 
                 'Enter Garage
-                If (Not playerPed.IsDead AndAlso Owner = playerName) AndAlso GarageDistance < 5.0 Then
+                If (Not playerPed.IsDead AndAlso Apartment.Owner = playerName) AndAlso Apartment.GarageDistance < 5.0 Then
                     If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
                         DisplayHelpTextThisFrame(_EnterGarage & Garage)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
@@ -637,7 +579,7 @@ Public Class NorthConker2045
                     End If
                 End If
 
-                If IsAtHome Then
+                If Apartment.IsAtHome Then
                     HIDE_MAP_OBJECT_THIS_FRAME()
                     Resources.Disable_Controls()
                     Brain.BrainEnable = True
@@ -654,20 +596,20 @@ Public Class NorthConker2045
 
     Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
         Native.Function.Call(Hash._0x4B5CFC83122DF602)
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_04_house01"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_04_house01_d"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_04_emissive_05_LOD"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_04_M_b_LOD"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_04_emissive_05"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_04_house01_details"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_04_house01"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_04_house01_d"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_04_emissive_05_LOD"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_04_M_b_LOD"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_04_emissive_05"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_04_house01_details"))
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                If Not _Blip Is Nothing Then _Blip.Remove()
-                If Not Blip2 Is Nothing Then Blip2.Remove()
+                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
             Catch ex As Exception
             End Try
         End If

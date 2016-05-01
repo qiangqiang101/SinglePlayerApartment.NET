@@ -9,9 +9,6 @@ Imports SinglePlayerApartment.Mechanic
 Public Class Website
     Inherits Script
 
-    'Public Shared Player As Player
-    'Public Shared PlayerPed As Ped
-    'Public Shared PlayerCash As Integer
     Public Shared VehiclePrice As Integer
     Public Shared SelectedVehicle As String
     Public Shared VehPreview As Vehicle
@@ -29,7 +26,7 @@ Public Class Website
     Public Shared PedalFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\padmcycles.cfg"
     Public Shared SouthernFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\southernsanandreassuperautos.cfg"
     Public Shared WarstockFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\warstock-cache-and-carry.cfg"
-    Public Shared Parameters As String() = {"[name]", "[price]", "[model]", "[category]", "[desc]"}
+    Public Shared Parameters As String() = {"[name]", "[price]", "[model]", "[gxt]", "[make]", "[category]", "[desc]"}
     Public Shared ImagePathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\Images\"
     Public Shared Caller, CallerImg, Subtitle As String
     Public Shared image As String = ""
@@ -39,10 +36,6 @@ Public Class Website
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
-        'Player = Game.Player
-        'PlayerPed = Game.Player.Character
-        'PlayerCash = SinglePlayerApartment.playerCash
-
         'New Language
         ChooseApt = ReadCfgValue("ChooseApt", langFile)
         BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
@@ -84,9 +77,10 @@ Public Class Website
             _menuPool.Add(WarstockMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 WarstockMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -112,9 +106,10 @@ Public Class Website
             _menuPool.Add(SouthernMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 SouthernMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -140,9 +135,10 @@ Public Class Website
             _menuPool.Add(PedalMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 PedalMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -168,9 +164,10 @@ Public Class Website
             _menuPool.Add(LegendaryMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 LegendaryMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -196,9 +193,10 @@ Public Class Website
             _menuPool.Add(ElitasMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 ElitasMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -224,9 +222,10 @@ Public Class Website
             _menuPool.Add(DockMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 DockMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -252,9 +251,10 @@ Public Class Website
             _menuPool.Add(BennyMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
-                Dim item As New UIMenuItem(Format(i)("name"), Format(i)("desc"))
+                Dim item As New UIMenuItem(Game.GetGXTEntry(Format(i)("make")) & " " & Game.GetGXTEntry(Format(i)("gxt")), Format(i)("desc"))
                 BennyMenu.AddItem(item)
                 With item
+                    If .Text.Contains("NULL") Then .Text = Game.GetGXTEntry(Format(i)("gxt"))
                     .SetRightLabel("$" & Price.ToString("N"))
                     .SubString1 = Format(i)("model")
                     .SubInteger1 = Format(i)("price")
@@ -308,8 +308,8 @@ Public Class Website
             Dim NConker2045 As Integer = IO.Directory.GetFiles(NorthConker2045Dir, "*.cfg").Count
             Dim MiltonR2117 As Integer = IO.Directory.GetFiles(MiltonRoad2117Dir, "*.cfg").Count
             Dim Hillcrest2874 As Integer = IO.Directory.GetFiles(HillcrestAve2874Dir, "*.cfg").Count
-            Dim Whispymound3677 As Integer = IO.Directory.GetFiles(Whispymound3677Dir, "*.cfg").Count
-            Dim MadWayne2113 As Integer = IO.Directory.GetFiles(MadWayne2113Dri, "*.cfg").Count
+            Dim _Whispymound3677 As Integer = IO.Directory.GetFiles(Whispymound3677Dir, "*.cfg").Count
+            Dim _MadWayne2113 As Integer = IO.Directory.GetFiles(MadWayne2113Dri, "*.cfg").Count
             Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
             Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
             Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
@@ -320,7 +320,7 @@ Public Class Website
             Dim Lagunas0604 As Integer = IO.Directory.GetFiles(LasLagunas0604Dir, "*.cfg").Count
             Dim Lagunas2143 As Integer = IO.Directory.GetFiles(LasLagunas2143Dir, "*.cfg").Count
             Dim MiltonR0184 As Integer = IO.Directory.GetFiles(MiltonRd0184Dir, "*.cfg").Count
-            Dim PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
+            Dim _PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
             Dim Procopio4401 As Integer = IO.Directory.GetFiles(ProcopioDr4401Dir, "*.cfg").Count
             Dim Procopio4584 As Integer = IO.Directory.GetFiles(ProcopioDr4584Dir, "*.cfg").Count
             Dim Prosperity As Integer = IO.Directory.GetFiles(ProsperityStDir, "*.cfg").Count
@@ -331,7 +331,7 @@ Public Class Website
             Dim Sustancia As Integer = IO.Directory.GetFiles(SustanciaRdDir, "*.cfg").Count
             Dim Royale As Integer = IO.Directory.GetFiles(TheRoyaleDir, "*.cfg").Count
             Dim Grapeseed As Integer = IO.Directory.GetFiles(GrapeseedAveDir, "*.cfg").Count
-            Dim PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
+            Dim _PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
             Dim Rockford0112 As Integer = IO.Directory.GetFiles(SouthRockford0012Dir, "*.cfg").Count
             Dim Zancudo As Integer = IO.Directory.GetFiles(ZancudoAveDir, "*.cfg").Count
 
@@ -350,40 +350,42 @@ Public Class Website
             TT = ReadCfgValue("TTowner", saveFile)
             TTHL = ReadCfgValue("TTHLowner", saveFile)
             WP = ReadCfgValue("WPowner", saveFile)
-            VB = ReadCfgValue("VPBowner", saveFile2)
-            NC2044 = ReadCfgValue("2044NCowner", saveFile2)
-            HA2862 = ReadCfgValue("2862HAowner", saveFile2)
-            HA2868 = ReadCfgValue("2868HAowner", saveFile2)
-            WO3655 = ReadCfgValue("3655WODowner", saveFile2)
-            NC2045 = ReadCfgValue("2045NCowner", saveFile2)
-            MR2117 = ReadCfgValue("2117MRowner", saveFile2)
-            HA2874 = ReadCfgValue("2874HAowner", saveFile2)
-            WD3677 = ReadCfgValue("3677WMDowner", saveFile2)
-            MW2113 = ReadCfgValue("2113MWTowner", saveFile2)
-            ETP1 = ReadCfgValue("ETP1owner", saveFile2)
-            ETP2 = ReadCfgValue("ETP2owner", saveFile2)
-            ETP3 = ReadCfgValue("ETP3owner", saveFile2)
-            BCA = ReadCfgValue("BCAowner", saveFile3)
-            BDP = ReadCfgValue("BDPowner", saveFile3)
-            CA = ReadCfgValue("CAowner", saveFile3)
-            HA = ReadCfgValue("HAowner", saveFile3)
-            LLB0604 = ReadCfgValue("0604LLBowner", saveFile3)
-            LLB2143 = ReadCfgValue("2143LLBowner", saveFile3)
-            MR0184 = ReadCfgValue("0184MRowner", saveFile3)
-            POWER = ReadCfgValue("PSowner", saveFile3)
-            PD4401 = ReadCfgValue("4401PDowner", saveFile3)
-            PD4584 = ReadCfgValue("4584PDowner", saveFile3)
-            PPS = ReadCfgValue("PPSowner", saveFile3)
-            SVS = ReadCfgValue("SVSowner", saveFile3)
-            SMMD = ReadCfgValue("SMMowner", saveFile3)
-            SRD0325 = ReadCfgValue("0325SRDowner", saveFile3)
-            SA = ReadCfgValue("SAonwer", saveFile3)
-            SR = ReadCfgValue("SRowner", saveFile3)
-            TR = ReadCfgValue("TRowner", saveFile3)
-            GA = ReadCfgValue("GAowner", saveFile3)
-            PB = ReadCfgValue("PBowner", saveFile3)
-            SRD0112 = ReadCfgValue("0112SRDowner", saveFile3)
-            ZA = ReadCfgValue("ZAowner", saveFile3)
+            VB = ReadCfgValue("VPBowner", saveFile)
+            NC2044 = ReadCfgValue("2044NCowner", saveFile)
+            HA2862 = ReadCfgValue("2862HAowner", saveFile)
+            HA2868 = ReadCfgValue("2868HAowner", saveFile)
+            WO3655 = ReadCfgValue("3655WODowner", saveFile)
+            NC2045 = ReadCfgValue("2045NCowner", saveFile)
+            MR2117 = ReadCfgValue("2117MRowner", saveFile)
+            HA2874 = ReadCfgValue("2874HAowner", saveFile)
+            WD3677 = ReadCfgValue("3677WMDowner", saveFile)
+            MW2113 = ReadCfgValue("2113MWTowner", saveFile)
+            ETP1 = ReadCfgValue("ETP1owner", saveFile)
+            ETP2 = ReadCfgValue("ETP2owner", saveFile)
+            ETP3 = ReadCfgValue("ETP3owner", saveFile)
+            BCA = ReadCfgValue("BCAowner", saveFile)
+            BDP = ReadCfgValue("BDPowner", saveFile)
+            CA = ReadCfgValue("CAowner", saveFile)
+            HA = ReadCfgValue("HAowner", saveFile)
+            LLB0604 = ReadCfgValue("0604LLBowner", saveFile)
+            LLB2143 = ReadCfgValue("2143LLBowner", saveFile)
+            MR0184 = ReadCfgValue("0184MRowner", saveFile)
+            POWER = ReadCfgValue("PSowner", saveFile)
+            PD4401 = ReadCfgValue("4401PDowner", saveFile)
+            PD4584 = ReadCfgValue("4584PDowner", saveFile)
+            PPS = ReadCfgValue("PPSowner", saveFile)
+            SVS = ReadCfgValue("SVSowner", saveFile)
+            SMMD = ReadCfgValue("SMMowner", saveFile)
+            SRD0325 = ReadCfgValue("0325SRDowner", saveFile)
+            SA = ReadCfgValue("SAonwer", saveFile)
+            SR = ReadCfgValue("SRowner", saveFile)
+            TR = ReadCfgValue("TRowner", saveFile)
+            GA = ReadCfgValue("GAowner", saveFile)
+            PB = ReadCfgValue("PBowner", saveFile)
+            SRD0112 = ReadCfgValue("0112SRDowner", saveFile)
+            ZA = ReadCfgValue("ZAowner", saveFile)
+
+            ReadMenuItems()
 
             If AS3 = playerName AndAlso Not Alta = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
             If IW4 = playerName AndAlso Not Integrity = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
@@ -406,8 +408,8 @@ Public Class Website
             If NC2045 = playerName AndAlso Not NConker2045 = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2045)
             If MR2117 = playerName AndAlso Not MiltonR2117 = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR2117)
             If HA2874 = playerName AndAlso Not Hillcrest2874 = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2874)
-            If WD3677 = playerName AndAlso Not Whispymound3677 = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
-            If MW2113 = playerName AndAlso Not MadWayne2113 = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
+            If WD3677 = playerName AndAlso Not _Whispymound3677 = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
+            If MW2113 = playerName AndAlso Not _MadWayne2113 = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
             If ETP1 = playerName AndAlso Not EclipseP1 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
             If ETP2 = playerName AndAlso Not EclipseP2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
             If ETP3 = playerName AndAlso Not EclipseP3 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
@@ -418,7 +420,7 @@ Public Class Website
             If LLB0604 = playerName AndAlso Not Lagunas0604 = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
             If LLB2143 = playerName AndAlso Not Lagunas2143 = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
             If MR0184 = playerName AndAlso Not MiltonR0184 = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
-            If POWER = playerName AndAlso Not PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
+            If POWER = playerName AndAlso Not _PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
             If PD4401 = playerName AndAlso Not Procopio4401 = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
             If PD4584 = playerName AndAlso Not Procopio4584 = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
             If PPS = playerName AndAlso Not Prosperity = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
@@ -429,7 +431,7 @@ Public Class Website
             If SR = playerName AndAlso Not Sustancia = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
             If TR = playerName AndAlso Not Royale = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
             If GA = playerName AndAlso Not Grapeseed = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
-            If PB = playerName AndAlso Not PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
+            If PB = playerName AndAlso Not _PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
             If SRD0112 = playerName AndAlso Not Rockford0112 = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
             If ZA = playerName AndAlso Not Zancudo = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
 

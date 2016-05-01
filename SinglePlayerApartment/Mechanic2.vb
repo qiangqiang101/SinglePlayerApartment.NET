@@ -57,6 +57,7 @@ Public Class Mechanic2
     Public PaletoBlvdPath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\paleto_blvd\"
     Public SouthRockford0012Path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0112_south_rockford_dr\"
     Public ZancudoAvePath As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\zancudo_ave\"
+    Public Shared MechanicPed As Ped
 
     Public Sub New()
         'New Language
@@ -115,9 +116,20 @@ Public Class Mechanic2
         AddHandler Tick, AddressOf OnTick
     End Sub
 
+    Public Shared Sub CreateMechanicInVehicle(Vehicle As Vehicle)
+        If My.Settings.VehicleSpawn = 1 Then
+            MechanicPed = Vehicle.CreatePedOnSeat(VehicleSeat.Driver, PedHash.Autoshop01SMM)
+            MechanicPed.AlwaysKeepTask = True
+            MechanicPed.Task.DriveTo(Vehicle, playerPed.Position, 20.0, 15.0)
+            MechanicPed.DrivingStyle = DrivingStyle.Normal
+        Else
+            Vehicle.Position = World.GetNextPositionOnStreet(playerPed.Position)
+        End If
+    End Sub
+
     Public Shared Sub Michael_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If MPV1 = Nothing Then
-            MPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+            MPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             MPV1.AddBlip()
             MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             MPV1.CurrentBlip.Color = BlipColor.Blue
@@ -126,9 +138,10 @@ Public Class Mechanic2
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(MPV1, SelectedItem_Car)
+            CreateMechanicInVehicle(MPV1)
         Else
             If MPV2 = Nothing Then
-                MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 MPV2.AddBlip()
                 MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 MPV2.CurrentBlip.Color = BlipColor.Blue
@@ -137,9 +150,10 @@ Public Class Mechanic2
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(MPV2, SelectedItem_Car)
+                CreateMechanicInVehicle(MPV2)
             Else
                 If MPV3 = Nothing Then
-                    MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                    MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     MPV3.AddBlip()
                     MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     MPV3.CurrentBlip.Color = BlipColor.Blue
@@ -148,9 +162,10 @@ Public Class Mechanic2
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(MPV3, SelectedItem_Car)
+                    CreateMechanicInVehicle(MPV3)
                 Else
                     If MPV4 = Nothing Then
-                        MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                        MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         MPV4.AddBlip()
                         MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         MPV4.CurrentBlip.Color = BlipColor.Blue
@@ -159,9 +174,10 @@ Public Class Mechanic2
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(MPV4, SelectedItem_Car)
+                        CreateMechanicInVehicle(MPV4)
                     Else
                         If MPV5 = Nothing Then
-                            MPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                            MPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             MPV5.AddBlip()
                             MPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             MPV5.CurrentBlip.Color = BlipColor.Blue
@@ -170,9 +186,10 @@ Public Class Mechanic2
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(MPV5, SelectedItem_Car)
+                            CreateMechanicInVehicle(MPV5)
                         Else
                             If MPV6 = Nothing Then
-                                MPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                MPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                 MPV6.AddBlip()
                                 MPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 MPV6.CurrentBlip.Color = BlipColor.Blue
@@ -181,9 +198,10 @@ Public Class Mechanic2
                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                 SetModKit(MPV6, SelectedItem_Car)
+                                CreateMechanicInVehicle(MPV6)
                             Else
                                 If MPV7 = Nothing Then
-                                    MPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                    MPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                     MPV7.AddBlip()
                                     MPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     MPV7.CurrentBlip.Color = BlipColor.Blue
@@ -192,9 +210,10 @@ Public Class Mechanic2
                                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                     WriteCfgValue("Active", "True", SelectedItem_Car)
                                     SetModKit(MPV7, SelectedItem_Car)
+                                    CreateMechanicInVehicle(MPV7)
                                 Else
                                     If MPV8 = Nothing Then
-                                        MPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                        MPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                         MPV8.AddBlip()
                                         MPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         MPV8.CurrentBlip.Color = BlipColor.Blue
@@ -203,9 +222,10 @@ Public Class Mechanic2
                                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                         WriteCfgValue("Active", "True", SelectedItem_Car)
                                         SetModKit(MPV8, SelectedItem_Car)
+                                        CreateMechanicInVehicle(MPV8)
                                     Else
                                         If MPV9 = Nothing Then
-                                            MPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                            MPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                             MPV9.AddBlip()
                                             MPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             MPV9.CurrentBlip.Color = BlipColor.Blue
@@ -214,9 +234,10 @@ Public Class Mechanic2
                                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                             WriteCfgValue("Active", "True", SelectedItem_Car)
                                             SetModKit(MPV9, SelectedItem_Car)
+                                            CreateMechanicInVehicle(MPV9)
                                         Else
                                             If MPV0 = Nothing Then
-                                                MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                                MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                                 MPV0.AddBlip()
                                                 MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 MPV0.CurrentBlip.Color = BlipColor.Blue
@@ -225,6 +246,7 @@ Public Class Mechanic2
                                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                                 SetModKit(MPV0, SelectedItem_Car)
+                                                CreateMechanicInVehicle(MPV0)
                                             Else
                                                 sender.Visible = False
                                                 UI.ShowSubtitle(Reach10)
@@ -243,7 +265,7 @@ Public Class Mechanic2
 
     Public Shared Sub Franklin_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If FPV1 = Nothing Then
-            FPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+            FPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             FPV1.AddBlip()
             FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             FPV1.CurrentBlip.Color = BlipColor.Green
@@ -252,9 +274,10 @@ Public Class Mechanic2
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(FPV1, SelectedItem_Car)
+            CreateMechanicInVehicle(FPV1)
         Else
             If FPV2 = Nothing Then
-                FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 FPV2.AddBlip()
                 FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 FPV2.CurrentBlip.Color = BlipColor.Green
@@ -263,9 +286,10 @@ Public Class Mechanic2
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(FPV2, SelectedItem_Car)
+                CreateMechanicInVehicle(FPV2)
             Else
                 If FPV3 = Nothing Then
-                    FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                    FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     FPV3.AddBlip()
                     FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     FPV3.CurrentBlip.Color = BlipColor.Green
@@ -274,9 +298,10 @@ Public Class Mechanic2
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(FPV3, SelectedItem_Car)
+                    CreateMechanicInVehicle(FPV3)
                 Else
                     If FPV4 = Nothing Then
-                        FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                        FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         FPV4.AddBlip()
                         FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         FPV4.CurrentBlip.Color = BlipColor.Green
@@ -285,9 +310,10 @@ Public Class Mechanic2
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(FPV4, SelectedItem_Car)
+                        CreateMechanicInVehicle(FPV4)
                     Else
                         If FPV5 = Nothing Then
-                            FPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                            FPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             FPV5.AddBlip()
                             FPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             FPV5.CurrentBlip.Color = BlipColor.Green
@@ -296,9 +322,10 @@ Public Class Mechanic2
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(FPV5, SelectedItem_Car)
+                            CreateMechanicInVehicle(FPV5)
                         Else
                             If FPV6 = Nothing Then
-                                FPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                FPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                 FPV6.AddBlip()
                                 FPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 FPV6.CurrentBlip.Color = BlipColor.Green
@@ -307,9 +334,10 @@ Public Class Mechanic2
                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                 SetModKit(FPV6, SelectedItem_Car)
+                                CreateMechanicInVehicle(FPV6)
                             Else
                                 If FPV7 = Nothing Then
-                                    FPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                    FPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                     FPV7.AddBlip()
                                     FPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     FPV7.CurrentBlip.Color = BlipColor.Green
@@ -318,9 +346,10 @@ Public Class Mechanic2
                                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                     WriteCfgValue("Active", "True", SelectedItem_Car)
                                     SetModKit(FPV7, SelectedItem_Car)
+                                    CreateMechanicInVehicle(FPV7)
                                 Else
                                     If FPV8 = Nothing Then
-                                        FPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                        FPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                         FPV8.AddBlip()
                                         FPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         FPV8.CurrentBlip.Color = BlipColor.Green
@@ -329,9 +358,10 @@ Public Class Mechanic2
                                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                         WriteCfgValue("Active", "True", SelectedItem_Car)
                                         SetModKit(FPV8, SelectedItem_Car)
+                                        CreateMechanicInVehicle(FPV8)
                                     Else
                                         If FPV9 = Nothing Then
-                                            FPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                            FPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                             FPV9.AddBlip()
                                             FPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             FPV9.CurrentBlip.Color = BlipColor.Green
@@ -340,9 +370,10 @@ Public Class Mechanic2
                                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                             WriteCfgValue("Active", "True", SelectedItem_Car)
                                             SetModKit(FPV9, SelectedItem_Car)
+                                            CreateMechanicInVehicle(FPV9)
                                         Else
                                             If FPV0 = Nothing Then
-                                                FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                                FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                                 FPV0.AddBlip()
                                                 FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 FPV0.CurrentBlip.Color = BlipColor.Green
@@ -351,6 +382,7 @@ Public Class Mechanic2
                                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                                 SetModKit(FPV0, SelectedItem_Car)
+                                                CreateMechanicInVehicle(FPV0)
                                             Else
                                                 sender.Visible = False
                                                 UI.ShowSubtitle(Reach10)
@@ -369,7 +401,7 @@ Public Class Mechanic2
 
     Public Shared Sub Trevor_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If TPV1 = Nothing Then
-            TPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+            TPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             TPV1.AddBlip()
             TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             TPV1.CurrentBlip.Color = 17
@@ -378,9 +410,10 @@ Public Class Mechanic2
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(TPV1, SelectedItem_Car)
+            CreateMechanicInVehicle(TPV1)
         Else
             If TPV2 = Nothing Then
-                TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 TPV2.AddBlip()
                 TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 TPV2.CurrentBlip.Color = 17
@@ -389,9 +422,10 @@ Public Class Mechanic2
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(TPV2, SelectedItem_Car)
+                CreateMechanicInVehicle(TPV2)
             Else
                 If TPV3 = Nothing Then
-                    TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                    TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     TPV3.AddBlip()
                     TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     TPV3.CurrentBlip.Color = 17
@@ -400,9 +434,10 @@ Public Class Mechanic2
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(TPV3, SelectedItem_Car)
+                    CreateMechanicInVehicle(TPV3)
                 Else
                     If TPV4 = Nothing Then
-                        TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                        TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         TPV4.AddBlip()
                         TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         TPV4.CurrentBlip.Color = 17
@@ -411,9 +446,10 @@ Public Class Mechanic2
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(TPV4, SelectedItem_Car)
+                        CreateMechanicInVehicle(TPV4)
                     Else
                         If TPV5 = Nothing Then
-                            TPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                            TPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             TPV5.AddBlip()
                             TPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             TPV5.CurrentBlip.Color = 17
@@ -422,9 +458,10 @@ Public Class Mechanic2
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(TPV5, SelectedItem_Car)
+                            CreateMechanicInVehicle(TPV5)
                         Else
                             If TPV6 = Nothing Then
-                                TPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                TPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                 TPV6.AddBlip()
                                 TPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 TPV6.CurrentBlip.Color = 17
@@ -433,9 +470,10 @@ Public Class Mechanic2
                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                 SetModKit(TPV6, SelectedItem_Car)
+                                CreateMechanicInVehicle(TPV6)
                             Else
                                 If TPV7 = Nothing Then
-                                    TPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                    TPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                     TPV7.AddBlip()
                                     TPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     TPV7.CurrentBlip.Color = 17
@@ -444,9 +482,10 @@ Public Class Mechanic2
                                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                     WriteCfgValue("Active", "True", SelectedItem_Car)
                                     SetModKit(TPV7, SelectedItem_Car)
+                                    CreateMechanicInVehicle(TPV7)
                                 Else
                                     If TPV8 = Nothing Then
-                                        TPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                        TPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                         TPV8.AddBlip()
                                         TPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         TPV8.CurrentBlip.Color = 17
@@ -455,9 +494,10 @@ Public Class Mechanic2
                                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                         WriteCfgValue("Active", "True", SelectedItem_Car)
                                         SetModKit(TPV8, SelectedItem_Car)
+                                        CreateMechanicInVehicle(TPV8)
                                     Else
                                         If TPV9 = Nothing Then
-                                            TPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                            TPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                             TPV9.AddBlip()
                                             TPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             TPV9.CurrentBlip.Color = 17
@@ -466,9 +506,10 @@ Public Class Mechanic2
                                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                             WriteCfgValue("Active", "True", SelectedItem_Car)
                                             SetModKit(TPV9, SelectedItem_Car)
+                                            CreateMechanicInVehicle(TPV9)
                                         Else
                                             If TPV0 = Nothing Then
-                                                TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                                TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                                 TPV0.AddBlip()
                                                 TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 TPV0.CurrentBlip.Color = 17
@@ -477,6 +518,7 @@ Public Class Mechanic2
                                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                                 SetModKit(TPV0, SelectedItem_Car)
+                                                CreateMechanicInVehicle(TPV0)
                                             Else
                                                 sender.Visible = False
                                                 UI.ShowSubtitle(Reach10)
@@ -495,7 +537,7 @@ Public Class Mechanic2
 
     Public Shared Sub Player3_SendVehicle(ByVal SelectedItem_Car As String, VehicleModel As String, VehicleHash As String, selectedItem As UIMenuItem, sender As UIMenu)
         If PPV1 = Nothing Then
-            PPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+            PPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             PPV1.AddBlip()
             PPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             PPV1.CurrentBlip.Color = BlipColor.Yellow
@@ -504,9 +546,10 @@ Public Class Mechanic2
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(PPV1, SelectedItem_Car)
+            CreateMechanicInVehicle(PPV1)
         Else
             If PPV2 = Nothing Then
-                PPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                PPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 PPV2.AddBlip()
                 PPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 PPV2.CurrentBlip.Color = BlipColor.Yellow
@@ -515,9 +558,10 @@ Public Class Mechanic2
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(PPV2, SelectedItem_Car)
+                CreateMechanicInVehicle(PPV2)
             Else
                 If PPV3 = Nothing Then
-                    PPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                    PPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     PPV3.AddBlip()
                     PPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     PPV3.CurrentBlip.Color = BlipColor.Yellow
@@ -526,9 +570,10 @@ Public Class Mechanic2
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(PPV3, SelectedItem_Car)
+                    CreateMechanicInVehicle(PPV3)
                 Else
                     If PPV4 = Nothing Then
-                        PPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                        PPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         PPV4.AddBlip()
                         PPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         PPV4.CurrentBlip.Color = BlipColor.Yellow
@@ -537,9 +582,10 @@ Public Class Mechanic2
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(PPV4, SelectedItem_Car)
+                        CreateMechanicInVehicle(PPV4)
                     Else
                         If PPV5 = Nothing Then
-                            PPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                            PPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             PPV5.AddBlip()
                             PPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                             PPV5.CurrentBlip.Color = BlipColor.Yellow
@@ -548,9 +594,10 @@ Public Class Mechanic2
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(PPV5, SelectedItem_Car)
+                            CreateMechanicInVehicle(PPV5)
                         Else
                             If PPV6 = Nothing Then
-                                PPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                PPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                 PPV6.AddBlip()
                                 PPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                 PPV6.CurrentBlip.Color = BlipColor.Yellow
@@ -559,9 +606,10 @@ Public Class Mechanic2
                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                 SetModKit(PPV6, SelectedItem_Car)
+                                CreateMechanicInVehicle(PPV6)
                             Else
                                 If PPV7 = Nothing Then
-                                    PPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                    PPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                     PPV7.AddBlip()
                                     PPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                     PPV7.CurrentBlip.Color = BlipColor.Yellow
@@ -570,9 +618,10 @@ Public Class Mechanic2
                                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                     WriteCfgValue("Active", "True", SelectedItem_Car)
                                     SetModKit(PPV7, SelectedItem_Car)
+                                    CreateMechanicInVehicle(PPV7)
                                 Else
                                     If PPV8 = Nothing Then
-                                        PPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                        PPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                         PPV8.AddBlip()
                                         PPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                         PPV8.CurrentBlip.Color = BlipColor.Yellow
@@ -581,9 +630,10 @@ Public Class Mechanic2
                                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                         WriteCfgValue("Active", "True", SelectedItem_Car)
                                         SetModKit(PPV8, SelectedItem_Car)
+                                        CreateMechanicInVehicle(PPV8)
                                     Else
                                         If PPV9 = Nothing Then
-                                            PPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                            PPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                             PPV9.AddBlip()
                                             PPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                             PPV9.CurrentBlip.Color = BlipColor.Yellow
@@ -592,9 +642,10 @@ Public Class Mechanic2
                                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                             WriteCfgValue("Active", "True", SelectedItem_Car)
                                             SetModKit(PPV9, SelectedItem_Car)
+                                            CreateMechanicInVehicle(PPV9)
                                         Else
                                             If PPV0 = Nothing Then
-                                                PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
+                                                PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                                                 PPV0.AddBlip()
                                                 PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                                                 PPV0.CurrentBlip.Color = BlipColor.Yellow
@@ -603,6 +654,7 @@ Public Class Mechanic2
                                                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                                                 WriteCfgValue("Active", "True", SelectedItem_Car)
                                                 SetModKit(PPV0, SelectedItem_Car)
+                                                CreateMechanicInVehicle(PPV0)
                                             Else
                                                 sender.Visible = False
                                                 UI.ShowSubtitle(Reach10)
@@ -806,21 +858,6 @@ Public Class Mechanic2
         If ReadCfgValue("ExtraSeven", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, -1)
         If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
         If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
-        'Added on v1.5.1
-        '_Vehicle.SetMod(49, ReadCfgValue("ForthyNine", VehicleCfgFile), True)
-        '_Vehicle.SetMod(50, ReadCfgValue("FiftyZero", VehicleCfgFile), True)
-        '_Vehicle.SetMod(51, ReadCfgValue("FiftyOne", VehicleCfgFile), True)
-        '_Vehicle.SetMod(52, ReadCfgValue("FiftyTwo", VehicleCfgFile), True)
-        '_Vehicle.SetMod(53, ReadCfgValue("FiftyThree", VehicleCfgFile), True)
-        '_Vehicle.SetMod(54, ReadCfgValue("FiftyFour", VehicleCfgFile), True)
-        '_Vehicle.SetMod(55, ReadCfgValue("FiftyFive", VehicleCfgFile), True)
-        '_Vehicle.SetMod(56, ReadCfgValue("FiftySix", VehicleCfgFile), True)
-        '_Vehicle.SetMod(57, ReadCfgValue("FiftySeven", VehicleCfgFile), True)
-        '_Vehicle.SetMod(58, ReadCfgValue("FiftyEight", VehicleCfgFile), True)
-        '_Vehicle.SetMod(59, ReadCfgValue("FiftyNine", VehicleCfgFile), True)
-        '_Vehicle.SetMod(60, ReadCfgValue("SixtyZero", VehicleCfgFile), True)
-        '_Vehicle.SetMod(61, ReadCfgValue("SixtyOne", VehicleCfgFile), True)
-        '_Vehicle.SetMod(62, ReadCfgValue("SixtyTwo", VehicleCfgFile), True)
     End Sub
 
     Public Shared Sub ReturnAllVehiclesToGarage(PathDir As String)
@@ -1115,8 +1152,29 @@ Public Class Mechanic2
                 SinglePlayerApartment.player.Money = (playerCash - 100)
                 UI.Notify(MechanicBill)
             End If
+
+            If Not MechanicPed = Nothing AndAlso My.Settings.VehicleSpawn = 1 Then
+                If MechanicPed.Position.DistanceTo(playerPed.Position) < 5.0 AndAlso MechanicPed.IsInVehicle Then
+                    MechanicPed.Task.LeaveVehicle()
+                    MechanicPed.AlwaysKeepTask = False
+                ElseIf MechanicPed.Position.DistanceTo(playerPed.Position) < 10.0 AndAlso Not MechanicPed.IsInVehicle Then
+                    MechanicPed.Task.RunTo(World.GetNextPositionOnSidewalk(playerPed.Position.Around(100.0)))
+                ElseIf MechanicPed.Position.DistanceTo(playerPed.Position) > 500.0 Then
+                    MechanicPed.Delete()
+                End If
+            End If
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Protected Overrides Sub Dispose(A_0 As Boolean)
+        If (A_0) Then
+            Try
+                If Not MechanicPed = Nothing Then MechanicPed.Delete()
+            Catch ex As Exception
+            End Try
+        End If
     End Sub
 End Class

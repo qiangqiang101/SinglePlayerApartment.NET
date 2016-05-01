@@ -283,21 +283,6 @@ Public Class SixCarGarage
         If EngineRunning = True Then _Vehicle.EngineRunning = True
         'Make sure it is set to correct Engine
         _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
-        'Added on v1.5.1
-        '_Vehicle.SetMod(49, ReadCfgValue("ForthyNine", VehicleCfgFile), True)
-        '_Vehicle.SetMod(50, ReadCfgValue("FiftyZero", VehicleCfgFile), True)
-        '_Vehicle.SetMod(51, ReadCfgValue("FiftyOne", VehicleCfgFile), True)
-        '_Vehicle.SetMod(52, ReadCfgValue("FiftyTwo", VehicleCfgFile), True)
-        '_Vehicle.SetMod(53, ReadCfgValue("FiftyThree", VehicleCfgFile), True)
-        '_Vehicle.SetMod(54, ReadCfgValue("FiftyFour", VehicleCfgFile), True)
-        '_Vehicle.SetMod(55, ReadCfgValue("FiftyFive", VehicleCfgFile), True)
-        '_Vehicle.SetMod(56, ReadCfgValue("FiftySix", VehicleCfgFile), True)
-        '_Vehicle.SetMod(57, ReadCfgValue("FiftySeven", VehicleCfgFile), True)
-        '_Vehicle.SetMod(58, ReadCfgValue("FiftyEight", VehicleCfgFile), True)
-        '_Vehicle.SetMod(59, ReadCfgValue("FiftyNine", VehicleCfgFile), True)
-        '_Vehicle.SetMod(60, ReadCfgValue("SixtyZero", VehicleCfgFile), True)
-        '_Vehicle.SetMod(61, ReadCfgValue("SixtyOne", VehicleCfgFile), True)
-        '_Vehicle.SetMod(62, ReadCfgValue("SixtyTwo", VehicleCfgFile), True)
     End Sub
 
     Public Shared Sub SaveGarageVehicle(file As String)
@@ -445,6 +430,10 @@ Public Class SixCarGarage
         WriteCfgValue("WheelType", playerPed.CurrentVehicle.WheelType, file)
         WriteCfgValue("Livery", playerPed.CurrentVehicle.Livery, file)
         WriteCfgValue("PlateType", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, playerPed.CurrentVehicle), file)
+        If playerPed.CurrentVehicle.NumberPlate.Contains("MENYOO") Or playerPed.CurrentVehicle.NumberPlate.Contains("ENHANCED") Then
+            Dim g As Guid = Guid.NewGuid()
+            playerPed.CurrentVehicle.NumberPlate = g.ToString()
+        End If
         WriteCfgValue("PlateNumber", playerPed.CurrentVehicle.NumberPlate, file)
         WriteCfgValue("WindowTint", playerPed.CurrentVehicle.WindowTint, file)
         WriteCfgValue("Spoiler", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 0), file)
@@ -514,21 +503,6 @@ Public Class SixCarGarage
         'Added on v1.3.4
         WriteCfgValue("TrimColor", GetVehicleInteriorTrimColor(playerPed.CurrentVehicle), file)
         WriteCfgValue("DashboardColor", GetVehicleInteriorDashboardColor(playerPed.CurrentVehicle), file)
-        'Added on v1.5.1
-        'WriteCfgValue("ForthyNine", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 49), file)
-        'WriteCfgValue("FiftyZero", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 50), file)
-        'WriteCfgValue("FiftyOne", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 51), file)
-        'WriteCfgValue("FiftyTwo", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 52), file)
-        'WriteCfgValue("FiftyThree", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 53), file)
-        'WriteCfgValue("FiftyFour", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 54), file)
-        'WriteCfgValue("FiftyFive", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 55), file)
-        'WriteCfgValue("FiftySix", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 56), file)
-        'WriteCfgValue("FiftySeven", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 57), file)
-        'WriteCfgValue("FiftyEight", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 58), file)
-        'WriteCfgValue("FiftyNine", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 59), file)
-        'WriteCfgValue("SixtyZero", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 60), file)
-        'WriteCfgValue("SixtyOne", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 61), file)
-        'WriteCfgValue("SixtyTwo", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 62), file)
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -1117,6 +1091,7 @@ Public Class SixCarGarage
             End If
 
             playerPed.CurrentVehicle.Repair()
+            Brain.TVOn = False
             playerPed.CurrentVehicle.Position = lastLocationGarageOutVector
             playerPed.CurrentVehicle.Heading = lastLocationGarageOutHeading
             ShowAllHiddenMapObject()
@@ -1138,6 +1113,7 @@ Public Class SixCarGarage
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
             Game.FadeScreenOut(500)
             Wait(&H3E8)
+            Brain.TVOn = False
             playerPed.Position = lastLocationGarageVector
             ShowAllHiddenMapObject()
             LowEndLastLocationName = Nothing
@@ -1156,11 +1132,13 @@ Public Class SixCarGarage
     End Sub
 
     Public Shared Sub ShowAllHiddenMapObject()
-        GrapeseedAve.IsAtHome = False
-        PaletoBlvd.IsAtHome = False
-        SouthRockfordDr0112.IsAtHome = False
-        VespucciBlvd.IsAtHome = False
-        ZancudoAve.IsAtHome = False
+        GrapeseedAve.Apartment.IsAtHome = False
+        PaletoBlvd.Apartment.IsAtHome = False
+        SouthRockfordDr0112.Apartment.IsAtHome = False
+        VespucciBlvd.Apartment.IsAtHome = False
+        ZancudoAve.Apartment.IsAtHome = False
+
+        Brain.TVOn = False
     End Sub
 
     Protected Overrides Sub Dispose(A_0 As Boolean)

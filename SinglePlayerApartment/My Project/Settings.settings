@@ -170,5 +170,17 @@
     <Setting Name="PreviewPointY" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">120</Value>
     </Setting>
+    <Setting Name="VehicleSpawn" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="Volume" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="MechanicPad" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">235</Value>
+    </Setting>
+    <Setting Name="SecondMechanicPad" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">223</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

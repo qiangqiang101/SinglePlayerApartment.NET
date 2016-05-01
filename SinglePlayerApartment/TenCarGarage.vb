@@ -369,21 +369,6 @@ Public Class TenCarGarage
         If EngineRunning = True Then _Vehicle.EngineRunning = True
         'Make sure it is set to correct Engine
         _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
-        'Added on v1.5.1
-        '_Vehicle.SetMod(49, ReadCfgValue("ForthyNine", VehicleCfgFile), True)
-        '_Vehicle.SetMod(50, ReadCfgValue("FiftyZero", VehicleCfgFile), True)
-        '_Vehicle.SetMod(51, ReadCfgValue("FiftyOne", VehicleCfgFile), True)
-        '_Vehicle.SetMod(52, ReadCfgValue("FiftyTwo", VehicleCfgFile), True)
-        '_Vehicle.SetMod(53, ReadCfgValue("FiftyThree", VehicleCfgFile), True)
-        '_Vehicle.SetMod(54, ReadCfgValue("FiftyFour", VehicleCfgFile), True)
-        '_Vehicle.SetMod(55, ReadCfgValue("FiftyFive", VehicleCfgFile), True)
-        '_Vehicle.SetMod(56, ReadCfgValue("FiftySix", VehicleCfgFile), True)
-        '_Vehicle.SetMod(57, ReadCfgValue("FiftySeven", VehicleCfgFile), True)
-        '_Vehicle.SetMod(58, ReadCfgValue("FiftyEight", VehicleCfgFile), True)
-        '_Vehicle.SetMod(59, ReadCfgValue("FiftyNine", VehicleCfgFile), True)
-        '_Vehicle.SetMod(60, ReadCfgValue("SixtyZero", VehicleCfgFile), True)
-        '_Vehicle.SetMod(61, ReadCfgValue("SixtyOne", VehicleCfgFile), True)
-        '_Vehicle.SetMod(62, ReadCfgValue("SixtyTwo", VehicleCfgFile), True)
     End Sub
 
     Public Shared Sub SaveGarageVehicle(file As String)
@@ -603,6 +588,10 @@ Public Class TenCarGarage
         WriteCfgValue("WheelType", playerPed.CurrentVehicle.WheelType, file)
         WriteCfgValue("Livery", playerPed.CurrentVehicle.Livery, file)
         WriteCfgValue("PlateType", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, playerPed.CurrentVehicle), file)
+        If playerPed.CurrentVehicle.NumberPlate.Contains("MENYOO") Or playerPed.CurrentVehicle.NumberPlate.Contains("ENHANCED") Then
+            Dim g As Guid = Guid.NewGuid()
+            playerPed.CurrentVehicle.NumberPlate = g.ToString()
+        End If
         WriteCfgValue("PlateNumber", playerPed.CurrentVehicle.NumberPlate, file)
         WriteCfgValue("WindowTint", playerPed.CurrentVehicle.WindowTint, file)
         WriteCfgValue("Spoiler", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 0), file)
@@ -672,21 +661,6 @@ Public Class TenCarGarage
         'Added on v1.3.4
         WriteCfgValue("TrimColor", GetVehicleInteriorTrimColor(playerPed.CurrentVehicle), file)
         WriteCfgValue("DashboardColor", GetVehicleInteriorDashboardColor(playerPed.CurrentVehicle), file)
-        'Added on v1.5.1
-        'WriteCfgValue("ForthyNine", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 49), file)
-        'WriteCfgValue("FiftyZero", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 50), file)
-        'WriteCfgValue("FiftyOne", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 51), file)
-        'WriteCfgValue("FiftyTwo", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 52), file)
-        'WriteCfgValue("FiftyThree", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 53), file)
-        'WriteCfgValue("FiftyFour", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 54), file)
-        'WriteCfgValue("FiftyFive", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 55), file)
-        'WriteCfgValue("FiftySix", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 56), file)
-        'WriteCfgValue("FiftySeven", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 57), file)
-        'WriteCfgValue("FiftyEight", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 58), file)
-        'WriteCfgValue("FiftyNine", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 59), file)
-        'WriteCfgValue("SixtyZero", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 60), file)
-        'WriteCfgValue("SixtyOne", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 61), file)
-        'WriteCfgValue("SixtyTwo", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 62), file)
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -710,7 +684,7 @@ Public Class TenCarGarage
                 DisplayHelpTextThisFrame(ExitGarage & Garage)
             End If
 
-            If Not playerPed.IsDead AndAlso GarageMarkerDistance < 3.0 Then
+            If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
                 DisplayHelpTextThisFrame(ManageGarage)
             End If
 
@@ -1288,6 +1262,7 @@ Public Class TenCarGarage
                 End If
             End If
 
+            Brain.TVOn = False
             playerPed.CurrentVehicle.Repair()
             playerPed.CurrentVehicle.Position = lastLocationGarageOutVector
             playerPed.CurrentVehicle.Heading = lastLocationGarageOutHeading
@@ -1310,6 +1285,7 @@ Public Class TenCarGarage
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
             Game.FadeScreenOut(500)
             Wait(&H3E8)
+            Brain.TVOn = False
             playerPed.Position = lastLocationGarageVector
             ShowAllHiddenMapObject()
             MediumEndLastLocationName = Nothing
@@ -1319,7 +1295,7 @@ Public Class TenCarGarage
             UnLoadMPDLCMap()
         End If
 
-        If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 3.0 Then
+        If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 1.5 Then
             Mechanic.CreateGarageMenu(CurrentPath)
             Mechanic.CreateGarageMenu2("Ten")
             Mechanic.GarageMenu.Visible = True
@@ -1328,40 +1304,42 @@ Public Class TenCarGarage
     End Sub
 
     Public Shared Sub ShowAllHiddenMapObject()
-        HillcrestAve2862.IsAtHome = False
-        HillcrestAve2868.IsAtHome = False
-        HillcrestAve2874.IsAtHome = False
-        MadWayne2113.IsAtHome = False
-        MiltonRd2117.IsAtHome = False
-        NorthConker2044.IsAtHome = False
-        NorthConker2045.IsAtHome = False
-        Whispymound3677.IsAtHome = False
-        WildOats3655.IsAtHome = False
-        _3AltaStreet.IsAtHome = False
-        _4IntegrityWay.IsAtHome = False
-        DelPerroHeight.IsAtHome = False
-        EclipseTower.IsAtHome = False
-        RichardMajestic.IsAtHome = False
-        TinselTower.IsAtHome = False
-        WeazelPlaza.IsAtHome = False
-        BayCityAve.IsAtHome = False
-        BlvdDelPerro.IsAtHome = False
-        CougarAve.IsAtHome = False
-        DreamTower.IsAtHome = False
-        HangmanAve.IsAtHome = False
-        LasLagunasBlvd0604.IsAtHome = False
-        LasLagunasBlvd2143.IsAtHome = False
-        MiltonRd0184.IsAtHome = False
-        PowerSt.IsAtHome = False
-        ProcopioDr4401.IsAtHome = False
-        ProcopioDr4584.IsAtHome = False
-        ProsperitySt.IsAtHome = False
-        SanVitasSt.IsAtHome = False
-        SouthMoMiltonDr.IsAtHome = False
-        SouthRockfordDrive0325.IsAtHome = False
-        SpanishAve.IsAtHome = False
-        SustanciaRd.IsAtHome = False
-        TheRoyale.IsAtHome = False
+        HillcrestAve2862.Apartment.IsAtHome = False
+        HillcrestAve2868.Apartment.IsAtHome = False
+        HillcrestAve2874.Apartment.IsAtHome = False
+        MadWayne2113.Apartment.IsAtHome = False
+        MiltonRd2117.Apartment.IsAtHome = False
+        NorthConker2044.Apartment.IsAtHome = False
+        NorthConker2045.Apartment.IsAtHome = False
+        Whispymound3677.Apartment.IsAtHome = False
+        WildOats3655.Apartment.IsAtHome = False
+        _3AltaStreet.Apartment.IsAtHome = False
+        _4IntegrityWay.Apartment.IsAtHome = False
+        DelPerroHeight.Apartment.IsAtHome = False
+        EclipseTower.Apartment.IsAtHome = False
+        RichardMajestic.Apartment.IsAtHome = False
+        TinselTower.Apartment.IsAtHome = False
+        WeazelPlaza.Apartment.IsAtHome = False
+        BayCityAve.Apartment.IsAtHome = False
+        BlvdDelPerro.Apartment.IsAtHome = False
+        CougarAve.Apartment.IsAtHome = False
+        DreamTower.Apartment.IsAtHome = False
+        HangmanAve.Apartment.IsAtHome = False
+        LasLagunasBlvd0604.Apartment.IsAtHome = False
+        LasLagunasBlvd2143.Apartment.IsAtHome = False
+        MiltonRd0184.Apartment.IsAtHome = False
+        PowerSt.Apartment.IsAtHome = False
+        ProcopioDr4401.Apartment.IsAtHome = False
+        ProcopioDr4584.Apartment.IsAtHome = False
+        ProsperitySt.Apartment.IsAtHome = False
+        SanVitasSt.Apartment.IsAtHome = False
+        SouthMoMiltonDr.Apartment.IsAtHome = False
+        SouthRockfordDrive0325.Apartment.IsAtHome = False
+        SpanishAve.Apartment.IsAtHome = False
+        SustanciaRd.Apartment.IsAtHome = False
+        TheRoyale.Apartment.IsAtHome = False
+
+        Brain.TVOn = False
 
         RemoveIPL("apa_stilt_ch2_04_ext1")
         RemoveIPL("apa_stilt_ch2_04_ext2")

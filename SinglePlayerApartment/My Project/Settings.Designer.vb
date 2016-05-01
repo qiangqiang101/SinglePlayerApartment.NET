@@ -725,6 +725,54 @@ Namespace My
                 Me("PreviewPointY") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property VehicleSpawn() As Integer
+            Get
+                Return CType(Me("VehicleSpawn"),Integer)
+            End Get
+            Set
+                Me("VehicleSpawn") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property Volume() As Integer
+            Get
+                Return CType(Me("Volume"),Integer)
+            End Get
+            Set
+                Me("Volume") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("235")>  _
+        Public Property MechanicPad() As Integer
+            Get
+                Return CType(Me("MechanicPad"),Integer)
+            End Get
+            Set
+                Me("MechanicPad") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("223")>  _
+        Public Property SecondMechanicPad() As Integer
+            Get
+                Return CType(Me("SecondMechanicPad"),Integer)
+            End Get
+            Set
+                Me("SecondMechanicPad") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

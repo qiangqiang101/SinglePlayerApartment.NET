@@ -61,7 +61,45 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to VehicleModel &quot;&quot;
+        '''  Looks up a localized string similar to //Property Owner
+        '''3ASowner &quot;None&quot;
+        '''4IWowner &quot;None&quot;
+        '''DPHwoner &quot;None&quot;
+        '''DPHHLowner &quot;None&quot;
+        '''ETowner &quot;None&quot;
+        '''4IWHLowner &quot;None&quot;
+        '''ETHLowner &quot;None&quot;
+        '''RMHLowner &quot;None&quot;
+        '''TTHLowner &quot;None&quot;
+        '''RMowner &quot;None&quot;
+        '''SSowner &quot;None&quot;
+        '''TTowner &quot;None&quot;
+        '''WPowner &quot;None&quot;
+        '''VPBowner &quot;None&quot;
+        '''2044NCowner &quot;None&quot;
+        '''2862HAowner &quot;None&quot;
+        '''2868HAowner &quot;None&quot;
+        '''3655WODowner &quot;None&quot;
+        '''2045NCowner &quot;None&quot;
+        '''2117MRowner &quot;None&quot;
+        '''2874HAowner &quot;None&quot;
+        '''3677WMDowner &quot;None&quot;
+        '''2113MWTowner &quot;None&quot;
+        '''ETP1owner &quot;None&quot;
+        '''ETP2owner &quot;None&quot;
+        '''ETP3owner &quot;None&quot;
+        '''CAowner &quot;None&quot;
+        '''B [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property MySave() As String
+            Get
+                Return ResourceManager.GetString("MySave", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to VehicleName &quot;&quot;
+        '''VehicleModel &quot;&quot;
         '''PrimaryColor &quot;&quot;
         '''SecondaryColor &quot;&quot;
         '''PearlescentColor &quot;&quot;
@@ -83,7 +121,7 @@ Namespace My.Resources
         '''NeonColorBlue &quot;&quot;
         '''TyreSmokeColorRed &quot;&quot;
         '''TyreSmokeColorGreen &quot;&quot;
-        '''TyreSmokeColorBlu [rest of string was truncated]&quot;;.
+        '''T [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property vehicle() As String
             Get

@@ -12,9 +12,7 @@ Public Class SinglePlayerApartment
     Public Shared playerCash As Integer
     Public Shared playerName As String
     Public Shared playerHash As String
-    Public Shared saveFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save.cfg"
-    Public Shared saveFile2 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save2.cfg"
-    Public Shared saveFile3 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save3.cfg"
+    Public Shared saveFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\MySave.cfg"
     Public Shared settingFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\setting.cfg"
     Public Shared langFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Languages\" & Game.Language.ToString & ".cfg"
     Public Shared playerMap As String
@@ -27,7 +25,6 @@ Public Class SinglePlayerApartment
     Public Shared GrgFull, Reach10, MechanicBill, EnterElevator, ExitGarage, ManageGarage, Maze, Fleeca, BOL, ForSale, PropPurchased, InsFundApartment, EnterApartment, SaveGame, ExitApartment, ChangeClothes, _EnterGarage As String
 
     Private teleported As Boolean = False
-    Public tvOn As Boolean = False
     Private franklinSafeHouse As Vector3 = New Vector3(7.1190319061279, 536.61511230469, 176.02365112305)
     Private michaelSafeHouse As Vector3 = New Vector3(-813.60302734375, 179.47380065918, 72.158325195313)
     Private trevorSafeHouse As Vector3 = New Vector3(1972.6002197266, 3817.0407714844, 33.426822662354)
@@ -47,7 +44,7 @@ Public Class SinglePlayerApartment
                 playerName = "Franklin"
             ElseIf playerHash = "-1686040670" Then
                 playerName = "Trevor"
-            ElseIf playerHash = "1885233650" Or "-1667301416" Then '"2627665880" Then
+            ElseIf playerHash = "1885233650" Or "-1667301416" Then
                 playerName = "Player3"
             Else
                 playerName = "None"
@@ -112,20 +109,9 @@ Public Class SinglePlayerApartment
             'End Language
 
             AddHandler Tick, AddressOf OnTick
-            AddHandler KeyDown, AddressOf OnKeyDown
 
             LoadSettingFromCFG()
             If My.Settings.AlwaysEnableMPMaps = True Then LoadMPDLCMap()
-
-            'SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
-            'SetInteriorActive2(-909.054, -441.466, 120.205) 'weazel plaza 70
-            'SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
-            'SetInteriorActive2(-575.305, 42.3233, 92.2236) 'tinsel tower 29
-            'SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
-            'SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
-            'SetInteriorActive2(-1477.14, -538.75, 55.5264) 'del perro 7
-            'SetInteriorActive2(343.85, -999.08, -99.198) 'midrange apartment
-            'SetInteriorActive2(222.592, -968.1, -99) '10 car garage
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -274,15 +260,6 @@ Public Class SinglePlayerApartment
         End Try
     End Sub
 
-    Public Shared Sub SetInteriorInActive(X As Single, Y As Single, Z As Single)
-        Try
-            Dim interiorID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, X, Y, Z)
-            Native.Function.Call(Hash.DISABLE_INTERIOR, interiorID, True)
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
     Public Shared Sub ClearArea(X As Single, Y As Single, Z As Single)
         Dim arguments As InputArgument() = New InputArgument() {X, Y, Z, 100, True, False, False, False}
         Native.Function.Call(Hash.CLEAR_AREA, arguments)
@@ -310,49 +287,6 @@ Public Class SinglePlayerApartment
         Native.Function.Call(Hash.REQUEST_IPL, New InputArgument() {NewIplName})
     End Sub
 
-    Enum TelevisionModel
-        HighLifeAptTV = 777010715
-        HighEndAptTV = 1036195894
-        TrevorTV = 1434219911
-        'LowEndAptTV = 3397365739
-    End Enum
-
-    Public Shared Sub TurnOnTV(X As Single, Y As Single, Z As Single, Model As TelevisionModel)
-        Dim TV As Entity = Native.Function.Call(Of Entity)(Hash.CREATE_OBJECT, Model, X, Y, Z, True, True, False)
-        Native.Function.Call(Hash.ATTACH_TV_AUDIO_TO_ENTITY, TV)
-        Dim tvScreen As String = Native.Function.Call(Of String)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID)
-        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, tvScreen) Then
-            Native.Function.Call(Hash.REGISTER_NAMED_RENDERTARGET, tvScreen, 0)
-        End If
-
-        Dim renderTargetID As Integer
-        Dim tvModel As String = Native.Function.Call(Of String)(Hash.GET_ENTITY_MODEL, TV)
-        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_LINKED, tvModel) Then
-            Native.Function.Call(Hash.LINK_NAMED_RENDERTARGET, tvModel)
-            renderTargetID = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, tvScreen)
-        End If
-
-        Native.Function.Call(Hash.SET_TV_CHANNEL, 0) 'TV Channel 0 or 1
-        Native.Function.Call(Hash.SET_TV_VOLUME, 0) 'TV Volume Float in range from -22.5 till 0
-
-        If Native.Function.Call(Of Boolean)(Hash.HAS_ENTITY_BEEN_DAMAGED_BY_ANY_PED, TV) Then
-            Native.Function.Call(Hash.SET_TEXT_RENDER_ID, renderTargetID)
-            Native.Function.Call(Hash._0x61BB1D9B3A95D802, 4)
-            Native.Function.Call(Hash._0xC6372ECD45D73BCD, 1)
-            Dim tvBright As Integer = 255 'TV Bright in range from 0 to 255
-            Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1, 1, 0, 255, 255, 255, tvBright)
-            'Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
-        End If
-
-        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, tvScreen) Then
-            Native.Function.Call(Hash.RELEASE_NAMED_RENDERTARGET, tvScreen)
-        End If
-    End Sub
-
-    Public Shared Sub PlayAnimation(ByVal AnimationSet As String, ByVal AnimationName As String)
-        Game.Player.Character.Task.PlayAnimation(AnimationSet, AnimationName, 8.0F, -1, True, 4.0F)
-    End Sub
-
     Enum IconType
         ChatBox = 1
         Email = 2
@@ -365,7 +299,6 @@ Public Class SinglePlayerApartment
         DollarSignIcon = 9
     End Enum
 
-    ''' <summary>
     ''' CHAR_DEFAULT : Default profile pic
     ''' CHAR_FACEBOOK: Facebook
     ''' CHAR_SOCIAL_CLUB: Social Club Star
@@ -379,7 +312,7 @@ Public Class SinglePlayerApartment
     ''' CHAR_MILSITE: Warstock W
     ''' CHAR_CARSITE: Legendary Motorsports Icon
     ''' CHAR_DR_FRIEDLANDER: Dr Freidlander Face
-    ''' CHAR_BIKESITE: P&M Logo
+    ''' CHAR_BIKESITE: P and M Logo
     ''' CHAR_LIFEINVADER: Liveinvader
     ''' CHAR_PLANESITE: Plane Site E
     ''' CHAR_MICHAEL: Michael's Face
@@ -398,7 +331,6 @@ Public Class SinglePlayerApartment
     ''' CHAR_WADE: Wade's Face
     ''' CHAR_MARTIN: Martin Madrazo 's Face
     ''' CHAR_ACTING_UP: Acting Icon
-    ''' </summary>
     Public Shared Sub DisplayNotificationThisFrame(Sender As String, Subject As String, Message As String, Icon As String, Flash As Boolean, Type As IconType)
         Native.Function.Call(Hash._SET_NOTIFICATION_TEXT_ENTRY, "STRING")
         Native.Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Message)
@@ -480,6 +412,8 @@ Public Class SinglePlayerApartment
             Else
                 My.Settings.NeverEnableMPMaps = False
             End If
+            My.Settings.VehicleSpawn = ReadCfgValue("VehicleSpawn", settingFile)
+            My.Settings.Volume = ReadCfgValue("Volume", settingFile)
             My.Settings.PreviewPointX = ReadCfgValue("PointX", settingFile)
             My.Settings.PreviewPointY = ReadCfgValue("PointY", settingFile)
             My.Settings.ThreeAltaStreet = ReadCfgValue("3AltaStreet", settingFile)
@@ -521,6 +455,8 @@ Public Class SinglePlayerApartment
             My.Settings.ZancudoAve = ReadCfgValue("ZancudoAve", settingFile)
             My.Settings.PaletoBlvd = ReadCfgValue("PaletoBlvd", settingFile)
             My.Settings.GrapeseedAve = ReadCfgValue("GrapeseedAve", settingFile)
+            My.Settings.MechanicPad = ReadCfgValue("PadMechanic", settingFile)
+            My.Settings.SecondMechanicPad = ReadCfgValue("SecondPadMechanic", settingFile)
             My.Settings.Save()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -556,43 +492,43 @@ Public Class SinglePlayerApartment
                 Case "3Alta"
                     SetInteriorActive2(-280.74, -961.5, 91.11) '3 alta street 57
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    _3AltaStreet.IsAtHome = True
+                    _3AltaStreet.Apartment.IsAtHome = True
                 Case "4Integrity"
                     SetInteriorActive2(-37.41, -582.82, 88.71) '4 integrity way 30
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    _4IntegrityWay.IsAtHome = True
+                    _4IntegrityWay.Apartment.IsAtHome = True
                 Case "DelPerro"
                     SetInteriorActive2(-1477.14, -538.75, 55.5264) 'del perro 7
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    DelPerroHeight.IsAtHome = True
+                    DelPerroHeight.Apartment.IsAtHome = True
                 Case "Eclipse"
                     SetInteriorActive2(-795.04, 342.37, 206.22) 'eclipse tower 5
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    EclipseTower.IsAtHome = True
+                    EclipseTower.Apartment.IsAtHome = True
                 Case "4IntegrityHL"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    _4IntegrityWay.IsAtHome = True
+                    _4IntegrityWay.Apartment.IsAtHome = True
                 Case "DelPerroHL"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    DelPerroHeight.IsAtHome = True
+                    DelPerroHeight.Apartment.IsAtHome = True
                 Case "EclipseHL"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    EclipseTower.IsAtHome = True
+                    EclipseTower.Apartment.IsAtHome = True
                 Case "RichardHL"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    RichardMajestic.IsAtHome = True
+                    RichardMajestic.Apartment.IsAtHome = True
                 Case "TinselHL"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    TinselTower.IsAtHome = True
+                    TinselTower.Apartment.IsAtHome = True
                 Case "Richard"
                     SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    RichardMajestic.IsAtHome = True
+                    RichardMajestic.Apartment.IsAtHome = True
                 Case "Richman"
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "SinnerSt", "CougarAve", "BayCityAve", "0184MiltonRd", "0325SouthRockfordDr", "SouthMoMiltonDr", "0604LasLagunasBlvd", "SpanishAve", "BlvdDelPerro", "PowerSt", "ProsperitySt", "SanVitasSt", "2143LasLagunasBlvd", "TheRoyale", "HangmanAve", "SustanciaRd", "4401ProcopioDr", "4584ProcopioDr"
@@ -601,74 +537,74 @@ Public Class SinglePlayerApartment
                 Case "Tinsel"
                     SetInteriorActive2(-575.305, 42.3233, 92.2236) 'tinsel tower 29
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    TinselTower.IsAtHome = True
+                    TinselTower.Apartment.IsAtHome = True
                 Case "Weazel"
                     SetInteriorActive2(-909.054, -441.466, 120.205) 'weazel plaza 70
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    WeazelPlaza.IsAtHome = True
+                    WeazelPlaza.Apartment.IsAtHome = True
                 Case "VespucciBlvd", "0112SouthRockfordDr", "ZancudoAve", "PaletoBlvd", "GrapeseedAve"
                     SetInteriorActive2(263.86999, -998.78002, -99.010002) 'low end apartment
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "NConker2044"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    NorthConker2044.IsAtHome = True
+                    NorthConker2044.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_04_ext1")
                 Case "HillcrestA2862"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    HillcrestAve2862.IsAtHome = True
+                    HillcrestAve2862.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_09c_ext2")
                 Case "HillcrestA2868"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    HillcrestAve2868.IsAtHome = True
+                    HillcrestAve2868.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_09b_ext3")
                 Case "WildOats3655"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    WildOats3655.IsAtHome = True
+                    WildOats3655.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_05e_ext1")
                 Case "NConker2045"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    NorthConker2045.IsAtHome = True
+                    NorthConker2045.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_04_ext2")
                 Case "MiltonR2117"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    MiltonRd2117.IsAtHome = True
+                    MiltonRd2117.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_09c_ext3")
                 Case "HillcrestA2874"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    HillcrestAve2874.IsAtHome = True
+                    HillcrestAve2874.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_09b_ext2")
                 Case "Whispy3677"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    Whispymound3677.IsAtHome = True
+                    Whispymound3677.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_05c_ext1")
                 Case "MadWayne2113"
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    MadWayne2113.IsAtHome = True
+                    MadWayne2113.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_12b_ext1")
                 Case "EclipsePS1"
-                    ToggleIPL(ReadCfgValue("ETP1ipl", saveFile2))
+                    ToggleIPL(ReadCfgValue("ETP1ipl", saveFile))
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    EclipseTower.IsAtHome = True
+                    EclipseTower.Apartment.IsAtHome = True
                 Case "EclipsePS2"
-                    ToggleIPL(ReadCfgValue("ETP2ipl", saveFile2))
+                    ToggleIPL(ReadCfgValue("ETP2ipl", saveFile))
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    EclipseTower.IsAtHome = True
+                    EclipseTower.Apartment.IsAtHome = True
                 Case "EclipsePS3"
-                    ToggleIPL(ReadCfgValue("ETP3ipl", saveFile2))
+                    ToggleIPL(ReadCfgValue("ETP3ipl", saveFile))
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    EclipseTower.IsAtHome = True
+                    EclipseTower.Apartment.IsAtHome = True
             End Select
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -720,30 +656,13 @@ Public Class SinglePlayerApartment
             End If
 
             'Control
-            If Game.IsControlJustPressed(0, GTA.Control.MoveUp) AndAlso teleported = False Then
+            If Game.IsControlJustPressed(0, GTA.Control.MoveUp) AndAlso Not teleported Then
                 teleported = True
             End If
             'End Control
 
-            'If tvOn = True Then Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 0.5, 0.5, 0.0, 255, 255, 255, 255)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Sub OnKeyDown(o As Object, e As KeyEventArgs)
-        Try
-            'If e.KeyCode = Keys.D8 And tvOn = False Then
-            '    Dim channel As Integer = Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "movie_arthouse")
-            '    Native.Function.Call(Hash._0x0AD973CA1E077B60, channel)
-            '    Native.Function.Call(Hash.SET_TV_CHANNEL, 1)
-            '    Native.Function.Call(Hash.SET_TV_VOLUME, 10)
-            '    tvOn = True
-            'Else
-            '    tvOn = False
-            'End If
-        Catch ex As Exception
-            UI.ShowSubtitle(ex.Message)
         End Try
     End Sub
 End Class

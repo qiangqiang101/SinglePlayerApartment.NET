@@ -6,47 +6,59 @@ Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
+Imports SinglePlayerApartment.INMNative
 
 Public Class TinselTower
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("TTowner", saveFile)
-    Public Shared _Name As String = "Tinsel Tower Apt. "
-    Public Shared Desc As String = "Your split personality will be right at home in this retro-slash-ultramodern apartment building on Boulevard Del Perro. Go mad in style. Includes 10-car garage."
-    Public Shared Unit As String = "29"
-    Public Shared Cost As Integer = 492000
-    Public Shared _Blip As Blip
-    Public Shared Blip2 As Blip
-    Public Shared Entrance As Vector3 = New Vector3(-614.7656, 37.9, 43.5895)
-    Public Shared Save As Vector3 = New Vector3(-583.2249, 44.9624, 87.4188)
-    Public Shared Teleport As Vector3 = New Vector3(-598.9042, 41.8059, 93.6261)
-    Public Shared Teleport2 As Vector3 = New Vector3(-617.9388, 35.7848, 43.5558)
-    Public Shared _Exit As Vector3 = New Vector3(-601.8906, 42.3395, 93.6261)
-    Public Shared Wardrobe As Vector3 = New Vector3(-583.9974, 50.5919, 87.4296)
-    Public Shared _Garage As Vector3 = New Vector3(-634.3952, 56.0859, 43.7127)
-    Public Shared GarageOut As Vector3 = New Vector3(-641.8661, 57.0499, 43.4129)
-    Public Shared GarageOutHeading As Single = 84.922
-    Public Shared GarageDistance As String
-    Public Shared WardrobeDistance As Single
-    Public Shared DoorDistance As Single
-    Public Shared SaveDistance As Single
-    Public Shared ExitDistance As Single
-    Public Shared CameraPos As Vector3 = New Vector3(-678.4925, -30.95172, 48.26074)
-    Public Shared CameraRot As Vector3 = New Vector3(16.23258, 0, -43.18668)
-    Public Shared CameraFov As Single = 50.0
-    Public Shared WardrobeHeading As Single = 79.9632
-    Public Shared IsAtHome As Boolean = False
-
-    Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
+    Public Shared Apartment, ApartmentHL As Apartment
+    Public Shared BuyMenu, ExitMenu, ExitMenuHL, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
+
+            Apartment = New Apartment("Tinsel Tower Apt. ", "29", 492000)
+                Apartment.Name = ReadCfgValue("TinselName", langFile)
+                Apartment.Description = ReadCfgValue("TinselDesc", langFile)
+                Apartment.Owner = ReadCfgValue("TTowner", saveFile)
+                Apartment.Entrance = New Vector3(-614.7656, 37.9, 43.5895)
+                Apartment.Save = New Vector3(-583.2249, 44.9624, 87.4188)
+                Apartment.TeleportInside = New Vector3(-598.9042, 41.8059, 93.6261)
+                Apartment.TeleportOutside = New Vector3(-617.9388, 35.7848, 43.5558)
+                Apartment.ApartmentExit = New Vector3(-601.8906, 42.3395, 93.6261)
+                Apartment.Wardrobe = New Vector3(-583.9974, 50.5919, 87.4296)
+                Apartment.GarageEntrance = New Vector3(-634.3952, 56.0859, 43.7127)
+                Apartment.GarageOutside = New Vector3(-641.8661, 57.0499, 43.4129)
+                Apartment.GarageOutHeading = 84.922
+                Apartment.CameraPosition = New Vector3(-678.4925, -30.95172, 48.26074)
+                Apartment.CameraRotation = New Vector3(16.23258, 0, -43.18668)
+                Apartment.CameraFOV = 50.0
+                Apartment.Interior = New Vector3(-575.305, 42.3233, 92.2236)
+                Apartment.WardrobeHeading = 79.9632
+                Apartment.IsAtHome = False
+                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
+                Apartment.SaveFile = "TTowner"
+                Apartment.PlayerMap = "Tinsel"
+                Apartment.Enabled = True
+
+                ApartmentHL = New Apartment("Tinsel Tower Apt. ", "42", 984000)
+                ApartmentHL.Name = ReadCfgValue("TinselHLName", langFile)
+                ApartmentHL.Description = ReadCfgValue("TinselHLDesc", langFile)
+                ApartmentHL.Owner = ReadCfgValue("TTHLowner", saveFile)
+                ApartmentHL.Save = New Vector3(-594.5658, 50.1804, 96.9996)
+                ApartmentHL.TeleportInside = New Vector3(-614.032, 58.9435, 98.2355)
+                ApartmentHL.TeleportOutside = New Vector3(-617.9388, 35.7848, 43.5558)
+                ApartmentHL.ApartmentExit = New Vector3(-610.6395, 58.8867, 98.2004)
+                ApartmentHL.Wardrobe = New Vector3(-594.8418, 55.761, 96.9996)
+                ApartmentHL.WardrobeHeading = 173.2113
+                ApartmentHL.IsAtHome = False
+                ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
+                ApartmentHL.SaveFile = "TTHLowner"
+                ApartmentHL.PlayerMap = "TinselHL"
+                ApartmentHL.Enabled = True
+
             If ReadCfgValue("TinselTower", settingFile) = "Enable" Then
-                _Name = ReadCfgValue("TinselName", langFile)
-                Desc = ReadCfgValue("TinselDesc", langFile)
-                HLTinselTower._Name = ReadCfgValue("TinselHLName", langFile)
-                HLTinselTower.Desc = ReadCfgValue("TinselHLDesc", langFile)
                 Garage = ReadCfgValue("Garage", langFile)
                 AptOptions = ReadCfgValue("AptOptions", langFile)
                 ExitApt = ReadCfgValue("ExitApt", langFile)
@@ -71,6 +83,7 @@ Public Class TinselTower
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
                 CreateExitMenu()
+                CreateExitMenuHL()
                 CreateGarageMenu()
 
                 AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
@@ -78,6 +91,8 @@ Public Class TinselTower
                 AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
                 AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
                 AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
+                AddHandler ExitMenuHL.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler ExitMenuHL.OnItemSelect, AddressOf HLItemSelectHandler
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -91,38 +106,38 @@ Public Class TinselTower
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             BuyMenu.SetBannerType(Rectangle)
             _menuPool.Add(BuyMenu)
-            Dim item As New UIMenuItem(_Name & Unit, Desc)
+            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
             With item
-                If Owner = "Michael" Then
+                If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Owner = "Franklin" Then
+                ElseIf Apartment.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Owner = "Trevor" Then
+                ElseIf Apartment.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Owner = "Player3" Then
+                ElseIf Apartment.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
-                    .SetRightLabel("$" & Cost.ToString("N"))
+                    .SetRightLabel("$" & Apartment.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
             BuyMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit, HLTinselTower.Desc)
+            Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit, ApartmentHL.Description)
             With item2
-                If HLTinselTower.Owner = "Michael" Then
+                If ApartmentHL.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf HLTinselTower.Owner = "Franklin" Then
+                ElseIf ApartmentHL.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf HLTinselTower.Owner = "Trevor" Then
+                ElseIf ApartmentHL.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf HLTinselTower.Owner = "Player3" Then
+                ElseIf ApartmentHL.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
-                    .SetRightLabel("$" & HLTinselTower.Cost.ToString("N"))
+                    .SetRightLabel("$" & ApartmentHL.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
-                BuyMenu.AddItem(item2)
             End With
+            BuyMenu.AddItem(item2)
             BuyMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -131,34 +146,34 @@ Public Class TinselTower
 
     Public Shared Sub RefreshMenu()
         BuyMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Name & Unit, Desc)
+        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
         With item
-            If Owner = "Michael" Then
+            If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Owner = "Franklin" Then
+            ElseIf Apartment.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Owner = "Trevor" Then
+            ElseIf Apartment.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Owner = "Player3" Then
+            ElseIf Apartment.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
-                .SetRightLabel("$" & Cost.ToString("N"))
+                .SetRightLabel("$" & Apartment.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
         BuyMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit, HLTinselTower.Desc)
+        Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit, ApartmentHL.Description)
         With item2
-            If HLTinselTower.Owner = "Michael" Then
+            If ApartmentHL.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf HLTinselTower.Owner = "Franklin" Then
+            ElseIf ApartmentHL.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf HLTinselTower.Owner = "Trevor" Then
+            ElseIf ApartmentHL.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf HLTinselTower.Owner = "Player3" Then
+            ElseIf ApartmentHL.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
-                .SetRightLabel("$" & HLTinselTower.Cost.ToString("N"))
+                .SetRightLabel("$" & ApartmentHL.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
@@ -168,30 +183,30 @@ Public Class TinselTower
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Name & Unit & Garage)
+        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
         With item
-            If Owner = "Michael" Then
+            If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Owner = "Franklin" Then
+            ElseIf Apartment.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Owner = "Trevor" Then
+            ElseIf Apartment.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Owner = "Player3" Then
+            ElseIf Apartment.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
         GarageMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit & Garage)
+        Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit & Garage)
         With item2
-            If HLTinselTower.Owner = "Michael" Then
+            If ApartmentHL.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf HLTinselTower.Owner = "Franklin" Then
+            ElseIf ApartmentHL.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf HLTinselTower.Owner = "Trevor" Then
+            ElseIf ApartmentHL.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf HLTinselTower.Owner = "Player3" Then
+            ElseIf ApartmentHL.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -217,6 +232,22 @@ Public Class TinselTower
         End Try
     End Sub
 
+    Public Shared Sub CreateExitMenuHL()
+        Try
+            ExitMenuHL = New UIMenu("", AptOptions, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            ExitMenuHL.SetBannerType(Rectangle)
+            _menuPool.Add(ExitMenuHL)
+            ExitMenuHL.AddItem(New UIMenuItem(ExitApt))
+            ExitMenuHL.AddItem(New UIMenuItem(EnterGarage))
+            ExitMenuHL.AddItem(New UIMenuItem(SellApt))
+            ExitMenuHL.RefreshIndex()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
     Public Shared Sub CreateGarageMenu()
         Try
             GarageMenu = New UIMenu("", GrgOptions, New Point(0, -107))
@@ -224,30 +255,30 @@ Public Class TinselTower
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(_Name & Unit & Garage)
+            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
             With item
-                If Owner = "Michael" Then
+                If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Owner = "Franklin" Then
+                ElseIf Apartment.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Owner = "Trevor" Then
+                ElseIf Apartment.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Owner = "Player3" Then
+                ElseIf Apartment.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
             GarageMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit & Garage)
+            Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit & Garage)
             With item2
-                If HLTinselTower.Owner = "Michael" Then
+                If ApartmentHL.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf HLTinselTower.Owner = "Franklin" Then
+                ElseIf ApartmentHL.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf HLTinselTower.Owner = "Trevor" Then
+                ElseIf ApartmentHL.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf HLTinselTower.Owner = "Player3" Then
+                ElseIf ApartmentHL.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -261,63 +292,7 @@ Public Class TinselTower
     End Sub
 
     Public Shared Sub CreateTinselTower()
-        _Blip = World.CreateBlip(Entrance)
-        If Owner = "Michael" AndAlso HLTinselTower.Owner = "Michael" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Blue
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Blue
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Franklin" AndAlso HLTinselTower.Owner = "Franklin" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Green
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Green
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Trevor" AndAlso HLTinselTower.Owner = "Trevor" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = 17
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = 17
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner = "Player3" AndAlso HLTinselTower.Owner = "Player3" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Yellow
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Yellow
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        ElseIf Owner <> HLTinselTower.Owner Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.White
-            _Blip.IsShortRange = True
-            SetBlipName(_Name, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.White
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Garage, Blip2)
-        Else
-            _Blip.Sprite = BlipSprite.SafehouseForSale
-            _Blip.Color = BlipColor.White
-            _Blip.IsShortRange = True
-            SetBlipName(ForSale, _Blip)
-        End If
+        Apartment.Create(Apartment, ApartmentHL)
     End Sub
 
     Public Sub MenuCloseHandler(sender As UIMenu)
@@ -337,42 +312,101 @@ Public Class TinselTower
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                Game.Player.Character.Position = Teleport2
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
-                IsAtHome = False
+                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("TTowner", "None", saveFile)
+                WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                SinglePlayerApartment.player.Money = (playerCash + Cost)
-                Owner = "None"
-                _Blip.Remove()
-                If Not Blip2 Is Nothing Then Blip2.Remove()
+                SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
+                Apartment.Owner = "None"
+                Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateTinselTower()
-                Game.Player.Character.Position = Teleport2
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                IsAtHome = False
+                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+                Brain.TVOn = False
                 playerPed.Position = TenCarGarage.Elevator
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
-                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
+                TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+                TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+                TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+                TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+                TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                TenCarGarage.CurrentPath = Apartment.GaragePath
                 ExitMenu.Visible = False
+                Wait(500)
+                Game.FadeScreenIn(500)
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub HLItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        Try
+            If selectedItem.Text = ExitApt Then
+                'Exit Apt
+                ExitMenuHL.Visible = False
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                Brain.TVOn = False
+                Game.Player.Character.Position = ApartmentHL.TeleportOutside
+                Wait(500)
+                Game.FadeScreenIn(500)
+                UnLoadMPDLCMap()
+                Apartment.IsAtHome = False
+            ElseIf selectedItem.Text = SellApt Then
+                'Sell Apt
+                ExitMenuHL.Visible = False
+                WriteCfgValue(ApartmentHL.SaveFile, "None", saveFile)
+                SavePosition2()
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                SinglePlayerApartment.player.Money = (playerCash + ApartmentHL.Cost)
+                ApartmentHL.Owner = "None"
+                Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+                CreateTinselTower()
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
+                Wait(500)
+                Game.FadeScreenIn(500)
+                RefreshMenu()
+                RefreshGarageMenu()
+                UnLoadMPDLCMap()
+                Apartment.IsAtHome = False
+            ElseIf selectedItem.Text = EnterGarage Then
+                'Enter Garage
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+                Brain.TVOn = False
+                playerPed.Position = TenCarGarage.Elevator
+                TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
+                TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
+                TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+                TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+                TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
+                TenCarGarage.CurrentPath = ApartmentHL.GaragePath
+                ExitMenuHL.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -383,23 +417,23 @@ Public Class TinselTower
 
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
-            If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
+            If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
                 'Buy Apartment
-                If playerCash > Cost Then
-                    WriteCfgValue("TTowner", playerName, saveFile)
+                If playerCash > Apartment.Cost Then
+                    WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Cost)
-                    Owner = playerName
-                    _Blip.Remove()
-                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    Apartment.Owner = playerName
+                    Apartment.AptBlip.Remove()
+                    If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateTinselTower()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & _Name & Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf playerName = "Franklin" Then
@@ -421,40 +455,40 @@ Public Class TinselTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
+            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = playerName Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                IsAtHome = True
+                Apartment.IsAtHome = True
 
-                SetInteriorActive2(-575.305, 42.3233, 92.2236) 'tinsel tower 29
+                Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                Game.Player.Character.Position = Teleport
+                Game.Player.Character.Position = Apartment.TeleportInside
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
 
-            'Tinsel Tower HL
-            If selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & HLTinselTower.Cost.ToString("N") AndAlso HLTinselTower.Owner = "None" Then
+            '4 Integrity Way HL
+            If selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentHL.Cost.ToString("N") AndAlso ApartmentHL.Owner = "None" Then
                 'Buy Apartment
-                If playerCash > HLTinselTower.Cost Then
-                    WriteCfgValue("TTHLowner", playerName, saveFile)
+                If playerCash > ApartmentHL.Cost Then
+                    WriteCfgValue(ApartmentHL.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Cost)
-                    HLTinselTower.Owner = playerName
-                    _Blip.Remove()
-                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
+                    ApartmentHL.Owner = playerName
+                    Apartment.AptBlip.Remove()
+                    If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateTinselTower()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & HLTinselTower._Name & HLTinselTower.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentHL.Name & ApartmentHL.Unit, Nothing)
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf playerName = "Franklin" Then
@@ -476,18 +510,18 @@ Public Class TinselTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso HLTinselTower.Owner = playerName Then
+            ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentHL.Owner = playerName Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                IsAtHome = True
+                Apartment.IsAtHome = True
 
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                Game.Player.Character.Position = HLTinselTower.Teleport
+                Game.Player.Character.Position = ApartmentHL.TeleportInside
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -497,57 +531,56 @@ Public Class TinselTower
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Owner = playerName Then
+        If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Apartment.Owner = playerName Then
             'Teleport to Garage
-            IsAtHome = True
+            Apartment.IsAtHome = True
 
             Game.FadeScreenOut(500)
             Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            SetInteriorActive2(-575.305, 42.3233, 92.2236) 'tinsel tower 29
+            Apartment.SetInteriorActive()
             playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
+            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+            TenCarGarage.CurrentPath = Apartment.GaragePath
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Owner = playerName Then
+        ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Apartment.Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
-            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
-            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
-            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
-            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
-            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
-            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
-            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
-            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
-            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
-            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            IsAtHome = True
+            Apartment.IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            SetInteriorActive2(-575.305, 42.3233, 92.2236) 'tinsel tower 29
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            Apartment.SetInteriorActive()
+            TenCarGarage.CurrentPath = Apartment.GaragePath
+            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             GarageMenu.Visible = False
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
@@ -557,8 +590,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
@@ -568,8 +601,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
@@ -579,8 +612,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
@@ -590,8 +623,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
@@ -601,8 +634,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
@@ -612,8 +645,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
@@ -623,8 +656,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
@@ -634,8 +667,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
@@ -645,8 +678,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
@@ -654,60 +687,60 @@ Public Class TinselTower
                 Wait(500)
                 Game.FadeScreenIn(500)
             Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                TenCarGarage.SaveGarageVehicle(Apartment.GaragePath)
             End If
-        ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso HLTinselTower.Owner = playerName Then
+        ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentHL.Owner = playerName Then
             'Teleport to Garage
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            IsAtHome = True
+            Apartment.IsAtHome = True
 
             Game.FadeScreenOut(500)
             Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = HLTinselTower._Name & HLTinselTower.Unit
-            TenCarGarage.lastLocationVector = HLTinselTower._Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
+            TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
+            TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
+            TenCarGarage.CurrentPath = ApartmentHL.GaragePath
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = HLTinselTower._Name & HLTinselTower.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso HLTinselTower.Owner = playerName Then
+        ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentHL.Owner = playerName Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
-            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
-            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
-            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
-            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
-            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
-            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
-            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
-            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
-            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
-            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+            Dim path As String = ApartmentHL.GaragePath
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            IsAtHome = True
+            Apartment.IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
-            TenCarGarage.LastLocationName = HLTinselTower._Name & HLTinselTower.Unit
-            TenCarGarage.lastLocationVector = HLTinselTower._Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            TenCarGarage.CurrentPath = ApartmentHL.GaragePath
+            TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
+            TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             GarageMenu.Visible = False
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
@@ -717,8 +750,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
@@ -728,8 +761,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
@@ -739,8 +772,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
@@ -750,8 +783,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
@@ -761,8 +794,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
@@ -772,8 +805,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
@@ -783,8 +816,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
@@ -794,8 +827,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
@@ -805,8 +838,8 @@ Public Class TinselTower
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
@@ -814,8 +847,8 @@ Public Class TinselTower
                 Wait(500)
                 Game.FadeScreenIn(500)
             Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\")
+                TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
+                TenCarGarage.SaveGarageVehicle(ApartmentHL.GaragePath)
             End If
         End If
     End Sub
@@ -823,20 +856,14 @@ Public Class TinselTower
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
             If My.Settings.TinselTower = "Enable" Then
-                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-                SaveDistance = World.GetDistance(playerPed.Position, Save)
-                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
-
                 'Enter Apartment
-                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso DoorDistance < 3.0 Then
-                    DisplayHelpTextThisFrame(EnterApartment & _Name)
+                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         Game.FadeScreenOut(500)
                         Wait(&H3E8)
                         BuyMenu.Visible = True
-                        World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                        World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                         hideHud = True
                         Wait(500)
                         Game.FadeScreenIn(500)
@@ -844,10 +871,23 @@ Public Class TinselTower
                 End If
 
                 'Save Game
-                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso SaveDistance < 3.0 Then
+                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.SaveDistance < 3.0 Then
                     DisplayHelpTextThisFrame(SaveGame)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        playerMap = "Tinsel"
+                        playerMap = Apartment.PlayerMap
+                        Game.FadeScreenOut(500)
+                        Wait(&H3E8)
+                        TimeLapse(8)
+                        Game.ShowSaveMenu()
+                        SavePosition()
+                        Wait(500)
+                        Game.FadeScreenIn(500)
+                    End If
+                End If
+                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = playerName) AndAlso ApartmentHL.SaveDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(SaveGame)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        playerMap = ApartmentHL.PlayerMap
                         Game.FadeScreenOut(500)
                         Wait(&H3E8)
                         TimeLapse(8)
@@ -859,19 +899,51 @@ Public Class TinselTower
                 End If
 
                 'Exit Apartment
-                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso ExitDistance < 2.0 Then
-                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
+                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.ExitDistance < 2.0 Then
+                    DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         ExitMenu.Visible = True
                     End If
                 End If
+                If ((Not ExitMenuHL.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = playerName) AndAlso ApartmentHL.ExitDistance < 2.0 Then
+                    DisplayHelpTextThisFrame(ExitApartment & ApartmentHL.Name & ApartmentHL.Unit)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        ExitMenuHL.Visible = True
+                    End If
+                End If
 
                 'Wardrobe
-                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso WardrobeDistance < 1.0 Then
+                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.WardrobeDistance < 1.0 Then
                     DisplayHelpTextThisFrame(ChangeClothes)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        WardrobeVector = Wardrobe
-                        WardrobeHead = WardrobeHeading
+                        WardrobeVector = Apartment.Wardrobe
+                        WardrobeHead = Apartment.WardrobeHeading
+                        WardrobeScriptStatus = 0
+                        If playerName = "Michael" Then
+                            Player0W.Visible = True
+                            MakeACamera()
+                        ElseIf playerName = "Franklin" Then
+                            Player1W.Visible = True
+                            MakeACamera()
+                        ElseIf playerName = “Trevor"
+                            Player2W.Visible = True
+                            MakeACamera()
+                        ElseIf playerName = "Player3" Then
+                            If playerHash = "1885233650" Then
+                                Player3_MW.Visible = True
+                                MakeACamera()
+                            ElseIf playerHash = "-1667301416" Then
+                                Player3_FW.Visible = True
+                                MakeACamera()
+                            End If
+                        End If
+                    End If
+                End If
+                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = playerName) AndAlso ApartmentHL.WardrobeDistance < 1.0 Then
+                    DisplayHelpTextThisFrame(ChangeClothes)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        WardrobeVector = ApartmentHL.Wardrobe
+                        WardrobeHead = ApartmentHL.WardrobeHeading
                         WardrobeScriptStatus = 0
                         If playerName = "Michael" Then
                             Player0W.Visible = True
@@ -895,7 +967,7 @@ Public Class TinselTower
                 End If
 
                 'Enter Garage
-                If (Not playerPed.IsDead AndAlso (Owner = playerName Or HLTinselTower.Owner = playerName)) AndAlso GarageDistance < 5.0 Then
+                If (Not playerPed.IsDead AndAlso (Apartment.Owner = playerName Or ApartmentHL.Owner = playerName)) AndAlso Apartment.GarageDistance < 5.0 Then
                     If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
                         DisplayHelpTextThisFrame(_EnterGarage & Garage)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
@@ -913,7 +985,7 @@ Public Class TinselTower
                     End If
                 End If
 
-                If IsAtHome Then
+                If Apartment.IsAtHome Then
                     HIDE_MAP_OBJECT_THIS_FRAME()
                     Resources.Disable_Controls()
                     Brain.BrainEnable = True
@@ -930,19 +1002,19 @@ Public Class TinselTower
 
     Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
         Native.Function.Call(Hash._0x4B5CFC83122DF602)
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ss1_02_building01"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_Emissive_SS1_02a_LOD"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ss1_02_ss1_emissive_ss1_02"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ss1_02_building01"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_02_Building01_LOD"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ss1_02_building01"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_Emissive_SS1_02a_LOD"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ss1_02_ss1_emissive_ss1_02"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ss1_02_building01"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "SS1_02_Building01_LOD"))
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                If Not _Blip Is Nothing Then _Blip.Remove()
-                If Not Blip2 Is Nothing Then Blip2.Remove()
+                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
             Catch ex As Exception
             End Try
         End If

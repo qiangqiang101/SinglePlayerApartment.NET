@@ -10,20 +10,20 @@ Imports SinglePlayerApartment.Wardrobe
 Public Class HLDelPerro
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("DPHHLowner", saveFile)
-    Public Shared _Name As String = "Del Perro Heights Apt. "
-    Public Shared Desc As String = "Enjoy ocean views far away from tourists and bums on Del Perro Beach with this lateral living opportunity for the super rich. If we can overpay for something, we have, and we're passing the expanse on down to you. Includes a 10-car garage."
-    Public Shared Unit As String = "4"
-    Public Shared Cost As Integer = 936000
-    Public Shared Save As Vector3 = New Vector3(-1454.6335, -552.5497, 72.8437)
-    Public Shared Teleport As Vector3 = New Vector3(-1458.6523, -531.4198, 74.0796)
-    Public Shared Teleport2 As Vector3 = New Vector3(-1439.5905, -550.6906, 34.7418)
-    Public Shared _Exit As Vector3 = New Vector3(-1456.5989, -534.5363, 74.0445)
-    Public Shared Wardrobe As Vector3 = New Vector3(-1449.6384, -549.0426, 72.8437)
-    Public Shared WardrobeDistance As Single
-    Public Shared SaveDistance As Single
-    Public Shared ExitDistance As Single
-    Public Shared WardrobeHeading As Single = 122.2167
+    'Public Shared Owner As String = ReadCfgValue("DPHHLowner", saveFile)
+    'Public Shared _Name As String = "Del Perro Heights Apt. "
+    'Public Shared Desc As String = "Enjoy ocean views far away from tourists and bums on Del Perro Beach with this lateral living opportunity for the super rich. If we can overpay for something, we have, and we're passing the expanse on down to you. Includes a 10-car garage."
+    'Public Shared Unit As String = "4"
+    'Public Shared Cost As Integer = 936000
+    'Public Shared Save As Vector3 = New Vector3(-1454.6335, -552.5497, 72.8437)
+    'Public Shared Teleport As Vector3 = New Vector3(-1458.6523, -531.4198, 74.0796)
+    'Public Shared Teleport2 As Vector3 = New Vector3(-1439.5905, -550.6906, 34.7418)
+    'Public Shared _Exit As Vector3 = New Vector3(-1456.5989, -534.5363, 74.0445)
+    'Public Shared Wardrobe As Vector3 = New Vector3(-1449.6384, -549.0426, 72.8437)
+    'Public Shared WardrobeDistance As Single
+    'Public Shared SaveDistance As Single
+    'Public Shared ExitDistance As Single
+    'Public Shared WardrobeHeading As Single = 122.2167
 
     Public Shared ExitMenu As UIMenu
     Public Shared _menuPool As MenuPool

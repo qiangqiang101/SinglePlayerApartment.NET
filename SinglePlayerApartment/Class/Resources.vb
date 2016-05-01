@@ -5,6 +5,7 @@ Imports GTA
 Imports GTA.Native
 Imports GTA.Math
 Imports System.Text
+Imports System.Media
 
 Public Class Resources
 
@@ -527,6 +528,21 @@ Label_005C:
         Return Result
     End Function
 
+    Public Shared Function CreateProp(PropHash As Integer, Position As Vector3, Rotation As Vector3, Optional Heading As Single = 0) As Prop
+        Dim Result As Prop = Nothing
+        Dim model = New Model(PropHash)
+        model.Request(250)
+        If model.IsInCdImage AndAlso model.IsValid Then
+            While Not model.IsLoaded
+                Script.Wait(50)
+            End While
+            Result = World.CreateProp(model, Position, Rotation, True, True)
+            Result.Heading = Heading
+        End If
+        model.MarkAsNoLongerNeeded()
+        Return Result
+    End Function
+
     Public Shared Function IsInGarageVehicle(PlayerPed As Ped) As Boolean
         Dim Result As Boolean
         Select Case PlayerPed.CurrentVehicle
@@ -567,4 +583,13 @@ Label_005C:
         decodedBytes = Convert.FromBase64String(String2Decode)
         Return Encoding.UTF8.GetString(decodedBytes)
     End Function
+
+    Public Shared Sub SoundPlayer(waveFile As String)
+        Using stream As New WaveStream(IO.File.OpenRead(waveFile))
+            stream.Volume = My.Settings.Volume
+            Using player As New SoundPlayer(stream)
+                player.Play()
+            End Using
+        End Using
+    End Sub
 End Class

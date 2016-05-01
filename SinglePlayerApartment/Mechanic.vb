@@ -142,88 +142,40 @@ Public Class Mechanic
             TT = ReadCfgValue("TTowner", saveFile)
             TTHL = ReadCfgValue("TTHLowner", saveFile)
             WP = ReadCfgValue("WPowner", saveFile)
-            VB = ReadCfgValue("VPBowner", saveFile2)
-            NC2044 = ReadCfgValue("2044NCowner", saveFile2)
-            HA2862 = ReadCfgValue("2862HAowner", saveFile2)
-            HA2868 = ReadCfgValue("2868HAowner", saveFile2)
-            WO3655 = ReadCfgValue("3655WODowner", saveFile2)
-            NC2045 = ReadCfgValue("2045NCowner", saveFile2)
-            MR2117 = ReadCfgValue("2117MRowner", saveFile2)
-            HA2874 = ReadCfgValue("2874HAowner", saveFile2)
-            WD3677 = ReadCfgValue("3677WMDowner", saveFile2)
-            MW2113 = ReadCfgValue("2113MWowner", saveFile2)
-            ETP1 = ReadCfgValue("ETP1owner", saveFile2)
-            ETP2 = ReadCfgValue("ETP2owner", saveFile2)
-            ETP3 = ReadCfgValue("ETP3owner", saveFile2)
-            BCA = ReadCfgValue("BCAowner", saveFile3)
-            BDP = ReadCfgValue("BDPowner", saveFile3)
-            CA = ReadCfgValue("CAowner", saveFile3)
-            HA = ReadCfgValue("HAowner", saveFile3)
-            LLB0604 = ReadCfgValue("0604LLBowner", saveFile3)
-            LLB2143 = ReadCfgValue("2143LLBowner", saveFile3)
-            MR0184 = ReadCfgValue("0184MRowner", saveFile3)
-            POWER = ReadCfgValue("PSowner", saveFile3)
-            PD4401 = ReadCfgValue("4401PDowner", saveFile3)
-            PD4584 = ReadCfgValue("4584PDowner", saveFile3)
-            PPS = ReadCfgValue("PPSowner", saveFile3)
-            SVS = ReadCfgValue("SVSowner", saveFile3)
-            SMMD = ReadCfgValue("SMMowner", saveFile3)
-            SRD0325 = ReadCfgValue("0325SRDowner", saveFile3)
-            SA = ReadCfgValue("SAonwer", saveFile3)
-            SR = ReadCfgValue("SRowner", saveFile3)
-            TR = ReadCfgValue("TRowner", saveFile3)
-            GA = ReadCfgValue("GAowner", saveFile3)
-            PB = ReadCfgValue("PBowner", saveFile3)
-            SRD0112 = ReadCfgValue("0112SRDowner", saveFile3)
-            ZA = ReadCfgValue("ZAowner", saveFile3)
-
-            itemAS3 = New UIMenuItem(_3AltaStreet._Name & _3AltaStreet.Unit)
-            itemIW4 = New UIMenuItem(_4IntegrityWay._Name & _4IntegrityWay.Unit)
-            itemIW4HL = New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit)
-            itemDPH = New UIMenuItem(DelPerroHeight._Name & DelPerroHeight.Unit)
-            itemDPHHL = New UIMenuItem(HLDelPerro._Name & HLDelPerro.Unit)
-            itemDT = New UIMenuItem(DreamTower._Name & DreamTower.Unit)
-            itemET = New UIMenuItem(EclipseTower._Name & EclipseTower.Unit)
-            itemETHL = New UIMenuItem(HLEclipseTower._Name & HLEclipseTower.Unit)
-            itemRM = New UIMenuItem(RichardMajestic._Name & RichardMajestic.Unit)
-            itemRMHL = New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit)
-            itemTT = New UIMenuItem(TinselTower._Name & TinselTower.Unit)
-            itemTTHL = New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit)
-            itemWP = New UIMenuItem(WeazelPlaza._Name & WeazelPlaza.Unit)
-            itemVB = New UIMenuItem(VespucciBlvd._Name & VespucciBlvd.Unit)
-            itemNC2044 = New UIMenuItem(NorthConker2044._Name & NorthConker2044.Unit)
-            itemHA2862 = New UIMenuItem(HillcrestAve2862._Name & HillcrestAve2862.Unit)
-            itemHA2868 = New UIMenuItem(HillcrestAve2868._Name & HillcrestAve2868.Unit)
-            itemWO3655 = New UIMenuItem(WildOats3655._Name & WildOats3655.Unit)
-            itemNC2045 = New UIMenuItem(NorthConker2045._Name & NorthConker2045.Unit)
-            itemMR2117 = New UIMenuItem(MiltonRd2117._Name & MiltonRd2117.Unit)
-            itemHA2874 = New UIMenuItem(HillcrestAve2874._Name & HillcrestAve2874.Unit)
-            itemWD3677 = New UIMenuItem(Whispymound3677._Name & Whispymound3677.Unit)
-            itemMW2113 = New UIMenuItem(MadWayne2113._Name & MadWayne2113.Unit)
-            itemETP1 = New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit)
-            itemETP2 = New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit)
-            itemETP3 = New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit)
-            itemBCA = New UIMenuItem(BayCityAve._Name & BayCityAve.Unit)
-            itemBDP = New UIMenuItem(BlvdDelPerro._Name & BlvdDelPerro.Unit)
-            itemCA = New UIMenuItem(CougarAve._Name & CougarAve.Unit)
-            itemHA = New UIMenuItem(HangmanAve._Name & HangmanAve.Unit)
-            itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604._Name & LasLagunasBlvd0604.Unit)
-            itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143._Name & LasLagunasBlvd2143.Unit)
-            itemMR0184 = New UIMenuItem(MiltonRd0184._Name & MiltonRd0184.Unit)
-            itemPower = New UIMenuItem(PowerSt._Name & PowerSt.Unit)
-            itemPD4401 = New UIMenuItem(ProcopioDr4401._Name & ProcopioDr4401.Unit)
-            itemPD4584 = New UIMenuItem(ProcopioDr4584._Name & ProcopioDr4584.Unit)
-            itemProsperity = New UIMenuItem(ProsperitySt._Name & ProsperitySt.Unit)
-            itemSVS = New UIMenuItem(SanVitasSt._Name & SanVitasSt.Unit)
-            itemSMMD = New UIMenuItem(SouthMoMiltonDr._Name & SouthMoMiltonDr.Unit)
-            itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325._Name & SouthRockfordDrive0325.Unit)
-            itemSA = New UIMenuItem(SpanishAve._Name & SpanishAve.Unit)
-            itemSR = New UIMenuItem(SustanciaRd._Name & SustanciaRd.Unit)
-            itemTR = New UIMenuItem(TheRoyale._Name & TheRoyale.Unit)
-            itemGA = New UIMenuItem(GrapeseedAve._Name & GrapeseedAve.Unit)
-            itemPB = New UIMenuItem(PaletoBlvd._Name & PaletoBlvd.Unit)
-            itemSRD0112 = New UIMenuItem(SouthRockfordDr0112._Name & SouthRockfordDr0112.Unit)
-            itemZA = New UIMenuItem(ZancudoAve._Name & ZancudoAve.Unit)
+            VB = ReadCfgValue("VPBowner", saveFile)
+            NC2044 = ReadCfgValue("2044NCowner", saveFile)
+            HA2862 = ReadCfgValue("2862HAowner", saveFile)
+            HA2868 = ReadCfgValue("2868HAowner", saveFile)
+            WO3655 = ReadCfgValue("3655WODowner", saveFile)
+            NC2045 = ReadCfgValue("2045NCowner", saveFile)
+            MR2117 = ReadCfgValue("2117MRowner", saveFile)
+            HA2874 = ReadCfgValue("2874HAowner", saveFile)
+            WD3677 = ReadCfgValue("3677WMDowner", saveFile)
+            MW2113 = ReadCfgValue("2113MWowner", saveFile)
+            ETP1 = ReadCfgValue("ETP1owner", saveFile)
+            ETP2 = ReadCfgValue("ETP2owner", saveFile)
+            ETP3 = ReadCfgValue("ETP3owner", saveFile)
+            BCA = ReadCfgValue("BCAowner", saveFile)
+            BDP = ReadCfgValue("BDPowner", saveFile)
+            CA = ReadCfgValue("CAowner", saveFile)
+            HA = ReadCfgValue("HAowner", saveFile)
+            LLB0604 = ReadCfgValue("0604LLBowner", saveFile)
+            LLB2143 = ReadCfgValue("2143LLBowner", saveFile)
+            MR0184 = ReadCfgValue("0184MRowner", saveFile)
+            POWER = ReadCfgValue("PSowner", saveFile)
+            PD4401 = ReadCfgValue("4401PDowner", saveFile)
+            PD4584 = ReadCfgValue("4584PDowner", saveFile)
+            PPS = ReadCfgValue("PPSowner", saveFile)
+            SVS = ReadCfgValue("SVSowner", saveFile)
+            SMMD = ReadCfgValue("SMMowner", saveFile)
+            SRD0325 = ReadCfgValue("0325SRDowner", saveFile)
+            SA = ReadCfgValue("SAonwer", saveFile)
+            SR = ReadCfgValue("SRowner", saveFile)
+            TR = ReadCfgValue("TRowner", saveFile)
+            GA = ReadCfgValue("GAowner", saveFile)
+            PB = ReadCfgValue("PBowner", saveFile)
+            SRD0112 = ReadCfgValue("0112SRDowner", saveFile)
+            ZA = ReadCfgValue("ZAowner", saveFile)
 
             AddHandler Tick, AddressOf OnTick
             AddHandler KeyDown, AddressOf OnKeyDown
@@ -232,6 +184,7 @@ Public Class Mechanic
             My.Settings.Save()
 
             _menuPool = New MenuPool()
+
             CreatePhoneMenu()
             CreateMechanicMenu()
             CreateVehMenuApartments(AS3Menu, itemAS3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
@@ -574,8 +527,8 @@ Public Class Mechanic
             Dim NConker2045 As Integer = IO.Directory.GetFiles(NorthConker2045Dir, "*.cfg").Count
             Dim MiltonR2117 As Integer = IO.Directory.GetFiles(MiltonRoad2117Dir, "*.cfg").Count
             Dim Hillcrest2874 As Integer = IO.Directory.GetFiles(HillcrestAve2874Dir, "*.cfg").Count
-            Dim Whispymound3677 As Integer = IO.Directory.GetFiles(Whispymound3677Dir, "*.cfg").Count
-            Dim MadWayne2113 As Integer = IO.Directory.GetFiles(MadWayne2113Dri, "*.cfg").Count
+            Dim _Whispymound3677 As Integer = IO.Directory.GetFiles(Whispymound3677Dir, "*.cfg").Count
+            Dim _MadWayne2113 As Integer = IO.Directory.GetFiles(MadWayne2113Dri, "*.cfg").Count
             Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
             Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
             Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
@@ -586,7 +539,7 @@ Public Class Mechanic
             Dim Lagunas0604 As Integer = IO.Directory.GetFiles(LasLagunas0604Dir, "*.cfg").Count
             Dim Lagunas2143 As Integer = IO.Directory.GetFiles(LasLagunas2143Dir, "*.cfg").Count
             Dim MiltonR0184 As Integer = IO.Directory.GetFiles(MiltonRd0184Dir, "*.cfg").Count
-            Dim PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
+            Dim _PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
             Dim Procopio4401 As Integer = IO.Directory.GetFiles(ProcopioDr4401Dir, "*.cfg").Count
             Dim Procopio4584 As Integer = IO.Directory.GetFiles(ProcopioDr4584Dir, "*.cfg").Count
             Dim Prosperity As Integer = IO.Directory.GetFiles(ProsperityStDir, "*.cfg").Count
@@ -597,7 +550,7 @@ Public Class Mechanic
             Dim Sustancia As Integer = IO.Directory.GetFiles(SustanciaRdDir, "*.cfg").Count
             Dim Royale As Integer = IO.Directory.GetFiles(TheRoyaleDir, "*.cfg").Count
             Dim Grapeseed As Integer = IO.Directory.GetFiles(GrapeseedAveDir, "*.cfg").Count
-            Dim PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
+            Dim _PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
             Dim Rockford0112 As Integer = IO.Directory.GetFiles(SouthRockford0012Dir, "*.cfg").Count
             Dim Zancudo As Integer = IO.Directory.GetFiles(ZancudoAveDir, "*.cfg").Count
 
@@ -607,6 +560,57 @@ Public Class Mechanic
             GrgTransMenu.SetBannerType(Rectangle)
             _menuPool.Add(GrgTransMenu)
             GrgTransMenu.MenuItems.Clear()
+
+            AS3 = ReadCfgValue("3ASowner", saveFile)
+            IW4 = ReadCfgValue("4IWowner", saveFile)
+            IW4HL = ReadCfgValue("4IWHLowner", saveFile)
+            DPH = ReadCfgValue("DPHwoner", saveFile)
+            DPHHL = ReadCfgValue("DPHHLowner", saveFile)
+            DT = ReadCfgValue("SSowner", saveFile)
+            ET = ReadCfgValue("ETowner", saveFile)
+            ETHL = ReadCfgValue("ETHLowner", saveFile)
+            RM = ReadCfgValue("RMowner", saveFile)
+            RMHL = ReadCfgValue("RMHLowner", saveFile)
+            TT = ReadCfgValue("TTowner", saveFile)
+            TTHL = ReadCfgValue("TTHLowner", saveFile)
+            WP = ReadCfgValue("WPowner", saveFile)
+            VB = ReadCfgValue("VPBowner", saveFile)
+            NC2044 = ReadCfgValue("2044NCowner", saveFile)
+            HA2862 = ReadCfgValue("2862HAowner", saveFile)
+            HA2868 = ReadCfgValue("2868HAowner", saveFile)
+            WO3655 = ReadCfgValue("3655WODowner", saveFile)
+            NC2045 = ReadCfgValue("2045NCowner", saveFile)
+            MR2117 = ReadCfgValue("2117MRowner", saveFile)
+            HA2874 = ReadCfgValue("2874HAowner", saveFile)
+            WD3677 = ReadCfgValue("3677WMDowner", saveFile)
+            MW2113 = ReadCfgValue("2113MWTowner", saveFile)
+            ETP1 = ReadCfgValue("ETP1owner", saveFile)
+            ETP2 = ReadCfgValue("ETP2owner", saveFile)
+            ETP3 = ReadCfgValue("ETP3owner", saveFile)
+            BCA = ReadCfgValue("BCAowner", saveFile)
+            BDP = ReadCfgValue("BDPowner", saveFile)
+            CA = ReadCfgValue("CAowner", saveFile)
+            HA = ReadCfgValue("HAowner", saveFile)
+            LLB0604 = ReadCfgValue("0604LLBowner", saveFile)
+            LLB2143 = ReadCfgValue("2143LLBowner", saveFile)
+            MR0184 = ReadCfgValue("0184MRowner", saveFile)
+            POWER = ReadCfgValue("PSowner", saveFile)
+            PD4401 = ReadCfgValue("4401PDowner", saveFile)
+            PD4584 = ReadCfgValue("4584PDowner", saveFile)
+            PPS = ReadCfgValue("PPSowner", saveFile)
+            SVS = ReadCfgValue("SVSowner", saveFile)
+            SMMD = ReadCfgValue("SMMowner", saveFile)
+            SRD0325 = ReadCfgValue("0325SRDowner", saveFile)
+            SA = ReadCfgValue("SAonwer", saveFile)
+            SR = ReadCfgValue("SRowner", saveFile)
+            TR = ReadCfgValue("TRowner", saveFile)
+            GA = ReadCfgValue("GAowner", saveFile)
+            PB = ReadCfgValue("PBowner", saveFile)
+            SRD0112 = ReadCfgValue("0112SRDowner", saveFile)
+            ZA = ReadCfgValue("ZAowner", saveFile)
+
+            ReadMenuItems()
+
             If AS3 = playerName AndAlso Not Alta = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemAS3)
             If IW4 = playerName AndAlso Not Integrity = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemIW4)
             If IW4HL = playerName AndAlso Not Integrity2 = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemIW4HL)
@@ -628,8 +632,8 @@ Public Class Mechanic
             If NC2045 = playerName AndAlso Not NConker2045 = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemNC2045)
             If MR2117 = playerName AndAlso Not MiltonR2117 = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMR2117)
             If HA2874 = playerName AndAlso Not Hillcrest2874 = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2874)
-            If WD3677 = playerName AndAlso Not Whispymound3677 = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWD3677)
-            If MW2113 = playerName AndAlso Not MadWayne2113 = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMW2113)
+            If WD3677 = playerName AndAlso Not _Whispymound3677 = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWD3677)
+            If MW2113 = playerName AndAlso Not _MadWayne2113 = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMW2113)
             If ETP1 = playerName AndAlso Not EclipseP1 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP1)
             If ETP2 = playerName AndAlso Not EclipseP2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP2)
             If ETP3 = playerName AndAlso Not EclipseP3 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP3)
@@ -640,7 +644,7 @@ Public Class Mechanic
             If LLB0604 = playerName AndAlso Not Lagunas0604 = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemLLB0604)
             If LLB2143 = playerName AndAlso Not Lagunas2143 = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemLLB2143)
             If MR0184 = playerName AndAlso Not MiltonR0184 = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMR0184)
-            If POWER = playerName AndAlso Not PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPower)
+            If POWER = playerName AndAlso Not _PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPower)
             If PD4401 = playerName AndAlso Not Procopio4401 = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPD4401)
             If PD4584 = playerName AndAlso Not Procopio4584 = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPD4584)
             If PPS = playerName AndAlso Not Prosperity = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemProsperity)
@@ -651,7 +655,7 @@ Public Class Mechanic
             If SR = playerName AndAlso Not Sustancia = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSR)
             If TR = playerName AndAlso Not Royale = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTR)
             If GA = playerName AndAlso Not Grapeseed = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemGA)
-            If PB = playerName AndAlso Not PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPB)
+            If PB = playerName AndAlso Not _PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPB)
             If SRD0112 = playerName AndAlso Not Rockford0112 = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSRD0112)
             If ZA = playerName AndAlso Not Zancudo = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemZA)
 
@@ -842,7 +846,9 @@ Public Class Mechanic
             AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
             'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            If Not ex.StackTrace.Contains("ContainsKey") Then
+                logger.Log(ex.Message & " " & ex.StackTrace)
+            End If
         End Try
     End Sub
 
@@ -961,7 +967,9 @@ Public Class Mechanic
             AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
             'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            If Not ex.StackTrace.Contains("ContainsKey") Then
+                logger.Log(ex.Message & " " & ex.StackTrace)
+            End If
         End Try
     End Sub
 #End Region
@@ -1749,7 +1757,7 @@ Public Class Mechanic
                 ElseIf playerName = "Player3" AndAlso Active = "False" Then
                     Mechanic2.Player3_SendVehicle(selectedItem.SubString1, VehicleModel, VehicleHash, selectedItem, sender)
                 End If
-                My.Computer.Audio.Play(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav", AudioPlayMode.Background)
+                SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
             End If
             sender.Visible = False
         Catch ex As Exception
@@ -2079,7 +2087,7 @@ Public Class Mechanic
                 PPV.FreezePosition = True
             End If
             SinglePlayerApartment.player.Money = (playerCash - 200)
-            My.Computer.Audio.Play(SoundPathDir & "pegasus_we_are_locating_a_suitable_drop_off_location.wav", AudioPlayMode.Background)
+            SoundPlayer(SoundPathDir & "pegasus_we_are_locating_a_suitable_drop_off_location.wav")
         ElseIf selectedItem.Text = PegasusDelete Then
             IO.File.Delete(PegasusSelectedVehicleFile)
             Call_Pegasus(False)
@@ -2304,15 +2312,15 @@ Public Class Mechanic
         Dim rd As Integer = r.Next(1, 5)
         Select Case rd
             Case 1, 2
-                My.Computer.Audio.Play(SoundPathDir & "pegasus_for_your_future_transport_need.wav", AudioPlayMode.Background)
+                SoundPlayer(SoundPathDir & "pegasus_for_your_future_transport_need.wav")
             Case 3, 4
-                My.Computer.Audio.Play(SoundPathDir & "pegasus_call_again.wav", AudioPlayMode.Background)
+                SoundPlayer(SoundPathDir & "pegasus_call_again.wav")
         End Select
 
     End Sub
 
     Public Shared Sub CategoryMenuCloseHandler(sender As UIMenu)
-        My.Computer.Audio.Play(SoundPathDir & "mechanic_get_back_to_work_then.wav", AudioPlayMode.Background)
+        SoundPlayer(SoundPathDir & "mechanic_get_back_to_work_then.wav")
     End Sub
 
     Public Shared Sub GrgMoveMenuCloseHandler(sender As UIMenu)
@@ -2327,8 +2335,12 @@ Public Class Mechanic
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
             _menuPool.ProcessMenus()
+
+            If (Native.Function.Call(Of Boolean)(Native.Hash._GET_LAST_INPUT_METHOD, 2) = False AndAlso Game.IsControlPressed(2, My.Settings.MechanicPad) AndAlso Game.IsControlPressed(2, My.Settings.SecondMechanicPad)) AndAlso (Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen()) Then
+                PhoneMenu.Visible = Not PhoneMenu.Visible
+            End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            If Not ex.StackTrace.Contains("MoveNext") Then logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
@@ -2346,88 +2358,42 @@ Public Class Mechanic
         TT = ReadCfgValue("TTowner", saveFile)
         TTHL = ReadCfgValue("TTHLowner", saveFile)
         WP = ReadCfgValue("WPowner", saveFile)
-        VB = ReadCfgValue("VPBowner", saveFile2)
-        NC2044 = ReadCfgValue("2044NCowner", saveFile2)
-        HA2862 = ReadCfgValue("2862HAowner", saveFile2)
-        HA2868 = ReadCfgValue("2868HAowner", saveFile2)
-        WO3655 = ReadCfgValue("3655WODowner", saveFile2)
-        NC2045 = ReadCfgValue("2045NCowner", saveFile2)
-        MR2117 = ReadCfgValue("2117MRowner", saveFile2)
-        HA2874 = ReadCfgValue("2874HAowner", saveFile2)
-        WD3677 = ReadCfgValue("3677WMDowner", saveFile2)
-        MW2113 = ReadCfgValue("2113MWTowner", saveFile2)
-        ETP1 = ReadCfgValue("ETP1owner", saveFile2)
-        ETP2 = ReadCfgValue("ETP2owner", saveFile2)
-        ETP3 = ReadCfgValue("ETP3owner", saveFile2)
-        BCA = ReadCfgValue("BCAowner", saveFile3)
-        BDP = ReadCfgValue("BDPowner", saveFile3)
-        CA = ReadCfgValue("CAowner", saveFile3)
-        HA = ReadCfgValue("HAowner", saveFile3)
-        LLB0604 = ReadCfgValue("0604LLBowner", saveFile3)
-        LLB2143 = ReadCfgValue("2143LLBowner", saveFile3)
-        MR0184 = ReadCfgValue("0184MRowner", saveFile3)
-        POWER = ReadCfgValue("PSowner", saveFile3)
-        PD4401 = ReadCfgValue("4401PDowner", saveFile3)
-        PD4584 = ReadCfgValue("4584PDowner", saveFile3)
-        PPS = ReadCfgValue("PPSowner", saveFile3)
-        SVS = ReadCfgValue("SVSowner", saveFile3)
-        SMMD = ReadCfgValue("SMMowner", saveFile3)
-        SRD0325 = ReadCfgValue("0325SRDowner", saveFile3)
-        SA = ReadCfgValue("SAonwer", saveFile3)
-        SR = ReadCfgValue("SRowner", saveFile3)
-        TR = ReadCfgValue("TRowner", saveFile3)
-        GA = ReadCfgValue("GAowner", saveFile3)
-        PB = ReadCfgValue("PBowner", saveFile3)
-        SRD0112 = ReadCfgValue("0112SRDowner", saveFile3)
-        ZA = ReadCfgValue("ZAowner", saveFile3)
+        VB = ReadCfgValue("VPBowner", saveFile)
+        NC2044 = ReadCfgValue("2044NCowner", saveFile)
+        HA2862 = ReadCfgValue("2862HAowner", saveFile)
+        HA2868 = ReadCfgValue("2868HAowner", saveFile)
+        WO3655 = ReadCfgValue("3655WODowner", saveFile)
+        NC2045 = ReadCfgValue("2045NCowner", saveFile)
+        MR2117 = ReadCfgValue("2117MRowner", saveFile)
+        HA2874 = ReadCfgValue("2874HAowner", saveFile)
+        WD3677 = ReadCfgValue("3677WMDowner", saveFile)
+        MW2113 = ReadCfgValue("2113MWTowner", saveFile)
+        ETP1 = ReadCfgValue("ETP1owner", saveFile)
+        ETP2 = ReadCfgValue("ETP2owner", saveFile)
+        ETP3 = ReadCfgValue("ETP3owner", saveFile)
+        BCA = ReadCfgValue("BCAowner", saveFile)
+        BDP = ReadCfgValue("BDPowner", saveFile)
+        CA = ReadCfgValue("CAowner", saveFile)
+        HA = ReadCfgValue("HAowner", saveFile)
+        LLB0604 = ReadCfgValue("0604LLBowner", saveFile)
+        LLB2143 = ReadCfgValue("2143LLBowner", saveFile)
+        MR0184 = ReadCfgValue("0184MRowner", saveFile)
+        POWER = ReadCfgValue("PSowner", saveFile)
+        PD4401 = ReadCfgValue("4401PDowner", saveFile)
+        PD4584 = ReadCfgValue("4584PDowner", saveFile)
+        PPS = ReadCfgValue("PPSowner", saveFile)
+        SVS = ReadCfgValue("SVSowner", saveFile)
+        SMMD = ReadCfgValue("SMMowner", saveFile)
+        SRD0325 = ReadCfgValue("0325SRDowner", saveFile)
+        SA = ReadCfgValue("SAonwer", saveFile)
+        SR = ReadCfgValue("SRowner", saveFile)
+        TR = ReadCfgValue("TRowner", saveFile)
+        GA = ReadCfgValue("GAowner", saveFile)
+        PB = ReadCfgValue("PBowner", saveFile)
+        SRD0112 = ReadCfgValue("0112SRDowner", saveFile)
+        ZA = ReadCfgValue("ZAowner", saveFile)
 
-        itemAS3 = New UIMenuItem(_3AltaStreet._Name & _3AltaStreet.Unit)
-        itemIW4 = New UIMenuItem(_4IntegrityWay._Name & _4IntegrityWay.Unit)
-        itemIW4HL = New UIMenuItem(HL4IntegrityWay._Name & HL4IntegrityWay.Unit)
-        itemDPH = New UIMenuItem(DelPerroHeight._Name & DelPerroHeight.Unit)
-        itemDPHHL = New UIMenuItem(HLDelPerro._Name & HLDelPerro.Unit)
-        itemDT = New UIMenuItem(DreamTower._Name & DreamTower.Unit)
-        itemET = New UIMenuItem(EclipseTower._Name & EclipseTower.Unit)
-        itemETHL = New UIMenuItem(HLEclipseTower._Name & HLEclipseTower.Unit)
-        itemRM = New UIMenuItem(RichardMajestic._Name & RichardMajestic.Unit)
-        itemRMHL = New UIMenuItem(HLRichardMajestic._Name & HLRichardMajestic.Unit)
-        itemTT = New UIMenuItem(TinselTower._Name & TinselTower.Unit)
-        itemTTHL = New UIMenuItem(HLTinselTower._Name & HLTinselTower.Unit)
-        itemWP = New UIMenuItem(WeazelPlaza._Name & WeazelPlaza.Unit)
-        itemVB = New UIMenuItem(VespucciBlvd._Name & VespucciBlvd.Unit)
-        itemNC2044 = New UIMenuItem(NorthConker2044._Name & NorthConker2044.Unit)
-        itemHA2862 = New UIMenuItem(HillcrestAve2862._Name & HillcrestAve2862.Unit)
-        itemHA2868 = New UIMenuItem(HillcrestAve2868._Name & HillcrestAve2868.Unit)
-        itemWO3655 = New UIMenuItem(WildOats3655._Name & WildOats3655.Unit)
-        itemNC2045 = New UIMenuItem(NorthConker2045._Name & NorthConker2045.Unit)
-        itemMR2117 = New UIMenuItem(MiltonRd2117._Name & MiltonRd2117.Unit)
-        itemHA2874 = New UIMenuItem(HillcrestAve2874._Name & HillcrestAve2874.Unit)
-        itemWD3677 = New UIMenuItem(Whispymound3677._Name & Whispymound3677.Unit)
-        itemMW2113 = New UIMenuItem(MadWayne2113._Name & MadWayne2113.Unit)
-        itemETP1 = New UIMenuItem(EclipseTowerPS1._Name & EclipseTowerPS1.Unit)
-        itemETP2 = New UIMenuItem(EclipseTowerPS2._Name & EclipseTowerPS2.Unit)
-        itemETP3 = New UIMenuItem(EclipseTowerPS3._Name & EclipseTowerPS3.Unit)
-        itemBCA = New UIMenuItem(BayCityAve._Name & BayCityAve.Unit)
-        itemBDP = New UIMenuItem(BlvdDelPerro._Name & BlvdDelPerro.Unit)
-        itemCA = New UIMenuItem(CougarAve._Name & CougarAve.Unit)
-        itemHA = New UIMenuItem(HangmanAve._Name & HangmanAve.Unit)
-        itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604._Name & LasLagunasBlvd0604.Unit)
-        itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143._Name & LasLagunasBlvd2143.Unit)
-        itemMR0184 = New UIMenuItem(MiltonRd0184._Name & MiltonRd0184.Unit)
-        itemPower = New UIMenuItem(PowerSt._Name & PowerSt.Unit)
-        itemPD4401 = New UIMenuItem(ProcopioDr4401._Name & ProcopioDr4401.Unit)
-        itemPD4584 = New UIMenuItem(ProcopioDr4584._Name & ProcopioDr4584.Unit)
-        itemProsperity = New UIMenuItem(ProsperitySt._Name & ProsperitySt.Unit)
-        itemSVS = New UIMenuItem(SanVitasSt._Name & SanVitasSt.Unit)
-        itemSMMD = New UIMenuItem(SouthMoMiltonDr._Name & SouthMoMiltonDr.Unit)
-        itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325._Name & SouthRockfordDrive0325.Unit)
-        itemSA = New UIMenuItem(SpanishAve._Name & SpanishAve.Unit)
-        itemSR = New UIMenuItem(SustanciaRd._Name & SustanciaRd.Unit)
-        itemTR = New UIMenuItem(TheRoyale._Name & TheRoyale.Unit)
-        itemGA = New UIMenuItem(GrapeseedAve._Name & GrapeseedAve.Unit)
-        itemPB = New UIMenuItem(PaletoBlvd._Name & PaletoBlvd.Unit)
-        itemSRD0112 = New UIMenuItem(SouthRockfordDr0112._Name & SouthRockfordDr0112.Unit)
-        itemZA = New UIMenuItem(ZancudoAve._Name & ZancudoAve.Unit)
+        ReadMenuItems()
 
         CreateMechanicMenu()
         CreateVehMenuApartments(AS3Menu, itemAS3, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\")
@@ -2484,9 +2450,9 @@ Public Class Mechanic
         Dim rd As Integer = r.Next(1, 5)
         Select Case rd
             Case 1, 2
-                My.Computer.Audio.Play(SoundPathDir & "mechanic_u_need_something_huh.wav", AudioPlayMode.Background)
+                SoundPlayer(SoundPathDir & "mechanic_u_need_something_huh.wav")
             Case 3, 4
-                My.Computer.Audio.Play(SoundPathDir & "mechanic_on_the_clock_some_wheels.wav", AudioPlayMode.Background)
+                SoundPlayer(SoundPathDir & "mechanic_on_the_clock_some_wheels.wav")
         End Select
 
     End Sub
@@ -2512,15 +2478,65 @@ Public Class Mechanic
                 Dim rd As Integer = r.Next(1, 5)
                 Select Case rd
                     Case 1, 2
-                        My.Computer.Audio.Play(SoundPathDir & "pegasus_how_can_i_help_u.wav", AudioPlayMode.Background)
+                        SoundPlayer(SoundPathDir & "pegasus_how_can_i_help_u.wav")
                     Case 3, 4
-                        My.Computer.Audio.Play(SoundPathDir & "pegasus_how_can_i_help_u.wav", AudioPlayMode.Background)
+                        SoundPlayer(SoundPathDir & "pegasus_what_do_you_need_us_to_deliver.wav")
                 End Select
 
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Public Shared Sub ReadMenuItems()
+        itemAS3 = New UIMenuItem(_3AltaStreet.Apartment.Name & _3AltaStreet.Apartment.Unit)
+        itemIW4 = New UIMenuItem(_4IntegrityWay.Apartment.Name & _4IntegrityWay.Apartment.Unit)
+        itemIW4HL = New UIMenuItem(_4IntegrityWay.ApartmentHL.Name & _4IntegrityWay.ApartmentHL.Unit)
+        itemDPH = New UIMenuItem(DelPerroHeight.Apartment.Name & DelPerroHeight.Apartment.Unit)
+        itemDPHHL = New UIMenuItem(DelPerroHeight.ApartmentHL.Name & DelPerroHeight.ApartmentHL.Unit)
+        itemDT = New UIMenuItem(DreamTower.Apartment.Name & DreamTower.Apartment.Unit)
+        itemET = New UIMenuItem(EclipseTower.Apartment.Name & EclipseTower.Apartment.Unit)
+        itemETHL = New UIMenuItem(EclipseTower.ApartmentHL.Name & EclipseTower.ApartmentHL.Unit)
+        itemRM = New UIMenuItem(RichardMajestic.Apartment.Name & RichardMajestic.Apartment.Unit)
+        itemRMHL = New UIMenuItem(RichardMajestic.ApartmentHL.Name & RichardMajestic.ApartmentHL.Unit)
+        itemTT = New UIMenuItem(TinselTower.Apartment.Name & TinselTower.Apartment.Unit)
+        itemTTHL = New UIMenuItem(TinselTower.ApartmentHL.Name & TinselTower.ApartmentHL.Unit)
+        itemWP = New UIMenuItem(WeazelPlaza.Apartment.Name & WeazelPlaza.Apartment.Unit)
+        itemVB = New UIMenuItem(VespucciBlvd.Apartment.Name & VespucciBlvd.Apartment.Unit)
+        itemNC2044 = New UIMenuItem(NorthConker2044.Apartment.Name & NorthConker2044.Apartment.Unit)
+        itemHA2862 = New UIMenuItem(HillcrestAve2862.Apartment.Name & HillcrestAve2862.Apartment.Unit)
+        itemHA2868 = New UIMenuItem(HillcrestAve2868.Apartment.Name & HillcrestAve2868.Apartment.Unit)
+        itemWO3655 = New UIMenuItem(WildOats3655.Apartment.Name & WildOats3655.Apartment.Unit)
+        itemNC2045 = New UIMenuItem(NorthConker2045.Apartment.Name & NorthConker2045.Apartment.Unit)
+        itemMR2117 = New UIMenuItem(MiltonRd2117.Apartment.Name & MiltonRd2117.Apartment.Unit)
+        itemHA2874 = New UIMenuItem(HillcrestAve2874.Apartment.Name & HillcrestAve2874.Apartment.Unit)
+        itemWD3677 = New UIMenuItem(Whispymound3677.Apartment.Name & Whispymound3677.Apartment.Unit)
+        itemMW2113 = New UIMenuItem(MadWayne2113.Apartment.Name & MadWayne2113.Apartment.Unit)
+        itemETP1 = New UIMenuItem(EclipseTower.ApartmentPS1.Name & EclipseTower.ApartmentPS1.Unit)
+        itemETP2 = New UIMenuItem(EclipseTower.ApartmentPS2.Name & EclipseTower.ApartmentPS2.Unit)
+        itemETP3 = New UIMenuItem(EclipseTower.ApartmentPS3.Name & EclipseTower.ApartmentPS3.Unit)
+        itemBCA = New UIMenuItem(BayCityAve.Apartment.Name & BayCityAve.Apartment.Unit)
+        itemBDP = New UIMenuItem(BlvdDelPerro.Apartment.Name & BlvdDelPerro.Apartment.Unit)
+        itemCA = New UIMenuItem(CougarAve.Apartment.Name & CougarAve.Apartment.Unit)
+        itemHA = New UIMenuItem(HangmanAve.Apartment.Name & HangmanAve.Apartment.Unit)
+        itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604.Apartment.Name & LasLagunasBlvd0604.Apartment.Unit)
+        itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143.Apartment.Name & LasLagunasBlvd2143.Apartment.Unit)
+        itemMR0184 = New UIMenuItem(MiltonRd0184.Apartment.Name & MiltonRd0184.Apartment.Unit)
+        itemPower = New UIMenuItem(PowerSt.Apartment.Name & PowerSt.Apartment.Unit)
+        itemPD4401 = New UIMenuItem(ProcopioDr4401.Apartment.Name & ProcopioDr4401.Apartment.Unit)
+        itemPD4584 = New UIMenuItem(ProcopioDr4584.Apartment.Name & ProcopioDr4584.Apartment.Unit)
+        itemProsperity = New UIMenuItem(ProsperitySt.Apartment.Name & ProsperitySt.Apartment.Unit)
+        itemSVS = New UIMenuItem(SanVitasSt.Apartment.Name & SanVitasSt.Apartment.Unit)
+        itemSMMD = New UIMenuItem(SouthMoMiltonDr.Apartment.Name & SouthMoMiltonDr.Apartment.Unit)
+        itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325.Apartment.Name & SouthRockfordDrive0325.Apartment.Unit)
+        itemSA = New UIMenuItem(SpanishAve.Apartment.Name & SpanishAve.Apartment.Unit)
+        itemSR = New UIMenuItem(SustanciaRd.Apartment.Name & SustanciaRd.Apartment.Unit)
+        itemTR = New UIMenuItem(TheRoyale.Apartment.Name & TheRoyale.Apartment.Unit)
+        itemGA = New UIMenuItem(GrapeseedAve.Apartment.Name & GrapeseedAve.Apartment.Unit)
+        itemPB = New UIMenuItem(PaletoBlvd.Apartment.Name & PaletoBlvd.Apartment.Unit)
+        itemSRD0112 = New UIMenuItem(SouthRockfordDr0112.Apartment.Name & SouthRockfordDr0112.Apartment.Unit)
+        itemZA = New UIMenuItem(ZancudoAve.Apartment.Name & ZancudoAve.Apartment.Unit)
     End Sub
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs)

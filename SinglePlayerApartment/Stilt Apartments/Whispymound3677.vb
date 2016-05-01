@@ -1,56 +1,48 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports GTA
 Imports GTA.Native
 Imports GTA.Math
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Reflection
 Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
+Imports SinglePlayerApartment.INMNative
 
 Public Class Whispymound3677
     Inherits Script
 
-    Public Shared Owner As String = ReadCfgValue("3677WMDowner", saveFile2)
-    Public Shared _Name As String = "Whispymound Drive "
-    Public Shared Desc As String = "The saps driving through downtown Vinewood on their morning commute need something to aspire to. They don't want to look up and see green, peaceful hills. They want to gaze through your floor-length windows and see you in nothing but snakeskin posing pouch injecting cold press kale juice with your tantric yoga instructor... Includes 10-car garage."
-    Public Shared Unit As String = "3677"
-    Public Shared Cost As Integer = 478000
-    Public Shared _Blip As Blip
-    Public Shared Blip2 As Blip
-    Public Shared Entrance As Vector3 = New Vector3(119.3083, 564.0632, 183.9594)
-    Public Shared Save As Vector3 = New Vector3(126.1813, 545.9031, 180.5226)
-    Public Shared Teleport As Vector3 = New Vector3(117.5057, 557.3167, 184.3022)
-    Public Shared Teleport2 As Vector3 = New Vector3(118.8673, 567.283, 183.1295)
-    Public Shared _Exit As Vector3 = New Vector3(117.2371, 560.0856, 184.3048)
-    Public Shared Wardrobe As Vector3 = New Vector3(122.0242, 548.9013, 180.4972)
-    Public Shared _Garage As Vector3 = New Vector3(131.7664, 568.0024, 183.1025)
-    Public Shared GarageOut As Vector3 = New Vector3(132.723, 568.142, 183.099)
-    Public Shared GarageOutHeading As Single = 335.12
-    Public Shared GarageDistance As String
-    Public Shared DoorDistance As Single
-    Public Shared SaveDistance As Single
-    Public Shared ExitDistance As Single
-    Public Shared WardrobeDistance As Single
-    Public Shared CameraPos As Vector3 = New Vector3(112.5791, 574.6387, 190.8119)
-    Public Shared CameraRot As Vector3 = New Vector3(-21.01317, 0, -144.2139)
-    Public Shared CameraFov As Single = 50.0
-    Public Shared WardrobeHeading As Single = 182.3311
-    Public Shared IsAtHome As Boolean = False
-
+    Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
+
+            Apartment = New Apartment("Whispymound Drive ", "3677", 478000)
+                Apartment.Name = ReadCfgValue("3677Name", langFile)
+                Apartment.Description = ReadCfgValue("3677Desc", langFile)
+                Apartment.Owner = ReadCfgValue("3677WMDowner", saveFile)
+                Apartment.Entrance = New Vector3(119.3083, 564.0632, 183.9594)
+                Apartment.Save = New Vector3(126.1813, 545.9031, 180.5226)
+                Apartment.TeleportInside = New Vector3(117.5057, 557.3167, 184.3022)
+                Apartment.TeleportOutside = New Vector3(118.8673, 567.283, 183.1295)
+                Apartment.ApartmentExit = New Vector3(117.2371, 560.0856, 184.3048)
+                Apartment.Wardrobe = New Vector3(122.0242, 548.9013, 180.4972)
+                Apartment.GarageEntrance = New Vector3(131.7664, 568.0024, 183.1025)
+                Apartment.GarageOutside = New Vector3(132.723, 568.142, 183.099)
+                Apartment.GarageOutHeading = 335.12
+                Apartment.CameraPosition = New Vector3(112.5791, 574.6387, 190.8119)
+                Apartment.CameraRotation = New Vector3(-21.01317, 0, -144.2139)
+                Apartment.CameraFOV = 50.0
+                Apartment.WardrobeHeading = 182.3311
+                Apartment.IsAtHome = False
+                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
+                Apartment.SaveFile = "3677WMDowner"
+                Apartment.PlayerMap = "Whispy3677"
+                Apartment.IPL = "apa_stilt_ch2_05c_ext1"
+                Apartment.Enabled = True
+
             If ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then
-                _Name = ReadCfgValue("3677Name", langFile)
-                Desc = ReadCfgValue("3677Desc", langFile)
                 Garage = ReadCfgValue("Garage", langFile)
                 AptOptions = ReadCfgValue("AptOptions", langFile)
                 ExitApt = ReadCfgValue("ExitApt", langFile)
@@ -95,18 +87,18 @@ Public Class Whispymound3677
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             BuyMenu.SetBannerType(Rectangle)
             _menuPool.Add(BuyMenu)
-            Dim item As New UIMenuItem(_Name & Unit, Desc)
+            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
             With item
-                If Owner = "Michael" Then
+                If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Owner = "Franklin" Then
+                ElseIf Apartment.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Owner = "Trevor" Then
+                ElseIf Apartment.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Owner = "Player3" Then
+                ElseIf Apartment.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
-                    .SetRightLabel("$" & Cost.ToString("N"))
+                    .SetRightLabel("$" & Apartment.Cost.ToString("N"))
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
@@ -119,18 +111,18 @@ Public Class Whispymound3677
 
     Public Shared Sub RefreshMenu()
         BuyMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Name & Unit, Desc)
+        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
         With item
-            If Owner = "Michael" Then
+            If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Owner = "Franklin" Then
+            ElseIf Apartment.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Owner = "Trevor" Then
+            ElseIf Apartment.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Owner = "Player3" Then
+            ElseIf Apartment.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
-                .SetRightLabel("$" & Cost.ToString("N"))
+                .SetRightLabel("$" & Apartment.Cost.ToString("N"))
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
@@ -140,15 +132,15 @@ Public Class Whispymound3677
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Name & Unit & Garage)
+        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
         With item
-            If Owner = "Michael" Then
+            If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Owner = "Franklin" Then
+            ElseIf Apartment.Owner = "Franklin" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Owner = "Trevor" Then
+            ElseIf Apartment.Owner = "Trevor" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Owner = "Player3" Then
+            ElseIf Apartment.Owner = "Player3" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -181,15 +173,15 @@ Public Class Whispymound3677
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(_Name & Unit & Garage)
+            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
             With item
-                If Owner = "Michael" Then
+                If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Owner = "Franklin" Then
+                ElseIf Apartment.Owner = "Franklin" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Owner = "Trevor" Then
+                ElseIf Apartment.Owner = "Trevor" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Owner = "Player3" Then
+                ElseIf Apartment.Owner = "Player3" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -203,53 +195,7 @@ Public Class Whispymound3677
     End Sub
 
     Public Shared Sub CreateWhispymound3677()
-        _Blip = World.CreateBlip(Entrance)
-        If Owner = "Michael" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Blue
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Blue
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        ElseIf Owner = "Franklin" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Green
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Green
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        ElseIf Owner = "Trevor" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = 17
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = 17
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        ElseIf Owner = "Player3" Then
-            _Blip.Sprite = BlipSprite.Safehouse
-            _Blip.Color = BlipColor.Yellow
-            _Blip.IsShortRange = True
-            SetBlipName(_Name & Unit, _Blip)
-            Blip2 = World.CreateBlip(_Garage)
-            Blip2.Sprite = BlipSprite.Garage
-            Blip2.Color = BlipColor.Yellow
-            Blip2.IsShortRange = True
-            SetBlipName(_Name & Unit & Garage, Blip2)
-        Else
-            _Blip.Sprite = BlipSprite.SafehouseForSale
-            _Blip.Color = BlipColor.White
-            _Blip.IsShortRange = True
-            SetBlipName(ForSale, _Blip)
-        End If
+        Apartment.CreateStilt(Apartment)
     End Sub
 
     Public Sub MenuCloseHandler(sender As UIMenu)
@@ -268,48 +214,51 @@ Public Class Whispymound3677
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = Teleport2
-                Script.Wait(500)
+                Wait(&H3E8)
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
+                Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
-                IsAtHome = False
-                RemoveIPL("apa_stilt_ch2_05c_ext1")
+                Apartment.IsAtHome = False
+                RemoveIPL(Apartment.IPL)
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue("3677WMDowner", "None", saveFile2)
+                WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                SinglePlayerApartment.player.Money = (playerCash + Cost)
-                Owner = "None"
-                _Blip.Remove()
-                If Not Blip2 Is Nothing Then Blip2.Remove()
+                Wait(&H3E8)
+                SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
+                Apartment.Owner = "None"
+                Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateWhispymound3677()
-                Game.Player.Character.Position = Teleport2
-                Script.Wait(500)
+                Brain.TVOn = False
+                Game.Player.Character.Position = Apartment.TeleportOutside
+                Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
                 UnLoadMPDLCMap()
-                IsAtHome = False
-                RemoveIPL("apa_stilt_ch2_05c_ext1")
+                Apartment.IsAtHome = False
+                RemoveIPL(Apartment.IPL)
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+                Brain.TVOn = False
                 playerPed.Position = TenCarGarage.Elevator
-                TenCarGarage.LastLocationName = _Name & Unit
-                TenCarGarage.lastLocationVector = _Exit
-                TenCarGarage.lastLocationGarageVector = _Garage
-                TenCarGarage.lastLocationGarageOutVector = GarageOut
-                TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
-                TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
+                TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+                TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+                TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+                TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+                TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                TenCarGarage.CurrentPath = Apartment.GaragePath
                 ExitMenu.Visible = False
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             End If
         Catch ex As Exception
@@ -319,23 +268,23 @@ Public Class Whispymound3677
 
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
-            If selectedItem.Text = _Name & Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Cost.ToString("N") AndAlso Owner = "None" Then
+            If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
                 'Buy Apartment
-                If playerCash > Cost Then
-                    WriteCfgValue("3677WMDowner", playerName, saveFile2)
+                If playerCash > Apartment.Cost Then
+                    WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Cost)
-                    Owner = playerName
-                    _Blip.Remove()
-                    If Not Blip2 Is Nothing Then Blip2.Remove()
+                    Wait(&H3E8)
+                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    Apartment.Owner = playerName
+                    Apartment.AptBlip.Remove()
+                    If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateWhispymound3677()
                     RefreshGarageMenu()
                     Mechanic.CreateMechanicMenu()
-                    Script.Wait(500)
+                    Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & _Name & Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
                     If playerName = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf playerName = "Franklin" Then
@@ -357,20 +306,20 @@ Public Class Whispymound3677
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = _Name & Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Owner = playerName Then
+            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = playerName Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                IsAtHome = True
-                ToggleIPL("apa_stilt_ch2_05c_ext1")
+                Apartment.IsAtHome = True
+                ToggleIPL(Apartment.IPL)
 
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                Game.Player.Character.Position = Teleport
-                Script.Wait(500)
+                Wait(&H3E8)
+                Game.Player.Character.Position = Apartment.TeleportInside
+                Wait(500)
                 Game.FadeScreenIn(500)
             End If
         Catch ex As Exception
@@ -379,167 +328,166 @@ Public Class Whispymound3677
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            IsAtHome = True
-            ToggleIPL("apa_stilt_ch2_05c_ext1")
+            Apartment.IsAtHome = True
+            ToggleIPL(Apartment.IPL)
 
             Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
+            Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             playerPed.Position = TenCarGarage.GarageDoorL
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
+            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+            TenCarGarage.CurrentPath = Apartment.GaragePath
             GarageMenu.Visible = False
-            Script.Wait(500)
+            Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Name & Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
-            Dim path As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
-            If IO.File.Exists(path & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", path & "vehicle_0.cfg") Else VehPlate0 = "0"
-            If IO.File.Exists(path & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", path & "vehicle_1.cfg") Else VehPlate1 = "0"
-            If IO.File.Exists(path & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", path & "vehicle_2.cfg") Else VehPlate2 = "0"
-            If IO.File.Exists(path & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", path & "vehicle_3.cfg") Else VehPlate3 = "0"
-            If IO.File.Exists(path & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", path & "vehicle_4.cfg") Else VehPlate4 = "0"
-            If IO.File.Exists(path & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", path & "vehicle_5.cfg") Else VehPlate5 = "0"
-            If IO.File.Exists(path & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", path & "vehicle_6.cfg") Else VehPlate6 = "0"
-            If IO.File.Exists(path & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", path & "vehicle_7.cfg") Else VehPlate7 = "0"
-            If IO.File.Exists(path & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", path & "vehicle_8.cfg") Else VehPlate8 = "0"
-            If IO.File.Exists(path & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", path & "vehicle_9.cfg") Else VehPlate9 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_1.cfg") Else VehPlate1 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_2.cfg") Else VehPlate2 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_3.cfg") Then VehPlate3 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_3.cfg") Else VehPlate3 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_4.cfg") Else VehPlate4 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_5.cfg") Else VehPlate5 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_6.cfg") Then VehPlate6 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_6.cfg") Else VehPlate6 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            IsAtHome = True
-            ToggleIPL("apa_stilt_ch2_05c_ext1")
+            Apartment.IsAtHome = True
+            ToggleIPL(Apartment.IPL)
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            TenCarGarage.CurrentPath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
-            TenCarGarage.LastLocationName = _Name & Unit
-            TenCarGarage.lastLocationVector = _Exit
-            TenCarGarage.lastLocationGarageVector = _Garage
-            TenCarGarage.lastLocationGarageOutVector = GarageOut
-            TenCarGarage.lastLocationGarageOutHeading = GarageOutHeading
+            TenCarGarage.CurrentPath = Apartment.GaragePath
+            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
+            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
+            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
+            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             GarageMenu.Visible = False
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(path & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                Wait(&H3E8)
+                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
                 playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
-                Script.Wait(500)
+                Wait(500)
                 Game.FadeScreenIn(500)
             Else
-                TenCarGarage.LoadGarageVechicles(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
-                TenCarGarage.SaveGarageVehicle(Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\")
+                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                TenCarGarage.SaveGarageVehicle(Apartment.GaragePath)
             End If
         End If
     End Sub
@@ -547,55 +495,49 @@ Public Class Whispymound3677
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
             If My.Settings.Whispymound3677 = "Enable" Then
-                DoorDistance = World.GetDistance(playerPed.Position, Entrance)
-                SaveDistance = World.GetDistance(playerPed.Position, Save)
-                ExitDistance = World.GetDistance(playerPed.Position, _Exit)
-                WardrobeDistance = World.GetDistance(playerPed.Position, Wardrobe)
-                GarageDistance = World.GetDistance(playerPed.Position, _Garage)
-
                 'Enter Apartment
-                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso DoorDistance < 3.0 Then
-                    DisplayHelpTextThisFrame(EnterApartment & _Name)
+                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         BuyMenu.Visible = True
-                        World.RenderingCamera = World.CreateCamera(CameraPos, CameraRot, CameraFov)
+                        World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                         hideHud = True
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                     End If
                 End If
 
                 'Save Game
-                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso SaveDistance < 3.0 Then
+                If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.SaveDistance < 3.0 Then
                     DisplayHelpTextThisFrame(SaveGame)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        playerMap = "Whispy3677"
+                        playerMap = Apartment.PlayerMap
                         Game.FadeScreenOut(500)
-                        Script.Wait(&H3E8)
+                        Wait(&H3E8)
                         TimeLapse(8)
                         Game.ShowSaveMenu()
                         SavePosition()
-                        Script.Wait(500)
+                        Wait(500)
                         Game.FadeScreenIn(500)
                     End If
                 End If
 
                 'Exit Apartment
-                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso ExitDistance < 2.0 Then
-                    DisplayHelpTextThisFrame(ExitApartment & _Name & Unit)
+                If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.ExitDistance < 2.0 Then
+                    DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         ExitMenu.Visible = True
                     End If
                 End If
 
                 'Wardrobe
-                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Owner = playerName) AndAlso WardrobeDistance < 1.0 Then
+                If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.WardrobeDistance < 1.0 Then
                     DisplayHelpTextThisFrame(ChangeClothes)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        WardrobeVector = Wardrobe
-                        WardrobeHead = WardrobeHeading
+                        WardrobeVector = Apartment.Wardrobe
+                        WardrobeHead = Apartment.WardrobeHeading
                         WardrobeScriptStatus = 0
                         If playerName = "Michael" Then
                             Player0W.Visible = True
@@ -619,7 +561,7 @@ Public Class Whispymound3677
                 End If
 
                 'Enter Garage
-                If (Not playerPed.IsDead AndAlso Owner = playerName) AndAlso GarageDistance < 5.0 Then
+                If (Not playerPed.IsDead AndAlso Apartment.Owner = playerName) AndAlso Apartment.GarageDistance < 5.0 Then
                     If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
                         DisplayHelpTextThisFrame(_EnterGarage & Garage)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
@@ -637,7 +579,7 @@ Public Class Whispymound3677
                     End If
                 End If
 
-                If IsAtHome Then
+                If Apartment.IsAtHome Then
                     HIDE_MAP_OBJECT_THIS_FRAME()
                     Resources.Disable_Controls()
                     Brain.BrainEnable = True
@@ -654,18 +596,18 @@ Public Class Whispymound3677
 
     Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
         Native.Function.Call(Hash._0x4B5CFC83122DF602)
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_05c_b4"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_05c_emissive_07"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_05c_decals_05"))
-        Native.Function.Call(Hash._0xA97F257D0151A6AB, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_05c_B4_LOD"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "apa_ch2_05c_b4"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_05c_emissive_07"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_05c_decals_05"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "ch2_05c_B4_LOD"))
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
     Protected Overrides Sub Dispose(A_0 As Boolean)
         If (A_0) Then
             Try
-                If Not _Blip Is Nothing Then _Blip.Remove()
-                If Not Blip2 Is Nothing Then Blip2.Remove()
+                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
             Catch ex As Exception
             End Try
         End If

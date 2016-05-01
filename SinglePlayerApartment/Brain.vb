@@ -7,16 +7,23 @@ Imports SinglePlayerApartment.Resources
 Public Class Brain
     Inherits Script
 
-    Public Shared Bong, Whiskey, WhiskeyGlass, Wine, WineGlass, Wheat, Shower, Radio As Prop
+    Public Shared Bong, Whiskey, WhiskeyGlass, Wine, WineGlass, Wheat, Shower, Radio, TV As Prop
     Public Shared BongPosition, WhiskeyPosition, WhiskeyGlassPosition, WinePosition, WineGlassPosition, WheatPosition, ShowerPosition As Vector3
     Public Shared BongRotation, WhiskeyRotation, WhiskeyGlassRotation, WineRotation, WineGlassRotation, WheatRotation, ShowerRotation As Vector3
     Public Shared DrunkStage As Integer = 1
     Public Shared BrainEnable As Boolean = False
 
+    '<-- TV -->
+    Public Shared TVModels As List(Of Model) = New List(Of Model) From {1036195894, 777010715, -1073182005, 1653710254, 170618079, -897601557, -1546399138, -1223496606, -1820646534}
+    Public Shared rendertargetid As Integer
+    Public Shared TVOn As Boolean = False
+    Public Shared TV_Volume As Integer = 0
+    Public Shared TV_Channel As Integer = 0
+    '<-- TV -->
     '<-- Radio -->
     Public Shared RadioModels As List(Of Model) = New List(Of Model) From {2079380440}
+    'prop_mp3_dock  -627813781
     '<-- Radio -->
-
     '<-- Bong -->
     Public Shared BongModels As List(Of Model) = New List(Of Model) From {-257549932}
     '                                                                     prop_bong_01
@@ -48,7 +55,7 @@ Public Class Brain
     '<-- Shower -->
 
     'Translate
-    Public Shared _Bong, _Whiskey, _Wine, _Wheat, _Shower As String
+    Public Shared _Bong, _Whiskey, _Wine, _Wheat, _Shower, _TVOn, _TVOff As String
 
     Public Shared a_d0, a_d1, a_d2, a_d3, a_d4, a_d5, a_d6, a_d7, a_d8, a_d9, a_d10, a_d11, a_t0, a_t1, a_t2, a_t3, a_t4, a_t5, a_t6, a_t7, a_t8, a_t9, a_t10, a_t11, b_d0, b_d1, b_d2, b_t0, b_t1, b_t2 As Integer
     Public Shared drunkTimer As Timer
@@ -60,6 +67,8 @@ Public Class Brain
 
     Public Sub New()
         Try
+            _TVOn = ReadCfgValue("TVOn", langFile)
+            _TVOff = ReadCfgValue("TVOff", langFile)
             _Bong = ReadCfgValue("Bong", langFile)
             _Whiskey = ReadCfgValue("Whiskey", langFile)
             _Wine = ReadCfgValue("Wine", langFile)
@@ -68,6 +77,28 @@ Public Class Brain
             drunkTimer = New Timer(60000)
 
             AddHandler Tick, AddressOf OnTick
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub UpdateGarageRadio(Station As RadioStation)
+        Try
+            Dim arguments As InputArgument() = New InputArgument(2 - 1) {}
+            arguments(0) = "SE_MP_GARAGE_S_RADIO"
+            Dim argumentArray2 As InputArgument() = New InputArgument() {Station}
+            arguments(1) = Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, argumentArray2)
+            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, arguments)
+            Dim argumentArray3 As InputArgument() = New InputArgument(2 - 1) {}
+            argumentArray3(0) = "SE_MP_GARAGE_M_RADIO"
+            Dim argumentArray4 As InputArgument() = New InputArgument() {Station}
+            argumentArray3(1) = Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, argumentArray4)
+            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, argumentArray3)
+            Dim argumentArray5 As InputArgument() = New InputArgument(2 - 1) {}
+            argumentArray5(0) = "SE_MP_GARAGE_L_RADIO"
+            Dim argumentArray6 As InputArgument() = New InputArgument() {Station}
+            argumentArray5(1) = Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, argumentArray6)
+            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, argumentArray5)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -134,7 +165,7 @@ Public Class Brain
                 DrunkStage = DrunkStage - 1
             End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            'logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
@@ -234,7 +265,7 @@ Public Class Brain
                 WineTaskScriptStatus = -1
             End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            'logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
@@ -333,146 +364,36 @@ Public Class Brain
                 WhiskeyTaskScriptStatus = -1
             End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            'logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
     Public Shared Sub ShowerOnTick()
-        Dim nearbyProps As Prop() = World.GetNearbyProps(Game.Player.Character.Position, 3.0)
-        For i As Integer = 0 To nearbyProps.Length - 1
-            If ((((ShowerTaskScriptStatus = -1) AndAlso Not playerPed.IsInVehicle) AndAlso (ShowerModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 1.0)))) Then
-                DisplayHelpTextThisFrame(_Shower)
-                If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                    Shower = nearbyProps(i)
-                    ShowerTaskScriptStatus = 0
+        Try
+            Dim nearbyProps As Prop() = World.GetNearbyProps(Game.Player.Character.Position, 3.0)
+            For i As Integer = 0 To nearbyProps.Length - 1
+                If ((((ShowerTaskScriptStatus = -1) AndAlso Not playerPed.IsInVehicle) AndAlso (ShowerModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 1.0)))) Then
+                    DisplayHelpTextThisFrame(_Shower)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        Shower = nearbyProps(i)
+                        ShowerTaskScriptStatus = 0
+                    End If
                 End If
-            End If
-        Next i
+            Next i
 
-        Select Case ShowerTaskScriptStatus
-            Case 0
-                If playerName = "Michael" Then
-                    GetPlayerClothes()
-
-                    Game.FadeScreenOut(500)
-                    Wait(&H3E8)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 26, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 18, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 2, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, -1, -1, 2)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_undress_&_turn_on_water", -1)
-                    Wait(500)
-                    Game.FadeScreenIn(500)
-                    Wait(7000)
-                    '
-                    'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
-                    '
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_a", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_b", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_c", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
-                    Wait(9000)
-                ElseIf playerName = "Franklin" Then
-                    GetPlayerClothes()
-
-                    Game.FadeScreenOut(500)
-                    Wait(&H3E8)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 26, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 18, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 5, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 14, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, -1, -1, 2)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_undress_&_turn_on_water", -1)
-                    Wait(500)
-                    Game.FadeScreenIn(500)
-                    Wait(7000)
-                    '
-                    'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
-                    '
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_a", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_b", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_c", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
-                ElseIf playerName = “Trevor"
-                    GetPlayerClothes()
-
-                    Game.FadeScreenOut(500)
-                    Wait(&H3E8)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 16, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 22, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 1, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
-                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, -1, -1, 2)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
-                    Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_undress_&_turn_on_water", -1)
-                    Wait(500)
-                    Game.FadeScreenIn(500)
-                    Wait(7000)
-                    '
-                    'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
-                    '
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_a", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_b", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_c", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
-                    Wait(9000)
-                    TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
-                    Wait(9000)
-                ElseIf playerName = "Player3" Then
-                    If playerHash = "1885233650" Then
+            Select Case ShowerTaskScriptStatus
+                Case 0
+                    If playerName = "Michael" Then
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
                         Wait(&H3E8)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 15, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 14, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 26, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 18, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 5, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 15, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 15, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 2, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 0, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
                         Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
                         Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
@@ -499,17 +420,17 @@ Public Class Brain
                         Wait(9000)
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
                         Wait(9000)
-                    ElseIf playerHash = "-1667301416" Then
+                    ElseIf playerName = "Franklin" Then
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
                         Wait(&H3E8)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 15, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 15, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 26, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 18, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 5, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 15, 0, 2)
-                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 15, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 14, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
                         Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
                         Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
@@ -517,51 +438,164 @@ Public Class Brain
                         Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
                         Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
                         Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_undress_&_turn_on_water", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_undress_&_turn_on_water", -1)
                         Wait(500)
                         Game.FadeScreenIn(500)
                         Wait(7000)
                         '
                         'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
                         '
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_enter_into_idle", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
                         Wait(9000)
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_a", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_a", -1)
                         Wait(9000)
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_b", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_b", -1)
                         Wait(9000)
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_c", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_c", -1)
                         Wait(9000)
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_d", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
                         Wait(9000)
-                        TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_towel_dry_to_get_dressed", -1)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
+                    ElseIf playerName = “Trevor"
+                        GetPlayerClothes()
+
+                        Game.FadeScreenOut(500)
+                        Wait(&H3E8)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 16, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 22, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 1, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 0, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 0, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
+                        Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
+                        Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
+                        Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, -1, -1, 2)
+                        Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
+                        Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
+                        Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_undress_&_turn_on_water", -1)
+                        Wait(500)
+                        Game.FadeScreenIn(500)
+                        Wait(7000)
+                        '
+                        'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                        '
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
                         Wait(9000)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_a", -1)
+                        Wait(9000)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_b", -1)
+                        Wait(9000)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_c", -1)
+                        Wait(9000)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
+                        Wait(9000)
+                        TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
+                        Wait(9000)
+                    ElseIf playerName = "Player3" Then
+                        If playerHash = "1885233650" Then
+                            GetPlayerClothes()
+
+                            Game.FadeScreenOut(500)
+                            Wait(&H3E8)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 14, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 5, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
+                            Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
+                            Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, -1, -1, 2)
+                            Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
+                            Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
+                            Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_undress_&_turn_on_water", -1)
+                            Wait(500)
+                            Game.FadeScreenIn(500)
+                            Wait(7000)
+                            '
+                            'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                            '
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_a", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_b", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_c", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
+                            Wait(9000)
+                        ElseIf playerHash = "-1667301416" Then
+                            GetPlayerClothes()
+
+                            Game.FadeScreenOut(500)
+                            Wait(&H3E8)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, 5, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, 15, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, 0, 0, 2)
+                            Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, -1, -1, 2)
+                            Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, -1, -1, 2)
+                            Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, -1, -1, 2)
+                            Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 0)
+                            Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 1)
+                            Native.Function.Call(Hash.CLEAR_PED_PROP, playerPed, 2)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_undress_&_turn_on_water", -1)
+                            Wait(500)
+                            Game.FadeScreenIn(500)
+                            Wait(7000)
+                            '
+                            'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                            '
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_enter_into_idle", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_a", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_b", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_c", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_idle_d", -1)
+                            Wait(9000)
+                            TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_towel_dry_to_get_dressed", -1)
+                            Wait(9000)
+                        End If
                     End If
-                End If
-                ShowerTaskScriptStatus = 1
-            Case 1
-                Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 0, a_d0, a_t0, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 1, a_d1, a_t1, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 2, a_d2, a_t2, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, a_d3, a_t3, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, a_d4, a_t4, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, a_d5, a_t5, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, a_d6, a_t6, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 7, a_d7, a_t7, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, a_d8, a_t8, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 9, a_d9, a_t9, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, a_d11, a_t11, 2)
-                Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, a_d10, a_t10, 2)
-                Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, b_d0, b_t0, 2)
-                Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, b_d1, b_t1, 2)
-                Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, b_d2, b_t2, 2)
-                playerPed.ClearBloodDamage()
-                Wait(500)
-                Game.FadeScreenIn(500)
-                ShowerTaskScriptStatus = -1
-        End Select
+                    ShowerTaskScriptStatus = 1
+                Case 1
+                    Game.FadeScreenOut(500)
+                    Wait(&H3E8)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 0, a_d0, a_t0, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 1, a_d1, a_t1, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 2, a_d2, a_t2, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, a_d3, a_t3, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, a_d4, a_t4, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, a_d5, a_t5, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 6, a_d6, a_t6, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 7, a_d7, a_t7, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 8, a_d8, a_t8, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 9, a_d9, a_t9, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 11, a_d11, a_t11, 2)
+                    Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 10, a_d10, a_t10, 2)
+                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 0, b_d0, b_t0, 2)
+                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 1, b_d1, b_t1, 2)
+                    Native.Function.Call(Hash.SET_PED_PROP_INDEX, playerPed, 2, b_d2, b_t2, 2)
+                    playerPed.ClearBloodDamage()
+                    Wait(500)
+                    Game.FadeScreenIn(500)
+                    ShowerTaskScriptStatus = -1
+            End Select
+        Catch ex As Exception
+        End Try
     End Sub
 
     Public Shared Sub WheatOnTick()
@@ -626,12 +660,44 @@ Public Class Brain
                 WheatTaskScriptStatus = -1
             End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            'logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Shared Sub RadioOnTick()
-
+    Public Shared Sub TVOnTick()
+        Try
+            Dim nearbyProps As Prop() = World.GetNearbyProps(Game.Player.Character.Position, 3.0)
+            For i As Integer = 0 To nearbyProps.Length - 1
+                If ((((TVOn = False) AndAlso Not playerPed.IsInVehicle) AndAlso (TVModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 2.0)))) Then
+                    DisplayHelpTextThisFrame(_TVOn)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        TV = nearbyProps(i)
+                        Native.Function.Call(Hash.ATTACH_TV_AUDIO_TO_ENTITY, TV)
+                        If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "tvscreen") Then
+                            Native.Function.Call(Hash.REGISTER_NAMED_RENDERTARGET, "tvscreen", False)
+                        End If
+                        If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_LINKED, TV.Model) Then
+                            Native.Function.Call(Hash.LINK_NAMED_RENDERTARGET, TV.Model)
+                            rendertargetid = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, "tvscreen")
+                        End If
+                        Native.Function.Call(Hash.SET_TV_CHANNEL, TV_Channel)
+                        Native.Function.Call(Hash.SET_TV_VOLUME, TV_Volume)
+                        TVOn = True
+                    End If
+                ElseIf ((((TVOn = True) AndAlso Not playerPed.IsInVehicle) AndAlso (TVModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 2.0)))) Then
+                    DisplayHelpTextThisFrame(_TVOff)
+                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        Wait(1000)
+                        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "tvscreen") Then
+                            Native.Function.Call(Hash.RELEASE_NAMED_RENDERTARGET, "tvscreen")
+                        End If
+                        TVOn = False
+                    End If
+                End If
+            Next i
+        Catch ex As Exception
+            'logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
     End Sub
 
     Public Shared Sub BongOnTick()
@@ -698,7 +764,7 @@ Public Class Brain
                 BongTaskScriptStatus = -1
             End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+            'logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
@@ -707,14 +773,15 @@ Public Class Brain
             MichaelHouseDistance = World.GetDistance(playerPed.Position, MichaelHouseVector)
             FranklinHouseDistance = World.GetDistance(playerPed.Position, FranklinHouseVector)
 
-            If MichaelHouseDistance > 30.0 AndAlso FranklinHouseDistance > 30.0 Then
-                    BongOnTick()
-                    WhiskeyOnTick()
-                    WineOnTick()
-                    WheatOnTick()
-                    ShowerOnTick()
-                    RadioOnTick()
-                End If
+            If MichaelHouseDistance > 50.0 AndAlso FranklinHouseDistance > 50.0 Then
+                BongOnTick()
+                WhiskeyOnTick()
+                WineOnTick()
+                WheatOnTick()
+                ShowerOnTick()
+                TVOnTick()
+                'UpdateGarageRadio(RadioStation.NonStopPopFM)
+            End If
 
             If drunkTimer.Enabled Then
 
@@ -725,6 +792,13 @@ Public Class Brain
                     Native.Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, playerPed.Handle, 0.0)
                     DrunkStage = 1
                 End If
+            End If
+
+            If TVOn Then
+                Native.Function.Call(Hash.SET_TEXT_RENDER_ID, rendertargetid)
+                Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
+                Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
+                Native.Function.Call(Hash.ENABLE_MOVIE_SUBTITLES, True)
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
