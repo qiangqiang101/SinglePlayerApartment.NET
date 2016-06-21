@@ -39,9 +39,11 @@ Public Class RichardMajestic
                 Apartment.IsAtHome = False
                 Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
                 Apartment.SaveFile = "RMowner"
-                Apartment.Enabled = True
+            Apartment.Enabled = True
+            Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
+            InteriorIDList.Add(Apartment.InteriorID)
 
-                ApartmentHL = New Apartment("Richards Majestic Apt. ", "2", 968000)
+            ApartmentHL = New Apartment("Richards Majestic Apt. ", "2", 968000)
                 ApartmentHL.Name = ReadCfgValue("RichardHLName", langFile)
                 ApartmentHL.Description = ReadCfgValue("RichardHLDesc", langFile)
                 ApartmentHL.Owner = ReadCfgValue("RMHLowner", saveFile)
@@ -49,12 +51,14 @@ Public Class RichardMajestic
                 ApartmentHL.TeleportInside = New Vector3(-922.1152, -370.0627, 114.3101)
                 ApartmentHL.TeleportOutside = New Vector3(-933.4771, -383.6144, 38.9613)
                 ApartmentHL.ApartmentExit = New Vector3(-919.3095, -368.5584, 114.275)
-                ApartmentHL.Wardrobe = New Vector3(-903.3266, -364.2998, 113.074)
-                ApartmentHL.WardrobeHeading = 195.6396
-                ApartmentHL.IsAtHome = False
-                ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
+            ApartmentHL.Wardrobe = New Vector3(-903.3266, -364.2998, 113.074)
+            ApartmentHL.Interior = New Vector3(-918.4964, -376.7593, 113.7099)
+            ApartmentHL.WardrobeHeading = 195.6396
+            ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
                 ApartmentHL.SaveFile = "RMHLowner"
-                ApartmentHL.Enabled = True
+            ApartmentHL.Enabled = True
+            ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
+            InteriorIDList.Add(ApartmentHL.InteriorID)
 
             If ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -314,7 +318,6 @@ Public Class RichardMajestic
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
-                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
@@ -333,14 +336,13 @@ Public Class RichardMajestic
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                playerPed.Position = TenCarGarage.Elevator
+
                 TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
                 TenCarGarage.lastLocationVector = Apartment.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
@@ -348,6 +350,7 @@ Public Class RichardMajestic
                 TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 TenCarGarage.CurrentPath = Apartment.GaragePath
+                playerPed.Position = TenCarGarage.Elevator
                 ExitMenu.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -369,7 +372,6 @@ Public Class RichardMajestic
                 Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
-                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenuHL.Visible = False
@@ -389,14 +391,12 @@ Public Class RichardMajestic
                 RefreshMenu()
                 RefreshGarageMenu()
                 UnLoadMPDLCMap()
-                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
                 TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
@@ -404,6 +404,7 @@ Public Class RichardMajestic
                 TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentHL.GaragePath
+                playerPed.Position = TenCarGarage.Elevator
                 ExitMenuHL.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -459,7 +460,6 @@ Public Class RichardMajestic
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                Apartment.IsAtHome = True
 
                 Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -515,8 +515,8 @@ Public Class RichardMajestic
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                Apartment.IsAtHome = True
 
+                ApartmentHL.SetInteriorActive()
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentHL.TeleportInside
@@ -531,13 +531,11 @@ Public Class RichardMajestic
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Apartment.Owner = playerName Then
             'Teleport to Garage
-            Apartment.IsAtHome = True
 
             Game.FadeScreenOut(500)
             Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
-            playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
             TenCarGarage.lastLocationVector = Apartment.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
@@ -545,6 +543,7 @@ Public Class RichardMajestic
             TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
             TenCarGarage.CurrentPath = Apartment.GaragePath
+            playerPed.Position = TenCarGarage.GarageDoorL
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
@@ -561,8 +560,6 @@ Public Class RichardMajestic
             If IO.File.Exists(Apartment.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
-
-            Apartment.IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
@@ -691,12 +688,11 @@ Public Class RichardMajestic
         ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentHL.Owner = playerName Then
             'Teleport to Garage
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            Apartment.IsAtHome = True
 
             Game.FadeScreenOut(500)
             Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            playerPed.Position = TenCarGarage.GarageDoorL
+            ApartmentHL.SetInteriorActive()
             TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
             TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
@@ -704,6 +700,7 @@ Public Class RichardMajestic
             TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
             TenCarGarage.CurrentPath = ApartmentHL.GaragePath
+            playerPed.Position = TenCarGarage.GarageDoorL
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
@@ -723,9 +720,9 @@ Public Class RichardMajestic
             If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            Apartment.IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
+            ApartmentHL.SetInteriorActive()
             TenCarGarage.CurrentPath = ApartmentHL.GaragePath
             TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
             TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
@@ -984,12 +981,19 @@ Public Class RichardMajestic
                     End If
                 End If
 
+                'If playerInterior = Apartment.InteriorID Then Apartment.IsAtHome = True Else Apartment.IsAtHome = False
+                'If playerInterior = ApartmentHL.InteriorID Then Apartment.IsAtHome = True Else Apartment.IsAtHome = False
+
+                Select Case playerInterior
+                    Case Apartment.InteriorID, ApartmentHL.InteriorID
+                        Apartment.IsAtHome = True
+                        HIDE_MAP_OBJECT_THIS_FRAME()
+                    Case Else
+                        Apartment.IsAtHome = False
+                End Select
+
                 If Apartment.IsAtHome Then
                     HIDE_MAP_OBJECT_THIS_FRAME()
-                    Resources.Disable_Controls()
-                    Brain.BrainEnable = True
-                Else
-                    Brain.BrainEnable = False
                 End If
 
                 _menuPool.ProcessMenus()
@@ -1009,13 +1013,11 @@ Public Class RichardMajestic
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
-                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+            If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

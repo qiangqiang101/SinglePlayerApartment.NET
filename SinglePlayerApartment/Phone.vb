@@ -127,14 +127,12 @@ Public Class Phone
         End Try
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                For i As Integer = 0 To Contact(9).Index - 1
-                    Contact(i).EndCall()
-                Next
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            For i As Integer = 0 To Contact(9).Index - 1
+                Contact(i).EndCall()
+            Next
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

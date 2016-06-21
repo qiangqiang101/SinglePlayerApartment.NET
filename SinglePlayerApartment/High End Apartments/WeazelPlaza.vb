@@ -40,7 +40,9 @@ Public Class WeazelPlaza
                 Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
                 Apartment.SaveFile = "WPowner"
                 Apartment.PlayerMap = "Weazel"
-                Apartment.Enabled = True
+            Apartment.Enabled = True
+            Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
+            InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -219,7 +221,6 @@ Public Class WeazelPlaza
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
-                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
@@ -238,14 +239,12 @@ Public Class WeazelPlaza
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                Apartment.IsAtHome = False
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                playerPed.Position = TenCarGarage.Elevator
                 TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
                 TenCarGarage.lastLocationVector = Apartment.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
@@ -253,6 +252,7 @@ Public Class WeazelPlaza
                 TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 TenCarGarage.CurrentPath = Apartment.GaragePath
+                playerPed.Position = TenCarGarage.Elevator
                 ExitMenu.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -308,7 +308,6 @@ Public Class WeazelPlaza
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                Apartment.IsAtHome = True
 
                 Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -325,12 +324,10 @@ Public Class WeazelPlaza
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
-            Apartment.IsAtHome = True
             Game.FadeScreenOut(500)
             Wait(&H3E8)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
-            playerPed.Position = TenCarGarage.GarageDoorL
             TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
             TenCarGarage.lastLocationVector = Apartment.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
@@ -338,6 +335,7 @@ Public Class WeazelPlaza
             TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
             TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
             TenCarGarage.CurrentPath = Apartment.GaragePath
+            playerPed.Position = TenCarGarage.GarageDoorL
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
@@ -354,8 +352,6 @@ Public Class WeazelPlaza
             If IO.File.Exists(Apartment.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
-
-            Apartment.IsAtHome = True
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
@@ -571,12 +567,18 @@ Public Class WeazelPlaza
                     End If
                 End If
 
+                'If playerInterior = Apartment.InteriorID Then Apartment.IsAtHome = True Else Apartment.IsAtHome = False
+
+                Select Case playerInterior
+                    Case Apartment.InteriorID
+                        Apartment.IsAtHome = True
+                        HIDE_MAP_OBJECT_THIS_FRAME()
+                    Case Else
+                        Apartment.IsAtHome = False
+                End Select
+
                 If Apartment.IsAtHome Then
                     HIDE_MAP_OBJECT_THIS_FRAME()
-                    Resources.Disable_Controls()
-                    Brain.BrainEnable = True
-                Else
-                    Brain.BrainEnable = False
                 End If
 
                 _menuPool.ProcessMenus()
@@ -594,13 +596,11 @@ Public Class WeazelPlaza
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
-                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+            If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

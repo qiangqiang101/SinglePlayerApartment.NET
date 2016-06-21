@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\INMNative.vb" />
+    <Compile Include="Class\Scaleform.vb" />
     <Compile Include="Class\SoundPlayer.vb" />
     <Compile Include="Class\VersionChecker.vb" />
     <Compile Include="Medium End Apartments\HangmanAve.vb" />

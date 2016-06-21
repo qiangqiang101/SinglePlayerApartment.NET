@@ -4,6 +4,7 @@ Imports System.Windows.Forms
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Resources
+Imports GTA.Math
 
 Public Class Mechanic
     Inherits Script
@@ -18,11 +19,14 @@ Public Class Mechanic
     Public Shared _menuPool As MenuPool
     Public Shared AS3, IW4, IW4HL, DPH, DPHHL, DT, ET, ETHL, RM, RMHL, TT, TTHL, WP, VB As String
     Public Shared NC2044, HA2862, HA2868, WO3655, NC2045, MR2117, HA2874, WD3677, MW2113, ETP1, ETP2, ETP3, BCA, BDP, CA, HA, LLB0604, LLB2143, MR0184, POWER, PD4401, PD4584, PPS, SVS, SMMD, SRD0325, SA, SR, TR, GA, PB, SRD0112, ZA As String
-    Public Shared MPV0, MPV1, MPV2, MPV3, MPV4, MPV5, MPV6, MPV7, MPV8, MPV9 As Vehicle
-    Public Shared FPV0, FPV1, FPV2, FPV3, FPV4, FPV5, FPV6, FPV7, FPV8, FPV9 As Vehicle
-    Public Shared TPV0, TPV1, TPV2, TPV3, TPV4, TPV5, TPV6, TPV7, TPV8, TPV9 As Vehicle
-    Public Shared PPV0, PPV1, PPV2, PPV3, PPV4, PPV5, PPV6, PPV7, PPV8, PPV9 As Vehicle
-    Public Shared MPV, FPV, TPV, PPV As Vehicle
+    Public Shared MPV0, MPV1, MPV2, MPV3, MPV4 As Vehicle
+    Public Shared FPV0, FPV1, FPV2, FPV3, FPV4 As Vehicle
+    Public Shared TPV0, TPV1, TPV2, TPV3, TPV4 As Vehicle
+    Public Shared PPV0, PPV1, PPV2, PPV3, PPV4 As Vehicle
+    Public Shared MPV10, MPV11, FPV10, FPV11, TPV10, TPV11, PPV10, PPV11 As Vehicle
+    Public Shared MPVV10, MPVV11, FPVV10, FPVV11, TPVV10, TPVV11, PPVV10, PPVV11 As Vector3
+    Public Shared MPVVB10, MPVVB11, FPVVB10, FPVVB11, TPVVB10, TPVVB11, PPVVB10, PPVVB11 As Blip
+    Public Shared MPVF10, MPVF11, FPVF10, FPVF11, TPVF10, TPVF11, PPVF10, PPVF11 As String
     Public Shared itemAS3, itemIW4, itemIW4HL, itemDPH, itemDPHHL, itemDT, itemET, itemETHL, itemRM, itemRMHL, itemTT, itemTTHL, itemWP, itemVB As UIMenuItem
     Public Shared itemNC2044, itemHA2862, itemHA2868, itemWO3655, itemNC2045, itemMR2117, itemHA2874, itemWD3677, itemMW2113, itemETP1, itemETP2, itemETP3 As UIMenuItem
     Public Shared itemBCA, itemBDP, itemCA, itemHA, itemLLB0604, itemLLB2143, itemMR0184, itemPower, itemPD4401, itemPD4584, itemProsperity, itemSVS, itemSMMD, itemSRD0325, itemSA, itemSR, itemTR As UIMenuItem
@@ -30,7 +34,7 @@ Public Class Mechanic
     Public Shared GarageMenuItem(10) As UIMenuItem
     Public Shared GrgMoveMenuItem(10) As UIMenuItem
     Public Shared GrgTransMenuItem(10) As UIMenuItem
-    Public Shared GarageMenuSelectedItem, GarageMenuSelectedFile, MoveMenuSelectedItem, MoveMenuSelectedFile, MoveMenuSelectedIndex, SelectedGarage, PegasusSelectedVehicleFile As String
+    Public Shared GarageMenuSelectedItem, GarageMenuSelectedFile, MoveMenuSelectedItem, MoveMenuSelectedFile, MoveMenuSelectedIndex, SelectedGarage, PegasusSelectedVehicleFile As String, MoveIndex As Integer = -1
 
     Public Shared AltaPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3_alta_street\"
     Public Shared IntegrityPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
@@ -844,7 +848,8 @@ Public Class Mechanic
             MenuCategory.RefreshIndex()
             MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
             AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
-            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryMenuCloseHandler
+            'AddHandler MenuCategory.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
+            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryInGarageMenuCloseHandler
         Catch ex As Exception
             If Not ex.StackTrace.Contains("ContainsKey") Then
                 logger.Log(ex.Message & " " & ex.StackTrace)
@@ -965,7 +970,8 @@ Public Class Mechanic
             MenuCategory.RefreshIndex()
             MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
             AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
-            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryMenuCloseHandler
+            'AddHandler MenuCategory.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
+            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryInGarageMenuCloseHandler
         Catch ex As Exception
             If Not ex.StackTrace.Contains("ContainsKey") Then
                 logger.Log(ex.Message & " " & ex.StackTrace)
@@ -1275,6 +1281,7 @@ Public Class Mechanic
             End If
             GrgMoveMenu.RefreshIndex()
             AddHandler GrgMoveMenu.OnItemSelect, AddressOf GrgMoveItemSelectHandler
+            AddHandler GrgMoveMenu.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
             AddHandler GrgMoveMenu.OnMenuClose, AddressOf GrgMoveMenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -1573,6 +1580,7 @@ Public Class Mechanic
             End If
             GarageMenu.RefreshIndex()
             AddHandler GarageMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler GarageMenu.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
             AddHandler GarageMenu.OnMenuClose, AddressOf MenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -1733,6 +1741,7 @@ Public Class Mechanic
             End If
             GarageMenu.RefreshIndex()
             AddHandler GarageMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler GarageMenu.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
             AddHandler GarageMenu.OnMenuClose, AddressOf MenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -1968,123 +1977,191 @@ Public Class Mechanic
         End Try
     End Sub
 
+    Public Shared Sub GrgMoveIndexChangeHandler(sender As UIMenu, index As Integer)
+        MoveIndex = index
+    End Sub
+
     Public Shared Sub PegasusConfirmItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = PegasusDeliver Then
             Dim VehicleModel As String = ReadCfgValue("VehicleModel", PegasusSelectedVehicleFile)
             Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", PegasusSelectedVehicleFile)
 
             If playerName = "Michael" Then
-                If Not MPV = Nothing Then
-                    MPV.CurrentBlip.Remove()
-                    MPV.Delete()
+                If Not MPV10 = Nothing Then
+                    If World.GetDistance(playerPed.Position, MPV10.Position) < 50.0 Then
+                        Exit Sub
+                    Else
+                        MPV10.CurrentBlip.Remove()
+                        MPV10.Delete()
+                    End If
                 End If
-                MPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
-                If MPV.ClassType = VehicleClass.Boats Then MPV.Position = GetPlayerZoneForBoat(playerPed)
-                If MPV.ClassType = VehicleClass.Planes Then MPV.Position = GetPlayerZoneForPlane(playerPed)
-                If MPV.ClassType = VehicleClass.Helicopters Then MPV.Position = GetPlayerZoneForHeli(playerPed)
-                MPV.PlaceOnGround()
-                MPV.AddBlip()
-                If MPV.ClassType = VehicleClass.Boats Then
-                    MPV.CurrentBlip.Sprite = BlipSprite.Boat
-                ElseIf MPV.ClassType = VehicleClass.Helicopters Then
-                    MPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf MPV.ClassType = VehicleClass.Utility
-                    MPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                ElseIf MPV.ClassType = VehicleClass.Planes Then
-                    MPV.CurrentBlip.Sprite = BlipSprite.Plane
-                ElseIf MPV.ClassType = VehicleClass.Military Then
-                    MPV.CurrentBlip.Sprite = BlipSprite.Tank
+                MPV10 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                If MPV10.ClassType = VehicleClass.Boats Then MPV10.Position = GetPlayerZoneForBoat(playerPed)
+                If MPV10.ClassType = VehicleClass.Planes Then MPV10.Position = GetPlayerZoneForPlane(playerPed)
+                If MPV10.ClassType = VehicleClass.Helicopters Then MPV10.Position = GetPlayerZoneForHeli(playerPed)
+                MPV10.PlaceOnGround()
+                MPV10.AddBlip()
+                If MPV10.ClassType = VehicleClass.Boats Then
+                    MPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf MPV10.ClassType = VehicleClass.Helicopters Then
+                    MPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf MPV10.ClassType = VehicleClass.Utility
+                    MPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf MPV10.ClassType = VehicleClass.Planes Then
+                    MPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf MPV10.ClassType = VehicleClass.Military Then
+                    MPV10.CurrentBlip.Sprite = BlipSprite.Tank
                 Else
-                    MPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    MPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                MPV.CurrentBlip.Color = BlipColor.Blue
-                SetBlipName(MPV.FriendlyName, MPV.CurrentBlip)
-                Mechanic2.SetModKit(MPV, PegasusSelectedVehicleFile)
-                MPV.FreezePosition = True
+                MPV10.CurrentBlip.Color = BlipColor.Blue
+                SetBlipName(MPV10.FriendlyName, MPV10.CurrentBlip)
+                Mechanic2.SetModKit(MPV10, PegasusSelectedVehicleFile)
+                If Not (MPV10.ClassType = VehicleClass.Boats Or MPV10.ClassType = VehicleClass.Helicopters Or MPV10.ClassType = VehicleClass.Planes) Then
+                    Mechanic2.CreateMechanicInVehicle(MPV10)
+                Else
+                    If World.GetDistance(playerPed.Position, MPV10.Position) > 50.0 Then
+                        MPVV10 = MPV10.Position
+                        MPVVB10 = World.CreateBlip(MPVV10)
+                        MPVVB10.Sprite = MPV10.CurrentBlip.Sprite
+                        MPVVB10.Color = BlipColor.Blue
+                        MPVVB10.Name = MPV10.FriendlyName
+                        MPVF10 = PegasusSelectedVehicleFile
+                        MPV10.Delete()
+                    End If
+                End If
             ElseIf playerName = "Franklin" Then
-                If Not FPV = Nothing Then
-                    FPV.CurrentBlip.Remove()
-                    FPV.Delete()
+                If Not FPV10 = Nothing Then
+                    If World.GetDistance(playerPed.Position, FPV10.Position) < 50.0 Then
+                        Exit Sub
+                    Else
+                        FPV10.CurrentBlip.Remove()
+                        FPV10.Delete()
+                    End If
                 End If
-                FPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
-                If FPV.ClassType = VehicleClass.Boats Then FPV.Position = GetPlayerZoneForBoat(playerPed)
-                If FPV.ClassType = VehicleClass.Planes Then FPV.Position = GetPlayerZoneForPlane(playerPed)
-                If FPV.ClassType = VehicleClass.Helicopters Then FPV.Position = GetPlayerZoneForHeli(playerPed)
-                FPV.PlaceOnGround()
-                FPV.AddBlip()
-                If FPV.ClassType = VehicleClass.Boats Then
-                    FPV.CurrentBlip.Sprite = BlipSprite.Boat
-                ElseIf FPV.ClassType = VehicleClass.Helicopters Then
-                    FPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf FPV.ClassType = VehicleClass.Utility
-                    FPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                ElseIf FPV.ClassType = VehicleClass.Planes Then
-                    FPV.CurrentBlip.Sprite = BlipSprite.Plane
-                ElseIf FPV.ClassType = VehicleClass.Military Then
-                    FPV.CurrentBlip.Sprite = BlipSprite.Tank
+                FPV10 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                If FPV10.ClassType = VehicleClass.Boats Then FPV10.Position = GetPlayerZoneForBoat(playerPed)
+                If FPV10.ClassType = VehicleClass.Planes Then FPV10.Position = GetPlayerZoneForPlane(playerPed)
+                If FPV10.ClassType = VehicleClass.Helicopters Then FPV10.Position = GetPlayerZoneForHeli(playerPed)
+                FPV10.PlaceOnGround()
+                FPV10.AddBlip()
+                If FPV10.ClassType = VehicleClass.Boats Then
+                    FPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf FPV10.ClassType = VehicleClass.Helicopters Then
+                    FPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf FPV10.ClassType = VehicleClass.Utility
+                    FPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf FPV10.ClassType = VehicleClass.Planes Then
+                    FPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf FPV10.ClassType = VehicleClass.Military Then
+                    FPV10.CurrentBlip.Sprite = BlipSprite.Tank
                 Else
-                    FPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    FPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                FPV.CurrentBlip.Color = BlipColor.Green
-                SetBlipName(FPV.FriendlyName, FPV.CurrentBlip)
-                Mechanic2.SetModKit(FPV, PegasusSelectedVehicleFile)
-                FPV.FreezePosition = True
+                FPV10.CurrentBlip.Color = BlipColor.Green
+                SetBlipName(FPV10.FriendlyName, FPV10.CurrentBlip)
+                Mechanic2.SetModKit(FPV10, PegasusSelectedVehicleFile)
+                If Not (FPV10.ClassType = VehicleClass.Boats Or FPV10.ClassType = VehicleClass.Helicopters Or FPV10.ClassType = VehicleClass.Planes) Then
+                    Mechanic2.CreateMechanicInVehicle(FPV10)
+                Else
+                    If World.GetDistance(playerPed.Position, FPV10.Position) > 50.0 Then
+                        FPVV10 = FPV10.Position
+                        FPVVB10 = World.CreateBlip(FPVV10)
+                        FPVVB10.Sprite = FPV10.CurrentBlip.Sprite
+                        FPVVB10.Color = BlipColor.Green
+                        FPVVB10.Name = FPV10.FriendlyName
+                        FPVF10 = PegasusSelectedVehicleFile
+                        FPV10.Delete()
+                    End If
+                End If
             ElseIf playerName = “Trevor" Then
-                If Not TPV = Nothing Then
-                    TPV.CurrentBlip.Remove()
-                    TPV.Delete()
+                If Not TPV10 = Nothing Then
+                    If World.GetDistance(playerPed.Position, TPV10.Position) < 50.0 Then
+                        Exit Sub
+                    Else
+                        TPV10.CurrentBlip.Remove()
+                        TPV10.Delete()
+                    End If
                 End If
-                TPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
-                If TPV.ClassType = VehicleClass.Boats Then TPV.Position = GetPlayerZoneForBoat(playerPed)
-                If TPV.ClassType = VehicleClass.Planes Then TPV.Position = GetPlayerZoneForPlane(playerPed)
-                If TPV.ClassType = VehicleClass.Helicopters Then TPV.Position = GetPlayerZoneForHeli(playerPed)
-                TPV.PlaceOnGround()
-                TPV.AddBlip()
-                If TPV.ClassType = VehicleClass.Boats Then
-                    TPV.CurrentBlip.Sprite = BlipSprite.Boat
-                ElseIf TPV.ClassType = VehicleClass.Helicopters Then
-                    TPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf TPV.ClassType = VehicleClass.Utility
-                    TPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                ElseIf TPV.ClassType = VehicleClass.Planes Then
-                    TPV.CurrentBlip.Sprite = BlipSprite.Plane
-                ElseIf TPV.ClassType = VehicleClass.Military Then
-                    TPV.CurrentBlip.Sprite = BlipSprite.Tank
+                TPV10 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                If TPV10.ClassType = VehicleClass.Boats Then TPV10.Position = GetPlayerZoneForBoat(playerPed)
+                If TPV10.ClassType = VehicleClass.Planes Then TPV10.Position = GetPlayerZoneForPlane(playerPed)
+                If TPV10.ClassType = VehicleClass.Helicopters Then TPV10.Position = GetPlayerZoneForHeli(playerPed)
+                TPV10.PlaceOnGround()
+                TPV10.AddBlip()
+                If TPV10.ClassType = VehicleClass.Boats Then
+                    TPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf TPV10.ClassType = VehicleClass.Helicopters Then
+                    TPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf TPV10.ClassType = VehicleClass.Utility
+                    TPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf TPV10.ClassType = VehicleClass.Planes Then
+                    TPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf TPV10.ClassType = VehicleClass.Military Then
+                    TPV10.CurrentBlip.Sprite = BlipSprite.Tank
                 Else
-                    TPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    TPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                TPV.CurrentBlip.Color = 17
-                SetBlipName(TPV.FriendlyName, TPV.CurrentBlip)
-                Mechanic2.SetModKit(TPV, PegasusSelectedVehicleFile)
-                TPV.FreezePosition = True
+                TPV10.CurrentBlip.Color = 17
+                SetBlipName(TPV10.FriendlyName, TPV10.CurrentBlip)
+                Mechanic2.SetModKit(TPV10, PegasusSelectedVehicleFile)
+                If Not (TPV10.ClassType = VehicleClass.Boats Or TPV10.ClassType = VehicleClass.Helicopters Or TPV10.ClassType = VehicleClass.Planes) Then
+                    Mechanic2.CreateMechanicInVehicle(TPV10)
+                Else
+                    If World.GetDistance(playerPed.Position, TPV10.Position) > 50.0 Then
+                        TPVV10 = TPV10.Position
+                        TPVVB10 = World.CreateBlip(TPVV10)
+                        TPVVB10.Sprite = TPV10.CurrentBlip.Sprite
+                        TPVVB10.Color = 17
+                        TPVVB10.Name = TPV10.FriendlyName
+                        TPVF10 = PegasusSelectedVehicleFile
+                        TPV10.Delete()
+                    End If
+                End If
             ElseIf playerName = "Player3" Then
-                If Not PPV = Nothing Then
-                    PPV.CurrentBlip.Remove()
-                    PPV.Delete()
+                If Not PPV10 = Nothing Then
+                    If World.GetDistance(playerPed.Position, PPV10.Position) < 50.0 Then
+                        Exit Sub
+                    Else
+                        PPV10.CurrentBlip.Remove()
+                        PPV10.Delete()
+                    End If
                 End If
-                PPV = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position))
-                If PPV.ClassType = VehicleClass.Boats Then PPV.Position = GetPlayerZoneForBoat(playerPed)
-                If PPV.ClassType = VehicleClass.Planes Then PPV.Position = GetPlayerZoneForPlane(playerPed)
-                If PPV.ClassType = VehicleClass.Helicopters Then PPV.Position = GetPlayerZoneForHeli(playerPed)
-                PPV.PlaceOnGround()
-                PPV.AddBlip()
-                If PPV.ClassType = VehicleClass.Boats Then
-                    PPV.CurrentBlip.Sprite = BlipSprite.Boat
-                ElseIf PPV.ClassType = VehicleClass.Helicopters Then
-                    PPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf PPV.ClassType = VehicleClass.Utility
-                    PPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                ElseIf PPV.ClassType = VehicleClass.Planes Then
-                    PPV.CurrentBlip.Sprite = BlipSprite.Plane
-                ElseIf PPV.ClassType = VehicleClass.Military Then
-                    PPV.CurrentBlip.Sprite = BlipSprite.Tank
+                PPV10 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                If PPV10.ClassType = VehicleClass.Boats Then PPV10.Position = GetPlayerZoneForBoat(playerPed)
+                If PPV10.ClassType = VehicleClass.Planes Then PPV10.Position = GetPlayerZoneForPlane(playerPed)
+                If PPV10.ClassType = VehicleClass.Helicopters Then PPV10.Position = GetPlayerZoneForHeli(playerPed)
+                PPV10.PlaceOnGround()
+                PPV10.AddBlip()
+                If PPV10.ClassType = VehicleClass.Boats Then
+                    PPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                ElseIf PPV10.ClassType = VehicleClass.Helicopters Then
+                    PPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                ElseIf PPV10.ClassType = VehicleClass.Utility
+                    PPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                ElseIf PPV10.ClassType = VehicleClass.Planes Then
+                    PPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                ElseIf PPV10.ClassType = VehicleClass.Military Then
+                    PPV10.CurrentBlip.Sprite = BlipSprite.Tank
                 Else
-                    PPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    PPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                PPV.CurrentBlip.Color = BlipColor.Yellow
-                SetBlipName(PPV.FriendlyName, PPV.CurrentBlip)
-                Mechanic2.SetModKit(PPV, PegasusSelectedVehicleFile)
-                PPV.FreezePosition = True
+                PPV10.CurrentBlip.Color = BlipColor.Yellow
+                SetBlipName(PPV10.FriendlyName, PPV10.CurrentBlip)
+                Mechanic2.SetModKit(PPV10, PegasusSelectedVehicleFile)
+                If Not (PPV10.ClassType = VehicleClass.Boats Or PPV10.ClassType = VehicleClass.Helicopters Or PPV10.ClassType = VehicleClass.Planes) Then
+                    Mechanic2.CreateMechanicInVehicle(PPV10)
+                Else
+                    If World.GetDistance(playerPed.Position, PPV10.Position) > 50.0 Then
+                        PPVV10 = PPV10.Position
+                        PPVVB10 = World.CreateBlip(PPVV10)
+                        PPVVB10.Sprite = PPV10.CurrentBlip.Sprite
+                        PPVVB10.Color = BlipColor.Yellow
+                        PPVVB10.Name = PPV10.FriendlyName
+                        PPVF10 = PegasusSelectedVehicleFile
+                        PPV10.Delete()
+                    End If
+                End If
             End If
             SinglePlayerApartment.player.Money = (playerCash - 200)
             SoundPlayer(SoundPathDir & "pegasus_we_are_locating_a_suitable_drop_off_location.wav")
@@ -2319,15 +2396,21 @@ Public Class Mechanic
 
     End Sub
 
+    Public Shared Sub CategoryInGarageMenuCloseHandler(sender As UIMenu)
+        MoveIndex = -1
+    End Sub
+
     Public Shared Sub CategoryMenuCloseHandler(sender As UIMenu)
         SoundPlayer(SoundPathDir & "mechanic_get_back_to_work_then.wav")
     End Sub
 
     Public Shared Sub GrgMoveMenuCloseHandler(sender As UIMenu)
+        MoveIndex = -1
         GarageMenu2.Visible = True
     End Sub
 
     Public Shared Sub MenuCloseHandler(sender As UIMenu)
+        MoveIndex = -1
         World.DestroyAllCameras()
         World.RenderingCamera = Nothing
     End Sub
@@ -2338,6 +2421,46 @@ Public Class Mechanic
 
             If (Native.Function.Call(Of Boolean)(Native.Hash._GET_LAST_INPUT_METHOD, 2) = False AndAlso Game.IsControlPressed(2, My.Settings.MechanicPad) AndAlso Game.IsControlPressed(2, My.Settings.SecondMechanicPad)) AndAlso (Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen()) Then
                 PhoneMenu.Visible = Not PhoneMenu.Visible
+            End If
+
+            If SelectedGarage = "Ten" Then
+                Select Case MoveIndex
+                    Case 0
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh0Pos.X, TenCarGarage.veh0Pos.Y, TenCarGarage.veh0Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 1
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh1Pos.X, TenCarGarage.veh1Pos.Y, TenCarGarage.veh1Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 2
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh2Pos.X, TenCarGarage.veh2Pos.Y, TenCarGarage.veh2Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 3
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh3Pos.X, TenCarGarage.veh3Pos.Y, TenCarGarage.veh3Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 4
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh4Pos.X, TenCarGarage.veh4Pos.Y, TenCarGarage.veh4Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 5
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh5Pos.X, TenCarGarage.veh5Pos.Y, TenCarGarage.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 6
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh6Pos.X, TenCarGarage.veh6Pos.Y, TenCarGarage.veh6Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 7
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh7Pos.X, TenCarGarage.veh7Pos.Y, TenCarGarage.veh7Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 8
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh8Pos.X, TenCarGarage.veh8Pos.Y, TenCarGarage.veh8Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 9
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TenCarGarage.veh9Pos.X, TenCarGarage.veh9Pos.Y, TenCarGarage.veh9Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                End Select
+            ElseIf SelectedGarage = "Six" Then
+                Select Case MoveIndex
+                    Case 0
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh0Pos.X, SixCarGarage.veh0Pos.Y, SixCarGarage.veh0Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 1
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh1Pos.X, SixCarGarage.veh1Pos.Y, SixCarGarage.veh1Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 2
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh2Pos.X, SixCarGarage.veh2Pos.Y, SixCarGarage.veh2Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 3
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh3Pos.X, SixCarGarage.veh3Pos.Y, SixCarGarage.veh3Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 4
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh4Pos.X, SixCarGarage.veh4Pos.Y, SixCarGarage.veh4Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    Case 5
+                        World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh5Pos.X, SixCarGarage.veh5Pos.Y, SixCarGarage.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                End Select
             End If
         Catch ex As Exception
             If Not ex.StackTrace.Contains("MoveNext") Then logger.Log(ex.Message & " " & ex.StackTrace)
@@ -2510,7 +2633,7 @@ Public Class Mechanic
         itemWO3655 = New UIMenuItem(WildOats3655.Apartment.Name & WildOats3655.Apartment.Unit)
         itemNC2045 = New UIMenuItem(NorthConker2045.Apartment.Name & NorthConker2045.Apartment.Unit)
         itemMR2117 = New UIMenuItem(MiltonRd2117.Apartment.Name & MiltonRd2117.Apartment.Unit)
-        itemHA2874 = New UIMenuItem(HillcrestAve2874.Apartment.Name & HillcrestAve2874.Apartment.Unit)
+        itemHA2874 = New UIMenuItem(HillcrestAve2874._Apartment.Name & HillcrestAve2874._Apartment.Unit)
         itemWD3677 = New UIMenuItem(Whispymound3677.Apartment.Name & Whispymound3677.Apartment.Unit)
         itemMW2113 = New UIMenuItem(MadWayne2113.Apartment.Name & MadWayne2113.Apartment.Unit)
         itemETP1 = New UIMenuItem(EclipseTower.ApartmentPS1.Name & EclipseTower.ApartmentPS1.Unit)
@@ -2545,55 +2668,45 @@ Public Class Mechanic
         End If
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                If Not MPV0 = Nothing Then MPV0.Delete()
-                If Not MPV1 = Nothing Then MPV1.Delete()
-                If Not MPV2 = Nothing Then MPV2.Delete()
-                If Not MPV3 = Nothing Then MPV3.Delete()
-                If Not MPV4 = Nothing Then MPV4.Delete()
-                If Not MPV5 = Nothing Then MPV5.Delete()
-                If Not MPV6 = Nothing Then MPV6.Delete()
-                If Not MPV7 = Nothing Then MPV7.Delete()
-                If Not MPV8 = Nothing Then MPV8.Delete()
-                If Not MPV9 = Nothing Then MPV9.Delete()
-                If Not FPV0 = Nothing Then FPV0.Delete()
-                If Not FPV1 = Nothing Then FPV1.Delete()
-                If Not FPV2 = Nothing Then FPV2.Delete()
-                If Not FPV3 = Nothing Then FPV3.Delete()
-                If Not FPV4 = Nothing Then FPV4.Delete()
-                If Not FPV5 = Nothing Then FPV5.Delete()
-                If Not FPV6 = Nothing Then FPV6.Delete()
-                If Not FPV7 = Nothing Then FPV7.Delete()
-                If Not FPV8 = Nothing Then FPV8.Delete()
-                If Not FPV9 = Nothing Then FPV9.Delete()
-                If Not TPV0 = Nothing Then TPV0.Delete()
-                If Not TPV1 = Nothing Then TPV1.Delete()
-                If Not TPV2 = Nothing Then TPV2.Delete()
-                If Not TPV3 = Nothing Then TPV3.Delete()
-                If Not TPV4 = Nothing Then TPV4.Delete()
-                If Not TPV5 = Nothing Then TPV5.Delete()
-                If Not TPV6 = Nothing Then TPV6.Delete()
-                If Not TPV7 = Nothing Then TPV7.Delete()
-                If Not TPV8 = Nothing Then TPV8.Delete()
-                If Not TPV9 = Nothing Then TPV9.Delete()
-                If Not PPV0 = Nothing Then PPV0.Delete()
-                If Not PPV1 = Nothing Then PPV1.Delete()
-                If Not PPV2 = Nothing Then PPV2.Delete()
-                If Not PPV3 = Nothing Then PPV3.Delete()
-                If Not PPV4 = Nothing Then PPV4.Delete()
-                If Not PPV5 = Nothing Then PPV5.Delete()
-                If Not PPV6 = Nothing Then PPV6.Delete()
-                If Not PPV7 = Nothing Then PPV7.Delete()
-                If Not PPV8 = Nothing Then PPV8.Delete()
-                If Not PPV9 = Nothing Then PPV9.Delete()
-                If Not MPV = Nothing Then MPV.Delete()
-                If Not FPV = Nothing Then FPV.Delete()
-                If Not TPV = Nothing Then TPV.Delete()
-                If Not PPV = Nothing Then PPV.Delete()
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not MPV0 = Nothing Then MPV0.Delete()
+            If Not MPV1 = Nothing Then MPV1.Delete()
+            If Not MPV2 = Nothing Then MPV2.Delete()
+            If Not MPV3 = Nothing Then MPV3.Delete()
+            If Not MPV4 = Nothing Then MPV4.Delete()
+            If Not FPV0 = Nothing Then FPV0.Delete()
+            If Not FPV1 = Nothing Then FPV1.Delete()
+            If Not FPV2 = Nothing Then FPV2.Delete()
+            If Not FPV3 = Nothing Then FPV3.Delete()
+            If Not FPV4 = Nothing Then FPV4.Delete()
+            If Not TPV0 = Nothing Then TPV0.Delete()
+            If Not TPV1 = Nothing Then TPV1.Delete()
+            If Not TPV2 = Nothing Then TPV2.Delete()
+            If Not TPV3 = Nothing Then TPV3.Delete()
+            If Not TPV4 = Nothing Then TPV4.Delete()
+            If Not PPV0 = Nothing Then PPV0.Delete()
+            If Not PPV1 = Nothing Then PPV1.Delete()
+            If Not PPV2 = Nothing Then PPV2.Delete()
+            If Not PPV3 = Nothing Then PPV3.Delete()
+            If Not PPV4 = Nothing Then PPV4.Delete()
+            If Not MPV10 = Nothing Then MPV10.Delete()
+            If Not FPV10 = Nothing Then FPV10.Delete()
+            If Not TPV10 = Nothing Then TPV10.Delete()
+            If Not PPV10 = Nothing Then PPV10.Delete()
+            If Not MPV11 = Nothing Then MPV11.Delete()
+            If Not FPV11 = Nothing Then FPV11.Delete()
+            If Not TPV11 = Nothing Then TPV11.Delete()
+            If Not PPV11 = Nothing Then PPV11.Delete()
+            If Not MPVVB10 = Nothing Then MPVVB10.Remove()
+            If Not FPVVB10 = Nothing Then FPVVB10.Remove()
+            If Not TPVVB10 = Nothing Then TPVVB10.Remove()
+            If Not PPVVB10 = Nothing Then PPVVB10.Remove()
+            If Not MPVVB11 = Nothing Then MPVVB11.Remove()
+            If Not FPVVB11 = Nothing Then FPVVB11.Remove()
+            If Not TPVVB11 = Nothing Then TPVVB11.Remove()
+            If Not PPVVB11 = Nothing Then PPVVB11.Remove()
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

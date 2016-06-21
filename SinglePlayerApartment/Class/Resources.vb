@@ -35,6 +35,28 @@ Public Class Resources
         Return Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, Args)
     End Function
 
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure VehicleStats
+        Public TopSpeed As Single
+        Public Acceleration As Single
+        Public Braking As Single
+        Public Traction As Single
+    End Structure
+
+    Public Shared Function GetVehicleStats(ByVal v As Vehicle) As VehicleStats
+        Dim num As Single = 1.0!
+        Dim stats As New VehicleStats
+        Dim arguments As InputArgument() = New InputArgument() {v}
+        stats.TopSpeed = Native.Function.Call(Of Single)(Hash._0x53AF99BAA671CA47, arguments)
+        Dim argumentArray2 As InputArgument() = New InputArgument() {v}
+        stats.Braking = Native.Function.Call(Of Single)(Hash._0xAD7E85FC227197C4, argumentArray2)
+        Dim argumentArray3 As InputArgument() = New InputArgument() {v}
+        stats.Acceleration = Native.Function.Call(Of Single)(Hash._0x5DD35C8D074E57AE, argumentArray3)
+        Dim argumentArray4 As InputArgument() = New InputArgument() {v}
+        stats.Traction = (Native.Function.Call(Of Single)(Hash._0xA132FB5370554DB0, argumentArray4) * num)
+        Return stats
+    End Function
+
     Public Shared Function GetVehiclePrice(file As String) As Integer
         Dim VehModel As String = ReadCfgValue("VehicleModel", file)
         Dim VehPrice As Integer
@@ -351,11 +373,7 @@ Label_005C:
         Native.Function.Call(Hash._0xEA47FE3719165B94, New InputArgument() {ped, animDict, animFile, 8.0, -4.0, duration, 9, 0, 0, 0, 0})
     End Sub
 
-    Public Shared Sub Disable_Controls()
-        Game.DisableControlThisFrame(0, GTA.Control.Jump)
-        Game.DisableControlThisFrame(0, GTA.Control.Attack)
-        Game.DisableControlThisFrame(0, GTA.Control.Attack2)
-        Game.DisableControlThisFrame(0, GTA.Control.Aim)
+    Public Shared Sub Disable_Weapons()
         Game.DisableControlThisFrame(0, GTA.Control.NextWeapon)
         Game.DisableControlThisFrame(0, GTA.Control.PrevWeapon)
         Game.DisableControlThisFrame(0, GTA.Control.MeleeAttack1)
@@ -363,10 +381,38 @@ Label_005C:
         Game.DisableControlThisFrame(0, GTA.Control.MeleeAttackAlternate)
         Game.DisableControlThisFrame(0, GTA.Control.MeleeAttackHeavy)
         Game.DisableControlThisFrame(0, GTA.Control.MeleeAttackLight)
-        Game.DisableControlThisFrame(0, GTA.Control.CharacterWheel)
         Game.DisableControlThisFrame(0, GTA.Control.SelectWeapon)
-        Native.Function.Call(Hash.SET_CURRENT_PED_WEAPON, Game.Player.Character, WeaponHash.Unarmed, True)
+        Select Case GetCurrentWeaponPedUsing()
+            Case Game.GenerateHash(WeaponHash.Unarmed), 966099553
+            Case Else
+                Native.Function.Call(Hash.SET_CURRENT_PED_WEAPON, Game.Player.Character, WeaponHash.Unarmed, True)
+        End Select
     End Sub
+
+    Public Shared Sub Disable_Switch_Characters()
+        Game.DisableControlThisFrame(0, GTA.Control.CharacterWheel)
+    End Sub
+
+    Public Shared Sub Disable_Controls()
+        Game.DisableControlThisFrame(0, GTA.Control.Jump)
+        Game.DisableControlThisFrame(0, GTA.Control.Attack)
+        Game.DisableControlThisFrame(0, GTA.Control.Attack2)
+        Game.DisableControlThisFrame(0, GTA.Control.Aim)
+        Game.DisableControlThisFrame(0, GTA.Control.Cover)
+        If Not Game.Player.Character.IsInVehicle AndAlso Not Brain.RadioTaskScriptStatus = 0 Then
+            Game.DisableControlThisFrame(0, GTA.Control.VehicleRadioWheel)
+            Game.DisableControlThisFrame(0, GTA.Control.VehicleNextRadio)
+            Game.DisableControlThisFrame(0, GTA.Control.VehiclePrevRadio)
+            Game.DisableControlThisFrame(0, GTA.Control.VehicleNextRadioTrack)
+            Game.DisableControlThisFrame(0, GTA.Control.VehiclePrevRadioTrack)
+        End If
+    End Sub
+
+    Public Shared Function GetCurrentWeaponPedUsing() As Integer
+        Dim arg As New OutputArgument()
+        Native.Function.Call(Hash.GET_CURRENT_PED_WEAPON, Game.Player.Character, arg, True)
+        Return arg.GetResult(Of Integer)()
+    End Function
 
     Public Shared Function GetPlayerZoneForPlane(PlayerPed As Ped) As Vector3
         Dim ZoneID As String = Native.Function.Call(Of String)(Hash.GET_NAME_OF_ZONE, PlayerPed.Position.X, PlayerPed.Position.Y, PlayerPed.Position.Z)
@@ -592,4 +638,32 @@ Label_005C:
             End Using
         End Using
     End Sub
+
+    Public Shared Function GetPlayerCurrentRadioStation() As String
+        Dim RadioID As Integer = Native.Function.Call(Of Integer)(Hash.GET_PLAYER_RADIO_STATION_INDEX)
+        Return Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, RadioID)
+    End Function
+
+    Public Shared Sub RadioPlayer(Room As String, Prop As Prop)
+
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, Room, True)
+        Native.Function.Call(&HE0CD610D5EB6C85L, Room, Prop)
+        Native.Function.Call(Hash._0xF1CA12B18AEF5298, Prop, True)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, Room, GetPlayerCurrentRadioStation())
+    End Sub
+
+    Public Shared Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
+        Dim result As Prop = Nothing
+
+        Dim model = New Model(PropModel)
+        model.Request(250)
+        If model.IsInCdImage AndAlso model.IsValid Then
+            While Not model.IsLoaded
+                Script.Wait(50)
+            End While
+            result = Native.Function.Call(Of Prop)(Hash.CREATE_OBJECT_NO_OFFSET, Game.GenerateHash(PropModel), Position.X, Position.Y, Position.Z, True, True, Dynamic)
+        End If
+        model.MarkAsNoLongerNeeded()
+        Return result
+    End Function
 End Class

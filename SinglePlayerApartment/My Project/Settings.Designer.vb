@@ -773,6 +773,30 @@ Namespace My
                 Me("SecondMechanicPad") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("RADIO_01_CLASS_ROCK")>  _
+        Public Property RadioStation() As String
+            Get
+                Return CType(Me("RadioStation"),String)
+            End Get
+            Set
+                Me("RadioStation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property RefreshGrgVehs() As Boolean
+            Get
+                Return CType(Me("RefreshGrgVehs"),Boolean)
+            End Get
+            Set
+                Me("RefreshGrgVehs") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

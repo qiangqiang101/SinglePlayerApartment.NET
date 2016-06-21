@@ -6,6 +6,7 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.Mechanic
 Imports INMNativeUI
 Imports SinglePlayerApartment.Resources
+Imports GTA.Math
 
 Public Class Mechanic2
     Inherits Script
@@ -119,10 +120,11 @@ Public Class Mechanic2
     Public Shared Sub CreateMechanicInVehicle(Vehicle As Vehicle)
         If My.Settings.VehicleSpawn = 1 Then
             MechanicPed = Vehicle.CreatePedOnSeat(VehicleSeat.Driver, PedHash.Autoshop01SMM)
-            MechanicPed.AlwaysKeepTask = True
+            'MechanicPed.AlwaysKeepTask = True
             MechanicPed.Task.DriveTo(Vehicle, playerPed.Position, 20.0, 15.0)
             MechanicPed.DrivingStyle = DrivingStyle.Normal
         Else
+            Wait(5000)
             Vehicle.Position = World.GetNextPositionOnStreet(playerPed.Position)
         End If
     End Sub
@@ -176,86 +178,21 @@ Public Class Mechanic2
                         SetModKit(MPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(MPV4)
                     Else
-                        If MPV5 = Nothing Then
-                            MPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                            MPV5.AddBlip()
-                            MPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            MPV5.CurrentBlip.Color = BlipColor.Blue
-                            MPV5.CurrentBlip.IsShortRange = True
-                            SetBlipName(MPV5.FriendlyName, MPV5.CurrentBlip)
+                        If MPV0 = Nothing Then
+                            MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                            MPV0.AddBlip()
+                            MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                            MPV0.CurrentBlip.Color = BlipColor.Blue
+                            MPV0.CurrentBlip.IsShortRange = True
+                            SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
-                            SetModKit(MPV5, SelectedItem_Car)
-                            CreateMechanicInVehicle(MPV5)
+                            SetModKit(MPV0, SelectedItem_Car)
+                            CreateMechanicInVehicle(MPV0)
                         Else
-                            If MPV6 = Nothing Then
-                                MPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                MPV6.AddBlip()
-                                MPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                MPV6.CurrentBlip.Color = BlipColor.Blue
-                                MPV6.CurrentBlip.IsShortRange = True
-                                SetBlipName(MPV6.FriendlyName, MPV6.CurrentBlip)
-                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                SetModKit(MPV6, SelectedItem_Car)
-                                CreateMechanicInVehicle(MPV6)
-                            Else
-                                If MPV7 = Nothing Then
-                                    MPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                    MPV7.AddBlip()
-                                    MPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    MPV7.CurrentBlip.Color = BlipColor.Blue
-                                    MPV7.CurrentBlip.IsShortRange = True
-                                    SetBlipName(MPV7.FriendlyName, MPV7.CurrentBlip)
-                                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", SelectedItem_Car)
-                                    SetModKit(MPV7, SelectedItem_Car)
-                                    CreateMechanicInVehicle(MPV7)
-                                Else
-                                    If MPV8 = Nothing Then
-                                        MPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                        MPV8.AddBlip()
-                                        MPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        MPV8.CurrentBlip.Color = BlipColor.Blue
-                                        MPV8.CurrentBlip.IsShortRange = True
-                                        SetBlipName(MPV8.FriendlyName, MPV8.CurrentBlip)
-                                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", SelectedItem_Car)
-                                        SetModKit(MPV8, SelectedItem_Car)
-                                        CreateMechanicInVehicle(MPV8)
-                                    Else
-                                        If MPV9 = Nothing Then
-                                            MPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                            MPV9.AddBlip()
-                                            MPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            MPV9.CurrentBlip.Color = BlipColor.Blue
-                                            MPV9.CurrentBlip.IsShortRange = True
-                                            SetBlipName(MPV9.FriendlyName, MPV9.CurrentBlip)
-                                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", SelectedItem_Car)
-                                            SetModKit(MPV9, SelectedItem_Car)
-                                            CreateMechanicInVehicle(MPV9)
-                                        Else
-                                            If MPV0 = Nothing Then
-                                                MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                                MPV0.AddBlip()
-                                                MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                MPV0.CurrentBlip.Color = BlipColor.Blue
-                                                MPV0.CurrentBlip.IsShortRange = True
-                                                SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
-                                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                                SetModKit(MPV0, SelectedItem_Car)
-                                                CreateMechanicInVehicle(MPV0)
-                                            Else
-                                                sender.Visible = False
-                                                UI.ShowSubtitle(Reach10)
-                                                Exit Sub
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
+                            sender.Visible = False
+                            UI.ShowSubtitle(Reach10)
+                            Exit Sub
                         End If
                     End If
                 End If
@@ -312,86 +249,21 @@ Public Class Mechanic2
                         SetModKit(FPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(FPV4)
                     Else
-                        If FPV5 = Nothing Then
-                            FPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                            FPV5.AddBlip()
-                            FPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            FPV5.CurrentBlip.Color = BlipColor.Green
-                            FPV5.CurrentBlip.IsShortRange = True
-                            SetBlipName(FPV5.FriendlyName, FPV5.CurrentBlip)
+                        If FPV0 = Nothing Then
+                            FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                            FPV0.AddBlip()
+                            FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                            FPV0.CurrentBlip.Color = BlipColor.Green
+                            FPV0.CurrentBlip.IsShortRange = True
+                            SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
-                            SetModKit(FPV5, SelectedItem_Car)
-                            CreateMechanicInVehicle(FPV5)
+                            SetModKit(FPV0, SelectedItem_Car)
+                            CreateMechanicInVehicle(FPV0)
                         Else
-                            If FPV6 = Nothing Then
-                                FPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                FPV6.AddBlip()
-                                FPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                FPV6.CurrentBlip.Color = BlipColor.Green
-                                FPV6.CurrentBlip.IsShortRange = True
-                                SetBlipName(FPV6.FriendlyName, FPV6.CurrentBlip)
-                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                SetModKit(FPV6, SelectedItem_Car)
-                                CreateMechanicInVehicle(FPV6)
-                            Else
-                                If FPV7 = Nothing Then
-                                    FPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                    FPV7.AddBlip()
-                                    FPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    FPV7.CurrentBlip.Color = BlipColor.Green
-                                    FPV7.CurrentBlip.IsShortRange = True
-                                    SetBlipName(FPV7.FriendlyName, FPV7.CurrentBlip)
-                                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", SelectedItem_Car)
-                                    SetModKit(FPV7, SelectedItem_Car)
-                                    CreateMechanicInVehicle(FPV7)
-                                Else
-                                    If FPV8 = Nothing Then
-                                        FPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                        FPV8.AddBlip()
-                                        FPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        FPV8.CurrentBlip.Color = BlipColor.Green
-                                        FPV8.CurrentBlip.IsShortRange = True
-                                        SetBlipName(FPV8.FriendlyName, FPV8.CurrentBlip)
-                                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", SelectedItem_Car)
-                                        SetModKit(FPV8, SelectedItem_Car)
-                                        CreateMechanicInVehicle(FPV8)
-                                    Else
-                                        If FPV9 = Nothing Then
-                                            FPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                            FPV9.AddBlip()
-                                            FPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            FPV9.CurrentBlip.Color = BlipColor.Green
-                                            FPV9.CurrentBlip.IsShortRange = True
-                                            SetBlipName(FPV9.FriendlyName, FPV9.CurrentBlip)
-                                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", SelectedItem_Car)
-                                            SetModKit(FPV9, SelectedItem_Car)
-                                            CreateMechanicInVehicle(FPV9)
-                                        Else
-                                            If FPV0 = Nothing Then
-                                                FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                                FPV0.AddBlip()
-                                                FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                FPV0.CurrentBlip.Color = BlipColor.Green
-                                                FPV0.CurrentBlip.IsShortRange = True
-                                                SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
-                                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                                SetModKit(FPV0, SelectedItem_Car)
-                                                CreateMechanicInVehicle(FPV0)
-                                            Else
-                                                sender.Visible = False
-                                                UI.ShowSubtitle(Reach10)
-                                                Exit Sub
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
+                            sender.Visible = False
+                            UI.ShowSubtitle(Reach10)
+                            Exit Sub
                         End If
                     End If
                 End If
@@ -448,86 +320,21 @@ Public Class Mechanic2
                         SetModKit(TPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(TPV4)
                     Else
-                        If TPV5 = Nothing Then
-                            TPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                            TPV5.AddBlip()
-                            TPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            TPV5.CurrentBlip.Color = 17
-                            TPV5.CurrentBlip.IsShortRange = True
-                            SetBlipName(TPV5.FriendlyName, TPV5.CurrentBlip)
+                        If TPV0 = Nothing Then
+                            TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                            TPV0.AddBlip()
+                            TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                            TPV0.CurrentBlip.Color = 17
+                            TPV0.CurrentBlip.IsShortRange = True
+                            SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
-                            SetModKit(TPV5, SelectedItem_Car)
-                            CreateMechanicInVehicle(TPV5)
+                            SetModKit(TPV0, SelectedItem_Car)
+                            CreateMechanicInVehicle(TPV0)
                         Else
-                            If TPV6 = Nothing Then
-                                TPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                TPV6.AddBlip()
-                                TPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                TPV6.CurrentBlip.Color = 17
-                                TPV6.CurrentBlip.IsShortRange = True
-                                SetBlipName(TPV6.FriendlyName, TPV6.CurrentBlip)
-                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                SetModKit(TPV6, SelectedItem_Car)
-                                CreateMechanicInVehicle(TPV6)
-                            Else
-                                If TPV7 = Nothing Then
-                                    TPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                    TPV7.AddBlip()
-                                    TPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    TPV7.CurrentBlip.Color = 17
-                                    TPV7.CurrentBlip.IsShortRange = True
-                                    SetBlipName(TPV7.FriendlyName, TPV7.CurrentBlip)
-                                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", SelectedItem_Car)
-                                    SetModKit(TPV7, SelectedItem_Car)
-                                    CreateMechanicInVehicle(TPV7)
-                                Else
-                                    If TPV8 = Nothing Then
-                                        TPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                        TPV8.AddBlip()
-                                        TPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        TPV8.CurrentBlip.Color = 17
-                                        TPV8.CurrentBlip.IsShortRange = True
-                                        SetBlipName(TPV8.FriendlyName, TPV8.CurrentBlip)
-                                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", SelectedItem_Car)
-                                        SetModKit(TPV8, SelectedItem_Car)
-                                        CreateMechanicInVehicle(TPV8)
-                                    Else
-                                        If TPV9 = Nothing Then
-                                            TPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                            TPV9.AddBlip()
-                                            TPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            TPV9.CurrentBlip.Color = 17
-                                            TPV9.CurrentBlip.IsShortRange = True
-                                            SetBlipName(TPV9.FriendlyName, TPV9.CurrentBlip)
-                                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", SelectedItem_Car)
-                                            SetModKit(TPV9, SelectedItem_Car)
-                                            CreateMechanicInVehicle(TPV9)
-                                        Else
-                                            If TPV0 = Nothing Then
-                                                TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                                TPV0.AddBlip()
-                                                TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                TPV0.CurrentBlip.Color = 17
-                                                TPV0.CurrentBlip.IsShortRange = True
-                                                SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
-                                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                                SetModKit(TPV0, SelectedItem_Car)
-                                                CreateMechanicInVehicle(TPV0)
-                                            Else
-                                                sender.Visible = False
-                                                UI.ShowSubtitle(Reach10)
-                                                Exit Sub
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
+                            sender.Visible = False
+                            UI.ShowSubtitle(Reach10)
+                            Exit Sub
                         End If
                     End If
                 End If
@@ -584,86 +391,21 @@ Public Class Mechanic2
                         SetModKit(PPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(PPV4)
                     Else
-                        If PPV5 = Nothing Then
-                            PPV5 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                            PPV5.AddBlip()
-                            PPV5.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            PPV5.CurrentBlip.Color = BlipColor.Yellow
-                            PPV5.CurrentBlip.IsShortRange = True
-                            SetBlipName(PPV5.FriendlyName, PPV5.CurrentBlip)
+                        If PPV0 = Nothing Then
+                            PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                            PPV0.AddBlip()
+                            PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                            PPV0.CurrentBlip.Color = BlipColor.Yellow
+                            PPV0.CurrentBlip.IsShortRange = True
+                            SetBlipName(PPV0.FriendlyName, PPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                             WriteCfgValue("Active", "True", SelectedItem_Car)
-                            SetModKit(PPV5, SelectedItem_Car)
-                            CreateMechanicInVehicle(PPV5)
+                            SetModKit(PPV0, SelectedItem_Car)
+                            CreateMechanicInVehicle(PPV0)
                         Else
-                            If PPV6 = Nothing Then
-                                PPV6 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                PPV6.AddBlip()
-                                PPV6.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                PPV6.CurrentBlip.Color = BlipColor.Yellow
-                                PPV6.CurrentBlip.IsShortRange = True
-                                SetBlipName(PPV6.FriendlyName, PPV6.CurrentBlip)
-                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                SetModKit(PPV6, SelectedItem_Car)
-                                CreateMechanicInVehicle(PPV6)
-                            Else
-                                If PPV7 = Nothing Then
-                                    PPV7 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                    PPV7.AddBlip()
-                                    PPV7.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    PPV7.CurrentBlip.Color = BlipColor.Yellow
-                                    PPV7.CurrentBlip.IsShortRange = True
-                                    SetBlipName(PPV7.FriendlyName, PPV7.CurrentBlip)
-                                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                    WriteCfgValue("Active", "True", SelectedItem_Car)
-                                    SetModKit(PPV7, SelectedItem_Car)
-                                    CreateMechanicInVehicle(PPV7)
-                                Else
-                                    If PPV8 = Nothing Then
-                                        PPV8 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                        PPV8.AddBlip()
-                                        PPV8.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                        PPV8.CurrentBlip.Color = BlipColor.Yellow
-                                        PPV8.CurrentBlip.IsShortRange = True
-                                        SetBlipName(PPV8.FriendlyName, PPV8.CurrentBlip)
-                                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                        WriteCfgValue("Active", "True", SelectedItem_Car)
-                                        SetModKit(PPV8, SelectedItem_Car)
-                                        CreateMechanicInVehicle(PPV8)
-                                    Else
-                                        If PPV9 = Nothing Then
-                                            PPV9 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                            PPV9.AddBlip()
-                                            PPV9.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                            PPV9.CurrentBlip.Color = BlipColor.Yellow
-                                            PPV9.CurrentBlip.IsShortRange = True
-                                            SetBlipName(PPV9.FriendlyName, PPV9.CurrentBlip)
-                                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                            WriteCfgValue("Active", "True", SelectedItem_Car)
-                                            SetModKit(PPV9, SelectedItem_Car)
-                                            CreateMechanicInVehicle(PPV9)
-                                        Else
-                                            If PPV0 = Nothing Then
-                                                PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
-                                                PPV0.AddBlip()
-                                                PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                                PPV0.CurrentBlip.Color = BlipColor.Yellow
-                                                PPV0.CurrentBlip.IsShortRange = True
-                                                SetBlipName(PPV0.FriendlyName, PPV0.CurrentBlip)
-                                                selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                                                WriteCfgValue("Active", "True", SelectedItem_Car)
-                                                SetModKit(PPV0, SelectedItem_Car)
-                                                CreateMechanicInVehicle(PPV0)
-                                            Else
-                                                sender.Visible = False
-                                                UI.ShowSubtitle(Reach10)
-                                                Exit Sub
-                                            End If
-                                        End If
-                                    End If
-                                End If
-                            End If
+                            sender.Visible = False
+                            UI.ShowSubtitle(Reach10)
+                            Exit Sub
                         End If
                     End If
                 End If
@@ -693,84 +435,44 @@ Public Class Mechanic2
             If Not MPV2 = Nothing Then MPV2.Delete()
             If Not MPV3 = Nothing Then MPV3.Delete()
             If Not MPV4 = Nothing Then MPV4.Delete()
-            If Not MPV5 = Nothing Then MPV5.Delete()
-            If Not MPV6 = Nothing Then MPV6.Delete()
-            If Not MPV7 = Nothing Then MPV7.Delete()
-            If Not MPV8 = Nothing Then MPV8.Delete()
-            If Not MPV9 = Nothing Then MPV9.Delete()
             MPV0 = Nothing
             MPV1 = Nothing
             MPV2 = Nothing
             MPV3 = Nothing
             MPV4 = Nothing
-            MPV5 = Nothing
-            MPV6 = Nothing
-            MPV7 = Nothing
-            MPV8 = Nothing
-            MPV9 = Nothing
         ElseIf playerName = "Franklin" Then
             If Not FPV0 = Nothing Then FPV0.Delete()
             If Not FPV1 = Nothing Then FPV1.Delete()
             If Not FPV2 = Nothing Then FPV2.Delete()
             If Not FPV3 = Nothing Then FPV3.Delete()
             If Not FPV4 = Nothing Then FPV4.Delete()
-            If Not FPV5 = Nothing Then FPV5.Delete()
-            If Not FPV6 = Nothing Then FPV6.Delete()
-            If Not FPV7 = Nothing Then FPV7.Delete()
-            If Not FPV8 = Nothing Then FPV8.Delete()
-            If Not FPV9 = Nothing Then FPV9.Delete()
             FPV0 = Nothing
             FPV1 = Nothing
             FPV2 = Nothing
             FPV3 = Nothing
             FPV4 = Nothing
-            FPV5 = Nothing
-            FPV6 = Nothing
-            FPV7 = Nothing
-            FPV8 = Nothing
-            FPV9 = Nothing
         ElseIf playerName = "Trevor" Then
             If Not TPV0 = Nothing Then TPV0.Delete()
             If Not TPV1 = Nothing Then TPV1.Delete()
             If Not TPV2 = Nothing Then TPV2.Delete()
             If Not TPV3 = Nothing Then TPV3.Delete()
             If Not TPV4 = Nothing Then TPV4.Delete()
-            If Not TPV5 = Nothing Then TPV5.Delete()
-            If Not TPV6 = Nothing Then TPV6.Delete()
-            If Not TPV7 = Nothing Then TPV7.Delete()
-            If Not TPV8 = Nothing Then TPV8.Delete()
-            If Not TPV9 = Nothing Then TPV9.Delete()
             TPV0 = Nothing
             TPV1 = Nothing
             TPV2 = Nothing
             TPV3 = Nothing
             TPV4 = Nothing
-            TPV5 = Nothing
-            TPV6 = Nothing
-            TPV7 = Nothing
-            TPV8 = Nothing
-            TPV9 = Nothing
         ElseIf playerName = "Player3" Then
             If Not PPV0 = Nothing Then PPV0.Delete()
             If Not PPV1 = Nothing Then PPV1.Delete()
             If Not PPV2 = Nothing Then PPV2.Delete()
             If Not PPV3 = Nothing Then PPV3.Delete()
             If Not PPV4 = Nothing Then PPV4.Delete()
-            If Not PPV5 = Nothing Then PPV5.Delete()
-            If Not PPV6 = Nothing Then PPV6.Delete()
-            If Not PPV7 = Nothing Then PPV7.Delete()
-            If Not PPV8 = Nothing Then PPV8.Delete()
-            If Not PPV9 = Nothing Then PPV9.Delete()
             PPV0 = Nothing
             PPV1 = Nothing
             PPV2 = Nothing
             PPV3 = Nothing
             PPV4 = Nothing
-            PPV5 = Nothing
-            PPV6 = Nothing
-            PPV7 = Nothing
-            PPV8 = Nothing
-            PPV9 = Nothing
         End If
     End Sub
 
@@ -901,29 +603,13 @@ Public Class Mechanic2
                     MPV4.CurrentBlip.Alpha = 255
                     If MPV4.IsPersistent = False Then MPV4.IsPersistent = True
                 End If
-                If Not MPV5 = Nothing AndAlso MPV5.CurrentBlip.Alpha = 0 Then
-                    MPV5.CurrentBlip.Alpha = 255
-                    If MPV5.IsPersistent = False Then MPV5.IsPersistent = True
+                If Not MPV10 = Nothing AndAlso MPV10.CurrentBlip.Alpha = 0 Then
+                    MPV10.CurrentBlip.Alpha = 255
+                    If MPV10.IsPersistent = False Then MPV10.IsPersistent = True
                 End If
-                If Not MPV6 = Nothing AndAlso MPV6.CurrentBlip.Alpha = 0 Then
-                    MPV6.CurrentBlip.Alpha = 255
-                    If MPV6.IsPersistent = False Then MPV6.IsPersistent = True
-                End If
-                If Not MPV7 = Nothing AndAlso MPV7.CurrentBlip.Alpha = 0 Then
-                    MPV7.CurrentBlip.Alpha = 255
-                    If MPV7.IsPersistent = False Then MPV7.IsPersistent = True
-                End If
-                If Not MPV8 = Nothing AndAlso MPV8.CurrentBlip.Alpha = 0 Then
-                    MPV8.CurrentBlip.Alpha = 255
-                    If MPV8.IsPersistent = False Then MPV8.IsPersistent = True
-                End If
-                If Not MPV9 = Nothing AndAlso MPV9.CurrentBlip.Alpha = 0 Then
-                    MPV9.CurrentBlip.Alpha = 255
-                    If MPV9.IsPersistent = False Then MPV9.IsPersistent = True
-                End If
-                If Not MPV = Nothing AndAlso MPV.CurrentBlip.Alpha = 0 Then
-                    MPV.CurrentBlip.Alpha = 255
-                    If MPV.IsPersistent = False Then MPV9.IsPersistent = True
+                If Not MPV11 = Nothing AndAlso MPV11.CurrentBlip.Alpha = 0 Then
+                    MPV11.CurrentBlip.Alpha = 255
+                    If MPV11.IsPersistent = False Then MPV11.IsPersistent = True
                 End If
                 If Not FPV0 = Nothing AndAlso FPV0.CurrentBlip.Alpha = 0 Then
                     FPV0.CurrentBlip.Alpha = 255
@@ -945,29 +631,13 @@ Public Class Mechanic2
                     FPV4.CurrentBlip.Alpha = 255
                     If FPV4.IsPersistent = False Then FPV4.IsPersistent = True
                 End If
-                If Not FPV5 = Nothing AndAlso FPV5.CurrentBlip.Alpha = 0 Then
-                    FPV5.CurrentBlip.Alpha = 255
-                    If FPV5.IsPersistent = False Then FPV5.IsPersistent = True
+                If Not FPV10 = Nothing AndAlso FPV10.CurrentBlip.Alpha = 0 Then
+                    FPV10.CurrentBlip.Alpha = 255
+                    If FPV10.IsPersistent = False Then FPV10.IsPersistent = True
                 End If
-                If Not FPV6 = Nothing AndAlso FPV6.CurrentBlip.Alpha = 0 Then
-                    FPV6.CurrentBlip.Alpha = 255
-                    If FPV6.IsPersistent = False Then FPV6.IsPersistent = True
-                End If
-                If Not FPV7 = Nothing AndAlso FPV7.CurrentBlip.Alpha = 0 Then
-                    FPV7.CurrentBlip.Alpha = 255
-                    If FPV7.IsPersistent = False Then FPV7.IsPersistent = True
-                End If
-                If Not FPV8 = Nothing AndAlso FPV8.CurrentBlip.Alpha = 0 Then
-                    FPV8.CurrentBlip.Alpha = 255
-                    If FPV8.IsPersistent = False Then FPV8.IsPersistent = True
-                End If
-                If Not FPV9 = Nothing AndAlso FPV9.CurrentBlip.Alpha = 0 Then
-                    FPV9.CurrentBlip.Alpha = 255
-                    If FPV9.IsPersistent = False Then FPV9.IsPersistent = True
-                End If
-                If Not FPV = Nothing AndAlso FPV.CurrentBlip.Alpha = 0 Then
-                    FPV.CurrentBlip.Alpha = 255
-                    If FPV.IsPersistent = False Then FPV.IsPersistent = True
+                If Not FPV11 = Nothing AndAlso FPV11.CurrentBlip.Alpha = 0 Then
+                    FPV11.CurrentBlip.Alpha = 255
+                    If FPV11.IsPersistent = False Then FPV11.IsPersistent = True
                 End If
                 If Not TPV0 = Nothing AndAlso TPV0.CurrentBlip.Alpha = 0 Then
                     TPV0.CurrentBlip.Alpha = 255
@@ -989,29 +659,13 @@ Public Class Mechanic2
                     TPV4.CurrentBlip.Alpha = 255
                     If TPV4.IsPersistent = False Then TPV4.IsPersistent = True
                 End If
-                If Not TPV5 = Nothing AndAlso TPV5.CurrentBlip.Alpha = 0 Then
-                    TPV5.CurrentBlip.Alpha = 255
-                    If TPV5.IsPersistent = False Then TPV5.IsPersistent = True
+                If Not TPV10 = Nothing AndAlso TPV10.CurrentBlip.Alpha = 0 Then
+                    TPV10.CurrentBlip.Alpha = 255
+                    If TPV10.IsPersistent = False Then TPV10.IsPersistent = True
                 End If
-                If Not TPV6 = Nothing AndAlso TPV6.CurrentBlip.Alpha = 0 Then
-                    TPV6.CurrentBlip.Alpha = 255
-                    If TPV6.IsPersistent = False Then TPV6.IsPersistent = True
-                End If
-                If Not TPV7 = Nothing AndAlso TPV7.CurrentBlip.Alpha = 0 Then
-                    TPV7.CurrentBlip.Alpha = 255
-                    If TPV7.IsPersistent = False Then TPV7.IsPersistent = True
-                End If
-                If Not TPV8 = Nothing AndAlso TPV8.CurrentBlip.Alpha = 0 Then
-                    TPV8.CurrentBlip.Alpha = 255
-                    If TPV8.IsPersistent = False Then TPV8.IsPersistent = True
-                End If
-                If Not TPV9 = Nothing AndAlso TPV9.CurrentBlip.Alpha = 0 Then
-                    TPV9.CurrentBlip.Alpha = 255
-                    If TPV9.IsPersistent = False Then TPV9.IsPersistent = True
-                End If
-                If Not TPV = Nothing AndAlso TPV.CurrentBlip.Alpha = 0 Then
-                    TPV.CurrentBlip.Alpha = 255
-                    If TPV.IsPersistent = False Then TPV.IsPersistent = True
+                If Not TPV11 = Nothing AndAlso TPV11.CurrentBlip.Alpha = 0 Then
+                    TPV11.CurrentBlip.Alpha = 255
+                    If TPV11.IsPersistent = False Then TPV11.IsPersistent = True
                 End If
                 If Not PPV0 = Nothing AndAlso PPV0.CurrentBlip.Alpha = 0 Then
                     PPV0.CurrentBlip.Alpha = 255
@@ -1033,119 +687,255 @@ Public Class Mechanic2
                     PPV4.CurrentBlip.Alpha = 255
                     If PPV4.IsPersistent = False Then PPV4.IsPersistent = True
                 End If
-                If Not PPV5 = Nothing AndAlso PPV5.CurrentBlip.Alpha = 0 Then
-                    PPV5.CurrentBlip.Alpha = 255
-                    If PPV5.IsPersistent = False Then PPV5.IsPersistent = True
+                If Not PPV10 = Nothing AndAlso PPV10.CurrentBlip.Alpha = 0 Then
+                    PPV10.CurrentBlip.Alpha = 255
+                    If PPV10.IsPersistent = False Then PPV10.IsPersistent = True
                 End If
-                If Not PPV6 = Nothing AndAlso PPV6.CurrentBlip.Alpha = 0 Then
-                    PPV6.CurrentBlip.Alpha = 255
-                    If PPV6.IsPersistent = False Then PPV6.IsPersistent = True
+                If Not PPV11 = Nothing AndAlso PPV11.CurrentBlip.Alpha = 0 Then
+                    PPV11.CurrentBlip.Alpha = 255
+                    If PPV11.IsPersistent = False Then PPV11.IsPersistent = True
                 End If
-                If Not PPV7 = Nothing AndAlso PPV7.CurrentBlip.Alpha = 0 Then
-                    PPV7.CurrentBlip.Alpha = 255
-                    If PPV7.IsPersistent = False Then PPV7.IsPersistent = True
+                If Not MPV10 = Nothing AndAlso MPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If MPV10.ClassType = VehicleClass.Boats Then
+                        MPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf MPV10.ClassType = VehicleClass.Helicopters Then
+                        MPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf MPV10.ClassType = VehicleClass.Utility
+                        MPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf MPV10.ClassType = VehicleClass.Planes Then
+                        MPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf MPV10.ClassType = VehicleClass.Military Then
+                        MPV10.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        MPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    MPV10.CurrentBlip.Color = BlipColor.Blue
+                    SetBlipName(MPV10.FriendlyName, MPV10.CurrentBlip)
                 End If
-                If Not PPV8 = Nothing AndAlso PPV8.CurrentBlip.Alpha = 0 Then
-                    PPV8.CurrentBlip.Alpha = 255
-                    If PPV8.IsPersistent = False Then PPV8.IsPersistent = True
+                If Not FPV10 = Nothing AndAlso FPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If FPV10.ClassType = VehicleClass.Boats Then
+                        FPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf FPV10.ClassType = VehicleClass.Helicopters Then
+                        FPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf FPV10.ClassType = VehicleClass.Utility
+                        FPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf FPV10.ClassType = VehicleClass.Planes Then
+                        FPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf FPV10.ClassType = VehicleClass.Military Then
+                        FPV10.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        FPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    FPV10.CurrentBlip.Color = BlipColor.Green
+                    SetBlipName(FPV10.FriendlyName, FPV10.CurrentBlip)
                 End If
-                If Not PPV9 = Nothing AndAlso PPV9.CurrentBlip.Alpha = 0 Then
-                    PPV9.CurrentBlip.Alpha = 255
-                    If PPV9.IsPersistent = False Then PPV9.IsPersistent = True
+                If Not TPV10 = Nothing AndAlso TPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If TPV10.ClassType = VehicleClass.Boats Then
+                        TPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf TPV10.ClassType = VehicleClass.Helicopters Then
+                        TPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf TPV10.ClassType = VehicleClass.Utility
+                        TPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf TPV10.ClassType = VehicleClass.Planes Then
+                        TPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf TPV10.ClassType = VehicleClass.Military Then
+                        TPV10.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        TPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    TPV10.CurrentBlip.Color = 17
+                    SetBlipName(TPV10.FriendlyName, TPV10.CurrentBlip)
                 End If
-                If Not PPV = Nothing AndAlso PPV.CurrentBlip.Alpha = 0 Then
-                    PPV.CurrentBlip.Alpha = 255
-                    If PPV.IsPersistent = False Then PPV.IsPersistent = True
+                If Not PPV10 = Nothing AndAlso PPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If PPV10.ClassType = VehicleClass.Boats Then
+                        PPV10.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf PPV10.ClassType = VehicleClass.Helicopters Then
+                        PPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf PPV10.ClassType = VehicleClass.Utility
+                        PPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf PPV10.ClassType = VehicleClass.Planes Then
+                        PPV10.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf PPV10.ClassType = VehicleClass.Military Then
+                        PPV10.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        PPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    PPV10.CurrentBlip.Color = BlipColor.Yellow
+                    SetBlipName(PPV10.FriendlyName, PPV10.CurrentBlip)
                 End If
-                If Not MPV = Nothing AndAlso MPV.CurrentBlip.Sprite = BlipSprite.Standard Then
+                If Not MPV11 = Nothing AndAlso MPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If MPV11.ClassType = VehicleClass.Boats Then
+                        MPV11.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf MPV11.ClassType = VehicleClass.Helicopters Then
+                        MPV11.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf MPV11.ClassType = VehicleClass.Utility
+                        MPV11.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf MPV11.ClassType = VehicleClass.Planes Then
+                        MPV11.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf MPV11.ClassType = VehicleClass.Military Then
+                        MPV11.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        MPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    MPV11.CurrentBlip.Color = BlipColor.Blue
+                    SetBlipName(MPV11.FriendlyName, MPV11.CurrentBlip)
+                End If
+                If Not FPV11 = Nothing AndAlso FPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If FPV11.ClassType = VehicleClass.Boats Then
+                        FPV11.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf FPV11.ClassType = VehicleClass.Helicopters Then
+                        FPV11.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf FPV11.ClassType = VehicleClass.Utility
+                        FPV11.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf FPV11.ClassType = VehicleClass.Planes Then
+                        FPV11.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf FPV11.ClassType = VehicleClass.Military Then
+                        FPV11.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        FPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    FPV11.CurrentBlip.Color = BlipColor.Green
+                    SetBlipName(FPV11.FriendlyName, FPV11.CurrentBlip)
+                End If
+                If Not TPV11 = Nothing AndAlso TPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If TPV11.ClassType = VehicleClass.Boats Then
+                        TPV11.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf TPV11.ClassType = VehicleClass.Helicopters Then
+                        TPV11.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf TPV11.ClassType = VehicleClass.Utility
+                        TPV11.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf TPV11.ClassType = VehicleClass.Planes Then
+                        TPV11.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf TPV11.ClassType = VehicleClass.Military Then
+                        TPV11.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        TPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    TPV11.CurrentBlip.Color = 17
+                    SetBlipName(TPV11.FriendlyName, TPV11.CurrentBlip)
+                End If
+                If Not PPV11 = Nothing AndAlso PPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
+                    If PPV11.ClassType = VehicleClass.Boats Then
+                        PPV11.CurrentBlip.Sprite = BlipSprite.Boat
+                    ElseIf PPV11.ClassType = VehicleClass.Helicopters Then
+                        PPV11.CurrentBlip.Sprite = BlipSprite.Helicopter
+                    ElseIf PPV11.ClassType = VehicleClass.Utility
+                        PPV11.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
+                    ElseIf PPV11.ClassType = VehicleClass.Planes Then
+                        PPV11.CurrentBlip.Sprite = BlipSprite.Plane
+                    ElseIf PPV11.ClassType = VehicleClass.Military Then
+                        PPV11.CurrentBlip.Sprite = BlipSprite.Tank
+                    Else
+                        PPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    End If
+                    PPV11.CurrentBlip.Color = BlipColor.Yellow
+                    SetBlipName(PPV11.FriendlyName, PPV11.CurrentBlip)
+                End If
+            End If
 
-                    If MPV.ClassType = VehicleClass.Boats Then
-                        MPV.CurrentBlip.Sprite = BlipSprite.Boat
-                    ElseIf MPV.ClassType = VehicleClass.Helicopters Then
-                        MPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                    ElseIf MPV.ClassType = VehicleClass.Utility
-                        MPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                    ElseIf MPV.ClassType = VehicleClass.Planes Then
-                        MPV.CurrentBlip.Sprite = BlipSprite.Plane
-                    ElseIf MPV.ClassType = VehicleClass.Military Then
-                        MPV.CurrentBlip.Sprite = BlipSprite.Tank
-                    Else
-                        MPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    End If
-                    MPV.CurrentBlip.Color = BlipColor.Blue
-                    SetBlipName(MPV.FriendlyName, MPV.CurrentBlip)
-                End If
-                If Not FPV = Nothing AndAlso FPV.CurrentBlip.Sprite = BlipSprite.Standard Then
-                    If FPV.ClassType = VehicleClass.Boats Then
-                        FPV.CurrentBlip.Sprite = BlipSprite.Boat
-                    ElseIf FPV.ClassType = VehicleClass.Helicopters Then
-                        FPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                    ElseIf FPV.ClassType = VehicleClass.Utility
-                        FPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                    ElseIf FPV.ClassType = VehicleClass.Planes Then
-                        FPV.CurrentBlip.Sprite = BlipSprite.Plane
-                    ElseIf FPV.ClassType = VehicleClass.Military Then
-                        FPV.CurrentBlip.Sprite = BlipSprite.Tank
-                    Else
-                        FPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    End If
-                    FPV.CurrentBlip.Color = BlipColor.Green
-                    SetBlipName(FPV.FriendlyName, FPV.CurrentBlip)
-                End If
-                If Not TPV = Nothing AndAlso TPV.CurrentBlip.Sprite = BlipSprite.Standard Then
-                    If TPV.ClassType = VehicleClass.Boats Then
-                        TPV.CurrentBlip.Sprite = BlipSprite.Boat
-                    ElseIf TPV.ClassType = VehicleClass.Helicopters Then
-                        TPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                    ElseIf TPV.ClassType = VehicleClass.Utility
-                        TPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                    ElseIf TPV.ClassType = VehicleClass.Planes Then
-                        TPV.CurrentBlip.Sprite = BlipSprite.Plane
-                    ElseIf TPV.ClassType = VehicleClass.Military Then
-                        TPV.CurrentBlip.Sprite = BlipSprite.Tank
-                    Else
-                        TPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    End If
-                    TPV.CurrentBlip.Color = 17
-                    SetBlipName(TPV.FriendlyName, TPV.CurrentBlip)
-                End If
-                If Not PPV = Nothing AndAlso PPV.CurrentBlip.Sprite = BlipSprite.Standard Then
-                    If PPV.ClassType = VehicleClass.Boats Then
-                        PPV.CurrentBlip.Sprite = BlipSprite.Boat
-                    ElseIf PPV.ClassType = VehicleClass.Helicopters Then
-                        PPV.CurrentBlip.Sprite = BlipSprite.Helicopter
-                    ElseIf PPV.ClassType = VehicleClass.Utility
-                        PPV.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
-                    ElseIf PPV.ClassType = VehicleClass.Planes Then
-                        PPV.CurrentBlip.Sprite = BlipSprite.Plane
-                    ElseIf PPV.ClassType = VehicleClass.Military Then
-                        PPV.CurrentBlip.Sprite = BlipSprite.Tank
-                    Else
-                        PPV.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    End If
-                    PPV.CurrentBlip.Color = BlipColor.Yellow
-                    SetBlipName(PPV.FriendlyName, PPV.CurrentBlip)
-                End If
+            If Not MPVVB10 = Nothing AndAlso World.GetDistance(playerPed.Position, MPVV10) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", MPVF10)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", MPVF10)
+                MPV10 = CreateVehicle(VehicleModel, VehicleHash, MPVV10)
+                MPV10.PlaceOnGround()
+                MPV10.AddBlip()
+                MPV10.CurrentBlip.Sprite = MPVVB10.Sprite
+                MPV10.CurrentBlip.Color = BlipColor.Blue
+                MPV10.CurrentBlip.Name = MPV10.FriendlyName
+                SetModKit(MPV10, MPVF10)
+                MPVVB10.Remove()
+                MPVF10 = Nothing
             End If
-            If Not MPV = Nothing AndAlso World.GetDistance(playerPed.Position, MPV.Position) < 50.0 Then
-                MPV.FreezePosition = False
-            ElseIf Not MPV = Nothing AndAlso World.GetDistance(playerPed.Position, MPV.Position) > 50.0 Then
-                MPV.FreezePosition = True
+            If Not FPVVB10 = Nothing AndAlso World.GetDistance(playerPed.Position, FPVV10) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", FPVF10)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", FPVF10)
+                FPV10 = CreateVehicle(VehicleModel, VehicleHash, FPVV10)
+                FPV10.PlaceOnGround()
+                FPV10.AddBlip()
+                FPV10.CurrentBlip.Sprite = FPVVB10.Sprite
+                FPV10.CurrentBlip.Color = BlipColor.Green
+                FPV10.CurrentBlip.Name = FPV10.FriendlyName
+                SetModKit(FPV10, FPVF10)
+                FPVVB10.Remove()
+                FPVF10 = Nothing
             End If
-            If Not FPV = Nothing AndAlso World.GetDistance(playerPed.Position, FPV.Position) < 50.0 Then
-                FPV.FreezePosition = False
-            ElseIf Not FPV = Nothing AndAlso World.GetDistance(playerPed.Position, FPV.Position) > 50.0 Then
-                FPV.FreezePosition = True
+            If Not TPVVB10 = Nothing AndAlso World.GetDistance(playerPed.Position, TPVV10) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", TPVF10)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", TPVF10)
+                TPV10 = CreateVehicle(VehicleModel, VehicleHash, TPVV10)
+                TPV10.PlaceOnGround()
+                TPV10.AddBlip()
+                TPV10.CurrentBlip.Sprite = TPVVB10.Sprite
+                TPV10.CurrentBlip.Color = 17
+                TPV10.CurrentBlip.Name = TPV10.FriendlyName
+                SetModKit(TPV10, TPVF10)
+                TPVVB10.Remove()
+                TPVF10 = Nothing
             End If
-            If Not TPV = Nothing AndAlso World.GetDistance(playerPed.Position, TPV.Position) < 50.0 Then
-                TPV.FreezePosition = False
-            ElseIf Not TPV = Nothing AndAlso World.GetDistance(playerPed.Position, TPV.Position) > 50.0 Then
-                TPV.FreezePosition = True
+            If Not PPVVB10 = Nothing AndAlso World.GetDistance(playerPed.Position, PPVV10) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", PPVF10)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", PPVF10)
+                PPV10 = CreateVehicle(VehicleModel, VehicleHash, PPVV10)
+                PPV10.PlaceOnGround()
+                PPV10.AddBlip()
+                PPV10.CurrentBlip.Sprite = PPVVB10.Sprite
+                PPV10.CurrentBlip.Color = BlipColor.Yellow
+                PPV10.CurrentBlip.Name = PPV10.FriendlyName
+                SetModKit(PPV10, PPVF10)
+                PPVVB10.Remove()
+                PPVF10 = Nothing
             End If
-            If Not PPV = Nothing AndAlso World.GetDistance(playerPed.Position, PPV.Position) < 50.0 Then
-                PPV.FreezePosition = False
-            ElseIf Not PPV = Nothing AndAlso World.GetDistance(playerPed.Position, PPV.Position) > 50.0 Then
-                PPV.FreezePosition = True
+            If Not MPVVB11 = Nothing AndAlso World.GetDistance(playerPed.Position, MPVV11) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", MPVF11)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", MPVF11)
+                MPV11 = CreateVehicle(VehicleModel, VehicleHash, MPVV11)
+                MPV11.PlaceOnGround()
+                MPV11.AddBlip()
+                MPV11.CurrentBlip.Sprite = MPVVB11.Sprite
+                MPV11.CurrentBlip.Color = BlipColor.Blue
+                MPV11.CurrentBlip.Name = MPV11.FriendlyName
+                SetModKit(MPV11, MPVF11)
+                MPVVB11.Remove()
+                MPVF11 = Nothing
+            End If
+            If Not FPVVB11 = Nothing AndAlso World.GetDistance(playerPed.Position, FPVV11) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", FPVF11)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", FPVF11)
+                FPV11 = CreateVehicle(VehicleModel, VehicleHash, FPVV11)
+                FPV11.PlaceOnGround()
+                FPV11.AddBlip()
+                FPV11.CurrentBlip.Sprite = FPVVB11.Sprite
+                FPV11.CurrentBlip.Color = BlipColor.Green
+                FPV11.CurrentBlip.Name = FPV11.FriendlyName
+                SetModKit(FPV11, FPVF11)
+                FPVVB11.Remove()
+                FPVF11 = Nothing
+            End If
+            If Not TPVVB11 = Nothing AndAlso World.GetDistance(playerPed.Position, TPVV11) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", TPVF11)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", TPVF11)
+                TPV11 = CreateVehicle(VehicleModel, VehicleHash, TPVV11)
+                TPV11.PlaceOnGround()
+                TPV11.AddBlip()
+                TPV11.CurrentBlip.Sprite = TPVVB11.Sprite
+                TPV11.CurrentBlip.Color = 17
+                TPV11.CurrentBlip.Name = TPV11.FriendlyName
+                SetModKit(TPV11, TPVF11)
+                TPVVB11.Remove()
+                TPVF11 = Nothing
+            End If
+            If Not PPVVB11 = Nothing AndAlso World.GetDistance(playerPed.Position, PPVV11) < 50.0 Then
+                Dim VehicleModel As String = ReadCfgValue("VehicleModel", PPVF11)
+                Dim VehicleHash As Integer = ReadCfgValue("VehicleHash", PPVF11)
+                PPV11 = CreateVehicle(VehicleModel, VehicleHash, PPVV11)
+                PPV11.PlaceOnGround()
+                PPV11.AddBlip()
+                PPV11.CurrentBlip.Sprite = PPVVB11.Sprite
+                PPV11.CurrentBlip.Color = BlipColor.Yellow
+                PPV11.CurrentBlip.Name = PPV11.FriendlyName
+                SetModKit(PPV11, PPVF11)
+                PPVVB11.Remove()
+                PPVF11 = Nothing
             End If
 
             If Native.Function.Call(Of Integer)(Hash.GET_CLOCK_HOURS) = 2 AndAlso Native.Function.Call(Of Integer)(Hash.GET_CLOCK_MINUTES) = 0 AndAlso Native.Function.Call(Of Integer)(Hash.GET_CLOCK_SECONDS) = 0 Then
@@ -1154,27 +944,24 @@ Public Class Mechanic2
             End If
 
             If Not MechanicPed = Nothing AndAlso My.Settings.VehicleSpawn = 1 Then
-                If MechanicPed.Position.DistanceTo(playerPed.Position) < 5.0 AndAlso MechanicPed.IsInVehicle Then
-                    MechanicPed.Task.LeaveVehicle()
-                    MechanicPed.AlwaysKeepTask = False
-                ElseIf MechanicPed.Position.DistanceTo(playerPed.Position) < 10.0 AndAlso Not MechanicPed.IsInVehicle Then
-                    MechanicPed.Task.RunTo(World.GetNextPositionOnSidewalk(playerPed.Position.Around(100.0)))
-                ElseIf MechanicPed.Position.DistanceTo(playerPed.Position) > 500.0 Then
-                    MechanicPed.Delete()
+                If MechanicPed.Position.DistanceTo(playerPed.Position) < 5.0 Then
+                    If MechanicPed.IsInVehicle Then
+                        MechanicPed.Task.LeaveVehicle()
+                    Else
+                        MechanicPed.Task.RunTo(World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)), False)
+                        If MechanicPed.Position.DistanceTo(playerPed.Position) > 100.0 Then MechanicPed.Delete()
+                    End If
                 End If
             End If
-
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                If Not MechanicPed = Nothing Then MechanicPed.Delete()
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not MechanicPed = Nothing Then MechanicPed.Delete()
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

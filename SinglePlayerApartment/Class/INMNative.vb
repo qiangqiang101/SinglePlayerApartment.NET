@@ -8,7 +8,8 @@ Namespace INMNative
 
     Public Class Apartment
 
-        Private _cost As Integer
+        Private _cost, _interiorID, _radio As Integer
+        Private _radioRoomList As List(Of String) = New List(Of String)
         Private _owner, _name, _desc, _unit, _grgpath, _savefile, _playermap, _ipl, _lastipl As String
         Private _aptblip, _grgblip As Blip
         Private _entrance, _save, _telin, _telout, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot As Vector3
@@ -348,12 +349,27 @@ Namespace INMNative
             End Set
         End Property
 
+        Public Property InteriorID() As Integer
+            Get
+                Return _interiorID
+            End Get
+            Set(value As Integer)
+                _interiorID = value
+            End Set
+        End Property
+
+        Public Shared Function GetInteriorID(interior As Vector3) As Integer
+            Return Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, interior.X, interior.Y, interior.Z)
+        End Function
+
         Public Sub SetInteriorActive()
             Try
-                Dim interiorID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, Interior.X, Interior.Y, Interior.Z)
-                Native.Function.Call(Hash._0x2CA429C029CCF247, New InputArgument() {interiorID})
-                Native.Function.Call(Hash.SET_INTERIOR_ACTIVE, interiorID, True)
-                Native.Function.Call(Hash.DISABLE_INTERIOR, interiorID, False)
+                Dim intID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, Interior.X, Interior.Y, Interior.Z)
+                Native.Function.Call(Hash._0x2CA429C029CCF247, New InputArgument() {intID})
+                Native.Function.Call(Hash.SET_INTERIOR_ACTIVE, intID, True)
+                Native.Function.Call(Hash.DISABLE_INTERIOR, intID, False)
+                'InteriorID = intID
+                If Not intID = 0 AndAlso Not SinglePlayerApartment.InteriorIDList.Contains(intID) Then SinglePlayerApartment.InteriorIDList.Add(intID)
             Catch ex As Exception
                 logger.Log(ex.Message & " " & ex.StackTrace)
             End Try
@@ -580,127 +596,6 @@ Namespace INMNative
         End Sub
 
     End Class
-
-    'Public Class Transform
-
-    '    Public Position As Vector3
-    '    Public Rotation As Vector3
-
-    '    Public Sub New()
-    '    End Sub
-
-    '    Public Sub New(pos As Vector3, rot As Vector3)
-    '        Position = pos
-    '        Rotation = rot
-    '    End Sub
-
-    '    Public Function Clone() As Transform
-    '        Return New Transform With {.Position = Position, .Rotation = Rotation}
-    '    End Function
-
-    'End Class
-
-    'Friend Class AnimatedCameraScript
-    '    Inherits Script
-
-    '    Public Shared prevPos As Transform = New Transform
-    '    Public Shared splineCamera As Camera = Nothing
-
-    '    Public Sub New()
-    '        World.DestroyAllCameras()
-    '        RecreateCam()
-    '        AddHandler Tick, New EventHandler(AddressOf OnTick)
-    '    End Sub
-
-    '    Public Shared Sub AddNode(ByVal transform As Transform, ByVal time As Integer)
-    '        AddNode(transform.Position, transform.Rotation, time)
-    '    End Sub
-
-    '    Public Shared Sub AddNode(ByVal position As Vector3, ByVal rotation As Vector3, ByVal time As Integer)
-    '        Dim arguments As InputArgument() = New InputArgument() {splineCamera.Handle, position.X, position.Y, position.Z, rotation.X, rotation.Y, rotation.Z, time, 3, 2}
-    '        Native.Function.Call(Hash._0x8609C75EC438FB3B, arguments)
-    '    End Sub
-
-    '    Private Sub OnTick(ByVal sender As Object, ByVal e As EventArgs)
-    '        If (World.RenderingCamera.Handle = -1) Then
-    '            prevPos.Position = GameplayCamera.Position
-    '            prevPos.Rotation = GameplayCamera.Rotation
-    '        Else
-    '            prevPos.Position = World.RenderingCamera.Position
-    '            prevPos.Rotation = World.RenderingCamera.Rotation
-    '        End If
-    '    End Sub
-
-    '    Public Shared Sub BeginNodes()
-    '        RecreateCam()
-    '        Dim arguments As InputArgument() = New InputArgument() {splineCamera.Handle, prevPos.Position.X, prevPos.Position.Y, prevPos.Position.Z, prevPos.Rotation.X, prevPos.Rotation.Y, prevPos.Rotation.Z, 0, 3, 2}
-    '        Native.Function.Call(Hash._0x8609C75EC438FB3B, arguments)
-    '    End Sub
-
-    '    Public Shared Sub CameraShake(ByVal shake As CameraShake, ByVal intensity As Single)
-    '        splineCamera.Shake(shake, intensity)
-    '    End Sub
-
-    '    Public Shared Sub DisableCamera()
-    '        World.RenderingCamera = Nothing
-    '    End Sub
-
-    '    Public Shared Sub EnableCamera()
-    '        World.RenderingCamera = splineCamera
-    '    End Sub
-
-    '    Public Shared Sub RecreateCam()
-    '        If (Not splineCamera Is Nothing) Then
-    '            splineCamera.Destroy()
-    '        End If
-    '        Dim arguments As InputArgument() = New InputArgument() {"DEFAULT_SPLINE_CAMERA", 1}
-    '        splineCamera = New Camera(Native.Function.Call(Of Integer)(Hash._0xC3981DCE61D9E13F, arguments))
-    '        Dim argumentArray2 As InputArgument() = New InputArgument() {splineCamera.Handle, prevPos.Position.X, prevPos.Position.Y, prevPos.Position.Z, prevPos.Rotation.X, prevPos.Rotation.Y, prevPos.Rotation.Z, GameplayCamera.FieldOfView, 0, 2, 2, 2}
-    '        Native.Function.Call(Hash._0xBFD8727AEA3CCEBA, argumentArray2)
-    '        splineCamera.MotionBlurStrength = 1.0!
-    '        splineCamera.FieldOfView = GameplayCamera.FieldOfView
-    '        splineCamera.DepthOfFieldStrength = 100.0!
-    '        splineCamera.NearDepthOfField = 1.0!
-    '        splineCamera.FarDepthOfField = 0.01!
-    '        Dim argumentArray3 As InputArgument() = New InputArgument() {splineCamera.Handle, 0!, 0!, 0!, 10.0!}
-    '        Native.Function.Call(Hash._0x3CF48F6F96E749DC, argumentArray3)
-    '    End Sub
-
-    '    Public Shared Sub SetPrevPosition(ByVal transform As Transform)
-    '        prevPos = transform.Clone
-    '    End Sub
-
-    '    Public Shared Sub TransitionToCamera(ByVal cam As Camera, ByVal time As Integer, ByVal Optional easeType As Integer = 3)
-    '        Dim arguments As InputArgument() = New InputArgument() {splineCamera.Handle, cam.Handle, time, easeType}
-    '        Native.Function.Call(Hash._0x0A9F2A468B328E74, arguments)
-    '    End Sub
-
-    '    Public Shared Sub TransitionToPoint(ByVal transform As Transform, ByVal time As Integer)
-    '        TransitionToPoint(transform.Position, transform.Rotation, time)
-    '    End Sub
-
-    '    Public Shared Sub TransitionToPoint(ByVal position As Vector3, ByVal rotation As Vector3, ByVal time As Integer)
-    '        RecreateCam()
-    '        Dim arguments As InputArgument() = New InputArgument() {splineCamera.Handle, prevPos.Position.X, prevPos.Position.Y, prevPos.Position.Z, prevPos.Rotation.X, prevPos.Rotation.Y, prevPos.Rotation.Z, 0, 3, 2}
-    '        Native.Function.Call(Hash._0x8609C75EC438FB3B, arguments)
-    '        Dim argumentArray2 As InputArgument() = New InputArgument() {splineCamera.Handle, position.X, position.Y, position.Z, rotation.X, rotation.Y, rotation.Z, time, 3, 2}
-    '        Native.Function.Call(Hash._0x8609C75EC438FB3B, argumentArray2)
-    '    End Sub
-
-    '    Public Shared Sub TransitionToPointList(ByVal transforms As Transform(), ByVal gaps As Integer, ByVal Optional transitionType As Integer = 0, ByVal Optional smoothStart As Boolean = False)
-    '        RecreateCam()
-
-    '        If smoothStart Then
-    '            Dim arguments As InputArgument() = New InputArgument() {splineCamera.Handle, prevPos.Position.X, prevPos.Position.Y, prevPos.Position.Z, prevPos.Rotation.X, prevPos.Rotation.Y, prevPos.Rotation.Z, 0, 3, 5}
-    '            Native.Function.Call(Hash._0x8609C75EC438FB3B, arguments)
-    '        End If
-    '        Dim i As Integer
-    '        For i = 0 To transforms.Length - 1
-    '            Dim argumentArray2 As InputArgument() = New InputArgument() {splineCamera.Handle, transforms(i).Position.X, transforms(i).Position.Y, transforms(i).Position.Z, transforms(i).Rotation.X, transforms(i).Rotation.Y, transforms(i).Rotation.Z, (gaps * i), 3, transitionType}
-    '            Native.Function.Call(Hash._0x8609C75EC438FB3B, argumentArray2)
-    '        Next i
-    '    End Sub
-    'End Class
 
     Public Enum INMBlipColor
         White = 0

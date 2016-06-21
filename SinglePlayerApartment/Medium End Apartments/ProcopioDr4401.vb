@@ -34,7 +34,6 @@ Public Class ProcopioDr4401
             Apartment.CameraRotation = New Vector3(-6.942835, 0, -170.2991)
             Apartment.CameraFOV = 50.0
             Apartment.WardrobeHeading = 200.6809
-            Apartment.IsAtHome = False
             Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4401_procopio_dr\"
             Apartment.SaveFile = "4401PDowner"
             Apartment.PlayerMap = "4401ProcopioDr"
@@ -218,7 +217,6 @@ Public Class ProcopioDr4401
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
-                Apartment.IsAtHome = False
                 MediumEndLastLocationName = Nothing
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
@@ -238,7 +236,6 @@ Public Class ProcopioDr4401
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                Apartment.IsAtHome = False
                 MediumEndLastLocationName = Nothing
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
@@ -310,7 +307,6 @@ Public Class ProcopioDr4401
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                Apartment.IsAtHome = True
                 MediumEndLastLocationName = Apartment.Name & Apartment.Unit
 
                 Apartment.SetInteriorActive()
@@ -328,7 +324,6 @@ Public Class ProcopioDr4401
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
-            Apartment.IsAtHome = True
 
             Game.FadeScreenOut(500)
             Wait(&H3E8)
@@ -360,7 +355,6 @@ Public Class ProcopioDr4401
             If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            Apartment.IsAtHome = True
             MediumEndLastLocationName = Apartment.Name & Apartment.Unit
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
@@ -576,13 +570,6 @@ Public Class ProcopioDr4401
                     End If
                 End If
 
-                If Apartment.IsAtHome Then
-                    Resources.Disable_Controls()
-                    Brain.BrainEnable = True
-                Else
-                    Brain.BrainEnable = False
-                End If
-
                 _menuPool.ProcessMenus()
             End If
         Catch ex As Exception
@@ -590,13 +577,11 @@ Public Class ProcopioDr4401
         End Try
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
-                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+            If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

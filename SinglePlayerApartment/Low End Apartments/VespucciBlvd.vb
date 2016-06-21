@@ -35,7 +35,6 @@ Public Class VespucciBlvd
             Apartment.CameraRotation = New Vector3(5.2089, -2.1432, 152.9055)
             Apartment.CameraFOV = 50.0
             Apartment.WardrobeHeading = 359.818
-            Apartment.IsAtHome = False
             Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\vespucci_blvd\"
             Apartment.SaveFile = "VPBowner"
             Apartment.PlayerMap = "VespucciBlvd"
@@ -219,7 +218,6 @@ Public Class VespucciBlvd
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
-                Apartment.IsAtHome = False
                 LowEndLastLocationName = Nothing
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
@@ -239,7 +237,6 @@ Public Class VespucciBlvd
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                Apartment.IsAtHome = False
                 LowEndLastLocationName = Nothing
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
@@ -311,7 +308,6 @@ Public Class VespucciBlvd
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                Apartment.IsAtHome = True
                 LowEndLastLocationName = Apartment.Name & Apartment.Unit
 
                 Apartment.SetInteriorActive()
@@ -329,7 +325,6 @@ Public Class VespucciBlvd
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
-            Apartment.IsAtHome = True
 
             Game.FadeScreenOut(500)
             Script.Wait(&H3E8)
@@ -357,7 +352,6 @@ Public Class VespucciBlvd
             If IO.File.Exists(Apartment.GaragePath & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_4.cfg") Else VehPlate4 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_5.cfg") Else VehPlate5 = "0"
 
-            Apartment.IsAtHome = True
             LowEndLastLocationName = Apartment.Name & Apartment.Unit
             SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
             Apartment.SetInteriorActive()
@@ -529,13 +523,6 @@ Public Class VespucciBlvd
                     End If
                 End If
 
-                If Apartment.IsAtHome Then
-                    Resources.Disable_Controls()
-                    Brain.BrainEnable = True
-                Else
-                    Brain.BrainEnable = False
-                End If
-
                 _menuPool.ProcessMenus()
             End If
         Catch ex As Exception
@@ -543,13 +530,11 @@ Public Class VespucciBlvd
         End Try
     End Sub
 
-    Protected Overrides Sub Dispose(A_0 As Boolean)
-        If (A_0) Then
-            Try
-                If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
-                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
-            Catch ex As Exception
-            End Try
-        End If
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
+            If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+        Catch ex As Exception
+        End Try
     End Sub
 End Class

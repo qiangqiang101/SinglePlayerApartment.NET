@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Drawing
+Imports System.Windows.Forms
 Imports GTA
 Imports SinglePlayerApartment.SinglePlayerApartment
 
@@ -6,6 +7,7 @@ Public Class Z
     Inherits Script
 
     Private ReloadScripts As Boolean = False
+    Private ReloadTimer As Timer
 
     Public Sub New()
         Try
@@ -168,10 +170,11 @@ Public Class Z
                     WriteCfgValue("PBowner", ReadCfgValue("PBowner", OldSave3), MySave)
                     WriteCfgValue("GAowner", ReadCfgValue("GAowner", OldSave3), MySave)
                     IO.File.Delete(OldSave3)
-
-                    'Reload Scripts
-                    ReloadScripts = True
                 End If
+
+                'Reload Scripts
+                ReloadTimer = New Timer(8000)
+                ReloadTimer.Start()
             End If
 
             If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then EclipseTower.CreateEclipseTower()
@@ -214,28 +217,6 @@ Public Class Z
             If ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then PaletoBlvd.CreatePaletoBlvd()
             If ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then GrapeseedAve.CreateGrapeseedAve()
             LoadPosition()
-
-            'If System.IO.File.Exists(Application.StartupPath & "\scripts\SinglePlayerApartment\spa.key") Then
-            '    Dim F2S As String = Nothing
-            '    Using textReader As New System.IO.StreamReader(Application.StartupPath & "\scripts\SinglePlayerApartment\spa.key")
-            '        F2S = textReader.ReadToEnd
-            '    End Using
-            '    If Resources.Decode(F2S) <> Game.Player.Name Then
-            '        Dim IE As SHDocVw.InternetExplorer = New SHDocVw.InternetExplorer()
-            '        IE.Navigate("http://notmental.ml/spa/")
-            '        IE.ToolBar = 0
-            '        IE.AddressBar = False
-            '        IE.Visible = True
-            '        IE.Silent = True
-            '    End If
-            'Else
-            '    Dim IE As SHDocVw.InternetExplorer = New SHDocVw.InternetExplorer()
-            '    IE.Navigate("http://notmental.ml/spa/")
-            '    IE.ToolBar = 0
-            '    IE.AddressBar = False
-            '    IE.Visible = True
-            '    IE.Silent = True
-            'End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -243,11 +224,20 @@ Public Class Z
 
     Public Sub OnTick(o As Object, e As EventArgs) Handles MyBase.Tick
         Try
-            If ReloadScripts Then
-                Resources.DrawText("Single Player Apartment Save Files Created or Updated, Please press Insert(INS) key to take effect.", New System.Drawing.PointF(Game.ScreenResolution.Width / 2, Game.ScreenResolution.Height / 2), 0.8, System.Drawing.Color.White, Resources.GTAFont.Title, Resources.GTAFontAlign.Center, Resources.GTAFontStyleOptions.DropShadow)
+            If ReloadTimer.Enabled Then
+                If Game.GameTime > ReloadTimer.Waiter Then
+                    ReloadTimer.Enabled = False
+                    ReloadScripts = True
+                    Process.Start("http://www2.imnotmental.xyz/guide/single-player-apartment-chinese-readme/")
+                    Process.Start("http://www2.imnotmental.xyz/guide/single-player-apartment-english-readme/")
+                End If
             End If
 
-            If Game.MissionFlag Or Game.Player.WantedLevel > 1 Then
+            If ReloadScripts Then
+                UI.Notify("Single Player Apartment save file has been created or updated successfully, please ~y~RELOAD ~w~scripts to take effect. (Insert key by default)")
+            End If
+
+            If Game.MissionFlag Or Game.Player.WantedLevel > 0 Then
                 If Not _3AltaStreet.Apartment.AptBlip Is Nothing Then _3AltaStreet.Apartment.AptBlip.Alpha = 0
                 If Not _3AltaStreet.Apartment.GrgBlip Is Nothing Then _3AltaStreet.Apartment.GrgBlip.Alpha = 0
                 If Not _4IntegrityWay.Apartment.AptBlip Is Nothing Then _4IntegrityWay.Apartment.AptBlip.Alpha = 0
@@ -266,8 +256,8 @@ Public Class Z
                 If Not HillcrestAve2862.Apartment.GrgBlip Is Nothing Then HillcrestAve2862.Apartment.GrgBlip.Alpha = 0
                 If Not HillcrestAve2868.Apartment.AptBlip Is Nothing Then HillcrestAve2868.Apartment.AptBlip.Alpha = 0
                 If Not HillcrestAve2868.Apartment.GrgBlip Is Nothing Then HillcrestAve2868.Apartment.GrgBlip.Alpha = 0
-                If Not HillcrestAve2874.Apartment.AptBlip Is Nothing Then HillcrestAve2874.Apartment.AptBlip.Alpha = 0
-                If Not HillcrestAve2874.Apartment.GrgBlip Is Nothing Then HillcrestAve2874.Apartment.GrgBlip.Alpha = 0
+                If Not HillcrestAve2874._Apartment.AptBlip Is Nothing Then HillcrestAve2874._Apartment.AptBlip.Alpha = 0
+                If Not HillcrestAve2874._Apartment.GrgBlip Is Nothing Then HillcrestAve2874._Apartment.GrgBlip.Alpha = 0
                 If Not MadWayne2113.Apartment.AptBlip Is Nothing Then MadWayne2113.Apartment.AptBlip.Alpha = 0
                 If Not MadWayne2113.Apartment.GrgBlip Is Nothing Then MadWayne2113.Apartment.GrgBlip.Alpha = 0
                 If Not MiltonRd2117.Apartment.AptBlip Is Nothing Then MiltonRd2117.Apartment.AptBlip.Alpha = 0
@@ -345,8 +335,8 @@ Public Class Z
                 If Not HillcrestAve2862.Apartment.GrgBlip Is Nothing Then HillcrestAve2862.Apartment.GrgBlip.Alpha = 255
                 If Not HillcrestAve2868.Apartment.AptBlip Is Nothing Then HillcrestAve2868.Apartment.AptBlip.Alpha = 255
                 If Not HillcrestAve2868.Apartment.GrgBlip Is Nothing Then HillcrestAve2868.Apartment.GrgBlip.Alpha = 255
-                If Not HillcrestAve2874.Apartment.AptBlip Is Nothing Then HillcrestAve2874.Apartment.AptBlip.Alpha = 255
-                If Not HillcrestAve2874.Apartment.GrgBlip Is Nothing Then HillcrestAve2874.Apartment.GrgBlip.Alpha = 255
+                If Not HillcrestAve2874._Apartment.AptBlip Is Nothing Then HillcrestAve2874._Apartment.AptBlip.Alpha = 255
+                If Not HillcrestAve2874._Apartment.GrgBlip Is Nothing Then HillcrestAve2874._Apartment.GrgBlip.Alpha = 255
                 If Not MadWayne2113.Apartment.AptBlip Is Nothing Then MadWayne2113.Apartment.AptBlip.Alpha = 255
                 If Not MadWayne2113.Apartment.GrgBlip Is Nothing Then MadWayne2113.Apartment.GrgBlip.Alpha = 255
                 If Not MiltonRd2117.Apartment.AptBlip Is Nothing Then MiltonRd2117.Apartment.AptBlip.Alpha = 255

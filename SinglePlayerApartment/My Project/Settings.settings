@@ -182,5 +182,11 @@
     <Setting Name="SecondMechanicPad" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">223</Value>
     </Setting>
+    <Setting Name="RadioStation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RADIO_01_CLASS_ROCK</Value>
+    </Setting>
+    <Setting Name="RefreshGrgVehs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

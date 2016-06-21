@@ -7,22 +7,34 @@ Imports SinglePlayerApartment.Resources
 Public Class Brain
     Inherits Script
 
-    Public Shared Bong, Whiskey, WhiskeyGlass, Wine, WineGlass, Wheat, Shower, Radio, TV As Prop
+    Public Shared Bong, Whiskey, WhiskeyGlass, Wine, WineGlass, Wheat, Shower, TV As Prop
     Public Shared BongPosition, WhiskeyPosition, WhiskeyGlassPosition, WinePosition, WineGlassPosition, WheatPosition, ShowerPosition As Vector3
     Public Shared BongRotation, WhiskeyRotation, WhiskeyGlassRotation, WineRotation, WineGlassRotation, WheatRotation, ShowerRotation As Vector3
     Public Shared DrunkStage As Integer = 1
-    Public Shared BrainEnable As Boolean = False
 
     '<-- TV -->
     Public Shared TVModels As List(Of Model) = New List(Of Model) From {1036195894, 777010715, -1073182005, 1653710254, 170618079, -897601557, -1546399138, -1223496606, -1820646534}
     Public Shared rendertargetid As Integer
-    Public Shared TVOn As Boolean = False
+    Public Shared TVOn As Boolean = False, SubtitleOn As Boolean = False
     Public Shared TV_Volume As Integer = 0
-    Public Shared TV_Channel As Integer = 0
+    Public Shared TV_Channel As Integer
+    Public Shared TVChannelList As List(Of Integer) = New List(Of Integer) From {0, 1}
+    Public Shared TVCamera As Camera
     '<-- TV -->
     '<-- Radio -->
-    Public Shared RadioModels As List(Of Model) = New List(Of Model) From {2079380440}
+    Public Shared RadioModels As List(Of Model) = New List(Of Model) From {2079380440, -627813781, 1729911864, -1999188639}
+    Public Shared RadioRoomsList As List(Of String) = New List(Of String) From {
+        "SE_DLC_APT_Stilts_A_Bedroom", "SE_DLC_APT_Stilts_A_Heist_Room", "SE_DLC_APT_Stilts_A_Living_Room", "SE_DLC_APT_Stilts_B_Bedroom", "SE_DLC_APT_Stilts_B_Heist_Room", "SE_DLC_APT_Stilts_B_Living_Room",
+        "SE_DLC_APT_Custom_Bedroom", "SE_DLC_APT_Custom_Heist_Room", "SE_DLC_APT_Custom_Living_Room", "SE_MP_GARAGE_L_RADIO", "SE_MP_AP_RAD_v_studio_lo_living", "SE_MP_AP_RAD_v_apart_midspaz_lounge", "SE_MP_APT_1_1",
+        "SE_MP_APT_1_2", "SE_MP_APT_1_3", "SE_MP_APT_2_1", "SE_MP_APT_2_2", "SE_MP_APT_2_3", "SE_MP_APT_3_1", "SE_MP_APT_3_2", "SE_MP_APT_3_3", "SE_MP_APT_4_1", "SE_MP_APT_4_2", "SE_MP_APT_4_3", "SE_MP_APT_NEW_4_1",
+        "SE_MP_APT_NEW_4_2", "SE_MP_APT_NEW_4_3", "SE_MP_APT_5_1", "SE_MP_APT_5_2", "SE_MP_APT_5_3", "SE_MP_APT_6_1", "SE_MP_APT_6_2", "SE_MP_APT_6_3", "SE_MP_APT_7_1", "SE_MP_APT_7_2", "SE_MP_APT_7_3", "SE_MP_APT_8_1",
+        "SE_MP_APT_8_2", "SE_MP_APT_8_3", "SE_MP_APT_NEW_1_1", "SE_MP_APT_NEW_1_2", "SE_MP_APT_NEW_1_3", "SE_MP_APT_9_1", "SE_MP_APT_9_2", "SE_MP_APT_9_3", "SE_MP_APT_10_1", "SE_MP_APT_10_2", "SE_MP_APT_10_3",
+        "SE_MP_APT_11_1", "SE_MP_APT_11_2", "SE_MP_APT_11_3", "SE_MP_APT_12_1", "SE_MP_APT_12_2", "SE_MP_APT_12_3", "SE_MP_APT_13_1", "SE_MP_APT_13_2", "SE_MP_APT_13_3", "SE_MP_APT_NEW_5_1", "SE_MP_APT_NEW_5_2",
+        "SE_MP_APT_NEW_5_3", "SE_MP_APT_14_1", "SE_MP_APT_14_2", "SE_MP_APT_14_3", "SE_MP_APT_15_1", "SE_MP_APT_15_2", "SE_MP_APT_15_3", "SE_MP_APT_NEW_2_1", "SE_MP_APT_NEW_2_2", "SE_MP_APT_NEW_2_3", "SE_MP_APT_16_1",
+        "SE_MP_APT_16_2", "SE_MP_APT_16_3", "SE_MP_APT_17_1", "SE_MP_APT_17_2", "SE_MP_APT_17_3", "SE_MP_APT_NEW_3_1", "SE_MP_APT_NEW_3_2", "SE_MP_APT_NEW_3_3", "SE_MP_GARAGE_M_RADIO"}
     'prop_mp3_dock  -627813781
+    Public Shared RadioTaskScriptStatus As Integer = -1
+    Public Shared RadioOn As Boolean = True
     '<-- Radio -->
     '<-- Bong -->
     Public Shared BongModels As List(Of Model) = New List(Of Model) From {-257549932}
@@ -55,7 +67,7 @@ Public Class Brain
     '<-- Shower -->
 
     'Translate
-    Public Shared _Bong, _Whiskey, _Wine, _Wheat, _Shower, _TVOn, _TVOff As String
+    Public Shared _Bong, _Whiskey, _Wine, _Wheat, _Shower, _TVOn, _TVOff, _RadioSwitchStation, _TVChannel As String
 
     Public Shared a_d0, a_d1, a_d2, a_d3, a_d4, a_d5, a_d6, a_d7, a_d8, a_d9, a_d10, a_d11, a_t0, a_t1, a_t2, a_t3, a_t4, a_t5, a_t6, a_t7, a_t8, a_t9, a_t10, a_t11, b_d0, b_d1, b_d2, b_t0, b_t1, b_t2 As Integer
     Public Shared drunkTimer As Timer
@@ -69,36 +81,16 @@ Public Class Brain
         Try
             _TVOn = ReadCfgValue("TVOn", langFile)
             _TVOff = ReadCfgValue("TVOff", langFile)
+            _TVChannel = _TVOff & "~n~" & ReadCfgValue("TVChannel", langFile)
             _Bong = ReadCfgValue("Bong", langFile)
             _Whiskey = ReadCfgValue("Whiskey", langFile)
             _Wine = ReadCfgValue("Wine", langFile)
             _Wheat = ReadCfgValue("Wheat", langFile)
             _Shower = ReadCfgValue("Shower", langFile)
+            _RadioSwitchStation = ReadCfgValue("Radio", langFile)
             drunkTimer = New Timer(60000)
 
             AddHandler Tick, AddressOf OnTick
-        Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
-        End Try
-    End Sub
-
-    Public Shared Sub UpdateGarageRadio(Station As RadioStation)
-        Try
-            Dim arguments As InputArgument() = New InputArgument(2 - 1) {}
-            arguments(0) = "SE_MP_GARAGE_S_RADIO"
-            Dim argumentArray2 As InputArgument() = New InputArgument() {Station}
-            arguments(1) = Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, argumentArray2)
-            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, arguments)
-            Dim argumentArray3 As InputArgument() = New InputArgument(2 - 1) {}
-            argumentArray3(0) = "SE_MP_GARAGE_M_RADIO"
-            Dim argumentArray4 As InputArgument() = New InputArgument() {Station}
-            argumentArray3(1) = Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, argumentArray4)
-            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, argumentArray3)
-            Dim argumentArray5 As InputArgument() = New InputArgument(2 - 1) {}
-            argumentArray5(0) = "SE_MP_GARAGE_L_RADIO"
-            Dim argumentArray6 As InputArgument() = New InputArgument() {Station}
-            argumentArray5(1) = Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, argumentArray6)
-            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, argumentArray5)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -407,6 +399,8 @@ Public Class Brain
                         Wait(7000)
                         '
                         'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                        PlayPTFXLoop("core", "ent_amb_shower", -60, 0, Shower.Position)
+                        PlayPTFXLoop("core", "ent_amb_shower_steam", -60, 0, Shower.Position)
                         '
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
                         Wait(9000)
@@ -444,6 +438,8 @@ Public Class Brain
                         Wait(7000)
                         '
                         'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                        PlayPTFXLoop("core", "ent_amb_shower", -60, 0, Shower.Position)
+                        PlayPTFXLoop("core", "ent_amb_shower_steam", -60, 0, Shower.Position)
                         '
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
                         Wait(9000)
@@ -480,6 +476,8 @@ Public Class Brain
                         Wait(7000)
                         '
                         'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                        PlayPTFXLoop("core", "ent_amb_shower", -60, 0, Shower.Position)
+                        PlayPTFXLoop("core", "ent_amb_shower_steam", -60, 0, Shower.Position)
                         '
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
                         Wait(9000)
@@ -518,6 +516,8 @@ Public Class Brain
                             Wait(7000)
                             '
                             'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                            PlayPTFXLoop("core", "ent_amb_shower", -60, 0, Shower.Position)
+                            PlayPTFXLoop("core", "ent_amb_shower_steam", -60, 0, Shower.Position)
                             '
                             TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_enter_into_idle", -1)
                             Wait(9000)
@@ -555,6 +555,8 @@ Public Class Brain
                             Wait(7000)
                             '
                             'Need Help Here I can't find the Asset for "ent_amb_shower" and "ent_amb_shower_steam".
+                            PlayPTFXLoop("core", "ent_amb_shower", -60, 0, Shower.Position)
+                            PlayPTFXLoop("core", "ent_amb_shower_steam", -60, 0, Shower.Position)
                             '
                             TaskPlayAnim(playerPed, "mp_safehouseshower@female@", "shower_enter_into_idle", -1)
                             Wait(9000)
@@ -664,6 +666,30 @@ Public Class Brain
         End Try
     End Sub
 
+    Public Shared Sub RadioOnTick()
+        Try
+            Dim nearbyProps As Prop() = World.GetNearbyProps(Game.Player.Character.Position, 3.0)
+            For i As Integer = 0 To nearbyProps.Length - 1
+                If ((((RadioTaskScriptStatus = -1) AndAlso Not playerPed.IsInVehicle) AndAlso (RadioModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 1.5)))) Then
+                    DisplayHelpTextThisFrame(_RadioSwitchStation)
+                    If Game.IsControlJustPressed(0, GTA.Control.VehicleRadioWheel) Then
+                        RadioTaskScriptStatus = 0
+                    ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                        RadioOn = Not RadioOn
+                    End If
+                End If
+            Next i
+            Select Case RadioTaskScriptStatus
+                Case 0
+                    If Game.IsControlJustReleased(0, GTA.Control.VehicleRadioWheel) Then
+                        RadioTaskScriptStatus = -1
+                    End If
+            End Select
+        Catch ex As Exception
+            'logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
     Public Shared Sub TVOnTick()
         Try
             Dim nearbyProps As Prop() = World.GetNearbyProps(Game.Player.Character.Position, 3.0)
@@ -680,18 +706,35 @@ Public Class Brain
                             Native.Function.Call(Hash.LINK_NAMED_RENDERTARGET, TV.Model)
                             rendertargetid = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, "tvscreen")
                         End If
+                        Dim r As Random = New Random()
+                        TV_Channel = r.Next(2)
                         Native.Function.Call(Hash.SET_TV_CHANNEL, TV_Channel)
                         Native.Function.Call(Hash.SET_TV_VOLUME, TV_Volume)
                         TVOn = True
                     End If
                 ElseIf ((((TVOn = True) AndAlso Not playerPed.IsInVehicle) AndAlso (TVModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 2.0)))) Then
-                    DisplayHelpTextThisFrame(_TVOff)
+                    DisplayHelpTextThisFrame(_TVChannel)
                     If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                         Wait(1000)
                         If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "tvscreen") Then
                             Native.Function.Call(Hash.RELEASE_NAMED_RENDERTARGET, "tvscreen")
                         End If
                         TVOn = False
+                    ElseIf Game.IsControlJustPressed(0, GTA.Control.VehicleRadioWheel) Then
+                        Select Case TV_Channel
+                            Case 0
+                                TV_Channel = 1
+                            Case 1
+                                TV_Channel = 0
+                        End Select
+                        Native.Function.Call(Hash.SET_TV_CHANNEL, TV_Channel)
+                        TVOn = True
+                    ElseIf Game.IsControlJustPressed(0, GTA.Control.Jump) AndAlso SubtitleOn = False Then
+                        Native.Function.Call(Hash.ENABLE_MOVIE_SUBTITLES, True)
+                        SubtitleOn = True
+                    ElseIf Game.IsControlJustPressed(0, GTA.Control.Jump) AndAlso SubtitleOn = True Then
+                        Native.Function.Call(Hash.ENABLE_MOVIE_SUBTITLES, False)
+                        SubtitleOn = False
                     End If
                 End If
             Next i
@@ -773,14 +816,14 @@ Public Class Brain
             MichaelHouseDistance = World.GetDistance(playerPed.Position, MichaelHouseVector)
             FranklinHouseDistance = World.GetDistance(playerPed.Position, FranklinHouseVector)
 
-            If MichaelHouseDistance > 50.0 AndAlso FranklinHouseDistance > 50.0 Then
+            If (MichaelHouseDistance > 50.0 AndAlso FranklinHouseDistance > 50.0) AndAlso InteriorIDList.Contains(playerInterior) Then
                 BongOnTick()
                 WhiskeyOnTick()
                 WineOnTick()
                 WheatOnTick()
                 ShowerOnTick()
                 TVOnTick()
-                'UpdateGarageRadio(RadioStation.NonStopPopFM)
+                RadioOnTick()
             End If
 
             If drunkTimer.Enabled Then
@@ -798,7 +841,6 @@ Public Class Brain
                 Native.Function.Call(Hash.SET_TEXT_RENDER_ID, rendertargetid)
                 Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
                 Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
-                Native.Function.Call(Hash.ENABLE_MOVIE_SUBTITLES, True)
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

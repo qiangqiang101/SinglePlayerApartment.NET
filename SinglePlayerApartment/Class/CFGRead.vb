@@ -1,4 +1,4 @@
-﻿Module CFGread
+﻿Public Module CFGread
     Public Function ReadCfgValue(ByVal key As String, ByVal file As String) As String
         Dim lines As String() = IO.File.ReadAllLines(file)
         Dim temp As String = Nothing
