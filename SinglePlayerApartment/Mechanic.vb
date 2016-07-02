@@ -2014,7 +2014,7 @@ Public Class Mechanic
                 Else
                     MPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                MPV10.CurrentBlip.Color = BlipColor.Blue
+                MPV10.CurrentBlip.Color = BlipColor2.Michael
                 SetBlipName(MPV10.FriendlyName, MPV10.CurrentBlip)
                 Mechanic2.SetModKit(MPV10, PegasusSelectedVehicleFile)
                 If Not (MPV10.ClassType = VehicleClass.Boats Or MPV10.ClassType = VehicleClass.Helicopters Or MPV10.ClassType = VehicleClass.Planes) Then
@@ -2024,7 +2024,7 @@ Public Class Mechanic
                         MPVV10 = MPV10.Position
                         MPVVB10 = World.CreateBlip(MPVV10)
                         MPVVB10.Sprite = MPV10.CurrentBlip.Sprite
-                        MPVVB10.Color = BlipColor.Blue
+                        MPVVB10.Color = BlipColor2.Michael
                         MPVVB10.Name = MPV10.FriendlyName
                         MPVF10 = PegasusSelectedVehicleFile
                         MPV10.Delete()
@@ -2058,7 +2058,7 @@ Public Class Mechanic
                 Else
                     FPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                FPV10.CurrentBlip.Color = BlipColor.Green
+                FPV10.CurrentBlip.Color = BlipColor2.Franklin
                 SetBlipName(FPV10.FriendlyName, FPV10.CurrentBlip)
                 Mechanic2.SetModKit(FPV10, PegasusSelectedVehicleFile)
                 If Not (FPV10.ClassType = VehicleClass.Boats Or FPV10.ClassType = VehicleClass.Helicopters Or FPV10.ClassType = VehicleClass.Planes) Then
@@ -2068,7 +2068,7 @@ Public Class Mechanic
                         FPVV10 = FPV10.Position
                         FPVVB10 = World.CreateBlip(FPVV10)
                         FPVVB10.Sprite = FPV10.CurrentBlip.Sprite
-                        FPVVB10.Color = BlipColor.Green
+                        FPVVB10.Color = BlipColor2.Franklin
                         FPVVB10.Name = FPV10.FriendlyName
                         FPVF10 = PegasusSelectedVehicleFile
                         FPV10.Delete()
@@ -2102,7 +2102,7 @@ Public Class Mechanic
                 Else
                     TPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
-                TPV10.CurrentBlip.Color = 17
+                TPV10.CurrentBlip.Color = BlipColor2.Trevor
                 SetBlipName(TPV10.FriendlyName, TPV10.CurrentBlip)
                 Mechanic2.SetModKit(TPV10, PegasusSelectedVehicleFile)
                 If Not (TPV10.ClassType = VehicleClass.Boats Or TPV10.ClassType = VehicleClass.Helicopters Or TPV10.ClassType = VehicleClass.Planes) Then
@@ -2112,7 +2112,7 @@ Public Class Mechanic
                         TPVV10 = TPV10.Position
                         TPVVB10 = World.CreateBlip(TPVV10)
                         TPVVB10.Sprite = TPV10.CurrentBlip.Sprite
-                        TPVVB10.Color = 17
+                        TPVVB10.Color = BlipColor2.Trevor
                         TPVVB10.Name = TPV10.FriendlyName
                         TPVF10 = PegasusSelectedVehicleFile
                         TPV10.Delete()

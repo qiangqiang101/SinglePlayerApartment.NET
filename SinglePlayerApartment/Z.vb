@@ -6,9 +6,6 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Public Class Z
     Inherits Script
 
-    Private ReloadScripts As Boolean = False
-    Private ReloadTimer As Timer
-
     Public Sub New()
         Try
             SinglePlayerApartment.player = Game.Player
@@ -81,102 +78,6 @@ Public Class Z
             CannotStore = ReadCfgValue("CannotStore", langFile)
             'End Language
 
-            'Save File Generate or Migration
-            If Not IO.File.Exists(Application.StartupPath & "\scripts\SinglePlayerApartment\MySave.cfg") Then
-                Dim MySave As String = Application.StartupPath & "\scripts\SinglePlayerApartment\MySave.cfg"
-                Dim OldSave1 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save.cfg"
-                Dim OldSave2 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save2.cfg"
-                Dim OldSave3 As String = Application.StartupPath & "\scripts\SinglePlayerApartment\save3.cfg"
-
-                'Create Save File
-                IO.File.WriteAllText(MySave, My.Resources.MySave)
-
-                'Migrate Save1
-                If IO.File.Exists(OldSave1) Then
-                    WriteCfgValue("3ASowner", ReadCfgValue("3ASowner", OldSave1), MySave)
-                    WriteCfgValue("4IWowner", ReadCfgValue("4IWowner", OldSave1), MySave)
-                    WriteCfgValue("DPHwoner", ReadCfgValue("DPHwoner", OldSave1), MySave)
-                    WriteCfgValue("DPHHLowner", ReadCfgValue("DPHHLowner", OldSave1), MySave)
-                    WriteCfgValue("ETowner", ReadCfgValue("ETowner", OldSave1), MySave)
-                    WriteCfgValue("4IWHLowner", ReadCfgValue("4IWHLowner", OldSave1), MySave)
-                    WriteCfgValue("ETHLowner", ReadCfgValue("ETHLowner", OldSave1), MySave)
-                    WriteCfgValue("RMHLowner", ReadCfgValue("RMHLowner", OldSave1), MySave)
-                    WriteCfgValue("TTHLowner", ReadCfgValue("TTHLowner", OldSave1), MySave)
-                    WriteCfgValue("RMowner", ReadCfgValue("RMowner", OldSave1), MySave)
-                    WriteCfgValue("SSowner", ReadCfgValue("SSowner", OldSave1), MySave)
-                    WriteCfgValue("TTowner", ReadCfgValue("TTowner", OldSave1), MySave)
-                    WriteCfgValue("WPowner", ReadCfgValue("WPowner", OldSave1), MySave)
-                    WriteCfgValue("MlastInterior", ReadCfgValue("MlastInterior", OldSave1), MySave)
-                    WriteCfgValue("MlastPosX", ReadCfgValue("MlastPosX", OldSave1), MySave)
-                    WriteCfgValue("MlastPosY", ReadCfgValue("MlastPosY", OldSave1), MySave)
-                    WriteCfgValue("MlastPosZ", ReadCfgValue("MlastPosZ", OldSave1), MySave)
-                    WriteCfgValue("FlastInterior", ReadCfgValue("FlastInterior", OldSave1), MySave)
-                    WriteCfgValue("FlastPosX", ReadCfgValue("FlastPosX", OldSave1), MySave)
-                    WriteCfgValue("FlastPosY", ReadCfgValue("FlastPosY", OldSave1), MySave)
-                    WriteCfgValue("FlastPosZ", ReadCfgValue("FlastPosZ", OldSave1), MySave)
-                    WriteCfgValue("TlastInterior", ReadCfgValue("TlastInterior", OldSave1), MySave)
-                    WriteCfgValue("TlastPosX", ReadCfgValue("TlastPosX", OldSave1), MySave)
-                    WriteCfgValue("TlastPosY", ReadCfgValue("TlastPosY", OldSave1), MySave)
-                    WriteCfgValue("TlastPosZ", ReadCfgValue("TlastPosZ", OldSave1), MySave)
-                    WriteCfgValue("3lastInterior", ReadCfgValue("3lastInterior", OldSave1), MySave)
-                    WriteCfgValue("3lastPosX", ReadCfgValue("3lastPosX", OldSave1), MySave)
-                    WriteCfgValue("3lastPosY", ReadCfgValue("3lastPosY", OldSave1), MySave)
-                    WriteCfgValue("3lastPosZ", ReadCfgValue("3lastPosZ", OldSave1), MySave)
-                    IO.File.Delete(OldSave1)
-                End If
-
-                'Migrate Save2
-                If IO.File.Exists(OldSave2) Then
-                    WriteCfgValue("VPBowner", ReadCfgValue("VPBowner", OldSave2), MySave)
-                    WriteCfgValue("2044NCowner", ReadCfgValue("2044NCowner", OldSave2), MySave)
-                    WriteCfgValue("2862HAowner", ReadCfgValue("2862HAowner", OldSave2), MySave)
-                    WriteCfgValue("2868HAowner", ReadCfgValue("2868HAowner", OldSave2), MySave)
-                    WriteCfgValue("3655WODowner", ReadCfgValue("3655WODowner", OldSave2), MySave)
-                    WriteCfgValue("2045NCowner", ReadCfgValue("2045NCowner", OldSave2), MySave)
-                    WriteCfgValue("2117MRowner", ReadCfgValue("2117MRowner", OldSave2), MySave)
-                    WriteCfgValue("2874HAowner", ReadCfgValue("2874HAowner", OldSave2), MySave)
-                    WriteCfgValue("3677WMDowner", ReadCfgValue("3677WMDowner", OldSave2), MySave)
-                    WriteCfgValue("2113MWTowner", ReadCfgValue("2113MWTowner", OldSave2), MySave)
-                    WriteCfgValue("ETP1owner", ReadCfgValue("ETP1owner", OldSave2), MySave)
-                    WriteCfgValue("ETP2owner", ReadCfgValue("ETP2owner", OldSave2), MySave)
-                    WriteCfgValue("ETP3owner", ReadCfgValue("ETP3owner", OldSave2), MySave)
-                    WriteCfgValue("ETP1ipl", ReadCfgValue("ETP1ipl", OldSave2), MySave)
-                    WriteCfgValue("ETP2ipl", ReadCfgValue("ETP2ipl", OldSave2), MySave)
-                    WriteCfgValue("ETP3ipl", ReadCfgValue("ETP3ipl", OldSave2), MySave)
-                    IO.File.Delete(OldSave2)
-                End If
-
-                'Migrate Save3
-                If IO.File.Exists(OldSave3) Then
-                    WriteCfgValue("CAowner", ReadCfgValue("CAowner", OldSave3), MySave)
-                    WriteCfgValue("BCAowner", ReadCfgValue("BCAowner", OldSave3), MySave)
-                    WriteCfgValue("0184MRowner", ReadCfgValue("0184MRowner", OldSave3), MySave)
-                    WriteCfgValue("0325SRDowner", ReadCfgValue("0325SRDowner", OldSave3), MySave)
-                    WriteCfgValue("SMMowner", ReadCfgValue("SMMowner", OldSave3), MySave)
-                    WriteCfgValue("0604LLBowner", ReadCfgValue("0604LLBowner", OldSave3), MySave)
-                    WriteCfgValue("SAonwer", ReadCfgValue("SAonwer", OldSave3), MySave)
-                    WriteCfgValue("BDPowner", ReadCfgValue("BDPowner", OldSave3), MySave)
-                    WriteCfgValue("PSowner", ReadCfgValue("PSowner", OldSave3), MySave)
-                    WriteCfgValue("PPSowner", ReadCfgValue("PPSowner", OldSave3), MySave)
-                    WriteCfgValue("SVSowner", ReadCfgValue("SVSowner", OldSave3), MySave)
-                    WriteCfgValue("2143LLBowner", ReadCfgValue("2143LLBowner", OldSave3), MySave)
-                    WriteCfgValue("TRowner", ReadCfgValue("TRowner", OldSave3), MySave)
-                    WriteCfgValue("HAowner", ReadCfgValue("HAowner", OldSave3), MySave)
-                    WriteCfgValue("SRowner", ReadCfgValue("SRowner", OldSave3), MySave)
-                    WriteCfgValue("4401PDowner", ReadCfgValue("4401PDowner", OldSave3), MySave)
-                    WriteCfgValue("4584PDowner", ReadCfgValue("4584PDowner", OldSave3), MySave)
-                    WriteCfgValue("0112SRDowner", ReadCfgValue("0112SRDowner", OldSave3), MySave)
-                    WriteCfgValue("ZAowner", ReadCfgValue("ZAowner", OldSave3), MySave)
-                    WriteCfgValue("PBowner", ReadCfgValue("PBowner", OldSave3), MySave)
-                    WriteCfgValue("GAowner", ReadCfgValue("GAowner", OldSave3), MySave)
-                    IO.File.Delete(OldSave3)
-                End If
-
-                'Reload Scripts
-                ReloadTimer = New Timer(8000)
-                ReloadTimer.Start()
-            End If
-
             If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then EclipseTower.CreateEclipseTower()
             If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then _3AltaStreet.Create3AltaStreet()
             If ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then _4IntegrityWay.Create4IntegrityWay()
@@ -224,19 +125,6 @@ Public Class Z
 
     Public Sub OnTick(o As Object, e As EventArgs) Handles MyBase.Tick
         Try
-            If ReloadTimer.Enabled Then
-                If Game.GameTime > ReloadTimer.Waiter Then
-                    ReloadTimer.Enabled = False
-                    ReloadScripts = True
-                    Process.Start("http://www2.imnotmental.xyz/guide/single-player-apartment-chinese-readme/")
-                    Process.Start("http://www2.imnotmental.xyz/guide/single-player-apartment-english-readme/")
-                End If
-            End If
-
-            If ReloadScripts Then
-                UI.Notify("Single Player Apartment save file has been created or updated successfully, please ~y~RELOAD ~w~scripts to take effect. (Insert key by default)")
-            End If
-
             If Game.MissionFlag Or Game.Player.WantedLevel > 0 Then
                 If Not _3AltaStreet.Apartment.AptBlip Is Nothing Then _3AltaStreet.Apartment.AptBlip.Alpha = 0
                 If Not _3AltaStreet.Apartment.GrgBlip Is Nothing Then _3AltaStreet.Apartment.GrgBlip.Alpha = 0
@@ -396,6 +284,8 @@ Public Class Z
                 If Not ZancudoAve.Apartment.AptBlip Is Nothing Then ZancudoAve.Apartment.AptBlip.Alpha = 255
                 If Not ZancudoAve.Apartment.GrgBlip Is Nothing Then ZancudoAve.Apartment.GrgBlip.Alpha = 255
             End If
+
+            'UI.ShowSubtitle(Native.Function.Call(Of Integer)(Native.Hash.GET_BLIP_COLOUR, Game.Player.Character.LastVehicle.CurrentBlip))
         Catch ex As Exception
         End Try
     End Sub

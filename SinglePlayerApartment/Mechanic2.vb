@@ -134,7 +134,7 @@ Public Class Mechanic2
             MPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             MPV1.AddBlip()
             MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-            MPV1.CurrentBlip.Color = BlipColor.Blue
+            MPV1.CurrentBlip.Color = BlipColor2.Michael
             MPV1.CurrentBlip.IsShortRange = True
             SetBlipName(MPV1.FriendlyName, MPV1.CurrentBlip)
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -146,7 +146,7 @@ Public Class Mechanic2
                 MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 MPV2.AddBlip()
                 MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                MPV2.CurrentBlip.Color = BlipColor.Blue
+                MPV2.CurrentBlip.Color = BlipColor2.Michael
                 MPV2.CurrentBlip.IsShortRange = True
                 SetBlipName(MPV2.FriendlyName, MPV2.CurrentBlip)
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -158,7 +158,7 @@ Public Class Mechanic2
                     MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     MPV3.AddBlip()
                     MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    MPV3.CurrentBlip.Color = BlipColor.Blue
+                    MPV3.CurrentBlip.Color = BlipColor2.Michael
                     MPV3.CurrentBlip.IsShortRange = True
                     SetBlipName(MPV3.FriendlyName, MPV3.CurrentBlip)
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -170,7 +170,7 @@ Public Class Mechanic2
                         MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         MPV4.AddBlip()
                         MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        MPV4.CurrentBlip.Color = BlipColor.Blue
+                        MPV4.CurrentBlip.Color = BlipColor2.Michael
                         MPV4.CurrentBlip.IsShortRange = True
                         SetBlipName(MPV4.FriendlyName, MPV4.CurrentBlip)
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -182,7 +182,7 @@ Public Class Mechanic2
                             MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             MPV0.AddBlip()
                             MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            MPV0.CurrentBlip.Color = BlipColor.Blue
+                            MPV0.CurrentBlip.Color = BlipColor2.Michael
                             MPV0.CurrentBlip.IsShortRange = True
                             SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -205,7 +205,7 @@ Public Class Mechanic2
             FPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             FPV1.AddBlip()
             FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-            FPV1.CurrentBlip.Color = BlipColor.Green
+            FPV1.CurrentBlip.Color = BlipColor2.Franklin
             FPV1.CurrentBlip.IsShortRange = True
             SetBlipName(FPV1.FriendlyName, FPV1.CurrentBlip)
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -217,7 +217,7 @@ Public Class Mechanic2
                 FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 FPV2.AddBlip()
                 FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                FPV2.CurrentBlip.Color = BlipColor.Green
+                FPV2.CurrentBlip.Color = BlipColor2.Franklin
                 FPV2.CurrentBlip.IsShortRange = True
                 SetBlipName(FPV2.FriendlyName, FPV2.CurrentBlip)
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -229,7 +229,7 @@ Public Class Mechanic2
                     FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     FPV3.AddBlip()
                     FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    FPV3.CurrentBlip.Color = BlipColor.Green
+                    FPV3.CurrentBlip.Color = BlipColor2.Franklin
                     FPV3.CurrentBlip.IsShortRange = True
                     SetBlipName(FPV3.FriendlyName, FPV3.CurrentBlip)
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -241,7 +241,7 @@ Public Class Mechanic2
                         FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         FPV4.AddBlip()
                         FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        FPV4.CurrentBlip.Color = BlipColor.Green
+                        FPV4.CurrentBlip.Color = BlipColor2.Franklin
                         FPV4.CurrentBlip.IsShortRange = True
                         SetBlipName(FPV4.FriendlyName, FPV4.CurrentBlip)
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -253,7 +253,7 @@ Public Class Mechanic2
                             FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             FPV0.AddBlip()
                             FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            FPV0.CurrentBlip.Color = BlipColor.Green
+                            FPV0.CurrentBlip.Color = BlipColor2.Franklin
                             FPV0.CurrentBlip.IsShortRange = True
                             SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -276,7 +276,7 @@ Public Class Mechanic2
             TPV1 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
             TPV1.AddBlip()
             TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-            TPV1.CurrentBlip.Color = 17
+            TPV1.CurrentBlip.Color = BlipColor2.Trevor
             TPV1.CurrentBlip.IsShortRange = True
             SetBlipName(TPV1.FriendlyName, TPV1.CurrentBlip)
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -288,7 +288,7 @@ Public Class Mechanic2
                 TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                 TPV2.AddBlip()
                 TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                TPV2.CurrentBlip.Color = 17
+                TPV2.CurrentBlip.Color = BlipColor2.Trevor
                 TPV2.CurrentBlip.IsShortRange = True
                 SetBlipName(TPV2.FriendlyName, TPV2.CurrentBlip)
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -300,7 +300,7 @@ Public Class Mechanic2
                     TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                     TPV3.AddBlip()
                     TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    TPV3.CurrentBlip.Color = 17
+                    TPV3.CurrentBlip.Color = BlipColor2.Trevor
                     TPV3.CurrentBlip.IsShortRange = True
                     SetBlipName(TPV3.FriendlyName, TPV3.CurrentBlip)
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -312,7 +312,7 @@ Public Class Mechanic2
                         TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                         TPV4.AddBlip()
                         TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        TPV4.CurrentBlip.Color = 17
+                        TPV4.CurrentBlip.Color = BlipColor2.Trevor
                         TPV4.CurrentBlip.IsShortRange = True
                         SetBlipName(TPV4.FriendlyName, TPV4.CurrentBlip)
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -324,7 +324,7 @@ Public Class Mechanic2
                             TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
                             TPV0.AddBlip()
                             TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            TPV0.CurrentBlip.Color = 17
+                            TPV0.CurrentBlip.Color = BlipColor2.Trevor
                             TPV0.CurrentBlip.IsShortRange = True
                             SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
                             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
@@ -709,7 +709,7 @@ Public Class Mechanic2
                     Else
                         MPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     End If
-                    MPV10.CurrentBlip.Color = BlipColor.Blue
+                    MPV10.CurrentBlip.Color = BlipColor2.Michael
                     SetBlipName(MPV10.FriendlyName, MPV10.CurrentBlip)
                 End If
                 If Not FPV10 = Nothing AndAlso FPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
@@ -726,7 +726,7 @@ Public Class Mechanic2
                     Else
                         FPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     End If
-                    FPV10.CurrentBlip.Color = BlipColor.Green
+                    FPV10.CurrentBlip.Color = BlipColor2.Franklin
                     SetBlipName(FPV10.FriendlyName, FPV10.CurrentBlip)
                 End If
                 If Not TPV10 = Nothing AndAlso TPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
@@ -743,7 +743,7 @@ Public Class Mechanic2
                     Else
                         TPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     End If
-                    TPV10.CurrentBlip.Color = 17
+                    TPV10.CurrentBlip.Color = BlipColor2.Trevor
                     SetBlipName(TPV10.FriendlyName, TPV10.CurrentBlip)
                 End If
                 If Not PPV10 = Nothing AndAlso PPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
@@ -777,7 +777,7 @@ Public Class Mechanic2
                     Else
                         MPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     End If
-                    MPV11.CurrentBlip.Color = BlipColor.Blue
+                    MPV11.CurrentBlip.Color = BlipColor2.Michael
                     SetBlipName(MPV11.FriendlyName, MPV11.CurrentBlip)
                 End If
                 If Not FPV11 = Nothing AndAlso FPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
@@ -794,7 +794,7 @@ Public Class Mechanic2
                     Else
                         FPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     End If
-                    FPV11.CurrentBlip.Color = BlipColor.Green
+                    FPV11.CurrentBlip.Color = BlipColor2.Franklin
                     SetBlipName(FPV11.FriendlyName, FPV11.CurrentBlip)
                 End If
                 If Not TPV11 = Nothing AndAlso TPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
@@ -811,7 +811,7 @@ Public Class Mechanic2
                     Else
                         TPV11.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     End If
-                    TPV11.CurrentBlip.Color = 17
+                    TPV11.CurrentBlip.Color = BlipColor2.Trevor
                     SetBlipName(TPV11.FriendlyName, TPV11.CurrentBlip)
                 End If
                 If Not PPV11 = Nothing AndAlso PPV11.CurrentBlip.Sprite = BlipSprite.Standard Then
@@ -840,7 +840,7 @@ Public Class Mechanic2
                 MPV10.PlaceOnGround()
                 MPV10.AddBlip()
                 MPV10.CurrentBlip.Sprite = MPVVB10.Sprite
-                MPV10.CurrentBlip.Color = BlipColor.Blue
+                MPV10.CurrentBlip.Color = BlipColor2.Michael
                 MPV10.CurrentBlip.Name = MPV10.FriendlyName
                 SetModKit(MPV10, MPVF10)
                 MPVVB10.Remove()
@@ -853,7 +853,7 @@ Public Class Mechanic2
                 FPV10.PlaceOnGround()
                 FPV10.AddBlip()
                 FPV10.CurrentBlip.Sprite = FPVVB10.Sprite
-                FPV10.CurrentBlip.Color = BlipColor.Green
+                FPV10.CurrentBlip.Color = BlipColor2.Franklin
                 FPV10.CurrentBlip.Name = FPV10.FriendlyName
                 SetModKit(FPV10, FPVF10)
                 FPVVB10.Remove()
@@ -866,7 +866,7 @@ Public Class Mechanic2
                 TPV10.PlaceOnGround()
                 TPV10.AddBlip()
                 TPV10.CurrentBlip.Sprite = TPVVB10.Sprite
-                TPV10.CurrentBlip.Color = 17
+                TPV10.CurrentBlip.Color = BlipColor2.Trevor
                 TPV10.CurrentBlip.Name = TPV10.FriendlyName
                 SetModKit(TPV10, TPVF10)
                 TPVVB10.Remove()
@@ -892,7 +892,7 @@ Public Class Mechanic2
                 MPV11.PlaceOnGround()
                 MPV11.AddBlip()
                 MPV11.CurrentBlip.Sprite = MPVVB11.Sprite
-                MPV11.CurrentBlip.Color = BlipColor.Blue
+                MPV11.CurrentBlip.Color = BlipColor2.Michael
                 MPV11.CurrentBlip.Name = MPV11.FriendlyName
                 SetModKit(MPV11, MPVF11)
                 MPVVB11.Remove()
@@ -905,7 +905,7 @@ Public Class Mechanic2
                 FPV11.PlaceOnGround()
                 FPV11.AddBlip()
                 FPV11.CurrentBlip.Sprite = FPVVB11.Sprite
-                FPV11.CurrentBlip.Color = BlipColor.Green
+                FPV11.CurrentBlip.Color = BlipColor2.Franklin
                 FPV11.CurrentBlip.Name = FPV11.FriendlyName
                 SetModKit(FPV11, FPVF11)
                 FPVVB11.Remove()
@@ -918,7 +918,7 @@ Public Class Mechanic2
                 TPV11.PlaceOnGround()
                 TPV11.AddBlip()
                 TPV11.CurrentBlip.Sprite = TPVVB11.Sprite
-                TPV11.CurrentBlip.Color = 17
+                TPV11.CurrentBlip.Color = BlipColor2.Trevor
                 TPV11.CurrentBlip.Name = TPV11.FriendlyName
                 SetModKit(TPV11, TPVF11)
                 TPVVB11.Remove()

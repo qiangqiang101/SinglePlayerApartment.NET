@@ -1,0 +1,10 @@
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\obj\Debug\SPAHelper.Resources.resources
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\obj\Debug\SPAHelper.vbproj.GenerateResource.Cache
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\obj\Debug\HelperSPA.xml
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\bin\Debug\HelperSPA.dll
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\bin\Debug\HelperSPA.pdb
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\bin\Debug\HelperSPA.xml
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\bin\Debug\ScriptHookVDotNet.dll
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\bin\Debug\ScriptHookVDotNet.xml
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\obj\Debug\HelperSPA.dll
+D:\GTAV Mods\SinglePlayerApartment\SPAHelper\obj\Debug\HelperSPA.pdb

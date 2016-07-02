@@ -9,6 +9,12 @@ Imports System.Media
 
 Public Class Resources
 
+    Public Enum BlipColor2
+        Franklin = 43
+        Michael = 42
+        Trevor = 44
+    End Enum
+
     Public Enum PedComponentsVars
         COMPONET_FACE = 0
         COMPONET_HEAD = 1

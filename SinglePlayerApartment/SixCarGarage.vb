@@ -600,7 +600,7 @@ Public Class SixCarGarage
                     Mechanic.MPV1.IsPersistent = True
                     Mechanic.MPV1.AddBlip()
                     Mechanic.MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.MPV1.CurrentBlip.Color = BlipColor.Blue
+                    Mechanic.MPV1.CurrentBlip.Color = BlipColor2.Michael
                     Mechanic.MPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.MPV1.FriendlyName, Mechanic.MPV1.CurrentBlip)
                     playerPed.SetIntoVehicle(Mechanic.MPV1, VehicleSeat.Driver)
@@ -611,7 +611,7 @@ Public Class SixCarGarage
                         Mechanic.MPV2.IsPersistent = True
                         Mechanic.MPV2.AddBlip()
                         Mechanic.MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.MPV2.CurrentBlip.Color = BlipColor.Blue
+                        Mechanic.MPV2.CurrentBlip.Color = BlipColor2.Michael
                         Mechanic.MPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.MPV2.FriendlyName, Mechanic.MPV2.CurrentBlip)
                         playerPed.SetIntoVehicle(Mechanic.MPV2, VehicleSeat.Driver)
@@ -622,7 +622,7 @@ Public Class SixCarGarage
                             Mechanic.MPV3.IsPersistent = True
                             Mechanic.MPV3.AddBlip()
                             Mechanic.MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.MPV3.CurrentBlip.Color = BlipColor.Blue
+                            Mechanic.MPV3.CurrentBlip.Color = BlipColor2.Michael
                             Mechanic.MPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.MPV3.FriendlyName, Mechanic.MPV3.CurrentBlip)
                             playerPed.SetIntoVehicle(Mechanic.MPV3, VehicleSeat.Driver)
@@ -633,7 +633,7 @@ Public Class SixCarGarage
                                 Mechanic.MPV4.IsPersistent = True
                                 Mechanic.MPV4.AddBlip()
                                 Mechanic.MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.MPV4.CurrentBlip.Color = BlipColor.Blue
+                                Mechanic.MPV4.CurrentBlip.Color = BlipColor2.Michael
                                 Mechanic.MPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.MPV4.FriendlyName, Mechanic.MPV4.CurrentBlip)
                                 playerPed.SetIntoVehicle(Mechanic.MPV4, VehicleSeat.Driver)
@@ -644,7 +644,7 @@ Public Class SixCarGarage
                                     Mechanic.MPV0.IsPersistent = True
                                     Mechanic.MPV0.AddBlip()
                                     Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.MPV0.CurrentBlip.Color = BlipColor.Blue
+                                    Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
                                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                                     playerPed.SetIntoVehicle(Mechanic.MPV0, VehicleSeat.Driver)
@@ -655,7 +655,7 @@ Public Class SixCarGarage
                                     Mechanic.MPV0.IsPersistent = True
                                     Mechanic.MPV0.AddBlip()
                                     Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.MPV0.CurrentBlip.Color = BlipColor.Blue
+                                    Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
                                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                                     playerPed.SetIntoVehicle(Mechanic.MPV0, VehicleSeat.Driver)
@@ -671,7 +671,7 @@ Public Class SixCarGarage
                     Mechanic.FPV1.IsPersistent = True
                     Mechanic.FPV1.AddBlip()
                     Mechanic.FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.FPV1.CurrentBlip.Color = BlipColor.Green
+                    Mechanic.FPV1.CurrentBlip.Color = BlipColor2.Franklin
                     Mechanic.FPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.FPV1.FriendlyName, Mechanic.FPV1.CurrentBlip)
                     playerPed.SetIntoVehicle(Mechanic.FPV1, VehicleSeat.Driver)
@@ -682,7 +682,7 @@ Public Class SixCarGarage
                         Mechanic.FPV2.IsPersistent = True
                         Mechanic.FPV2.AddBlip()
                         Mechanic.FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.FPV2.CurrentBlip.Color = BlipColor.Green
+                        Mechanic.FPV2.CurrentBlip.Color = BlipColor2.Franklin
                         Mechanic.FPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.FPV2.FriendlyName, Mechanic.FPV2.CurrentBlip)
                         playerPed.SetIntoVehicle(Mechanic.FPV2, VehicleSeat.Driver)
@@ -693,7 +693,7 @@ Public Class SixCarGarage
                             Mechanic.FPV3.IsPersistent = True
                             Mechanic.FPV3.AddBlip()
                             Mechanic.FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.FPV3.CurrentBlip.Color = BlipColor.Green
+                            Mechanic.FPV3.CurrentBlip.Color = BlipColor2.Franklin
                             Mechanic.FPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.FPV3.FriendlyName, Mechanic.FPV3.CurrentBlip)
                             playerPed.SetIntoVehicle(Mechanic.FPV3, VehicleSeat.Driver)
@@ -704,7 +704,7 @@ Public Class SixCarGarage
                                 Mechanic.FPV4.IsPersistent = True
                                 Mechanic.FPV4.AddBlip()
                                 Mechanic.FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.FPV4.CurrentBlip.Color = BlipColor.Green
+                                Mechanic.FPV4.CurrentBlip.Color = BlipColor2.Franklin
                                 Mechanic.FPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.FPV4.FriendlyName, Mechanic.FPV4.CurrentBlip)
                                 playerPed.SetIntoVehicle(Mechanic.FPV4, VehicleSeat.Driver)
@@ -716,7 +716,7 @@ Public Class SixCarGarage
                                     Mechanic.FPV0.IsPersistent = True
                                     Mechanic.FPV0.AddBlip()
                                     Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.FPV0.CurrentBlip.Color = BlipColor.Green
+                                    Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
                                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                                     playerPed.SetIntoVehicle(Mechanic.FPV0, VehicleSeat.Driver)
@@ -727,7 +727,7 @@ Public Class SixCarGarage
                                     Mechanic.FPV0.IsPersistent = True
                                     Mechanic.FPV0.AddBlip()
                                     Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.FPV0.CurrentBlip.Color = BlipColor.Green
+                                    Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
                                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                                     playerPed.SetIntoVehicle(Mechanic.FPV0, VehicleSeat.Driver)
@@ -743,7 +743,7 @@ Public Class SixCarGarage
                     Mechanic.TPV1.IsPersistent = True
                     Mechanic.TPV1.AddBlip()
                     Mechanic.TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.TPV1.CurrentBlip.Color = 17
+                    Mechanic.TPV1.CurrentBlip.Color = BlipColor2.Trevor
                     Mechanic.TPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.TPV1.FriendlyName, Mechanic.TPV1.CurrentBlip)
                     playerPed.SetIntoVehicle(Mechanic.TPV1, VehicleSeat.Driver)
@@ -754,7 +754,7 @@ Public Class SixCarGarage
                         Mechanic.TPV2.IsPersistent = True
                         Mechanic.TPV2.AddBlip()
                         Mechanic.TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.TPV2.CurrentBlip.Color = 17
+                        Mechanic.TPV2.CurrentBlip.Color = BlipColor2.Trevor
                         Mechanic.TPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.TPV2.FriendlyName, Mechanic.TPV2.CurrentBlip)
                         playerPed.SetIntoVehicle(Mechanic.TPV2, VehicleSeat.Driver)
@@ -765,7 +765,7 @@ Public Class SixCarGarage
                             Mechanic.TPV3.IsPersistent = True
                             Mechanic.TPV3.AddBlip()
                             Mechanic.TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.TPV3.CurrentBlip.Color = 17
+                            Mechanic.TPV3.CurrentBlip.Color = BlipColor2.Trevor
                             Mechanic.TPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.TPV3.FriendlyName, Mechanic.TPV3.CurrentBlip)
                             playerPed.SetIntoVehicle(Mechanic.TPV3, VehicleSeat.Driver)
@@ -776,7 +776,7 @@ Public Class SixCarGarage
                                 Mechanic.TPV4.IsPersistent = True
                                 Mechanic.TPV4.AddBlip()
                                 Mechanic.TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.TPV4.CurrentBlip.Color = 17
+                                Mechanic.TPV4.CurrentBlip.Color = BlipColor2.Trevor
                                 Mechanic.TPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.TPV4.FriendlyName, Mechanic.TPV4.CurrentBlip)
                                 playerPed.SetIntoVehicle(Mechanic.TPV4, VehicleSeat.Driver)
@@ -787,7 +787,7 @@ Public Class SixCarGarage
                                     Mechanic.TPV0.IsPersistent = True
                                     Mechanic.TPV0.AddBlip()
                                     Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.TPV0.CurrentBlip.Color = 17
+                                    Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
                                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                                     playerPed.SetIntoVehicle(Mechanic.TPV0, VehicleSeat.Driver)
@@ -798,7 +798,7 @@ Public Class SixCarGarage
                                     Mechanic.TPV0.IsPersistent = True
                                     Mechanic.TPV0.AddBlip()
                                     Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.TPV0.CurrentBlip.Color = 17
+                                    Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
                                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                                     playerPed.SetIntoVehicle(Mechanic.TPV0, VehicleSeat.Driver)

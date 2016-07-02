@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Single Player Apartment")>
+<Assembly: AssemblyTitle("Single Player Apartment Helper")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("Zettabyte Technology")>
-<Assembly: AssemblyProduct("Single Player Apartment")>
+<Assembly: AssemblyProduct("Single Player Apartment Helper")>
 <Assembly: AssemblyCopyright("Copyright © 2016 Zettabyte Technology")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("cba6ffb6-b1b6-4cf3-810c-af5f53246ee9")>
+<Assembly: Guid("ff756675-291c-4ed0-b3db-25a390741608")> 
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.7.3.0")>
-<Assembly: AssemblyFileVersion("1.7.3.0")>
+<Assembly: AssemblyVersion("1.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.0.0.0")> 
