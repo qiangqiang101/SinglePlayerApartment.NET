@@ -3,6 +3,7 @@ Imports GTA
 Imports GTA.Native
 Imports GTA.Math
 Imports System.Windows.Forms
+Imports SinglePlayerApartment.INMNative
 
 Public Class SinglePlayerApartment
     Inherits Script

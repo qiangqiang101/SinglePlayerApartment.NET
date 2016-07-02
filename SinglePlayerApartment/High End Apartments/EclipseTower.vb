@@ -7,6 +7,7 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
 Imports SinglePlayerApartment.INMNative
+Imports SinglePlayerApartment.Resources
 
 Public Class EclipseTower
     Inherits Script
@@ -1803,7 +1804,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1814,7 +1815,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1825,7 +1826,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1836,7 +1837,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1847,7 +1848,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1858,7 +1859,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1869,7 +1870,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1880,7 +1881,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1891,7 +1892,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1902,7 +1903,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1967,7 +1968,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1978,7 +1979,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1989,7 +1990,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2000,7 +2001,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2011,7 +2012,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2022,7 +2023,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2033,7 +2034,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2044,7 +2045,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2055,7 +2056,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2066,7 +2067,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2130,7 +2131,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2141,7 +2142,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2152,7 +2153,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2163,7 +2164,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2174,7 +2175,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2185,7 +2186,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2196,7 +2197,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2207,7 +2208,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2218,7 +2219,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2229,7 +2230,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2293,7 +2294,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2304,7 +2305,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2315,7 +2316,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2326,7 +2327,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2337,7 +2338,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2348,7 +2349,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2359,7 +2360,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2370,7 +2371,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2381,7 +2382,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2392,7 +2393,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2456,7 +2457,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh0, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2467,7 +2468,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh1, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2478,7 +2479,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh2, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2489,7 +2490,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh3, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2500,7 +2501,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh4, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2511,7 +2512,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh5, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2522,7 +2523,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh6, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2533,7 +2534,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh7, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2544,7 +2545,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh8, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -2555,7 +2556,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = TenCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(TenCarGarage.veh9, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, TenCarGarage.veh9, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)

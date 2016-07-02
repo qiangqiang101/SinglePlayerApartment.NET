@@ -6,6 +6,7 @@ Imports GTA.Native
 Imports GTA.Math
 Imports System.Text
 Imports System.Media
+Imports SinglePlayerApartment.INMNative
 
 Public Class Resources
 
@@ -312,7 +313,7 @@ Public Class Resources
         Return Result
     End Function
 
-    Public Shared Function GetVehicleInteriorTrimColor(Vehicle As Vehicle) As Integer
+    Public Shared Function GetVehicleInteriorTrimColor2(Vehicle As Vehicle) As Integer
         Dim arg As New OutputArgument()
         If My.Settings.HasLowriderUpdate = True Then
             Native.Function.Call(&H7D1464D472D32136L, Vehicle.Handle, arg)
@@ -322,7 +323,27 @@ Public Class Resources
         Return arg.GetResult(Of Integer)()
     End Function
 
-    Public Shared Function GetVehicleInteriorDashboardColor(Vehicle As Vehicle) As Integer
+    Public Shared Function GetVehicleInteriorDashboardColor2(Vehicle As Vehicle) As Integer
+        Dim arg As New OutputArgument()
+        If My.Settings.HasLowriderUpdate = True Then
+            Native.Function.Call(&HB7635E80A5C31BFFUL, Vehicle.Handle, arg)
+        Else
+            Return 0
+        End If
+        Return arg.GetResult(Of Integer)()
+    End Function
+
+    Public Shared Function GetVehicleInteriorTrimColor(Vehicle As SPAVehicle) As Integer
+        Dim arg As New OutputArgument()
+        If My.Settings.HasLowriderUpdate = True Then
+            Native.Function.Call(&H7D1464D472D32136L, Vehicle.Handle, arg)
+        Else
+            Return 0
+        End If
+        Return arg.GetResult(Of Integer)()
+    End Function
+
+    Public Shared Function GetVehicleInteriorDashboardColor(Vehicle As SPAVehicle) As Integer
         Dim arg As New OutputArgument()
         If My.Settings.HasLowriderUpdate = True Then
             Native.Function.Call(&HB7635E80A5C31BFFUL, Vehicle.Handle, arg)
@@ -554,8 +575,25 @@ Label_005C:
         End Select
     End Sub
 
-    Public Shared Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As Vehicle
-        Dim Result As Vehicle = Nothing
+    Public Shared Sub DriveTo(ped As Ped, vehicle As INMNative.SPAVehicle, target As Vector3, radius As Single, speed As Single, Optional drivingstyle As Integer = 0)
+        Native.Function.Call(Hash.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE, ped.Handle, vehicle.Handle, target.X, target.Y, target.Z, speed, drivingstyle, radius)
+    End Sub
+
+    Public Shared Sub SetIntoVehicle(ped As Ped, vehicle As INMNative.SPAVehicle, seat As VehicleSeat)
+        Native.Function.Call(Hash.SET_PED_INTO_VEHICLE, ped, vehicle.Handle, seat)
+    End Sub
+
+    Public Shared Function WorldCreateVehicle(model As Model, position As Vector3, Optional heading As Single = 0F) As INMNative.SPAVehicle
+        If Not model.IsVehicle OrElse Not model.Request(1000) Then
+            Return Nothing
+        End If
+
+        Return New INMNative.SPAVehicle([Function].[Call](Of Integer)(Hash.CREATE_VEHICLE, model.Hash, position.X, position.Y, position.Z, heading,
+        False, False))
+    End Function
+
+    Public Shared Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As INMNative.SPAVehicle
+        Dim Result As INMNative.SPAVehicle = Nothing
         If VehicleModel = "" Then
             Dim model = New Model(VehicleHash)
             model.Request(250)
@@ -563,7 +601,7 @@ Label_005C:
                 While Not model.IsLoaded
                     Script.Wait(50)
                 End While
-                Result = World.CreateVehicle(model, Position, Heading)
+                Result = WorldCreateVehicle(model, Position, Heading)
             End If
             model.MarkAsNoLongerNeeded()
         Else
@@ -573,7 +611,7 @@ Label_005C:
                 While Not model.IsLoaded
                     Script.Wait(50)
                 End While
-                Result = World.CreateVehicle(model, Position, Heading)
+                Result = WorldCreateVehicle(model, Position, Heading)
             End If
             model.MarkAsNoLongerNeeded()
         End If

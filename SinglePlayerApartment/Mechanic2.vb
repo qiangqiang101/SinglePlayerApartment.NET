@@ -7,6 +7,7 @@ Imports SinglePlayerApartment.Mechanic
 Imports INMNativeUI
 Imports SinglePlayerApartment.Resources
 Imports GTA.Math
+Imports SinglePlayerApartment.INMNative
 
 Public Class Mechanic2
     Inherits Script
@@ -117,11 +118,11 @@ Public Class Mechanic2
         AddHandler Tick, AddressOf OnTick
     End Sub
 
-    Public Shared Sub CreateMechanicInVehicle(Vehicle As Vehicle)
+    Public Shared Sub CreateMechanicInVehicle(Vehicle As SPAVehicle)
         If My.Settings.VehicleSpawn = 1 Then
             MechanicPed = Vehicle.CreatePedOnSeat(VehicleSeat.Driver, PedHash.Autoshop01SMM)
             'MechanicPed.AlwaysKeepTask = True
-            MechanicPed.Task.DriveTo(Vehicle, playerPed.Position, 20.0, 15.0)
+            DriveTo(MechanicPed, Vehicle, playerPed.Position, 20.0, 15.0)
             MechanicPed.DrivingStyle = DrivingStyle.Normal
         Else
             Wait(5000)
@@ -476,7 +477,7 @@ Public Class Mechanic2
         End If
     End Sub
 
-    Public Shared Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String)
+    Public Shared Sub SetModKit(_Vehicle As SPAVehicle, VehicleCfgFile As String)
         Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, _Vehicle, 0)
         _Vehicle.DirtLevel = 0F
         _Vehicle.PrimaryColor = ReadCfgValue("PrimaryColor", VehicleCfgFile)

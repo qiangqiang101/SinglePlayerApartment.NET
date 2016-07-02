@@ -7,6 +7,7 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
 Imports SinglePlayerApartment.INMNative
+Imports SinglePlayerApartment.Resources
 
 Public Class ZancudoAve
     Inherits Script
@@ -370,7 +371,7 @@ Public Class ZancudoAve
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = SixCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(SixCarGarage.veh0, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, SixCarGarage.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -381,7 +382,7 @@ Public Class ZancudoAve
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = SixCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(SixCarGarage.veh1, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, SixCarGarage.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -392,7 +393,7 @@ Public Class ZancudoAve
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = SixCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(SixCarGarage.veh2, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, SixCarGarage.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -403,7 +404,7 @@ Public Class ZancudoAve
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = SixCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(SixCarGarage.veh3, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, SixCarGarage.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -414,7 +415,7 @@ Public Class ZancudoAve
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = SixCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(SixCarGarage.veh4, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, SixCarGarage.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
@@ -425,7 +426,7 @@ Public Class ZancudoAve
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
                 playerPed.Position = SixCarGarage.GarageDoorL
-                playerPed.SetIntoVehicle(SixCarGarage.veh5, VehicleSeat.Driver)
+                SetIntoVehicle(playerPed, SixCarGarage.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Script.Wait(500)
                 Game.FadeScreenIn(500)

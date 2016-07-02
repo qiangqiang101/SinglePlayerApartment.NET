@@ -3,13 +3,14 @@ Imports GTA.Native
 Imports GTA.Math
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.Resources
+Imports SinglePlayerApartment.INMNative
 
 Public Class TenCarGarage
     Inherits Script
 
     Public Shared InteriorID As Integer
     Public Shared CurrentPath As String
-    Public Shared veh0, veh1, veh2, veh3, veh4, veh5, veh6, veh7, veh8, veh9 As Vehicle
+    Public Shared veh0, veh1, veh2, veh3, veh4, veh5, veh6, veh7, veh8, veh9 As SPAVehicle
     Public Shared LastLocationName As String
     Public Shared lastLocationVector As Vector3
     Public Shared lastLocationGarageVector As Vector3
@@ -312,7 +313,7 @@ Public Class TenCarGarage
         End Try
     End Sub
 
-    Public Shared Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String, EngineRunning As Boolean)
+    Public Shared Sub SetModKit(_Vehicle As SPAVehicle, VehicleCfgFile As String, EngineRunning As Boolean)
         Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, _Vehicle, 0)
         _Vehicle.DirtLevel = 0F
         _Vehicle.PrimaryColor = ReadCfgValue("PrimaryColor", VehicleCfgFile)
@@ -412,7 +413,7 @@ Public Class TenCarGarage
                 playerPed.CurrentVehicle.Delete()
                 If Not veh0 = Nothing Then
                     playerPed.Position = veh0Pos
-                    playerPed.SetIntoVehicle(veh0, VehicleSeat.Driver)
+                    SetIntoVehicle(playerPed, veh0, VehicleSeat.Driver)
                 Else
                     playerPed.Position = veh0Pos
                 End If
@@ -429,7 +430,7 @@ Public Class TenCarGarage
                     playerPed.CurrentVehicle.Delete()
                     If Not veh1 = Nothing Then
                         playerPed.Position = veh1Pos
-                        playerPed.SetIntoVehicle(veh1, VehicleSeat.Driver)
+                        SetIntoVehicle(playerPed, veh1, VehicleSeat.Driver)
                     Else
                         playerPed.Position = veh1Pos
                     End If
@@ -446,7 +447,7 @@ Public Class TenCarGarage
                         playerPed.CurrentVehicle.Delete()
                         If Not veh2 = Nothing Then
                             playerPed.Position = veh2Pos
-                            playerPed.SetIntoVehicle(veh2, VehicleSeat.Driver)
+                            SetIntoVehicle(playerPed, veh2, VehicleSeat.Driver)
                         Else
                             playerPed.Position = veh2Pos
                         End If
@@ -463,7 +464,7 @@ Public Class TenCarGarage
                             playerPed.CurrentVehicle.Delete()
                             If Not veh3 = Nothing Then
                                 playerPed.Position = veh3Pos
-                                playerPed.SetIntoVehicle(veh3, VehicleSeat.Driver)
+                                SetIntoVehicle(playerPed, veh3, VehicleSeat.Driver)
                             Else
                                 playerPed.Position = veh3Pos
                             End If
@@ -480,7 +481,7 @@ Public Class TenCarGarage
                                 playerPed.CurrentVehicle.Delete()
                                 If Not veh4 = Nothing Then
                                     playerPed.Position = veh4Pos
-                                    playerPed.SetIntoVehicle(veh4, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, veh4, VehicleSeat.Driver)
                                 Else
                                     playerPed.Position = veh4Pos
                                 End If
@@ -497,7 +498,7 @@ Public Class TenCarGarage
                                     playerPed.CurrentVehicle.Delete()
                                     If Not veh5 = Nothing Then
                                         playerPed.Position = veh5Pos
-                                        playerPed.SetIntoVehicle(veh5, VehicleSeat.Driver)
+                                        SetIntoVehicle(playerPed, veh5, VehicleSeat.Driver)
                                     Else
                                         playerPed.Position = veh5Pos
                                     End If
@@ -514,7 +515,7 @@ Public Class TenCarGarage
                                         playerPed.CurrentVehicle.Delete()
                                         If Not veh6 = Nothing Then
                                             playerPed.Position = veh6Pos
-                                            playerPed.SetIntoVehicle(veh6, VehicleSeat.Driver)
+                                            SetIntoVehicle(playerPed, veh6, VehicleSeat.Driver)
                                         Else
                                             playerPed.Position = veh6Pos
                                         End If
@@ -531,7 +532,7 @@ Public Class TenCarGarage
                                             playerPed.CurrentVehicle.Delete()
                                             If Not veh7 = Nothing Then
                                                 playerPed.Position = veh7Pos
-                                                playerPed.SetIntoVehicle(veh7, VehicleSeat.Driver)
+                                                SetIntoVehicle(playerPed, veh7, VehicleSeat.Driver)
                                             Else
                                                 playerPed.Position = veh7Pos
                                             End If
@@ -548,7 +549,7 @@ Public Class TenCarGarage
                                                 playerPed.CurrentVehicle.Delete()
                                                 If Not veh8 = Nothing Then
                                                     playerPed.Position = veh8Pos
-                                                    playerPed.SetIntoVehicle(veh8, VehicleSeat.Driver)
+                                                    SetIntoVehicle(playerPed, veh8, VehicleSeat.Driver)
                                                 Else
                                                     playerPed.Position = veh8Pos
                                                 End If
@@ -565,7 +566,7 @@ Public Class TenCarGarage
                                                     playerPed.CurrentVehicle.Delete()
                                                     If Not veh9 = Nothing Then
                                                         playerPed.Position = veh9Pos
-                                                        playerPed.SetIntoVehicle(veh9, VehicleSeat.Driver)
+                                                        SetIntoVehicle(playerPed, veh9, VehicleSeat.Driver)
                                                     Else
                                                         playerPed.Position = veh9Pos
                                                     End If
@@ -689,8 +690,8 @@ Public Class TenCarGarage
         WriteCfgValue("ExtraEight", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 8), file)
         WriteCfgValue("ExtraNine", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 9), file)
         'Added on v1.3.4
-        WriteCfgValue("TrimColor", GetVehicleInteriorTrimColor(playerPed.CurrentVehicle), file)
-        WriteCfgValue("DashboardColor", GetVehicleInteriorDashboardColor(playerPed.CurrentVehicle), file)
+        WriteCfgValue("TrimColor", GetVehicleInteriorTrimColor2(playerPed.CurrentVehicle), file)
+        WriteCfgValue("DashboardColor", GetVehicleInteriorDashboardColor2(playerPed.CurrentVehicle), file)
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs)
@@ -705,7 +706,7 @@ Public Class TenCarGarage
                 World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
                 If My.Settings.RefreshGrgVehs = True Then RefreshGarageVehicles(CurrentPath)
             Else
-                    If Not Game.Player.Character.IsInVehicle Then
+                If Not Game.Player.Character.IsInVehicle Then
                     If Not veh0 = Nothing Then veh0.Delete()
                     If Not veh1 = Nothing Then veh1.Delete()
                     If Not veh2 = Nothing Then veh2.Delete()
@@ -719,7 +720,7 @@ Public Class TenCarGarage
                 End If
             End If
 
-                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
+            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
                 DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
             End If
 
@@ -788,7 +789,7 @@ Public Class TenCarGarage
                     Mechanic.MPV1.CurrentBlip.Color = BlipColor2.Michael
                     Mechanic.MPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.MPV1.FriendlyName, Mechanic.MPV1.CurrentBlip)
-                    playerPed.SetIntoVehicle(Mechanic.MPV1, VehicleSeat.Driver)
+                    SetIntoVehicle(playerPed, Mechanic.MPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.MPV2 = Nothing Then
                         Mechanic.MPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -799,7 +800,7 @@ Public Class TenCarGarage
                         Mechanic.MPV2.CurrentBlip.Color = BlipColor2.Michael
                         Mechanic.MPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.MPV2.FriendlyName, Mechanic.MPV2.CurrentBlip)
-                        playerPed.SetIntoVehicle(Mechanic.MPV2, VehicleSeat.Driver)
+                        SetIntoVehicle(playerPed, Mechanic.MPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.MPV3 = Nothing Then
                             Mechanic.MPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -810,7 +811,7 @@ Public Class TenCarGarage
                             Mechanic.MPV3.CurrentBlip.Color = BlipColor2.Michael
                             Mechanic.MPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.MPV3.FriendlyName, Mechanic.MPV3.CurrentBlip)
-                            playerPed.SetIntoVehicle(Mechanic.MPV3, VehicleSeat.Driver)
+                            SetIntoVehicle(playerPed, Mechanic.MPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.MPV4 = Nothing Then
                                 Mechanic.MPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -821,7 +822,7 @@ Public Class TenCarGarage
                                 Mechanic.MPV4.CurrentBlip.Color = BlipColor2.Michael
                                 Mechanic.MPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.MPV4.FriendlyName, Mechanic.MPV4.CurrentBlip)
-                                playerPed.SetIntoVehicle(Mechanic.MPV4, VehicleSeat.Driver)
+                                SetIntoVehicle(playerPed, Mechanic.MPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.MPV0 = Nothing Then
                                     Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -832,7 +833,7 @@ Public Class TenCarGarage
                                     Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
                                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.MPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
                                 Else
                                     Mechanic.MPV0.Delete()
                                     Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -843,7 +844,7 @@ Public Class TenCarGarage
                                     Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
                                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.MPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
                                 End If
                             End If
                         End If
@@ -859,7 +860,7 @@ Public Class TenCarGarage
                     Mechanic.FPV1.CurrentBlip.Color = BlipColor2.Franklin
                     Mechanic.FPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.FPV1.FriendlyName, Mechanic.FPV1.CurrentBlip)
-                    playerPed.SetIntoVehicle(Mechanic.FPV1, VehicleSeat.Driver)
+                    SetIntoVehicle(playerPed, Mechanic.FPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.FPV2 = Nothing Then
                         Mechanic.FPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -870,7 +871,7 @@ Public Class TenCarGarage
                         Mechanic.FPV2.CurrentBlip.Color = BlipColor2.Franklin
                         Mechanic.FPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.FPV2.FriendlyName, Mechanic.FPV2.CurrentBlip)
-                        playerPed.SetIntoVehicle(Mechanic.FPV2, VehicleSeat.Driver)
+                        SetIntoVehicle(playerPed, Mechanic.FPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.FPV3 = Nothing Then
                             Mechanic.FPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -881,7 +882,7 @@ Public Class TenCarGarage
                             Mechanic.FPV3.CurrentBlip.Color = BlipColor2.Franklin
                             Mechanic.FPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.FPV3.FriendlyName, Mechanic.FPV3.CurrentBlip)
-                            playerPed.SetIntoVehicle(Mechanic.FPV3, VehicleSeat.Driver)
+                            SetIntoVehicle(playerPed, Mechanic.FPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.FPV4 = Nothing Then
                                 Mechanic.FPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -892,7 +893,7 @@ Public Class TenCarGarage
                                 Mechanic.FPV4.CurrentBlip.Color = BlipColor2.Franklin
                                 Mechanic.FPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.FPV4.FriendlyName, Mechanic.FPV4.CurrentBlip)
-                                playerPed.SetIntoVehicle(Mechanic.FPV4, VehicleSeat.Driver)
+                                SetIntoVehicle(playerPed, Mechanic.FPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.FPV0 = Nothing Then
                                     Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -903,7 +904,7 @@ Public Class TenCarGarage
                                     Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
                                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.FPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
                                 Else
                                     Mechanic.FPV0.Delete()
                                     Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -914,7 +915,7 @@ Public Class TenCarGarage
                                     Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
                                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.FPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
                                 End If
                             End If
                         End If
@@ -930,7 +931,7 @@ Public Class TenCarGarage
                     Mechanic.TPV1.CurrentBlip.Color = BlipColor2.Trevor
                     Mechanic.TPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.TPV1.FriendlyName, Mechanic.TPV1.CurrentBlip)
-                    playerPed.SetIntoVehicle(Mechanic.TPV1, VehicleSeat.Driver)
+                    SetIntoVehicle(playerPed, Mechanic.TPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.TPV2 = Nothing Then
                         Mechanic.TPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -941,7 +942,7 @@ Public Class TenCarGarage
                         Mechanic.TPV2.CurrentBlip.Color = BlipColor2.Trevor
                         Mechanic.TPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.TPV2.FriendlyName, Mechanic.TPV2.CurrentBlip)
-                        playerPed.SetIntoVehicle(Mechanic.TPV2, VehicleSeat.Driver)
+                        SetIntoVehicle(playerPed, Mechanic.TPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.TPV3 = Nothing Then
                             Mechanic.TPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -952,7 +953,7 @@ Public Class TenCarGarage
                             Mechanic.TPV3.CurrentBlip.Color = BlipColor2.Trevor
                             Mechanic.TPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.TPV3.FriendlyName, Mechanic.TPV3.CurrentBlip)
-                            playerPed.SetIntoVehicle(Mechanic.TPV3, VehicleSeat.Driver)
+                            SetIntoVehicle(playerPed, Mechanic.TPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.TPV4 = Nothing Then
                                 Mechanic.TPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -963,7 +964,7 @@ Public Class TenCarGarage
                                 Mechanic.TPV4.CurrentBlip.Color = BlipColor2.Trevor
                                 Mechanic.TPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.TPV4.FriendlyName, Mechanic.TPV4.CurrentBlip)
-                                playerPed.SetIntoVehicle(Mechanic.TPV4, VehicleSeat.Driver)
+                                SetIntoVehicle(playerPed, Mechanic.TPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.TPV0 = Nothing Then
                                     Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -974,7 +975,7 @@ Public Class TenCarGarage
                                     Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
                                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.TPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
                                 Else
                                     Mechanic.TPV0.Delete()
                                     Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -985,7 +986,7 @@ Public Class TenCarGarage
                                     Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
                                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.TPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
                                 End If
                             End If
                         End If
@@ -1001,7 +1002,7 @@ Public Class TenCarGarage
                     Mechanic.PPV1.CurrentBlip.Color = BlipColor.Yellow
                     Mechanic.PPV1.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.PPV1.FriendlyName, Mechanic.PPV1.CurrentBlip)
-                    playerPed.SetIntoVehicle(Mechanic.PPV1, VehicleSeat.Driver)
+                    SetIntoVehicle(playerPed, Mechanic.PPV1, VehicleSeat.Driver)
                 Else
                     If Mechanic.PPV2 = Nothing Then
                         Mechanic.PPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -1012,7 +1013,7 @@ Public Class TenCarGarage
                         Mechanic.PPV2.CurrentBlip.Color = BlipColor.Yellow
                         Mechanic.PPV2.CurrentBlip.IsShortRange = True
                         SetBlipName(Mechanic.PPV2.FriendlyName, Mechanic.PPV2.CurrentBlip)
-                        playerPed.SetIntoVehicle(Mechanic.PPV2, VehicleSeat.Driver)
+                        SetIntoVehicle(playerPed, Mechanic.PPV2, VehicleSeat.Driver)
                     Else
                         If Mechanic.PPV3 = Nothing Then
                             Mechanic.PPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -1023,7 +1024,7 @@ Public Class TenCarGarage
                             Mechanic.PPV3.CurrentBlip.Color = BlipColor.Yellow
                             Mechanic.PPV3.CurrentBlip.IsShortRange = True
                             SetBlipName(Mechanic.PPV3.FriendlyName, Mechanic.PPV3.CurrentBlip)
-                            playerPed.SetIntoVehicle(Mechanic.PPV3, VehicleSeat.Driver)
+                            SetIntoVehicle(playerPed, Mechanic.PPV3, VehicleSeat.Driver)
                         Else
                             If Mechanic.PPV4 = Nothing Then
                                 Mechanic.PPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -1034,7 +1035,7 @@ Public Class TenCarGarage
                                 Mechanic.PPV4.CurrentBlip.Color = BlipColor.Yellow
                                 Mechanic.PPV4.CurrentBlip.IsShortRange = True
                                 SetBlipName(Mechanic.PPV4.FriendlyName, Mechanic.PPV4.CurrentBlip)
-                                playerPed.SetIntoVehicle(Mechanic.PPV4, VehicleSeat.Driver)
+                                SetIntoVehicle(playerPed, Mechanic.PPV4, VehicleSeat.Driver)
                             Else
                                 If Mechanic.PPV0 = Nothing Then
                                     Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -1045,7 +1046,7 @@ Public Class TenCarGarage
                                     Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
                                     Mechanic.PPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.PPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
                                 Else
                                     Mechanic.PPV0.Delete()
                                     Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -1056,7 +1057,7 @@ Public Class TenCarGarage
                                     Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
                                     Mechanic.PPV0.CurrentBlip.IsShortRange = True
                                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
-                                    playerPed.SetIntoVehicle(Mechanic.PPV0, VehicleSeat.Driver)
+                                    SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
                                 End If
                             End If
                         End If

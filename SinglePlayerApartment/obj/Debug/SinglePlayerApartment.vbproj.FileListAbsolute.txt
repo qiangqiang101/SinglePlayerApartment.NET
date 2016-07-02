@@ -12,3 +12,14 @@ D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerA
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.dll
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.xml
 D:\GTAV Mods\SinglePlayerApartment\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.pdb
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.dll.config
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.dll
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.pdb
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.xml
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\ScriptHookVDotNet.xml
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.Resources.resources
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.vbproj.GenerateResource.Cache
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.dll
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.xml
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.pdb
