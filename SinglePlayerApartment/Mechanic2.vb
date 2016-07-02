@@ -142,6 +142,9 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(MPV1, SelectedItem_Car)
             CreateMechanicInVehicle(MPV1)
+            MPV1.Active = True
+            MPV1.File = SelectedItem_Car
+            MPV1.Owner = playerName
         Else
             If MPV2 = Nothing Then
                 MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -154,6 +157,9 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(MPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(MPV2)
+                MPV2.Active = True
+                MPV2.File = SelectedItem_Car
+                MPV2.Owner = playerName
             Else
                 If MPV3 = Nothing Then
                     MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -166,6 +172,9 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(MPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(MPV3)
+                    MPV3.Active = True
+                    MPV3.File = SelectedItem_Car
+                    MPV3.Owner = playerName
                 Else
                     If MPV4 = Nothing Then
                         MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -178,6 +187,9 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(MPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(MPV4)
+                        MPV4.Active = True
+                        MPV4.File = SelectedItem_Car
+                        MPV4.Owner = playerName
                     Else
                         If MPV0 = Nothing Then
                             MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -190,6 +202,9 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(MPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(MPV0)
+                            MPV0.Active = True
+                            MPV0.File = SelectedItem_Car
+                            MPV0.Owner = playerName
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -213,6 +228,9 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(FPV1, SelectedItem_Car)
             CreateMechanicInVehicle(FPV1)
+            FPV1.Active = True
+            FPV1.File = SelectedItem_Car
+            FPV1.Owner = playerName
         Else
             If FPV2 = Nothing Then
                 FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -225,6 +243,9 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(FPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(FPV2)
+                FPV2.Active = True
+                FPV2.File = SelectedItem_Car
+                FPV2.Owner = playerName
             Else
                 If FPV3 = Nothing Then
                     FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -237,6 +258,9 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(FPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(FPV3)
+                    FPV3.Active = True
+                    FPV3.File = SelectedItem_Car
+                    FPV3.Owner = playerName
                 Else
                     If FPV4 = Nothing Then
                         FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -249,6 +273,9 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(FPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(FPV4)
+                        FPV4.Active = True
+                        FPV4.File = SelectedItem_Car
+                        FPV4.Owner = playerName
                     Else
                         If FPV0 = Nothing Then
                             FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -261,6 +288,9 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(FPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(FPV0)
+                            FPV0.Active = True
+                            FPV0.File = SelectedItem_Car
+                            FPV0.Owner = playerName
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -284,6 +314,9 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(TPV1, SelectedItem_Car)
             CreateMechanicInVehicle(TPV1)
+            TPV1.Active = True
+            TPV1.File = SelectedItem_Car
+            TPV1.Owner = playerName
         Else
             If TPV2 = Nothing Then
                 TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -296,6 +329,9 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(TPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(TPV2)
+                TPV2.Active = True
+                TPV2.File = SelectedItem_Car
+                TPV2.Owner = playerName
             Else
                 If TPV3 = Nothing Then
                     TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -308,6 +344,9 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(TPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(TPV3)
+                    TPV3.Active = True
+                    TPV3.File = SelectedItem_Car
+                    TPV3.Owner = playerName
                 Else
                     If TPV4 = Nothing Then
                         TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -320,6 +359,9 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(TPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(TPV4)
+                        TPV4.Active = True
+                        TPV4.File = SelectedItem_Car
+                        TPV4.Owner = playerName
                     Else
                         If TPV0 = Nothing Then
                             TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -332,6 +374,9 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(TPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(TPV0)
+                            TPV0.Active = True
+                            TPV0.File = SelectedItem_Car
+                            TPV0.Owner = playerName
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -355,6 +400,9 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(PPV1, SelectedItem_Car)
             CreateMechanicInVehicle(PPV1)
+            PPV1.Active = True
+            PPV1.File = SelectedItem_Car
+            PPV1.Owner = playerName
         Else
             If PPV2 = Nothing Then
                 PPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -367,6 +415,9 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(PPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(PPV2)
+                PPV2.Active = True
+                PPV2.File = SelectedItem_Car
+                PPV2.Owner = playerName
             Else
                 If PPV3 = Nothing Then
                     PPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -379,6 +430,9 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(PPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(PPV3)
+                    PPV3.Active = True
+                    PPV3.File = SelectedItem_Car
+                    PPV3.Owner = playerName
                 Else
                     If PPV4 = Nothing Then
                         PPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -391,6 +445,9 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(PPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(PPV4)
+                        PPV4.Active = True
+                        PPV4.File = SelectedItem_Car
+                        PPV4.Owner = playerName
                     Else
                         If PPV0 = Nothing Then
                             PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -403,6 +460,9 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(PPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(PPV0)
+                            PPV0.Active = True
+                            PPV0.File = SelectedItem_Car
+                            PPV0.Owner = playerName
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)

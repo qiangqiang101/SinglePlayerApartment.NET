@@ -633,6 +633,17 @@ Label_005C:
         Return Result
     End Function
 
+    Public Shared Function LastVehicle(ped As Ped) As SPAVehicle
+        Dim handle_1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_PED_IS_IN, ped, True)
+        If Not Native.Function.Call(Of Boolean)(Hash.DOES_ENTITY_EXIST, handle_1) Then Return Nothing
+        Return New SPAVehicle(handle_1)
+    End Function
+
+    Public Shared Function CurrentVehicle(ped As Ped) As SPAVehicle
+        If Not ped.IsInVehicle() Then Return Nothing
+        Return New SPAVehicle(Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_PED_IS_IN, ped, False))
+    End Function
+
     Public Shared Function IsInGarageVehicle(PlayerPed As Ped) As Boolean
         Dim Result As Boolean
         Select Case PlayerPed.CurrentVehicle
