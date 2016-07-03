@@ -721,6 +721,8 @@ Public Class SinglePlayerApartment
             Else
                 Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
             End If
+
+            If playerPed.IsInVehicle Then UI.ShowSubtitle("(" & Resources.CurrentVehicle(playerPed).FriendlyName & " - " & Resources.CurrentVehicle(playerPed).File & ")")
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
