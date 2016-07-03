@@ -640,7 +640,6 @@ Label_005C:
     End Function
 
     Public Shared Function CurrentVehicle(ped As Ped) As SPAVehicle
-        If Not ped.IsInVehicle() Then Return Nothing
         Return New SPAVehicle(Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_PED_IS_IN, ped, False))
     End Function
 
