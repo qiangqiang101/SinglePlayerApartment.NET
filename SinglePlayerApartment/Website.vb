@@ -12,7 +12,7 @@ Public Class Website
 
     Public Shared VehiclePrice As Integer
     Public Shared SelectedVehicle As String
-    Public Shared VehPreview As SPAVehicle
+    Public Shared VehPreview As Vehicle
     Public Shared Price As Decimal = 0
     Public Shared Category As String = Nothing
 

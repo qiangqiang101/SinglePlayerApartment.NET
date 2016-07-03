@@ -18,3 +18,4 @@ C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\De
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\HelperSPA.dll
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\HelperSPA.xml
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\HelperSPA.pdb
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\ScriptHookVDotNet.dll

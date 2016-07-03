@@ -333,7 +333,7 @@ Public Class Resources
         Return arg.GetResult(Of Integer)()
     End Function
 
-    Public Shared Function GetVehicleInteriorTrimColor(Vehicle As SPAVehicle) As Integer
+    Public Shared Function GetVehicleInteriorTrimColor(Vehicle As Vehicle) As Integer
         Dim arg As New OutputArgument()
         If My.Settings.HasLowriderUpdate = True Then
             Native.Function.Call(&H7D1464D472D32136L, Vehicle.Handle, arg)
@@ -343,7 +343,7 @@ Public Class Resources
         Return arg.GetResult(Of Integer)()
     End Function
 
-    Public Shared Function GetVehicleInteriorDashboardColor(Vehicle As SPAVehicle) As Integer
+    Public Shared Function GetVehicleInteriorDashboardColor(Vehicle As Vehicle) As Integer
         Dim arg As New OutputArgument()
         If My.Settings.HasLowriderUpdate = True Then
             Native.Function.Call(&HB7635E80A5C31BFFUL, Vehicle.Handle, arg)
@@ -575,25 +575,25 @@ Label_005C:
         End Select
     End Sub
 
-    Public Shared Sub DriveTo(ped As Ped, vehicle As INMNative.SPAVehicle, target As Vector3, radius As Single, speed As Single, Optional drivingstyle As Integer = 0)
+    Public Shared Sub DriveTo(ped As Ped, vehicle As Vehicle, target As Vector3, radius As Single, speed As Single, Optional drivingstyle As Integer = 0)
         Native.Function.Call(Hash.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE, ped.Handle, vehicle.Handle, target.X, target.Y, target.Z, speed, drivingstyle, radius)
     End Sub
 
-    Public Shared Sub SetIntoVehicle(ped As Ped, vehicle As INMNative.SPAVehicle, seat As VehicleSeat)
+    Public Shared Sub SetIntoVehicle(ped As Ped, vehicle As Vehicle, seat As VehicleSeat)
         Native.Function.Call(Hash.SET_PED_INTO_VEHICLE, ped, vehicle.Handle, seat)
     End Sub
 
-    Public Shared Function WorldCreateVehicle(model As Model, position As Vector3, Optional heading As Single = 0F) As INMNative.SPAVehicle
+    Public Shared Function WorldCreateVehicle(model As Model, position As Vector3, Optional heading As Single = 0F) As Vehicle
         If Not model.IsVehicle OrElse Not model.Request(1000) Then
             Return Nothing
         End If
 
-        Return New INMNative.SPAVehicle([Function].[Call](Of Integer)(Hash.CREATE_VEHICLE, model.Hash, position.X, position.Y, position.Z, heading,
+        Return New Vehicle([Function].[Call](Of Integer)(Hash.CREATE_VEHICLE, model.Hash, position.X, position.Y, position.Z, heading,
         False, False))
     End Function
 
-    Public Shared Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As INMNative.SPAVehicle
-        Dim Result As INMNative.SPAVehicle = Nothing
+    Public Shared Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As Vehicle
+        Dim Result As Vehicle = Nothing
         If VehicleModel = "" Then
             Dim model = New Model(VehicleHash)
             model.Request(250)
@@ -631,16 +631,6 @@ Label_005C:
         End If
         model.MarkAsNoLongerNeeded()
         Return Result
-    End Function
-
-    Public Shared Function LastVehicle(ped As Ped) As SPAVehicle
-        Dim handle_1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_PED_IS_IN, ped, True)
-        If Not Native.Function.Call(Of Boolean)(Hash.DOES_ENTITY_EXIST, handle_1) Then Return Nothing
-        Return New SPAVehicle(handle_1)
-    End Function
-
-    Public Shared Function CurrentVehicle(ped As Ped) As SPAVehicle
-        Return New SPAVehicle(Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_PED_IS_IN, ped, False))
     End Function
 
     Public Shared Function IsInGarageVehicle(PlayerPed As Ped) As Boolean
@@ -719,5 +709,15 @@ Label_005C:
         End If
         model.MarkAsNoLongerNeeded()
         Return result
+    End Function
+
+    Public Shared Function MD5Gen(strText As String) As String
+        Dim MD5Service As New System.Security.Cryptography.MD5CryptoServiceProvider
+        Dim Bytes() As Byte = MD5Service.ComputeHash(System.Text.Encoding.ASCII.GetBytes(strText))
+        Dim s As String = Nothing
+        For Each By As Byte In Bytes
+            s += By.ToString("x2")
+        Next
+        Return s
     End Function
 End Class

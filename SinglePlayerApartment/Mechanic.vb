@@ -10,6 +10,10 @@ Imports SinglePlayerApartment.INMNative
 Public Class Mechanic
     Inherits Script
 
+    Public Shared MVDict As New Dictionary(Of String, String)
+    Public Shared FVDict As New Dictionary(Of String, String)
+    Public Shared TVDict As New Dictionary(Of String, String)
+    Public Shared PVDict As New Dictionary(Of String, String)
     Public Shared Path As String
     Public Shared playerHash As String
     Public Shared GarageMenu, GarageMenu2, GrgMoveMenu, GrgTransMenu, MechanicMenu, PhoneMenu, AS3Menu, IW4Menu, IW4HLMenu, DPHMenu, DPHHLMenu, DTMenu, ETMenu, ETHLMenu, RMMenu, RMHLMenu, TTMenu, TTHLMenu, WPMenu, VBMenu As UIMenu
@@ -20,11 +24,11 @@ Public Class Mechanic
     Public Shared _menuPool As MenuPool
     Public Shared AS3, IW4, IW4HL, DPH, DPHHL, DT, ET, ETHL, RM, RMHL, TT, TTHL, WP, VB As String
     Public Shared NC2044, HA2862, HA2868, WO3655, NC2045, MR2117, HA2874, WD3677, MW2113, ETP1, ETP2, ETP3, BCA, BDP, CA, HA, LLB0604, LLB2143, MR0184, POWER, PD4401, PD4584, PPS, SVS, SMMD, SRD0325, SA, SR, TR, GA, PB, SRD0112, ZA As String
-    Public Shared MPV0, MPV1, MPV2, MPV3, MPV4 As SPAVehicle
-    Public Shared FPV0, FPV1, FPV2, FPV3, FPV4 As SPAVehicle
-    Public Shared TPV0, TPV1, TPV2, TPV3, TPV4 As SPAVehicle
-    Public Shared PPV0, PPV1, PPV2, PPV3, PPV4 As SPAVehicle
-    Public Shared MPV10, MPV11, FPV10, FPV11, TPV10, TPV11, PPV10, PPV11 As SPAVehicle
+    Public Shared MPV0, MPV1, MPV2, MPV3, MPV4 As Vehicle
+    Public Shared FPV0, FPV1, FPV2, FPV3, FPV4 As Vehicle
+    Public Shared TPV0, TPV1, TPV2, TPV3, TPV4 As Vehicle
+    Public Shared PPV0, PPV1, PPV2, PPV3, PPV4 As Vehicle
+    Public Shared MPV10, MPV11, FPV10, FPV11, TPV10, TPV11, PPV10, PPV11 As Vehicle
     Public Shared MPVV10, MPVV11, FPVV10, FPVV11, TPVV10, TPVV11, PPVV10, PPVV11 As Vector3
     Public Shared MPVVB10, MPVVB11, FPVVB10, FPVVB11, TPVVB10, TPVVB11, PPVVB10, PPVVB11 As Blip
     Public Shared MPVF10, MPVF11, FPVF10, FPVF11, TPVF10, TPVF11, PPVF10, PPVF11 As String
@@ -2197,7 +2201,7 @@ Public Class Mechanic
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
                         Game.FadeScreenOut(500)
                         Wait(&H3E8)
-                        Dim tempVeh As SPAVehicle
+                        Dim tempVeh As Vehicle
                         playerPed.Position = TenCarGarage.lastLocationGarageOutVector
                         tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), TenCarGarage.lastLocationGarageOutVector, TenCarGarage.lastLocationGarageOutHeading)
                         Mechanic2.SetModKit(tempVeh, Path & GarageMenuSelectedFile)
@@ -2216,7 +2220,7 @@ Public Class Mechanic
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
                         Game.FadeScreenOut(500)
                         Wait(&H3E8)
-                        Dim tempVeh As SPAVehicle
+                        Dim tempVeh As Vehicle
                         playerPed.Position = SixCarGarage.lastLocationGarageOutVector
                         tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), SixCarGarage.lastLocationGarageOutVector, SixCarGarage.lastLocationGarageOutHeading)
                         Mechanic2.SetModKit(tempVeh, Path & GarageMenuSelectedFile)

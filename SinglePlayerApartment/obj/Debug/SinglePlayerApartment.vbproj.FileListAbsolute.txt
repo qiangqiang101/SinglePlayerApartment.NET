@@ -23,3 +23,6 @@ C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApar
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.dll
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.xml
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.pdb
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\iFruitAddon.dll
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\INMNativeUI.dll
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\ScriptHookVDotNet.dll

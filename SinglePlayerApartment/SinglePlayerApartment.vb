@@ -26,6 +26,7 @@ Public Class SinglePlayerApartment
     Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, GrgRemove, GrgRemoveAndDrive, GrgMove, GrgSell, GrgSelectVeh, GrgTooHot, GrgPlate, GrgRename, GrgTransfer, _Mechanic, _Pegasus, ChooseApt As String
     Public Shared ModernStyle, MoodyStyle, VibrantStyle, SharpStyle, MonochromeStyle, SeductiveStyle, RegalStyle, AquaStyle, ChooseVeh, ChooseVehDesc, ReturnVeh, AptStyle, _Phone, PegasusDeliver, PegasusDelete, CannotStore As String
     Public Shared GrgFull, Reach10, MechanicBill, EnterElevator, ExitGarage, ManageGarage, Maze, Fleeca, BOL, ForSale, PropPurchased, InsFundApartment, EnterApartment, SaveGame, ExitApartment, ChangeClothes, _EnterGarage As String
+    Public Shared Insurance1, Insurance2, Insurance3, Insurance4, MorsMutual As String
 
     Private teleported As Boolean = False
     Private michaelSafeHouse, franklinAuntSafeHouse, franklinSafeHouse, trevorTrailerSafeHouse, trevorPubSafeHouse, floydSafeHouse As Integer
@@ -101,6 +102,11 @@ Public Class SinglePlayerApartment
             ExitGarage = ReadCfgValue("ExitGarage", langFile)
             ManageGarage = ReadCfgValue("ManageGarage", langFile)
             Maze = ReadCfgValue("Maze", langFile)
+            Insurance1 = ReadCfgValue("InsuranceLineOne", langFile)
+            Insurance2 = ReadCfgValue("InsuranceLineTwo", langFile)
+            Insurance3 = ReadCfgValue("InsuranceLineThree", langFile)
+            Insurance4 = ReadCfgValue("InsuranceLineFour", langFile)
+            MorsMutual = ReadCfgValue("MorsMutual", langFile)
             Fleeca = ReadCfgValue("Fleeca", langFile)
             BOL = ReadCfgValue("BOL", langFile)
             ForSale = ReadCfgValue("ForSale", langFile)
@@ -721,8 +727,6 @@ Public Class SinglePlayerApartment
             Else
                 Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
             End If
-
-            If playerPed.IsInVehicle Then UI.ShowSubtitle("(" & Resources.CurrentVehicle(playerPed).FriendlyName & " - " & Resources.CurrentVehicle(playerPed).File & " - " & Resources.CurrentVehicle(playerPed).Owner & ")")
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
