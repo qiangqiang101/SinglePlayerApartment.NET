@@ -919,11 +919,15 @@ Namespace INMNative
 
         Public Property PrimaryColor() As VehicleColor
             Get
-                Dim color1 As New OutputArgument()
-                Dim color2 As New OutputArgument()
-                Native.Function.Call(Hash.GET_VEHICLE_COLOURS, Handle, color1, color2)
+                'Dim color1 As New OutputArgument()
+                'Dim color2 As New OutputArgument()
+                'Native.Function.Call(Hash.GET_VEHICLE_COLOURS, Handle, color1, color2)
 
-                Return color1.GetResult(Of VehicleColor)()
+                'Return color1.GetResult(Of VehicleColor)()
+
+                Dim color1, color2 As Integer
+                Native.Function.Call(Hash.GET_VEHICLE_COLOURS, Handle, color1, color2)
+                Return CType(color1, VehicleColor)
             End Get
             Set
                 Native.Function.Call(Hash.SET_VEHICLE_COLOURS, Handle, Value, SecondaryColor)
@@ -932,11 +936,15 @@ Namespace INMNative
 
         Public Property SecondaryColor() As VehicleColor
             Get
-                Dim color1 As New OutputArgument()
-                Dim color2 As New OutputArgument()
-                Native.Function.Call(Hash.GET_VEHICLE_COLOURS, Handle, color1, color2)
+                'Dim color1 As New OutputArgument()
+                'Dim color2 As New OutputArgument()
+                'Native.Function.Call(Hash.GET_VEHICLE_COLOURS, Handle, color1, color2)
 
-                Return color2.GetResult(Of VehicleColor)()
+                'Return color2.GetResult(Of VehicleColor)()
+
+                Dim color1, color2 As Integer
+                Native.Function.Call(Hash.GET_VEHICLE_COLOURS, Handle, color1, color2)
+                Return CType(color2, VehicleColor)
             End Get
             Set
                 Native.Function.Call(Hash.SET_VEHICLE_COLOURS, Handle, PrimaryColor, Value)
@@ -944,11 +952,15 @@ Namespace INMNative
         End Property
         Public Property RimColor() As VehicleColor
             Get
-                Dim color1 As New OutputArgument()
-                Dim color2 As New OutputArgument()
-                Native.Function.Call(Hash.GET_VEHICLE_EXTRA_COLOURS, Handle, color1, color2)
+                'Dim color1 As New OutputArgument()
+                'Dim color2 As New OutputArgument()
+                'Native.Function.Call(Hash.GET_VEHICLE_EXTRA_COLOURS, Handle, color1, color2)
 
-                Return color2.GetResult(Of VehicleColor)()
+                'Return color2.GetResult(Of VehicleColor)()
+
+                Dim peacolor, _rimcolor As Integer
+                Native.Function.Call(Hash.GET_VEHICLE_EXTRA_COLOURS, Handle, peacolor, _rimcolor)
+                Return CType(_rimcolor, VehicleColor)
             End Get
             Set
                 Native.Function.Call(Hash.SET_VEHICLE_EXTRA_COLOURS, Handle, PearlescentColor, Value)
@@ -956,11 +968,15 @@ Namespace INMNative
         End Property
         Public Property PearlescentColor() As VehicleColor
             Get
-                Dim color1 As New OutputArgument()
-                Dim color2 As New OutputArgument()
-                Native.Function.Call(Hash.GET_VEHICLE_EXTRA_COLOURS, Handle, color1, color2)
+                'Dim color1 As New OutputArgument()
+                'Dim color2 As New OutputArgument()
+                'Native.Function.Call(Hash.GET_VEHICLE_EXTRA_COLOURS, Handle, color1, color2)
 
-                Return color1.GetResult(Of VehicleColor)()
+                'Return color1.GetResult(Of VehicleColor)()
+
+                Dim peacolor, _rimcolor As Integer
+                Native.Function.Call(Hash.GET_VEHICLE_EXTRA_COLOURS, Handle, peacolor, _rimcolor)
+                Return CType(peacolor, VehicleColor)
             End Get
             Set
                 Native.Function.Call(Hash.SET_VEHICLE_EXTRA_COLOURS, Handle, Value, RimColor)
