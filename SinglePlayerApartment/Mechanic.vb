@@ -2539,7 +2539,7 @@ Public Class Mechanic
         CreateVehMenuApartments(WPMenu, itemWP, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\")
         CreateVehMenuApartments(NC2044Menu, itemNC2044, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2044_north_conker\")
         CreateVehMenuApartments(HA2862Menu, itemHA2862, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2862_hillcreast_ave\")
-        CreateVehMenuApartments(HA2868Menu, itemHA2868, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcrest_ave\")
+        CreateVehMenuApartments(HA2868Menu, itemHA2868, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2868_hillcreast_ave\")
         CreateVehMenuApartments(WO3655Menu, itemWO3655, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\")
         CreateVehMenuApartments(NC2045Menu, itemNC2045, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\")
         CreateVehMenuApartments(MR2117Menu, itemMR2117, Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\")

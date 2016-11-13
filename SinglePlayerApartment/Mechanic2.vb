@@ -147,7 +147,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(MPV1, SelectedItem_Car)
             CreateMechanicInVehicle(MPV1)
-            MVDict.Add(MD5Gen(MPV1.DisplayName & MPV1.NumberPlate), SelectedItem_Car)
+            MVDict.Add(MD5Gen(MPV1.DisplayName & MPV1.Handle), SelectedItem_Car)
         Else
             If MPV2 = Nothing Then
                 MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -160,7 +160,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(MPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(MPV2)
-                MVDict.Add(MD5Gen(MPV2.DisplayName & MPV2.NumberPlate), SelectedItem_Car)
+                MVDict.Add(MD5Gen(MPV2.DisplayName & MPV2.Handle), SelectedItem_Car)
             Else
                 If MPV3 = Nothing Then
                     MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -173,7 +173,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(MPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(MPV3)
-                    MVDict.Add(MD5Gen(MPV3.DisplayName & MPV3.NumberPlate), SelectedItem_Car)
+                    MVDict.Add(MD5Gen(MPV3.DisplayName & MPV3.Handle), SelectedItem_Car)
                 Else
                     If MPV4 = Nothing Then
                         MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -186,7 +186,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(MPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(MPV4)
-                        MVDict.Add(MD5Gen(MPV4.DisplayName & MPV4.NumberPlate), SelectedItem_Car)
+                        MVDict.Add(MD5Gen(MPV4.DisplayName & MPV4.Handle), SelectedItem_Car)
                     Else
                         If MPV0 = Nothing Then
                             MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -199,7 +199,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(MPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(MPV0)
-                            MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
+                            MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.Handle), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -223,7 +223,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(FPV1, SelectedItem_Car)
             CreateMechanicInVehicle(FPV1)
-            FVDict.Add(MD5Gen(FPV1.DisplayName & FPV1.NumberPlate), SelectedItem_Car)
+            FVDict.Add(MD5Gen(FPV1.DisplayName & FPV1.Handle), SelectedItem_Car)
         Else
             If FPV2 = Nothing Then
                 FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -236,7 +236,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(FPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(FPV2)
-                FVDict.Add(MD5Gen(FPV2.DisplayName & FPV2.NumberPlate), SelectedItem_Car)
+                FVDict.Add(MD5Gen(FPV2.DisplayName & FPV2.Handle), SelectedItem_Car)
             Else
                 If FPV3 = Nothing Then
                     FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -249,7 +249,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(FPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(FPV3)
-                    FVDict.Add(MD5Gen(FPV3.DisplayName & FPV3.NumberPlate), SelectedItem_Car)
+                    FVDict.Add(MD5Gen(FPV3.DisplayName & FPV3.Handle), SelectedItem_Car)
                 Else
                     If FPV4 = Nothing Then
                         FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -262,7 +262,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(FPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(FPV4)
-                        FVDict.Add(MD5Gen(FPV4.DisplayName & FPV4.NumberPlate), SelectedItem_Car)
+                        FVDict.Add(MD5Gen(FPV4.DisplayName & FPV4.Handle), SelectedItem_Car)
                     Else
                         If FPV0 = Nothing Then
                             FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -275,7 +275,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(FPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(FPV0)
-                            FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
+                            FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.Handle), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -299,7 +299,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(TPV1, SelectedItem_Car)
             CreateMechanicInVehicle(TPV1)
-            TVDict.Add(MD5Gen(TPV1.DisplayName & TPV1.NumberPlate), SelectedItem_Car)
+            TVDict.Add(MD5Gen(TPV1.DisplayName & TPV1.Handle), SelectedItem_Car)
         Else
             If TPV2 = Nothing Then
                 TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -312,7 +312,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(TPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(TPV2)
-                TVDict.Add(MD5Gen(TPV2.DisplayName & TPV2.NumberPlate), SelectedItem_Car)
+                TVDict.Add(MD5Gen(TPV2.DisplayName & TPV2.Handle), SelectedItem_Car)
             Else
                 If TPV3 = Nothing Then
                     TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -325,7 +325,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(TPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(TPV3)
-                    TVDict.Add(MD5Gen(TPV3.DisplayName & TPV3.NumberPlate), SelectedItem_Car)
+                    TVDict.Add(MD5Gen(TPV3.DisplayName & TPV3.Handle), SelectedItem_Car)
                 Else
                     If TPV4 = Nothing Then
                         TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -338,7 +338,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(TPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(TPV4)
-                        TVDict.Add(MD5Gen(TPV4.DisplayName & TPV4.NumberPlate), SelectedItem_Car)
+                        TVDict.Add(MD5Gen(TPV4.DisplayName & TPV4.Handle), SelectedItem_Car)
                     Else
                         If TPV0 = Nothing Then
                             TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -351,7 +351,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(TPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(TPV0)
-                            TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
+                            TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.Handle), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -375,7 +375,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(PPV1, SelectedItem_Car)
             CreateMechanicInVehicle(PPV1)
-            PVDict.Add(MD5Gen(PPV1.DisplayName & PPV1.NumberPlate), SelectedItem_Car)
+            PVDict.Add(MD5Gen(PPV1.DisplayName & PPV1.Handle), SelectedItem_Car)
         Else
             If PPV2 = Nothing Then
                 PPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -388,7 +388,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(PPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(PPV2)
-                PVDict.Add(MD5Gen(PPV2.DisplayName & PPV2.NumberPlate), SelectedItem_Car)
+                PVDict.Add(MD5Gen(PPV2.DisplayName & PPV2.Handle), SelectedItem_Car)
             Else
                 If PPV3 = Nothing Then
                     PPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -401,7 +401,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(PPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(PPV3)
-                    PVDict.Add(MD5Gen(PPV3.DisplayName & PPV3.NumberPlate), SelectedItem_Car)
+                    PVDict.Add(MD5Gen(PPV3.DisplayName & PPV3.Handle), SelectedItem_Car)
                 Else
                     If PPV4 = Nothing Then
                         PPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -414,7 +414,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(PPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(PPV4)
-                        PVDict.Add(MD5Gen(PPV4.DisplayName & PPV4.NumberPlate), SelectedItem_Car)
+                        PVDict.Add(MD5Gen(PPV4.DisplayName & PPV4.Handle), SelectedItem_Car)
                     Else
                         If PPV0 = Nothing Then
                             PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -427,7 +427,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(PPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(PPV0)
-                            PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
+                            PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.Handle), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -611,36 +611,36 @@ Public Class Mechanic2
     Public Shared Sub ReturnVehicleIfDead(vehicle As Vehicle)
         Select Case playerName
             Case "Michael"
-                If MVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
+                If MVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
-                    MVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
+                    MVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
                 End If
             Case "Franklin"
-                If FVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
+                If FVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
-                    FVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
+                    FVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
                 End If
             Case "Trevor"
-                If TVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
+                If TVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
-                    TVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
+                    TVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
                 End If
             Case "Player3"
-                If PVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
+                If PVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
-                    PVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
+                    PVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
                 End If
         End Select
 
