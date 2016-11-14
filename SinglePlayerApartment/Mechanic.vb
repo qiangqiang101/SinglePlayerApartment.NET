@@ -135,7 +135,7 @@ Public Class Mechanic
             ElseIf playerHash = "1885233650" Or "-1667301416" Then
                 playerName = "Player3"
             Else
-                playerName = "None"
+                playerName = "Player3" '"None"
             End If
 
             AS3 = ReadCfgValue("3ASowner", saveFile)

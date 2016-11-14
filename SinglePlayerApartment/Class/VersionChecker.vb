@@ -22,7 +22,7 @@ Public Class VersionChecker
                 If Game.GameTime > Checker.Waiter Then
                     Checker.Enabled = False
                     Select Case Version
-                        Case "2.9", "2.8", "2.7", "2.6.2", "2.6.1", "2.6", "2.5.1", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.1", "1.0", "0.9", "0.8", "0.6", "0.5"
+                        Case "2.9.2", "2.9", "2.8", "2.7", "2.6.2", "2.6.1", "2.6", "2.5.1", "2.5", "2.4", "2.3", "2.2", "2.1", "2.0", "1.1", "1.0", "0.9", "0.8", "0.6", "0.5"
                             SinglePlayerApartment.DisplayNotificationThisFrame("Single Player Apartment", "", "Your Community Script Hook V.NET version is Out of Date, Some Features will be disabled.", "CHAR_SOCIAL_CLUB", True, SinglePlayerApartment.IconType.RightJumpingArrow)
                             Checker.Start()
                         Case Else
@@ -50,6 +50,8 @@ Public Class VersionChecker
             Next
 
             Select Case sb.ToString.ToLower
+                Case "699598b7cbc849130f8f29b5f0a94ade"
+                    Version = "2.9.3"
                 Case "de9fe83108d5dfcb93e5242a67123432"
                     Version = "2.9.2"
                 Case "d41d8cd98f00b204e9800998ecf8427e"

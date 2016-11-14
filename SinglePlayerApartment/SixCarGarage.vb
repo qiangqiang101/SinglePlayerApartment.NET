@@ -53,7 +53,7 @@ Public Class SixCarGarage
             ElseIf playerHash = "1885233650" Or "-1667301416" Then
                 playerName = "Player3"
             Else
-                playerName = "None"
+                playerName = "Player3" '"None"
             End If
             InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(193.9493, -1004.425, -99.99999))
             InteriorIDList.Add(InteriorID)

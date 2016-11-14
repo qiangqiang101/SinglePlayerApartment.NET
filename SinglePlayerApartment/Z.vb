@@ -20,7 +20,7 @@ Public Class Z
             ElseIf playerHash = "1885233650" Or "-1667301416" Then
                 playerName = "Player3"
             Else
-                playerName = "None"
+                playerName = "Player3" '"None"
             End If
             If playerName = "Player3" Then
                 playerCash = 1000000000
