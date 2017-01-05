@@ -147,7 +147,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(MPV1, SelectedItem_Car)
             CreateMechanicInVehicle(MPV1)
-            MVDict.Add(MD5Gen(MPV1.DisplayName & MPV1.Handle), SelectedItem_Car)
+            MVDict.Add(MD5Gen(MPV1.DisplayName & MPV1.NumberPlate), SelectedItem_Car)
         Else
             If MPV2 = Nothing Then
                 MPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -160,7 +160,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(MPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(MPV2)
-                MVDict.Add(MD5Gen(MPV2.DisplayName & MPV2.Handle), SelectedItem_Car)
+                MVDict.Add(MD5Gen(MPV2.DisplayName & MPV2.NumberPlate), SelectedItem_Car)
             Else
                 If MPV3 = Nothing Then
                     MPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -173,7 +173,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(MPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(MPV3)
-                    MVDict.Add(MD5Gen(MPV3.DisplayName & MPV3.Handle), SelectedItem_Car)
+                    MVDict.Add(MD5Gen(MPV3.DisplayName & MPV3.NumberPlate), SelectedItem_Car)
                 Else
                     If MPV4 = Nothing Then
                         MPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -186,7 +186,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(MPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(MPV4)
-                        MVDict.Add(MD5Gen(MPV4.DisplayName & MPV4.Handle), SelectedItem_Car)
+                        MVDict.Add(MD5Gen(MPV4.DisplayName & MPV4.NumberPlate), SelectedItem_Car)
                     Else
                         If MPV0 = Nothing Then
                             MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -199,7 +199,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(MPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(MPV0)
-                            MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.Handle), SelectedItem_Car)
+                            MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -223,7 +223,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(FPV1, SelectedItem_Car)
             CreateMechanicInVehicle(FPV1)
-            FVDict.Add(MD5Gen(FPV1.DisplayName & FPV1.Handle), SelectedItem_Car)
+            FVDict.Add(MD5Gen(FPV1.DisplayName & FPV1.NumberPlate), SelectedItem_Car)
         Else
             If FPV2 = Nothing Then
                 FPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -236,7 +236,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(FPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(FPV2)
-                FVDict.Add(MD5Gen(FPV2.DisplayName & FPV2.Handle), SelectedItem_Car)
+                FVDict.Add(MD5Gen(FPV2.DisplayName & FPV2.NumberPlate), SelectedItem_Car)
             Else
                 If FPV3 = Nothing Then
                     FPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -249,7 +249,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(FPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(FPV3)
-                    FVDict.Add(MD5Gen(FPV3.DisplayName & FPV3.Handle), SelectedItem_Car)
+                    FVDict.Add(MD5Gen(FPV3.DisplayName & FPV3.NumberPlate), SelectedItem_Car)
                 Else
                     If FPV4 = Nothing Then
                         FPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -262,7 +262,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(FPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(FPV4)
-                        FVDict.Add(MD5Gen(FPV4.DisplayName & FPV4.Handle), SelectedItem_Car)
+                        FVDict.Add(MD5Gen(FPV4.DisplayName & FPV4.NumberPlate), SelectedItem_Car)
                     Else
                         If FPV0 = Nothing Then
                             FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -275,7 +275,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(FPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(FPV0)
-                            FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.Handle), SelectedItem_Car)
+                            FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -299,7 +299,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(TPV1, SelectedItem_Car)
             CreateMechanicInVehicle(TPV1)
-            TVDict.Add(MD5Gen(TPV1.DisplayName & TPV1.Handle), SelectedItem_Car)
+            TVDict.Add(MD5Gen(TPV1.DisplayName & TPV1.NumberPlate), SelectedItem_Car)
         Else
             If TPV2 = Nothing Then
                 TPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -312,7 +312,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(TPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(TPV2)
-                TVDict.Add(MD5Gen(TPV2.DisplayName & TPV2.Handle), SelectedItem_Car)
+                TVDict.Add(MD5Gen(TPV2.DisplayName & TPV2.NumberPlate), SelectedItem_Car)
             Else
                 If TPV3 = Nothing Then
                     TPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -325,7 +325,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(TPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(TPV3)
-                    TVDict.Add(MD5Gen(TPV3.DisplayName & TPV3.Handle), SelectedItem_Car)
+                    TVDict.Add(MD5Gen(TPV3.DisplayName & TPV3.NumberPlate), SelectedItem_Car)
                 Else
                     If TPV4 = Nothing Then
                         TPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -338,7 +338,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(TPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(TPV4)
-                        TVDict.Add(MD5Gen(TPV4.DisplayName & TPV4.Handle), SelectedItem_Car)
+                        TVDict.Add(MD5Gen(TPV4.DisplayName & TPV4.NumberPlate), SelectedItem_Car)
                     Else
                         If TPV0 = Nothing Then
                             TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -351,7 +351,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(TPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(TPV0)
-                            TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.Handle), SelectedItem_Car)
+                            TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -375,7 +375,7 @@ Public Class Mechanic2
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(PPV1, SelectedItem_Car)
             CreateMechanicInVehicle(PPV1)
-            PVDict.Add(MD5Gen(PPV1.DisplayName & PPV1.Handle), SelectedItem_Car)
+            PVDict.Add(MD5Gen(PPV1.DisplayName & PPV1.NumberPlate), SelectedItem_Car)
         Else
             If PPV2 = Nothing Then
                 PPV2 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -388,7 +388,7 @@ Public Class Mechanic2
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(PPV2, SelectedItem_Car)
                 CreateMechanicInVehicle(PPV2)
-                PVDict.Add(MD5Gen(PPV2.DisplayName & PPV2.Handle), SelectedItem_Car)
+                PVDict.Add(MD5Gen(PPV2.DisplayName & PPV2.NumberPlate), SelectedItem_Car)
             Else
                 If PPV3 = Nothing Then
                     PPV3 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -401,7 +401,7 @@ Public Class Mechanic2
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(PPV3, SelectedItem_Car)
                     CreateMechanicInVehicle(PPV3)
-                    PVDict.Add(MD5Gen(PPV3.DisplayName & PPV3.Handle), SelectedItem_Car)
+                    PVDict.Add(MD5Gen(PPV3.DisplayName & PPV3.NumberPlate), SelectedItem_Car)
                 Else
                     If PPV4 = Nothing Then
                         PPV4 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -414,7 +414,7 @@ Public Class Mechanic2
                         WriteCfgValue("Active", "True", SelectedItem_Car)
                         SetModKit(PPV4, SelectedItem_Car)
                         CreateMechanicInVehicle(PPV4)
-                        PVDict.Add(MD5Gen(PPV4.DisplayName & PPV4.Handle), SelectedItem_Car)
+                        PVDict.Add(MD5Gen(PPV4.DisplayName & PPV4.NumberPlate), SelectedItem_Car)
                     Else
                         If PPV0 = Nothing Then
                             PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -427,7 +427,7 @@ Public Class Mechanic2
                             WriteCfgValue("Active", "True", SelectedItem_Car)
                             SetModKit(PPV0, SelectedItem_Car)
                             CreateMechanicInVehicle(PPV0)
-                            PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.Handle), SelectedItem_Car)
+                            PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
                         Else
                             sender.Visible = False
                             UI.ShowSubtitle(Reach10)
@@ -611,48 +611,40 @@ Public Class Mechanic2
     Public Shared Sub ReturnVehicleIfDead(vehicle As Vehicle)
         Select Case playerName
             Case "Michael"
-                If MVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
+                If MVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
-                    MVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
+                    MVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                 End If
             Case "Franklin"
-                If FVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
+                If FVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
-                    FVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
+                    FVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                 End If
             Case "Trevor"
-                If TVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
+                If TVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
-                    TVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
+                    TVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                 End If
             Case "Player3"
-                If PVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.Handle)) Then
+                If PVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)) Then
                     If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                     Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                     DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.Handle)))
-                    PVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.Handle))
+                    WriteCfgValue("Active", "False", MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate)))
+                    PVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                 End If
         End Select
 
     End Sub
-
-    Public Shared Function IsAlive(vehicle As Vehicle) As Boolean
-        If vehicle.EngineHealth < 0 Then
-            Return False
-        Else
-            Return True
-        End If
-    End Function
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
@@ -661,135 +653,135 @@ Public Class Mechanic2
             Else
                 If Not MPV0 = Nothing AndAlso MPV0.CurrentBlip.Alpha = 0 Then
                     MPV0.CurrentBlip.Alpha = 255
-                    MPV0.IsPersistent = IsAlive(MPV0)
-                    If Not IsAlive(MPV0) Then ReturnVehicleIfDead(MPV0)
+                    MPV0.IsPersistent = MPV0.IsAlive
+                    If Not MPV0.IsAlive Then ReturnVehicleIfDead(MPV0)
                 End If
                 If Not MPV1 = Nothing AndAlso MPV1.CurrentBlip.Alpha = 0 Then
                     MPV1.CurrentBlip.Alpha = 255
-                    MPV1.IsPersistent = IsAlive(MPV1)
-                    If Not IsAlive(MPV1) Then ReturnVehicleIfDead(MPV1)
+                    MPV1.IsPersistent = MPV1.IsAlive
+                    If Not MPV1.IsAlive Then ReturnVehicleIfDead(MPV1)
                 End If
                 If Not MPV2 = Nothing AndAlso MPV2.CurrentBlip.Alpha = 0 Then
                     MPV2.CurrentBlip.Alpha = 255
-                    MPV2.IsPersistent = IsAlive(MPV2)
-                    If Not IsAlive(MPV2) Then ReturnVehicleIfDead(MPV2)
+                    MPV2.IsPersistent = MPV2.IsAlive
+                    If Not MPV2.IsAlive Then ReturnVehicleIfDead(MPV2)
                 End If
                 If Not MPV3 = Nothing AndAlso MPV3.CurrentBlip.Alpha = 0 Then
                     MPV3.CurrentBlip.Alpha = 255
-                    MPV3.IsPersistent = IsAlive(MPV3)
-                    If Not IsAlive(MPV3) Then ReturnVehicleIfDead(MPV3)
+                    MPV3.IsPersistent = MPV3.IsAlive
+                    If Not MPV3.IsAlive Then ReturnVehicleIfDead(MPV3)
                 End If
                 If Not MPV4 = Nothing AndAlso MPV4.CurrentBlip.Alpha = 0 Then
                     MPV4.CurrentBlip.Alpha = 255
-                    MPV4.IsPersistent = IsAlive(MPV4)
-                    If Not IsAlive(MPV4) Then ReturnVehicleIfDead(MPV4)
+                    MPV4.IsPersistent = MPV4.IsAlive
+                    If Not MPV4.IsAlive Then ReturnVehicleIfDead(MPV4)
                 End If
                 If Not MPV10 = Nothing AndAlso MPV10.CurrentBlip.Alpha = 0 Then
                     MPV10.CurrentBlip.Alpha = 255
-                    MPV10.IsPersistent = IsAlive(MPV10)
+                    MPV10.IsPersistent = MPV10.IsAlive
                 End If
                 If Not MPV11 = Nothing AndAlso MPV11.CurrentBlip.Alpha = 0 Then
                     MPV11.CurrentBlip.Alpha = 255
-                    MPV11.IsPersistent = IsAlive(MPV11)
+                    MPV11.IsPersistent = MPV11.IsAlive
                 End If
                 If Not FPV0 = Nothing AndAlso FPV0.CurrentBlip.Alpha = 0 Then
                     FPV0.CurrentBlip.Alpha = 255
-                    FPV0.IsPersistent = IsAlive(FPV0)
-                    If Not IsAlive(FPV0) Then ReturnVehicleIfDead(FPV0)
+                    FPV0.IsPersistent = FPV0.IsAlive
+                    If Not FPV0.IsAlive Then ReturnVehicleIfDead(FPV0)
                 End If
                 If Not FPV1 = Nothing AndAlso FPV1.CurrentBlip.Alpha = 0 Then
                     FPV1.CurrentBlip.Alpha = 255
-                    FPV1.IsPersistent = IsAlive(FPV1)
-                    If Not IsAlive(FPV1) Then ReturnVehicleIfDead(FPV1)
+                    FPV1.IsPersistent = FPV1.IsAlive
+                    If Not FPV1.IsAlive Then ReturnVehicleIfDead(FPV1)
                 End If
                 If Not FPV2 = Nothing AndAlso FPV2.CurrentBlip.Alpha = 0 Then
                     FPV2.CurrentBlip.Alpha = 255
-                    FPV2.IsPersistent = IsAlive(FPV2)
-                    If Not IsAlive(FPV2) Then ReturnVehicleIfDead(FPV2)
+                    FPV2.IsPersistent = FPV2.IsAlive
+                    If Not FPV2.IsAlive Then ReturnVehicleIfDead(FPV2)
                 End If
                 If Not FPV3 = Nothing AndAlso FPV3.CurrentBlip.Alpha = 0 Then
                     FPV3.CurrentBlip.Alpha = 255
-                    FPV3.IsPersistent = IsAlive(FPV3)
-                    If Not IsAlive(FPV3) Then ReturnVehicleIfDead(FPV3)
+                    FPV3.IsPersistent = FPV3.IsAlive
+                    If Not FPV3.IsAlive Then ReturnVehicleIfDead(FPV3)
                 End If
                 If Not FPV4 = Nothing AndAlso FPV4.CurrentBlip.Alpha = 0 Then
                     FPV4.CurrentBlip.Alpha = 255
-                    FPV4.IsPersistent = IsAlive(FPV4)
-                    If Not IsAlive(FPV4) Then ReturnVehicleIfDead(FPV4)
+                    FPV4.IsPersistent = FPV4.IsAlive
+                    If Not FPV4.IsAlive Then ReturnVehicleIfDead(FPV4)
                 End If
                 If Not FPV10 = Nothing AndAlso FPV10.CurrentBlip.Alpha = 0 Then
                     FPV10.CurrentBlip.Alpha = 255
-                    FPV10.IsPersistent = IsAlive(FPV10)
+                    FPV10.IsPersistent = FPV10.IsAlive
                 End If
                 If Not FPV11 = Nothing AndAlso FPV11.CurrentBlip.Alpha = 0 Then
                     FPV11.CurrentBlip.Alpha = 255
-                    FPV11.IsPersistent = IsAlive(FPV11)
+                    FPV11.IsPersistent = FPV11.IsAlive
                 End If
                 If Not TPV0 = Nothing AndAlso TPV0.CurrentBlip.Alpha = 0 Then
                     TPV0.CurrentBlip.Alpha = 255
-                    TPV0.IsPersistent = IsAlive(TPV0)
-                    If Not IsAlive(TPV0) Then ReturnVehicleIfDead(TPV0)
+                    TPV0.IsPersistent = TPV0.IsAlive
+                    If Not TPV0.IsAlive Then ReturnVehicleIfDead(TPV0)
                 End If
                 If Not TPV1 = Nothing AndAlso TPV1.CurrentBlip.Alpha = 0 Then
                     TPV1.CurrentBlip.Alpha = 255
-                    TPV1.IsPersistent = IsAlive(TPV1)
-                    If Not IsAlive(TPV1) Then ReturnVehicleIfDead(TPV1)
+                    TPV1.IsPersistent = TPV1.IsAlive
+                    If Not TPV1.IsAlive Then ReturnVehicleIfDead(TPV1)
                 End If
                 If Not TPV2 = Nothing AndAlso TPV2.CurrentBlip.Alpha = 0 Then
                     TPV2.CurrentBlip.Alpha = 255
-                    TPV2.IsPersistent = IsAlive(TPV2)
-                    If Not IsAlive(TPV2) Then ReturnVehicleIfDead(TPV2)
+                    TPV2.IsPersistent = TPV2.IsAlive
+                    If Not TPV2.IsAlive Then ReturnVehicleIfDead(TPV2)
                 End If
                 If Not TPV3 = Nothing AndAlso TPV3.CurrentBlip.Alpha = 0 Then
                     TPV3.CurrentBlip.Alpha = 255
-                    TPV3.IsPersistent = IsAlive(TPV3)
-                    If Not IsAlive(TPV3) Then ReturnVehicleIfDead(TPV3)
+                    TPV3.IsPersistent = TPV3.IsAlive
+                    If Not TPV3.IsAlive Then ReturnVehicleIfDead(TPV3)
                 End If
                 If Not TPV4 = Nothing AndAlso TPV4.CurrentBlip.Alpha = 0 Then
                     TPV4.CurrentBlip.Alpha = 255
-                    TPV4.IsPersistent = IsAlive(TPV4)
-                    If Not IsAlive(TPV4) Then ReturnVehicleIfDead(TPV4)
+                    TPV4.IsPersistent = TPV4.IsAlive
+                    If Not TPV4.IsAlive Then ReturnVehicleIfDead(TPV4)
                 End If
                 If Not TPV10 = Nothing AndAlso TPV10.CurrentBlip.Alpha = 0 Then
                     TPV10.CurrentBlip.Alpha = 255
-                    TPV10.IsPersistent = IsAlive(TPV10)
+                    TPV10.IsPersistent = TPV10.IsAlive
                 End If
                 If Not TPV11 = Nothing AndAlso TPV11.CurrentBlip.Alpha = 0 Then
                     TPV11.CurrentBlip.Alpha = 255
-                    TPV11.IsPersistent = IsAlive(TPV11)
+                    TPV11.IsPersistent = TPV11.IsAlive
                 End If
                 If Not PPV0 = Nothing AndAlso PPV0.CurrentBlip.Alpha = 0 Then
                     PPV0.CurrentBlip.Alpha = 255
-                    PPV0.IsPersistent = IsAlive(PPV0)
-                    If Not IsAlive(PPV0) Then ReturnVehicleIfDead(PPV0)
+                    PPV0.IsPersistent = PPV0.IsAlive
+                    If Not PPV0.IsAlive Then ReturnVehicleIfDead(PPV0)
                 End If
                 If Not PPV1 = Nothing AndAlso PPV1.CurrentBlip.Alpha = 0 Then
                     PPV1.CurrentBlip.Alpha = 255
-                    PPV1.IsPersistent = IsAlive(PPV1)
-                    If Not IsAlive(PPV1) Then ReturnVehicleIfDead(PPV1)
+                    PPV1.IsPersistent = PPV1.IsAlive
+                    If Not PPV1.IsAlive Then ReturnVehicleIfDead(PPV1)
                 End If
                 If Not PPV2 = Nothing AndAlso PPV2.CurrentBlip.Alpha = 0 Then
                     PPV2.CurrentBlip.Alpha = 255
-                    PPV2.IsPersistent = IsAlive(PPV2)
-                    If Not IsAlive(PPV2) Then ReturnVehicleIfDead(PPV2)
+                    PPV2.IsPersistent = PPV2.IsAlive
+                    If Not PPV2.IsAlive Then ReturnVehicleIfDead(PPV2)
                 End If
                 If Not PPV3 = Nothing AndAlso PPV3.CurrentBlip.Alpha = 0 Then
                     PPV3.CurrentBlip.Alpha = 255
-                    PPV3.IsPersistent = IsAlive(PPV3)
-                    If Not IsAlive(PPV3) Then ReturnVehicleIfDead(PPV3)
+                    PPV3.IsPersistent = PPV3.IsAlive
+                    If Not PPV3.IsAlive Then ReturnVehicleIfDead(PPV3)
                 End If
                 If Not PPV4 = Nothing AndAlso PPV4.CurrentBlip.Alpha = 0 Then
                     PPV4.CurrentBlip.Alpha = 255
-                    PPV4.IsPersistent = IsAlive(PPV4)
-                    If Not IsAlive(PPV4) Then ReturnVehicleIfDead(PPV4)
+                    PPV4.IsPersistent = PPV4.IsAlive
+                    If Not PPV4.IsAlive Then ReturnVehicleIfDead(PPV4)
                 End If
                 If Not PPV10 = Nothing AndAlso PPV10.CurrentBlip.Alpha = 0 Then
                     PPV10.CurrentBlip.Alpha = 255
-                    PPV10.IsPersistent = IsAlive(PPV10)
+                    PPV10.IsPersistent = PPV10.IsAlive
                 End If
                 If Not PPV11 = Nothing AndAlso PPV11.CurrentBlip.Alpha = 0 Then
                     PPV11.CurrentBlip.Alpha = 255
-                    PPV11.IsPersistent = IsAlive(PPV11)
+                    PPV11.IsPersistent = PPV11.IsAlive
                 End If
                 If Not MPV10 = Nothing AndAlso MPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
                     If MPV10.ClassType = VehicleClass.Boats Then
@@ -929,26 +921,26 @@ Public Class Mechanic2
                 End If
             End If
 
-            If (Not MPV0 = Nothing AndAlso (Not IsAlive(MPV0) AndAlso World.GetDistance(playerPed.Position, MPV0.Position) > 50.0)) Then MPV0.Delete()
-            If (Not MPV1 = Nothing AndAlso (Not IsAlive(MPV1) AndAlso World.GetDistance(playerPed.Position, MPV1.Position) > 50.0)) Then MPV1.Delete()
-            If (Not MPV2 = Nothing AndAlso (Not IsAlive(MPV2) AndAlso World.GetDistance(playerPed.Position, MPV2.Position) > 50.0)) Then MPV2.Delete()
-            If (Not MPV3 = Nothing AndAlso (Not IsAlive(MPV3) AndAlso World.GetDistance(playerPed.Position, MPV3.Position) > 50.0)) Then MPV3.Delete()
-            If (Not MPV4 = Nothing AndAlso (Not IsAlive(MPV4) AndAlso World.GetDistance(playerPed.Position, MPV4.Position) > 50.0)) Then MPV4.Delete()
-            If (Not FPV0 = Nothing AndAlso (Not IsAlive(FPV0) AndAlso World.GetDistance(playerPed.Position, FPV0.Position) > 50.0)) Then FPV0.Delete()
-            If (Not FPV1 = Nothing AndAlso (Not IsAlive(FPV1) AndAlso World.GetDistance(playerPed.Position, FPV1.Position) > 50.0)) Then FPV1.Delete()
-            If (Not FPV2 = Nothing AndAlso (Not IsAlive(FPV2) AndAlso World.GetDistance(playerPed.Position, FPV2.Position) > 50.0)) Then FPV2.Delete()
-            If (Not FPV3 = Nothing AndAlso (Not IsAlive(FPV3) AndAlso World.GetDistance(playerPed.Position, FPV3.Position) > 50.0)) Then FPV3.Delete()
-            If (Not FPV4 = Nothing AndAlso (Not IsAlive(FPV4) AndAlso World.GetDistance(playerPed.Position, FPV4.Position) > 50.0)) Then FPV4.Delete()
-            If (Not TPV0 = Nothing AndAlso (Not IsAlive(TPV0) AndAlso World.GetDistance(playerPed.Position, TPV0.Position) > 50.0)) Then TPV0.Delete()
-            If (Not TPV1 = Nothing AndAlso (Not IsAlive(TPV1) AndAlso World.GetDistance(playerPed.Position, TPV1.Position) > 50.0)) Then TPV1.Delete()
-            If (Not TPV2 = Nothing AndAlso (Not IsAlive(TPV2) AndAlso World.GetDistance(playerPed.Position, TPV2.Position) > 50.0)) Then TPV2.Delete()
-            If (Not TPV3 = Nothing AndAlso (Not IsAlive(TPV3) AndAlso World.GetDistance(playerPed.Position, TPV3.Position) > 50.0)) Then TPV3.Delete()
-            If (Not TPV4 = Nothing AndAlso (Not IsAlive(TPV4) AndAlso World.GetDistance(playerPed.Position, TPV4.Position) > 50.0)) Then TPV4.Delete()
-            If (Not PPV0 = Nothing AndAlso (Not IsAlive(PPV0) AndAlso World.GetDistance(playerPed.Position, PPV0.Position) > 50.0)) Then PPV0.Delete()
-            If (Not PPV1 = Nothing AndAlso (Not IsAlive(PPV1) AndAlso World.GetDistance(playerPed.Position, PPV1.Position) > 50.0)) Then PPV1.Delete()
-            If (Not PPV2 = Nothing AndAlso (Not IsAlive(PPV2) AndAlso World.GetDistance(playerPed.Position, PPV2.Position) > 50.0)) Then PPV2.Delete()
-            If (Not PPV3 = Nothing AndAlso (Not IsAlive(PPV3) AndAlso World.GetDistance(playerPed.Position, PPV3.Position) > 50.0)) Then PPV3.Delete()
-            If (Not PPV4 = Nothing AndAlso (Not IsAlive(PPV4) AndAlso World.GetDistance(playerPed.Position, PPV4.Position) > 50.0)) Then PPV4.Delete()
+            If (Not MPV0 = Nothing AndAlso (Not MPV0.IsAlive AndAlso World.GetDistance(playerPed.Position, MPV0.Position) > 50.0)) Then MPV0.Delete()
+            If (Not MPV1 = Nothing AndAlso (Not MPV1.IsAlive AndAlso World.GetDistance(playerPed.Position, MPV1.Position) > 50.0)) Then MPV1.Delete()
+            If (Not MPV2 = Nothing AndAlso (Not MPV2.IsAlive AndAlso World.GetDistance(playerPed.Position, MPV2.Position) > 50.0)) Then MPV2.Delete()
+            If (Not MPV3 = Nothing AndAlso (Not MPV3.IsAlive AndAlso World.GetDistance(playerPed.Position, MPV3.Position) > 50.0)) Then MPV3.Delete()
+            If (Not MPV4 = Nothing AndAlso (Not MPV4.IsAlive AndAlso World.GetDistance(playerPed.Position, MPV4.Position) > 50.0)) Then MPV4.Delete()
+            If (Not FPV0 = Nothing AndAlso (Not FPV0.IsAlive AndAlso World.GetDistance(playerPed.Position, FPV0.Position) > 50.0)) Then FPV0.Delete()
+            If (Not FPV1 = Nothing AndAlso (Not FPV1.IsAlive AndAlso World.GetDistance(playerPed.Position, FPV1.Position) > 50.0)) Then FPV1.Delete()
+            If (Not FPV2 = Nothing AndAlso (Not FPV2.IsAlive AndAlso World.GetDistance(playerPed.Position, FPV2.Position) > 50.0)) Then FPV2.Delete()
+            If (Not FPV3 = Nothing AndAlso (Not FPV3.IsAlive AndAlso World.GetDistance(playerPed.Position, FPV3.Position) > 50.0)) Then FPV3.Delete()
+            If (Not FPV4 = Nothing AndAlso (Not FPV4.IsAlive AndAlso World.GetDistance(playerPed.Position, FPV4.Position) > 50.0)) Then FPV4.Delete()
+            If (Not TPV0 = Nothing AndAlso (Not TPV0.IsAlive AndAlso World.GetDistance(playerPed.Position, TPV0.Position) > 50.0)) Then TPV0.Delete()
+            If (Not TPV1 = Nothing AndAlso (Not TPV1.IsAlive AndAlso World.GetDistance(playerPed.Position, TPV1.Position) > 50.0)) Then TPV1.Delete()
+            If (Not TPV2 = Nothing AndAlso (Not TPV2.IsAlive AndAlso World.GetDistance(playerPed.Position, TPV2.Position) > 50.0)) Then TPV2.Delete()
+            If (Not TPV3 = Nothing AndAlso (Not TPV3.IsAlive AndAlso World.GetDistance(playerPed.Position, TPV3.Position) > 50.0)) Then TPV3.Delete()
+            If (Not TPV4 = Nothing AndAlso (Not TPV4.IsAlive AndAlso World.GetDistance(playerPed.Position, TPV4.Position) > 50.0)) Then TPV4.Delete()
+            If (Not PPV0 = Nothing AndAlso (Not PPV0.IsAlive AndAlso World.GetDistance(playerPed.Position, PPV0.Position) > 50.0)) Then PPV0.Delete()
+            If (Not PPV1 = Nothing AndAlso (Not PPV1.IsAlive AndAlso World.GetDistance(playerPed.Position, PPV1.Position) > 50.0)) Then PPV1.Delete()
+            If (Not PPV2 = Nothing AndAlso (Not PPV2.IsAlive AndAlso World.GetDistance(playerPed.Position, PPV2.Position) > 50.0)) Then PPV2.Delete()
+            If (Not PPV3 = Nothing AndAlso (Not PPV3.IsAlive AndAlso World.GetDistance(playerPed.Position, PPV3.Position) > 50.0)) Then PPV3.Delete()
+            If (Not PPV4 = Nothing AndAlso (Not PPV4.IsAlive AndAlso World.GetDistance(playerPed.Position, PPV4.Position) > 50.0)) Then PPV4.Delete()
 
             If Not MPVVB10 = Nothing AndAlso World.GetDistance(playerPed.Position, MPVV10) < 50.0 Then
                 Dim VehicleModel As String = ReadCfgValue("VehicleModel", MPVF10)

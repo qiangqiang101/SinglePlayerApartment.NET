@@ -669,7 +669,7 @@ Public Class SinglePlayerApartment
                     '    If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     '    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
             End Select
-            teleported = True
+            'teleported = True
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -705,16 +705,16 @@ Public Class SinglePlayerApartment
             trevorPubSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(96.154197692871, -1290.7312011719, 29.266660690308))
             floydSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-1155.31, -1518.57, 10.63135))
 
+            Dim Safehouses As List(Of Integer) = New List(Of Integer)() From {michaelSafeHouse, franklinAuntSafeHouse, franklinSafeHouse, trevorTrailerSafeHouse, trevorPubSafeHouse, floydSafeHouse}
+            If Safehouses.Contains(playerInterior) Then
+                LoadPosition()
+            Else
+                teleported = True
+            End If
+
             If hideHud Then
                 Native.Function.Call(Hash.HIDE_HUD_AND_RADAR_THIS_FRAME)
             End If
-
-            Select Case playerInterior
-                Case michaelSafeHouse, franklinAuntSafeHouse, franklinSafeHouse, trevorTrailerSafeHouse, trevorPubSafeHouse, floydSafeHouse
-                    If Not teleported Then
-                        LoadPosition()
-                    End If
-            End Select
 
             If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso Not player.WantedLevel > 0 Then
                 Resources.Disable_Switch_Characters()
