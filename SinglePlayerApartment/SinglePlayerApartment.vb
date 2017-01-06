@@ -669,7 +669,7 @@ Public Class SinglePlayerApartment
                     '    If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     '    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
             End Select
-            'teleported = True
+
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -707,9 +707,11 @@ Public Class SinglePlayerApartment
 
             Dim Safehouses As List(Of Integer) = New List(Of Integer)() From {michaelSafeHouse, franklinAuntSafeHouse, franklinSafeHouse, trevorTrailerSafeHouse, trevorPubSafeHouse, floydSafeHouse}
             If Safehouses.Contains(playerInterior) Then
-                LoadPosition()
-            Else
-                teleported = True
+                If Not teleported Then LoadPosition()
+            End If
+
+            If InteriorIDList.Contains(playerInterior) Then
+                teleported = Not teleported
             End If
 
             If hideHud Then

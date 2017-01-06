@@ -11,6 +11,7 @@ D:\GTAV Mods\SinglePlayerApartment\SPAHelper\obj\Debug\HelperSPA.pdb
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\HelperSPA.dll
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\HelperSPA.pdb
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\HelperSPA.xml
+C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\ScriptHookVDotNet.dll
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\ScriptHookVDotNet.xml
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\SPAHelper.vbprojResolveAssemblyReference.cache
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\SPAHelper.Resources.resources
@@ -18,4 +19,3 @@ C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\De
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\HelperSPA.dll
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\HelperSPA.xml
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\Debug\HelperSPA.pdb
-C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\Debug\ScriptHookVDotNet.dll
