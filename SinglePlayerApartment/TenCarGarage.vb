@@ -840,312 +840,104 @@ Public Class TenCarGarage
 
             playerPed.CurrentVehicle.Delete()
             If playerName = "Michael" Then
-                If Mechanic.MPV1 = Nothing Then
-                    Mechanic.MPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                    SetModKit(Mechanic.MPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                    Mechanic.MPV1.IsPersistent = True
-                    Mechanic.MPV1.AddBlip()
-                    Mechanic.MPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.MPV1.CurrentBlip.Color = BlipColor2.Michael
-                    Mechanic.MPV1.CurrentBlip.IsShortRange = True
-                    SetBlipName(Mechanic.MPV1.FriendlyName, Mechanic.MPV1.CurrentBlip)
-                    SetIntoVehicle(playerPed, Mechanic.MPV1, VehicleSeat.Driver)
-                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV1.DisplayName & Mechanic.MPV1.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                If Mechanic.MPV0 = Nothing Then
+                    Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.MPV0.IsPersistent = True
+                    Mechanic.MPV0.AddBlip()
+                    Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
+                    Mechanic.MPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
+                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
-                    If Mechanic.MPV2 = Nothing Then
-                        Mechanic.MPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                        SetModKit(Mechanic.MPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                        Mechanic.MPV2.IsPersistent = True
-                        Mechanic.MPV2.AddBlip()
-                        Mechanic.MPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.MPV2.CurrentBlip.Color = BlipColor2.Michael
-                        Mechanic.MPV2.CurrentBlip.IsShortRange = True
-                        SetBlipName(Mechanic.MPV2.FriendlyName, Mechanic.MPV2.CurrentBlip)
-                        SetIntoVehicle(playerPed, Mechanic.MPV2, VehicleSeat.Driver)
-                        Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV2.DisplayName & Mechanic.MPV2.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Else
-                        If Mechanic.MPV3 = Nothing Then
-                            Mechanic.MPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                            SetModKit(Mechanic.MPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                            Mechanic.MPV3.IsPersistent = True
-                            Mechanic.MPV3.AddBlip()
-                            Mechanic.MPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.MPV3.CurrentBlip.Color = BlipColor2.Michael
-                            Mechanic.MPV3.CurrentBlip.IsShortRange = True
-                            SetBlipName(Mechanic.MPV3.FriendlyName, Mechanic.MPV3.CurrentBlip)
-                            SetIntoVehicle(playerPed, Mechanic.MPV3, VehicleSeat.Driver)
-                            Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV3.DisplayName & Mechanic.MPV3.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Else
-                            If Mechanic.MPV4 = Nothing Then
-                                Mechanic.MPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                SetModKit(Mechanic.MPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                Mechanic.MPV4.IsPersistent = True
-                                Mechanic.MPV4.AddBlip()
-                                Mechanic.MPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.MPV4.CurrentBlip.Color = BlipColor2.Michael
-                                Mechanic.MPV4.CurrentBlip.IsShortRange = True
-                                SetBlipName(Mechanic.MPV4.FriendlyName, Mechanic.MPV4.CurrentBlip)
-                                SetIntoVehicle(playerPed, Mechanic.MPV4, VehicleSeat.Driver)
-                                Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV4.DisplayName & Mechanic.MPV4.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Else
-                                If Mechanic.MPV0 = Nothing Then
-                                    Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.MPV0.IsPersistent = True
-                                    Mechanic.MPV0.AddBlip()
-                                    Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
-                                    Mechanic.MPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
-                                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Else
-                                    Mechanic.MPV0.Delete()
-                                    Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.MPV0.IsPersistent = True
-                                    Mechanic.MPV0.AddBlip()
-                                    Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
-                                    Mechanic.MPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
-                                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic.MPV0.Delete()
+                    Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.MPV0.IsPersistent = True
+                    Mechanic.MPV0.AddBlip()
+                    Mechanic.MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.MPV0.CurrentBlip.Color = BlipColor2.Michael
+                    Mechanic.MPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
+                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Franklin" Then
-                If Mechanic.FPV1 = Nothing Then
-                    Mechanic.FPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                    SetModKit(Mechanic.FPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                    Mechanic.FPV1.IsPersistent = True
-                    Mechanic.FPV1.AddBlip()
-                    Mechanic.FPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.FPV1.CurrentBlip.Color = BlipColor2.Franklin
-                    Mechanic.FPV1.CurrentBlip.IsShortRange = True
-                    SetBlipName(Mechanic.FPV1.FriendlyName, Mechanic.FPV1.CurrentBlip)
-                    SetIntoVehicle(playerPed, Mechanic.FPV1, VehicleSeat.Driver)
-                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV1.DisplayName & Mechanic.FPV1.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                If Mechanic.FPV0 = Nothing Then
+                    Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.FPV0.IsPersistent = True
+                    Mechanic.FPV0.AddBlip()
+                    Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
+                    Mechanic.FPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
+                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
-                    If Mechanic.FPV2 = Nothing Then
-                        Mechanic.FPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                        SetModKit(Mechanic.FPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                        Mechanic.FPV2.IsPersistent = True
-                        Mechanic.FPV2.AddBlip()
-                        Mechanic.FPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.FPV2.CurrentBlip.Color = BlipColor2.Franklin
-                        Mechanic.FPV2.CurrentBlip.IsShortRange = True
-                        SetBlipName(Mechanic.FPV2.FriendlyName, Mechanic.FPV2.CurrentBlip)
-                        SetIntoVehicle(playerPed, Mechanic.FPV2, VehicleSeat.Driver)
-                        Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV2.DisplayName & Mechanic.FPV2.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Else
-                        If Mechanic.FPV3 = Nothing Then
-                            Mechanic.FPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                            SetModKit(Mechanic.FPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                            Mechanic.FPV3.IsPersistent = True
-                            Mechanic.FPV3.AddBlip()
-                            Mechanic.FPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.FPV3.CurrentBlip.Color = BlipColor2.Franklin
-                            Mechanic.FPV3.CurrentBlip.IsShortRange = True
-                            SetBlipName(Mechanic.FPV3.FriendlyName, Mechanic.FPV3.CurrentBlip)
-                            SetIntoVehicle(playerPed, Mechanic.FPV3, VehicleSeat.Driver)
-                            Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV3.DisplayName & Mechanic.FPV3.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Else
-                            If Mechanic.FPV4 = Nothing Then
-                                Mechanic.FPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                SetModKit(Mechanic.FPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                Mechanic.FPV4.IsPersistent = True
-                                Mechanic.FPV4.AddBlip()
-                                Mechanic.FPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.FPV4.CurrentBlip.Color = BlipColor2.Franklin
-                                Mechanic.FPV4.CurrentBlip.IsShortRange = True
-                                SetBlipName(Mechanic.FPV4.FriendlyName, Mechanic.FPV4.CurrentBlip)
-                                SetIntoVehicle(playerPed, Mechanic.FPV4, VehicleSeat.Driver)
-                                Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV4.DisplayName & Mechanic.FPV4.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Else
-                                If Mechanic.FPV0 = Nothing Then
-                                    Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.FPV0.IsPersistent = True
-                                    Mechanic.FPV0.AddBlip()
-                                    Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
-                                    Mechanic.FPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
-                                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Else
-                                    Mechanic.FPV0.Delete()
-                                    Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.FPV0.IsPersistent = True
-                                    Mechanic.FPV0.AddBlip()
-                                    Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
-                                    Mechanic.FPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
-                                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic.FPV0.Delete()
+                    Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.FPV0.IsPersistent = True
+                    Mechanic.FPV0.AddBlip()
+                    Mechanic.FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.FPV0.CurrentBlip.Color = BlipColor2.Franklin
+                    Mechanic.FPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
+                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Trevor" Then
-                If Mechanic.TPV1 = Nothing Then
-                    Mechanic.TPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                    SetModKit(Mechanic.TPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                    Mechanic.TPV1.IsPersistent = True
-                    Mechanic.TPV1.AddBlip()
-                    Mechanic.TPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.TPV1.CurrentBlip.Color = BlipColor2.Trevor
-                    Mechanic.TPV1.CurrentBlip.IsShortRange = True
-                    SetBlipName(Mechanic.TPV1.FriendlyName, Mechanic.TPV1.CurrentBlip)
-                    SetIntoVehicle(playerPed, Mechanic.TPV1, VehicleSeat.Driver)
-                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV1.DisplayName & Mechanic.TPV1.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                If Mechanic.TPV0 = Nothing Then
+                    Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.TPV0.IsPersistent = True
+                    Mechanic.TPV0.AddBlip()
+                    Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
+                    Mechanic.TPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
+                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
-                    If Mechanic.TPV2 = Nothing Then
-                        Mechanic.TPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                        SetModKit(Mechanic.TPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                        Mechanic.TPV2.IsPersistent = True
-                        Mechanic.TPV2.AddBlip()
-                        Mechanic.TPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.TPV2.CurrentBlip.Color = BlipColor2.Trevor
-                        Mechanic.TPV2.CurrentBlip.IsShortRange = True
-                        SetBlipName(Mechanic.TPV2.FriendlyName, Mechanic.TPV2.CurrentBlip)
-                        SetIntoVehicle(playerPed, Mechanic.TPV2, VehicleSeat.Driver)
-                        Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV2.DisplayName & Mechanic.TPV2.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Else
-                        If Mechanic.TPV3 = Nothing Then
-                            Mechanic.TPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                            SetModKit(Mechanic.TPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                            Mechanic.TPV3.IsPersistent = True
-                            Mechanic.TPV3.AddBlip()
-                            Mechanic.TPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.TPV3.CurrentBlip.Color = BlipColor2.Trevor
-                            Mechanic.TPV3.CurrentBlip.IsShortRange = True
-                            SetBlipName(Mechanic.TPV3.FriendlyName, Mechanic.TPV3.CurrentBlip)
-                            SetIntoVehicle(playerPed, Mechanic.TPV3, VehicleSeat.Driver)
-                            Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV3.DisplayName & Mechanic.TPV3.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Else
-                            If Mechanic.TPV4 = Nothing Then
-                                Mechanic.TPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                SetModKit(Mechanic.TPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                Mechanic.TPV4.IsPersistent = True
-                                Mechanic.TPV4.AddBlip()
-                                Mechanic.TPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.TPV4.CurrentBlip.Color = BlipColor2.Trevor
-                                Mechanic.TPV4.CurrentBlip.IsShortRange = True
-                                SetBlipName(Mechanic.TPV4.FriendlyName, Mechanic.TPV4.CurrentBlip)
-                                SetIntoVehicle(playerPed, Mechanic.TPV4, VehicleSeat.Driver)
-                                Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV4.DisplayName & Mechanic.TPV4.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Else
-                                If Mechanic.TPV0 = Nothing Then
-                                    Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.TPV0.IsPersistent = True
-                                    Mechanic.TPV0.AddBlip()
-                                    Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
-                                    Mechanic.TPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
-                                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Else
-                                    Mechanic.TPV0.Delete()
-                                    Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.TPV0.IsPersistent = True
-                                    Mechanic.TPV0.AddBlip()
-                                    Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
-                                    Mechanic.TPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
-                                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic.TPV0.Delete()
+                    Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.TPV0.IsPersistent = True
+                    Mechanic.TPV0.AddBlip()
+                    Mechanic.TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.TPV0.CurrentBlip.Color = BlipColor2.Trevor
+                    Mechanic.TPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
+                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Player3" Then
-                If Mechanic.PPV1 = Nothing Then
-                    Mechanic.PPV1 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                    SetModKit(Mechanic.PPV1, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                    Mechanic.PPV1.IsPersistent = True
-                    Mechanic.PPV1.AddBlip()
-                    Mechanic.PPV1.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                    Mechanic.PPV1.CurrentBlip.Color = BlipColor.Yellow
-                    Mechanic.PPV1.CurrentBlip.IsShortRange = True
-                    SetBlipName(Mechanic.PPV1.FriendlyName, Mechanic.PPV1.CurrentBlip)
-                    SetIntoVehicle(playerPed, Mechanic.PPV1, VehicleSeat.Driver)
-                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV1.DisplayName & Mechanic.PPV1.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                If Mechanic.PPV0 = Nothing Then
+                    Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.PPV0.IsPersistent = True
+                    Mechanic.PPV0.AddBlip()
+                    Mechanic.PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
+                    Mechanic.PPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
+                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
-                    If Mechanic.PPV2 = Nothing Then
-                        Mechanic.PPV2 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                        SetModKit(Mechanic.PPV2, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                        Mechanic.PPV2.IsPersistent = True
-                        Mechanic.PPV2.AddBlip()
-                        Mechanic.PPV2.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                        Mechanic.PPV2.CurrentBlip.Color = BlipColor.Yellow
-                        Mechanic.PPV2.CurrentBlip.IsShortRange = True
-                        SetBlipName(Mechanic.PPV2.FriendlyName, Mechanic.PPV2.CurrentBlip)
-                        SetIntoVehicle(playerPed, Mechanic.PPV2, VehicleSeat.Driver)
-                        Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV2.DisplayName & Mechanic.PPV2.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                    Else
-                        If Mechanic.PPV3 = Nothing Then
-                            Mechanic.PPV3 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                            SetModKit(Mechanic.PPV3, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                            Mechanic.PPV3.IsPersistent = True
-                            Mechanic.PPV3.AddBlip()
-                            Mechanic.PPV3.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                            Mechanic.PPV3.CurrentBlip.Color = BlipColor.Yellow
-                            Mechanic.PPV3.CurrentBlip.IsShortRange = True
-                            SetBlipName(Mechanic.PPV3.FriendlyName, Mechanic.PPV3.CurrentBlip)
-                            SetIntoVehicle(playerPed, Mechanic.PPV3, VehicleSeat.Driver)
-                            Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV3.DisplayName & Mechanic.PPV3.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                        Else
-                            If Mechanic.PPV4 = Nothing Then
-                                Mechanic.PPV4 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                SetModKit(Mechanic.PPV4, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                Mechanic.PPV4.IsPersistent = True
-                                Mechanic.PPV4.AddBlip()
-                                Mechanic.PPV4.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                Mechanic.PPV4.CurrentBlip.Color = BlipColor.Yellow
-                                Mechanic.PPV4.CurrentBlip.IsShortRange = True
-                                SetBlipName(Mechanic.PPV4.FriendlyName, Mechanic.PPV4.CurrentBlip)
-                                SetIntoVehicle(playerPed, Mechanic.PPV4, VehicleSeat.Driver)
-                                Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV4.DisplayName & Mechanic.PPV4.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                            Else
-                                If Mechanic.PPV0 = Nothing Then
-                                    Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.PPV0.IsPersistent = True
-                                    Mechanic.PPV0.AddBlip()
-                                    Mechanic.PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
-                                    Mechanic.PPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
-                                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                Else
-                                    Mechanic.PPV0.Delete()
-                                    Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
-                                    SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
-                                    Mechanic.PPV0.IsPersistent = True
-                                    Mechanic.PPV0.AddBlip()
-                                    Mechanic.PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
-                                    Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
-                                    Mechanic.PPV0.CurrentBlip.IsShortRange = True
-                                    SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
-                                    SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
-                                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
-                                End If
-                            End If
-                        End If
-                    End If
+                    Mechanic.PPV0.Delete()
+                    Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
+                    SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
+                    Mechanic.PPV0.IsPersistent = True
+                    Mechanic.PPV0.AddBlip()
+                    Mechanic.PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    Mechanic.PPV0.CurrentBlip.Color = BlipColor.Yellow
+                    Mechanic.PPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
+                    SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
+                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             End If
 

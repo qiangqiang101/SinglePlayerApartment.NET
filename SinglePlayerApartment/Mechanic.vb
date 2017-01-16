@@ -24,14 +24,12 @@ Public Class Mechanic
     Public Shared _menuPool As MenuPool
     Public Shared AS3, IW4, IW4HL, DPH, DPHHL, DT, ET, ETHL, RM, RMHL, TT, TTHL, WP, VB As String
     Public Shared NC2044, HA2862, HA2868, WO3655, NC2045, MR2117, HA2874, WD3677, MW2113, ETP1, ETP2, ETP3, BCA, BDP, CA, HA, LLB0604, LLB2143, MR0184, POWER, PD4401, PD4584, PPS, SVS, SMMD, SRD0325, SA, SR, TR, GA, PB, SRD0112, ZA As String
-    Public Shared MPV0, MPV1, MPV2, MPV3, MPV4 As Vehicle
-    Public Shared FPV0, FPV1, FPV2, FPV3, FPV4 As Vehicle
-    Public Shared TPV0, TPV1, TPV2, TPV3, TPV4 As Vehicle
-    Public Shared PPV0, PPV1, PPV2, PPV3, PPV4 As Vehicle
-    Public Shared MPV10, MPV11, FPV10, FPV11, TPV10, TPV11, PPV10, PPV11 As Vehicle
-    Public Shared MPVV10, MPVV11, FPVV10, FPVV11, TPVV10, TPVV11, PPVV10, PPVV11 As Vector3
-    Public Shared MPVVB10, MPVVB11, FPVVB10, FPVVB11, TPVVB10, TPVVB11, PPVVB10, PPVVB11 As Blip
-    Public Shared MPVF10, MPVF11, FPVF10, FPVF11, TPVF10, TPVF11, PPVF10, PPVF11 As String
+    Public Shared MPV0, FPV0, TPV0, PPV0 As Vehicle
+    Public Shared MPVD, FPVD, TPVD, PPVD As Single
+    Public Shared MPV10, FPV10, TPV10, PPV10 As Vehicle
+    Public Shared MPVV10, FPVV10, TPVV10, PPVV10 As Vector3
+    Public Shared MPVVB10, FPVVB10, TPVVB10, PPVVB10 As Blip
+    Public Shared MPVF10, FPVF10, TPVF10, PPVF10 As String
     Public Shared itemAS3, itemIW4, itemIW4HL, itemDPH, itemDPHHL, itemDT, itemET, itemETHL, itemRM, itemRMHL, itemTT, itemTTHL, itemWP, itemVB As UIMenuItem
     Public Shared itemNC2044, itemHA2862, itemHA2868, itemWO3655, itemNC2045, itemMR2117, itemHA2874, itemWD3677, itemMW2113, itemETP1, itemETP2, itemETP3 As UIMenuItem
     Public Shared itemBCA, itemBDP, itemCA, itemHA, itemLLB0604, itemLLB2143, itemMR0184, itemPower, itemPD4401, itemPD4584, itemProsperity, itemSVS, itemSMMD, itemSRD0325, itemSA, itemSR, itemTR As UIMenuItem
@@ -1771,7 +1769,6 @@ Public Class Mechanic
                 ElseIf playerName = "Player3" AndAlso Active = "False" Then
                     Mechanic2.Player3_SendVehicle(selectedItem.SubString1, VehicleModel, VehicleHash, selectedItem, sender)
                 End If
-                SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
             End If
             sender.Visible = False
         Catch ex As Exception
@@ -2424,6 +2421,11 @@ Public Class Mechanic
         Try
             _menuPool.ProcessMenus()
 
+            If Not MPV0 = Nothing Then MPVD = World.GetDistance(playerPed.Position, MPV0.Position)
+            If Not FPV0 = Nothing Then FPVD = World.GetDistance(playerPed.Position, FPV0.Position)
+            If Not TPV0 = Nothing Then TPVD = World.GetDistance(playerPed.Position, TPV0.Position)
+            If Not PPV0 = Nothing Then PPVD = World.GetDistance(playerPed.Position, PPV0.Position)
+
             If (Native.Function.Call(Of Boolean)(Native.Hash._GET_LAST_INPUT_METHOD, 2) = False AndAlso Game.IsControlPressed(2, My.Settings.MechanicPad) AndAlso Game.IsControlPressed(2, My.Settings.SecondMechanicPad)) AndAlso (Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen()) Then
                 PhoneMenu.Visible = Not PhoneMenu.Visible
             End If
@@ -2676,41 +2678,17 @@ Public Class Mechanic
     Public Sub OnAborted() Handles MyBase.Aborted
         Try
             If Not MPV0 = Nothing Then MPV0.Delete()
-            If Not MPV1 = Nothing Then MPV1.Delete()
-            If Not MPV2 = Nothing Then MPV2.Delete()
-            If Not MPV3 = Nothing Then MPV3.Delete()
-            If Not MPV4 = Nothing Then MPV4.Delete()
             If Not FPV0 = Nothing Then FPV0.Delete()
-            If Not FPV1 = Nothing Then FPV1.Delete()
-            If Not FPV2 = Nothing Then FPV2.Delete()
-            If Not FPV3 = Nothing Then FPV3.Delete()
-            If Not FPV4 = Nothing Then FPV4.Delete()
             If Not TPV0 = Nothing Then TPV0.Delete()
-            If Not TPV1 = Nothing Then TPV1.Delete()
-            If Not TPV2 = Nothing Then TPV2.Delete()
-            If Not TPV3 = Nothing Then TPV3.Delete()
-            If Not TPV4 = Nothing Then TPV4.Delete()
             If Not PPV0 = Nothing Then PPV0.Delete()
-            If Not PPV1 = Nothing Then PPV1.Delete()
-            If Not PPV2 = Nothing Then PPV2.Delete()
-            If Not PPV3 = Nothing Then PPV3.Delete()
-            If Not PPV4 = Nothing Then PPV4.Delete()
             If Not MPV10 = Nothing Then MPV10.Delete()
             If Not FPV10 = Nothing Then FPV10.Delete()
             If Not TPV10 = Nothing Then TPV10.Delete()
             If Not PPV10 = Nothing Then PPV10.Delete()
-            If Not MPV11 = Nothing Then MPV11.Delete()
-            If Not FPV11 = Nothing Then FPV11.Delete()
-            If Not TPV11 = Nothing Then TPV11.Delete()
-            If Not PPV11 = Nothing Then PPV11.Delete()
             If Not MPVVB10 = Nothing Then MPVVB10.Remove()
             If Not FPVVB10 = Nothing Then FPVVB10.Remove()
             If Not TPVVB10 = Nothing Then TPVVB10.Remove()
             If Not PPVVB10 = Nothing Then PPVVB10.Remove()
-            If Not MPVVB11 = Nothing Then MPVVB11.Remove()
-            If Not FPVVB11 = Nothing Then FPVVB11.Remove()
-            If Not TPVVB11 = Nothing Then TPVVB11.Remove()
-            If Not PPVVB11 = Nothing Then PPVVB11.Remove()
         Catch ex As Exception
         End Try
     End Sub
