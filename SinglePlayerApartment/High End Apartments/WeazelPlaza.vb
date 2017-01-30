@@ -271,7 +271,7 @@ Public Class WeazelPlaza
                     WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -314,6 +314,7 @@ Public Class WeazelPlaza
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = Apartment.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-908.57, -432.6784, 120.2045))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If

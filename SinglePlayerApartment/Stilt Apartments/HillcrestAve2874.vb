@@ -276,7 +276,7 @@ Public Class HillcrestAve2874
                     WriteCfgValue(_Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - _Apartment.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - _Apartment.Cost)
                     _Apartment.Owner = playerName
                     _Apartment.AptBlip.Remove()
                     If Not _Apartment.GrgBlip Is Nothing Then _Apartment.GrgBlip.Remove()
@@ -320,6 +320,7 @@ Public Class HillcrestAve2874
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = _Apartment.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-859.7589, 682.8218, 152.6529))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If

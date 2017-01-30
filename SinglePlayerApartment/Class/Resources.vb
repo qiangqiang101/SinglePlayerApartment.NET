@@ -37,6 +37,15 @@ Public Class Resources
         PROP_EARS = 2
     End Enum
 
+    Public Shared Sub ShowXmasTree(Location As Vector3)
+        If Not Website.PropXmasTree = Nothing Then
+            Website.PropXmasTree.Delete()
+            Website.PropXmasTree = World.CreateProp("prop_xmas_tree_int", New Vector3(Location.X, Location.Y, Location.Z - 1), False, False)
+        Else
+            Website.PropXmasTree = World.CreateProp("prop_xmas_tree_int", New Vector3(Location.X, Location.Y, Location.Z - 1), False, False)
+        End If
+    End Sub
+
     Public Shared Function GetHashKey(ByVal s As String) As Integer
         Dim Args As InputArgument() = New InputArgument() {s}
         Return Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, Args)
@@ -68,142 +77,110 @@ Public Class Resources
         Dim VehModel As String = ReadCfgValue("VehicleModel", file)
         Dim VehPrice As Integer
         Select Case VehModel
-            Case "Dukes2", "Vacca", "Dukes", "Dubsta3", "Marshall", "Cognoscenti", "Superd", "Massacro", "Jester", "Baller4"
-                VehPrice = 139500
-            Case "Guardian", "Baller5", "Coquette2", "Faction2", "Tampa", "Massacro2", "Jester2"
-                VehPrice = 187500
-            Case "Kuruma2"
-                VehPrice = 262500
-            Case "Insurgent2", "Casco", "Cheetah", "Vindicator", "Lurcher", "Coquette3", "Brawler"
-                VehPrice = 337500
-            Case "Schafter5"
-                VehPrice = 162500
-            Case "Schafter6", "Infernus", "Voodoo", "Furoregt"
-                VehPrice = 219000
-            Case "Cognoscenti2", "Btype2", "Nightshade"
-                VehPrice = 279000
-            Case "Baller6", "Monroe", "Jb700", "Turismor"
-                VehPrice = 256500
-            Case "Limo2"
-                VehPrice = 825000
-            Case "Mamba", "Feltzer3"
-                VehPrice = 497500
-            Case "Pigalle", "Buccaneer2", "Chino2", "Moonbeam2", "Primo2"
-                VehPrice = 200000
-            Case "Btype", "Entityxf", "Zentorno", "Lectro", "Monster", "Verlierer2"
-                VehPrice = 375000
-            Case "Ztype"
-                VehPrice = 5000000
-            Case "Stingergt", "Stinger", "Adder"
-                VehPrice = 550000
-            Case "Blista2", "Blista3", "Carbonrs", "Enduro", "Slamvan", "Kalahari", "Paradise", "Boxville2"
-                VehPrice = 21000
-            Case "Rhapsody", "Bullet", "Voltic", "Blade", "Cog55", "Alpha", "Rapidgt2", "Rapidgt", "Feltzer2", "Coquette", "Baller3"
-                VehPrice = 70000
-            Case "Panto", "F620", "Innovation", "Hakuchou", "Buffalo3", "Hotknife", "Kuruma", "Surano", "Banshee", "Baller2"
-                VehPrice = 42500
-            Case "Cogcabrio", "Virgo", "Carbonizzare", "Huntley"
-                VehPrice = 92500
-            Case "Exemplar", "Chino", "Glendale", "Schafter4"
-                VehPrice = 102500
-            Case "Windsor"
-                VehPrice = 422500
-            Case "Osiris"
-                VehPrice = 975000
-            Case "T20"
-                VehPrice = 1100000
-            Case "Thrust", "Stalion2", "Stalion", "Bifta", "Blazer3", "Schafter2", "Gburrito2"
-                VehPrice = 37500
-            Case "Sovereign", "Warrener", "Schafter3", "ninef2", "ninef"
-                VehPrice = 60000
-            Case "Faction", "Ratloader2", "Moonbeam"
-                VehPrice = 18000
-            Case "Bodhi2", "Romero", "Stretch"
-                VehPrice = 12500
-            Case "Khamelion", "Comet2", "Buffalo2"
-                VehPrice = 50000
-            Case "Dubsta2"
-                VehPrice = 82500
-            Case "Felon2", "Sentinel2", "Dune", "Camper"
-                VehPrice = 9500
-            Case "Baller", "Felon"
-                VehPrice = 9000
-            Case "Mesa3", "Rocoto"
-                VehPrice = 8500
-            Case "Oracle"
-                VehPrice = 8200
-            Case "Oracle2", "Schwarzer", "F620"
-                VehPrice = 8000
-            Case "Cavalcade", "Dubsta", "Bati2", "Hexer", "Dloader", "Calvlcade2", "Journey", "Burrito3"
-                VehPrice = 7000
-            Case "Schafter", "Zion2", "Pony"
-                VehPrice = 6500
-            Case "Zion"
-                VehPrice = 6200
-            Case "Serrano", "Jackal", "Sentinel", "Double"
-                VehPrice = 6000
-            Case "Landstalker"
-                VehPrice = 5800
-            Case "Tailgater"
-                VehPrice = 5500
-            Case "Fq2", "Patriot", "Bati"
-                VehPrice = 5000
-            Case "Sandking2", "Sandking", "Akuma"
-                VehPrice = 4500
-            Case "Habanero"
-                VehPrice = 4200
-            Case "Surge"
-                VehPrice = 3800
-            Case "Fusilade"
-                VehPrice = 3600
-            Case "Buffalo", "Granger", "Dominator", "Sadler", "Dominator2"
-                VehPrice = 3500
-            Case "Gauntlet", "Gauntlet2", "Radius", "Radi"
-                VehPrice = 3200
-            Case "Bison", "Mesa", "Seminole", "Tornado", "Minivan", "Tornado2"
-                VehPrice = 3000
-            Case "Gresley"
-                VehPrice = 2900
-            Case "Buccaneer"
-                VehPrice = 2800
-            Case "BJXL"
-                VehPrice = 2700
-            Case "Asterope"
-                VehPrice = 2600
-            Case "Prairie", "Dilettante", "Voodoo2", "Caddy2"
-                VehPrice = 2500
-            Case "Fugitive", "Penumbra"
-                VehPrice = 2400
-            Case "BobcatXL"
-                VehPrice = 2300
-            Case "Vigero"
-                VehPrice = 2100
-            Case "Phoenix", "Daemon"
-                VehPrice = 2000
-            Case "Issi2"
-                VehPrice = 1800
-            Case "BfInjection", "Youga", "Blista", "Intruder", "Bagger"
-                VehPrice = 1600
-            Case "Washington", "Duneloader", "SabreGT", "Speedo"
-                VehPrice = 1500
-            Case "Rumpo"
-                VehPrice = 1300
-            Case "Asea", "Sultan", "Nemesis", "Peyote"
-                VehPrice = 1200
-            Case "Premier", "Ruiner", "Ruffian", "Stanier", "Stratum"
-                VehPrice = 1000
-            Case "Primo", "Picador", "RancherXL", "Futo", "PCJ", "Vader", "Ingot", "Blazer2"
-                VehPrice = 900
-            Case "Blazer", "Emperor", "Manana", "Regina"
+            '0 - 900
+            Case "bmx", "cruiser"
                 VehPrice = 800
-            Case "Rebel", "Sanchez", "Sanchez2"
-                VehPrice = 700
-            Case "Surfer", "Voodoo", "Faggio"
-                VehPrice = 500
+            '1k - 9k
+            Case "scorcher"
+                VehPrice = 2000
+            Case "rebel"
+                VehPrice = 3000
+            Case "voodoo2", "faggio2"
+                VehPrice = 5000
+            Case "ratloader"
+                VehPrice = 6000
+            Case "sanchez"
+                VehPrice = 7000
+            Case "regina", "blazer", "sanchez2"
+                VehPrice = 8000
+            Case "primo", "picador", "rancherxl", "ingot", "vader", "pcj", "akuma"
+                VehPrice = 9000
+            '10k - 90k
+            Case "sabregt", "sultan", "tribike", "tribike2", "tribike3", "issi2", "surfer", "youga", "bfinjection", "rumpo", "asea", "intruder", "premier", "stanier", "stratum", "washington", "bati", "nemesis", "bati2"
+                VehPrice = 10000
+            Case "ruffian", "double", "hexer", "journey"
+                VehPrice = 10000
+            Case "buccaneer", "paradise", "vigero", "penumbra", "bodhi2", "dune", "rebel2", "fugitive", "dilettante", "asterope", "gresley", "bobcatxl"
+                VehPrice = 20000
+            Case "tornado", "minivan", "moonbeam", "faction", "ratloader2", "gauntlet", "dominator", "fusilade", "seminole", "sandking2", "bison", "sadler", "surge", "granger", "minivan", "radi", "buffalo", "stretch"
+                VehPrice = 30000
+            Case "slamvan", "carbonrs", "faggio", "ratbike", "enduro", "slamvan", "kalahari", "sandking", "boxville3"
+                VehPrice = 40000
+            Case "faggio3", "tailgater", "landstalker"
+                VehPrice = 50000
+            Case "manchez", "gburrito2", "zion", "zion2", "sentinel", "jackal", "schafter2", "cavalcade", "blazer3"
+                VehPrice = 60000
+            Case "thrust", "bifta", "cavalcade2"
+                VehPrice = 70000
+            Case "blazer4", "panto", "schwarzer", "f620", "oracle", "rocoto", "oracle2", "hakuchou", "mesa3"
+                VehPrice = 80000
+            Case "hotknife", "wolfsbane", "zombiea", "bf400", "kuruma", "sentinel2", "buffalo2", "baller", "felon", "felon2", "innovation"
+                VehPrice = 90000
+            '100k - 900k
+            Case "fcr", "diablous", "virgo3", "banshee", "comet2", "cog55", "baller3", "schafter3", "virgo", "huntley", "alpha", "khamelion", "cogcabrio", "bullet", "carbonizzare", "coquette", "feltzer2", "ninef", "ninef2"
+                VehPrice = 100000
+            Case "rapidgt", "rapidgt2", "voltic", "surano", "avarus", "nightblade", "zombieb", "daemon2", "brioso", "gargoyle", "rumpo3", "blade", "warrener", "rhapsody"
+                VehPrice = 100000
+            Case "chino", "xls", "cognoscenti", "baller4", "schafter4", "chino", "massacro", "jester", "vacca", "exemplar", "superd", "chimera", "contender", "cliffhanger", "glendale", "dubsta3"
+                VehPrice = 200000
+            Case "fcr2", "faction2", "faction3", "cog552", "baller5", "schafter5", "jb700", "vortex", "tornado6", "tampa", "massacro2", "jester2"
+                VehPrice = 300000
+            Case "diablous2", "buccaneer2", "chino2", "moonbeam2", "primo2", "slamvan3", "virgo2", "voodoo", "schafter6", "furoregt", "monroe", "infernus", "defiler", "guardian", "pigalle"
+                VehPrice = 400000
+            Case "minivan2", "sabregt2", "tornado5", "xls2", "nightshade", "cognoscenti2", "baller6", "turismor", "trophytruck", "kuruma2"
+                VehPrice = 500000
+            Case "specter", "banshee2", "raptor", "bestiagts", "verlierer2", "coquette3", "vindicator", "casco", "coquette2", "cheetah", "trophytruck2", "insurgent2"
+                VehPrice = 600000
+            Case "comet3", "brawler", "lectro", "zentorno", "entityxf", "omnis"
+                VehPrice = 700000
+            Case "specter2", "sultanrs", "penetrator", "windsor", "stinger", "stingergt", "tropos"
+                VehPrice = 800000
+            Case "elegy", "hakuchou2", "windsor2", "seven70", "btype3", "mamba", "feltzer3", "ztype", "tampa2", "technical"
+                VehPrice = 900000
+            '1 million
+            Case "adder"
+                VehPrice = 1000000
+            Case "italigtb"
+                VehPrice = 1100000
+            Case "tempesta", "rallytruck", "insurgent"
+                VehPrice = 1300000
+            Case "nero", "technical2"
+                VehPrice = 1400000
+            Case "reaper"
+                VehPrice = 1500000
+            Case "italigtb2", "limo2"
+                VehPrice = 1600000
+            Case "lynx", "fmj", "blazer5"
+                VehPrice = 1700000
+            Case "sheava", "osiris", "sanctus"
+                VehPrice = 1900000
+            '2 million
+            Case "nero2"
+                VehPrice = 2000000
+            Case "shotaro", "t20"
+                VehPrice = 2200000
+            Case "le7b"
+                VehPrice = 2400000
+            Case "tyrus"
+                VehPrice = 2500000
+            Case "pfister811"
+                VehPrice = 2700000
+            Case "boxville5"
+                VehPrice = 2900000
+            '3 million
+            Case "dune4", "dune5"
+                VehPrice = 3100000
+            Case "prototipo"
+                VehPrice = 3700000
+            Case "voltic2"
+                VehPrice = 3800000
+            '5 million
+            Case "ruiner2"
+                VehPrice = 5700000
             Case Else
                 VehPrice = 0
         End Select
-        Return VehPrice
+        Return VehPrice / 2
     End Function
 
     Public Enum GTAFont

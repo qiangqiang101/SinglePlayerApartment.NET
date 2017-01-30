@@ -26,3 +26,17 @@ C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApar
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.dll
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.xml
 C:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.pdb
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.dll.config
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.pdb
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\SinglePlayerApartment.xml
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\iFruitAddon.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\INMNativeUI.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\ScriptHookVDotNet.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\Debug\ScriptHookVDotNet.xml
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.Resources.resources
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.vbproj.GenerateResource.Cache
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.xml
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\Debug\SinglePlayerApartment.pdb

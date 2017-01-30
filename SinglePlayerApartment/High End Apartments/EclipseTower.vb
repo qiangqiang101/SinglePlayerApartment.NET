@@ -1478,7 +1478,7 @@ Public Class EclipseTower
                     WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -1521,6 +1521,7 @@ Public Class EclipseTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = Apartment.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-787.8336, 342.3493, 206.2184))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -1532,7 +1533,7 @@ Public Class EclipseTower
                     WriteCfgValue(ApartmentHL.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
                     ApartmentHL.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -1576,6 +1577,7 @@ Public Class EclipseTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentHL.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-769.3657, 324.1958, 211.9971))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -1587,7 +1589,7 @@ Public Class EclipseTower
                     WriteCfgValue(ApartmentPS1.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - ApartmentPS1.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS1.Cost)
                     ApartmentPS1.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -1632,6 +1634,7 @@ Public Class EclipseTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentPS1.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-788.0755, 319.9557, 217.0382))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -1643,7 +1646,7 @@ Public Class EclipseTower
                     WriteCfgValue(ApartmentPS2.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - ApartmentPS2.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS2.Cost)
                     ApartmentPS2.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -1688,6 +1691,7 @@ Public Class EclipseTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentPS2.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-772.9551, 337.914, 196.086))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -1699,7 +1703,7 @@ Public Class EclipseTower
                     WriteCfgValue(ApartmentPS3.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - ApartmentPS3.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS3.Cost)
                     ApartmentPS3.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -1744,6 +1748,7 @@ Public Class EclipseTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentPS3.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-788.2332, 319.9676, 187.3132))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If

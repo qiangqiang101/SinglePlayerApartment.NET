@@ -275,29 +275,29 @@ Public Class HillcrestAve2862
                     WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    If Website.freeRealEstate = False Then If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = playerName
-                    Apartment.AptBlip.Remove()
-                    If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
-                    CreateHillcrestAve2862()
-                    RefreshGarageMenu()
-                    Mechanic.CreateMechanicMenu()
-                    Wait(500)
-                    Game.FadeScreenIn(500)
-                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
-                    If playerName = "Michael" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                    ElseIf playerName = "Franklin" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                    ElseIf playerName = "Trevor" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                    ElseIf playerName = "Player3" Then
-                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
-                    End If
-                    selectedItem.SetRightLabel("")
-                Else
-                    If playerName = "Michael" Then
+                        Apartment.AptBlip.Remove()
+                        If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+                        CreateHillcrestAve2862()
+                        RefreshGarageMenu()
+                        Mechanic.CreateMechanicMenu()
+                        Wait(500)
+                        Game.FadeScreenIn(500)
+                        Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
+                        BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
+                        If playerName = "Michael" Then
+                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                        ElseIf playerName = "Franklin" Then
+                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                        ElseIf playerName = "Trevor" Then
+                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                        ElseIf playerName = "Player3" Then
+                            selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+                        End If
+                        selectedItem.SetRightLabel("")
+                    Else
+                        If playerName = "Michael" Then
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     ElseIf playerName = "Franklin" Then
                         DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
@@ -319,6 +319,7 @@ Public Class HillcrestAve2862
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = Apartment.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-676.817, 587.2742, 145.1695))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If

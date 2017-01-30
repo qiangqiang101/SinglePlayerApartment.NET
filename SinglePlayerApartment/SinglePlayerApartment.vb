@@ -191,7 +191,6 @@ Public Class SinglePlayerApartment
         Try
             If My.Settings.NeverEnableMPMaps = False Then
                 Native.Function.Call(Hash._LOAD_MP_DLC_MAPS)
-                Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, True)
                 LoadMPDLCMapMissingObjects()
             End If
         Catch ex As Exception
@@ -270,9 +269,7 @@ Public Class SinglePlayerApartment
         Try
             If My.Settings.NeverEnableMPMaps = False Then
                 If My.Settings.AlwaysEnableMPMaps = False Then
-                    Native.Function.Call(Hash._ENABLE_MP_DLC_MAPS, New Native.InputArgument() {0})
-                    Native.Function.Call(Hash._UNLOAD_MP_DLC_MAPS)
-                    Native.Function.Call(Hash._0xD7C10C4A637992C9)
+                    Native.Function.Call(Hash._LOAD_SP_DLC_MAPS)
                 End If
             End If
         Catch ex As Exception

@@ -424,7 +424,7 @@ Public Class TinselTower
                     WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -467,6 +467,7 @@ Public Class TinselTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = Apartment.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-591.1595, 39.91172, 92.22356))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -478,7 +479,7 @@ Public Class TinselTower
                     WriteCfgValue(ApartmentHL.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
                     ApartmentHL.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -522,6 +523,7 @@ Public Class TinselTower
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentHL.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-618.6377, 58.32537, 98.19994))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If

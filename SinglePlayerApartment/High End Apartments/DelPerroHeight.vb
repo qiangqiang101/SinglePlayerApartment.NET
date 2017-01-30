@@ -424,7 +424,7 @@ Public Class DelPerroHeight
                     WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -467,6 +467,7 @@ Public Class DelPerroHeight
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = Apartment.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-1467.85, -524.3887, 55.52636))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
@@ -478,7 +479,7 @@ Public Class DelPerroHeight
                     WriteCfgValue(ApartmentHL.SaveFile, playerName, saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
-                    SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
+                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
                     ApartmentHL.Owner = playerName
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
@@ -522,6 +523,7 @@ Public Class DelPerroHeight
                 Game.FadeScreenOut(500)
                 Wait(&H3E8)
                 Game.Player.Character.Position = ApartmentHL.TeleportInside
+                If Website.merryChristmas Then ShowXmasTree(New Vector3(-1461.64, -528.199, 74.04414))
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If

@@ -10,6 +10,7 @@ Imports SinglePlayerApartment.INMNative
 Public Class Website
     Inherits Script
 
+    Public Shared PropXmasTree As Prop
     Public Shared VehiclePrice As Integer
     Public Shared SelectedVehicle As String
     Public Shared VehPreview As Vehicle
@@ -35,6 +36,10 @@ Public Class Website
     Public Shared pointY As Integer
 
     Public Shared _menuPool As MenuPool
+
+    Public Shared freeRealEstate As Boolean = False
+    Public Shared merryChristmas As Boolean = False
+    Public Shared freeWheels As Boolean = False
 
     Public Sub New()
         'New Language
@@ -66,6 +71,8 @@ Public Class Website
         ReadSouthernSA()
         ReadWarstock()
         CreateDeliveryMenu()
+
+        If Now.Month = 12 Then merryChristmas = True
     End Sub
 
     Public Shared Sub ReadWarstock()
@@ -562,70 +569,70 @@ Public Class Website
             End Select
 
             If IO.File.Exists(TargetPathDir & "vehicle_0.cfg") = False Then
-                Game.Player.Money = (playerCash - VehiclePrice)
+                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                 Resources.CreateFile(TargetPathDir & "vehicle_0.cfg")
                 SavePegasusVehicle(TargetPathDir & "vehicle_0.cfg")
                 VehPreview.Delete()
                 DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
             Else
                 If IO.File.Exists(TargetPathDir & "vehicle_1.cfg") = False Then
-                    Game.Player.Money = (playerCash - VehiclePrice)
+                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                     Resources.CreateFile(TargetPathDir & "vehicle_1.cfg")
                     SavePegasusVehicle(TargetPathDir & "vehicle_1.cfg")
                     VehPreview.Delete()
                     DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                 Else
                     If IO.File.Exists(TargetPathDir & "vehicle_2.cfg") = False Then
-                        Game.Player.Money = (playerCash - VehiclePrice)
+                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                         Resources.CreateFile(TargetPathDir & "vehicle_2.cfg")
                         SavePegasusVehicle(TargetPathDir & "vehicle_2.cfg")
                         VehPreview.Delete()
                         DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                     Else
                         If IO.File.Exists(TargetPathDir & "vehicle_3.cfg") = False Then
-                            Game.Player.Money = (playerCash - VehiclePrice)
+                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(TargetPathDir & "vehicle_3.cfg")
                             SavePegasusVehicle(TargetPathDir & "vehicle_3.cfg")
                             VehPreview.Delete()
                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                         Else
                             If IO.File.Exists(TargetPathDir & "vehicle_4.cfg") = False Then
-                                Game.Player.Money = (playerCash - VehiclePrice)
+                                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                 Resources.CreateFile(TargetPathDir & "vehicle_4.cfg")
                                 SavePegasusVehicle(TargetPathDir & "vehicle_4.cfg")
                                 VehPreview.Delete()
                                 DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                             Else
                                 If IO.File.Exists(TargetPathDir & "vehicle_5.cfg") = False Then
-                                    Game.Player.Money = (playerCash - VehiclePrice)
+                                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                     Resources.CreateFile(TargetPathDir & "vehicle_5.cfg")
                                     SavePegasusVehicle(TargetPathDir & "vehicle_5.cfg")
                                     VehPreview.Delete()
                                     DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                 Else
                                     If IO.File.Exists(TargetPathDir & "vehicle_6.cfg") = False Then
-                                        Game.Player.Money = (playerCash - VehiclePrice)
+                                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                         Resources.CreateFile(TargetPathDir & "vehicle_6.cfg")
                                         SavePegasusVehicle(TargetPathDir & "vehicle_6.cfg")
                                         VehPreview.Delete()
                                         DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                     Else
                                         If IO.File.Exists(TargetPathDir & "vehicle_7.cfg") = False Then
-                                            Game.Player.Money = (playerCash - VehiclePrice)
+                                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                             Resources.CreateFile(TargetPathDir & "vehicle_7.cfg")
                                             SavePegasusVehicle(TargetPathDir & "vehicle_7.cfg")
                                             VehPreview.Delete()
                                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                         Else
                                             If IO.File.Exists(TargetPathDir & "vehicle_8.cfg") = False Then
-                                                Game.Player.Money = (playerCash - VehiclePrice)
+                                                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                 Resources.CreateFile(TargetPathDir & "vehicle_8.cfg")
                                                 SavePegasusVehicle(TargetPathDir & "vehicle_8.cfg")
                                                 VehPreview.Delete()
                                                 DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                                             Else
                                                 If IO.File.Exists(TargetPathDir & "vehicle_9.cfg") = False Then
-                                                    Game.Player.Money = (playerCash - VehiclePrice)
+                                                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                     Resources.CreateFile(TargetPathDir & "vehicle_9.cfg")
                                                     SavePegasusVehicle(TargetPathDir & "vehicle_9.cfg")
                                                     VehPreview.Delete()
@@ -709,7 +716,7 @@ Public Class Website
                 Case "Michael"
                     If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(MichaelPathDir & VehPreview.NumberPlate & ".cfg") Then
-                            Game.Player.Money = (playerCash - VehiclePrice)
+                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
@@ -722,7 +729,7 @@ Public Class Website
                 Case "Franklin"
                     If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(FranklinPathDir & VehPreview.NumberPlate & ".cfg") Then
-                            Game.Player.Money = (playerCash - VehiclePrice)
+                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
@@ -735,7 +742,7 @@ Public Class Website
                 Case "Trevor"
                     If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(TrevorPathDir & VehPreview.NumberPlate & ".cfg") Then
-                            Game.Player.Money = (playerCash - VehiclePrice)
+                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                             Resources.CreateFile(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
@@ -782,10 +789,34 @@ Public Class Website
         Try
             _menuPool.ProcessMenus()
             DrawTexture()
+
+            If Cheating("FREEREALESTATE") Then
+                freeRealEstate = Not freeRealEstate
+                If freeRealEstate Then UI.Notify("Cheat activated: ~n~Free Apartment.") Else UI.Notify("Cheat deactivated: ~n~Free Apartment.")
+            End If
+
+            If Cheating("FREEWHEELS") Then
+                freeWheels = Not freeWheels
+                If freeWheels Then UI.Notify("Cheat activated: ~n~Free Vehicles.") Else UI.Notify("Cheat deactivated: ~n~Free Vehicles.")
+            End If
+
+            If Cheating("MERRYCHRISTMAS") Then
+                merryChristmas = Not merryChristmas
+                If merryChristmas Then
+                    UI.Notify("Cheat activated: ~n~Christmas Tree.")
+                Else
+                    UI.Notify("Cheat deactivated: ~n~Christmas Tree")
+                    If Not PropXmasTree = Nothing Then PropXmasTree.Delete()
+                End If
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
+
+    Public Shared Function Cheating(Cheat As String) As Boolean
+        Return Native.Function.Call(Of Boolean)(Hash._0x557E43C447E700A8, Game.GenerateHash(Cheat))
+    End Function
 
     Public Shared Sub Call_Benny()
         BennyMenu.Visible = Not BennyMenu.Visible
@@ -915,6 +946,13 @@ Public Class Website
             WriteCfgValue("DashboardColor", Resources.GetVehicleInteriorDashboardColor(VehPreview), file)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub OnAborted() Handles MyBase.Aborted
+        Try
+            If Not PropXmasTree = Nothing Then PropXmasTree.Delete()
+        Catch ex As Exception
         End Try
     End Sub
 End Class
