@@ -10,6 +10,7 @@ Public Class Phone
     Public Shared ifruit As CustomiFruit
     Public Shared Contact(9) As iFruitContact
     Public Shared pHash As String
+    Public Shared phoneContact As String = ReadCfgValue("PhoneContact", settingFile)
     Public Shared FIndex As Integer = CInt(ReadCfgValue("FranklinPhoneIndex", settingFile))
     Public Shared MIndex As Integer = CInt(ReadCfgValue("MichaelPhoneIndex", settingFile))
     Public Shared TIndex As Integer = CInt(ReadCfgValue("TrevorPhoneIndex", settingFile))
@@ -35,6 +36,7 @@ Public Class Phone
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
+
     Public Shared Sub AddPhoneContacts(index As Integer)
         Contact(0) = New iFruitContact("Mechanic", index)
         AddHandler Contact(0).Answered, AddressOf Call_Mechanic
@@ -106,21 +108,23 @@ Public Class Phone
 
     Public Sub OnTick(o As Object, e As EventArgs)
         Try
-            ifruit.Update()
+            If phoneContact = "True" Then
+                ifruit.Update()
 
-            If Game.IsControlJustPressed(0, GTA.Control.Phone) Then
-                ifruit.Contacts.Clear()
+                If Game.IsControlJustPressed(0, GTA.Control.Phone) Then
+                    ifruit.Contacts.Clear()
 
-                Select Case playerName
-                    Case "Franklin"
-                        AddPhoneContacts(FIndex)
-                    Case "Michael"
-                        AddPhoneContacts(MIndex)
-                    Case "Trevor"
-                        AddPhoneContacts(TIndex)
-                    Case "Player3"
-                        AddPhoneContacts(1)
-                End Select
+                    Select Case playerName
+                        Case "Franklin"
+                            AddPhoneContacts(FIndex)
+                        Case "Michael"
+                            AddPhoneContacts(MIndex)
+                        Case "Trevor"
+                            AddPhoneContacts(TIndex)
+                        Case "Player3"
+                            AddPhoneContacts(1)
+                    End Select
+                End If
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

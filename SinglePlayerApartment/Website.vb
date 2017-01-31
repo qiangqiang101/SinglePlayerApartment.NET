@@ -40,6 +40,7 @@ Public Class Website
     Public Shared freeRealEstate As Boolean = False
     Public Shared merryChristmas As Boolean = False
     Public Shared freeWheels As Boolean = False
+    Public Shared iWillGetThereAsSoonAsICan As Boolean = False
 
     Public Sub New()
         'New Language
@@ -805,8 +806,17 @@ Public Class Website
                 If merryChristmas Then
                     UI.Notify("Cheat activated: ~n~Christmas Tree.")
                 Else
-                    UI.Notify("Cheat deactivated: ~n~Christmas Tree")
+                    UI.Notify("Cheat deactivated: ~n~Christmas Tree.")
                     If Not PropXmasTree = Nothing Then PropXmasTree.Delete()
+                End If
+            End If
+
+            If Cheating("IWILLGETTHEREASSOONASICAN") Then
+                iWillGetThereAsSoonAsICan = Not iWillGetThereAsSoonAsICan
+                If iWillGetThereAsSoonAsICan Then
+                    UI.Notify("Cheat activated: ~n~Disable Restrict to Call Mechanic when you too close to your vehicle.")
+                Else
+                    UI.Notify("Cheat deactivated: ~n~Disable Restrict to Call Mechanic when you too close to your vehicle.")
                 End If
             End If
         Catch ex As Exception

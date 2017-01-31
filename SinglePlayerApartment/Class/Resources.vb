@@ -74,108 +74,108 @@ Public Class Resources
     End Function
 
     Public Shared Function GetVehiclePrice(file As String) As Integer
-        Dim VehModel As String = ReadCfgValue("VehicleModel", file)
+        Dim VehHash As Integer = CInt(ReadCfgValue("VehicleHash", file))
         Dim VehPrice As Integer
-        Select Case VehModel
+        Select Case VehHash
             '0 - 900
-            Case "bmx", "cruiser"
+            Case GetHashKey("bmx"), GetHashKey("cruiser")
                 VehPrice = 800
             '1k - 9k
-            Case "scorcher"
+            Case GetHashKey("scorcher")
                 VehPrice = 2000
-            Case "rebel"
+            Case GetHashKey("rebel")
                 VehPrice = 3000
-            Case "voodoo2", "faggio2"
+            Case GetHashKey("voodoo2"), GetHashKey("faggio2")
                 VehPrice = 5000
-            Case "ratloader"
+            Case GetHashKey("ratloader")
                 VehPrice = 6000
-            Case "sanchez"
+            Case GetHashKey("sanchez")
                 VehPrice = 7000
-            Case "regina", "blazer", "sanchez2"
+            Case GetHashKey("regina"), GetHashKey("blazer"), GetHashKey("sanchez2")
                 VehPrice = 8000
-            Case "primo", "picador", "rancherxl", "ingot", "vader", "pcj", "akuma"
+            Case GetHashKey("primo"), GetHashKey("picador"), GetHashKey("rancherxl"), GetHashKey("ingot"), GetHashKey("vader"), GetHashKey("pcj"), GetHashKey("akuma")
                 VehPrice = 9000
             '10k - 90k
-            Case "sabregt", "sultan", "tribike", "tribike2", "tribike3", "issi2", "surfer", "youga", "bfinjection", "rumpo", "asea", "intruder", "premier", "stanier", "stratum", "washington", "bati", "nemesis", "bati2"
+            Case GetHashKey("sabregt"), GetHashKey("sultan"), GetHashKey("tribike"), GetHashKey("tribike2"), GetHashKey("tribike3"), GetHashKey("issi2"), GetHashKey("surfer"), GetHashKey("youga"), GetHashKey("bfinjection"), GetHashKey("rumpo"), GetHashKey("asea"), GetHashKey("intruder"), GetHashKey("premier"), GetHashKey("stanier"), GetHashKey("stratum"), GetHashKey("washington"), GetHashKey("bati"), GetHashKey("nemesis"), GetHashKey("bati2")
                 VehPrice = 10000
-            Case "ruffian", "double", "hexer", "journey"
+            Case GetHashKey("ruffian"), GetHashKey("double"), GetHashKey("hexer"), GetHashKey("journey")
                 VehPrice = 10000
-            Case "buccaneer", "paradise", "vigero", "penumbra", "bodhi2", "dune", "rebel2", "fugitive", "dilettante", "asterope", "gresley", "bobcatxl"
+            Case GetHashKey("buccaneer"), GetHashKey("paradise"), GetHashKey("vigero"), GetHashKey("penumbra"), GetHashKey("bodhi2"), GetHashKey("dune"), GetHashKey("rebel2"), GetHashKey("fugitive"), GetHashKey("dilettante"), GetHashKey("asterope"), GetHashKey("gresley"), GetHashKey("bobcatxl")
                 VehPrice = 20000
-            Case "tornado", "minivan", "moonbeam", "faction", "ratloader2", "gauntlet", "dominator", "fusilade", "seminole", "sandking2", "bison", "sadler", "surge", "granger", "minivan", "radi", "buffalo", "stretch"
+            Case GetHashKey("tornado"), GetHashKey("minivan"), GetHashKey("moonbeam"), GetHashKey("faction"), GetHashKey("ratloader2"), GetHashKey("gauntlet"), GetHashKey("dominator"), GetHashKey("fusilade"), GetHashKey("seminole"), GetHashKey("sandking2"), GetHashKey("bison"), GetHashKey("sadler"), GetHashKey("surge"), GetHashKey("granger"), GetHashKey("minivan"), GetHashKey("radi"), GetHashKey("buffalo"), GetHashKey("stretch")
                 VehPrice = 30000
-            Case "slamvan", "carbonrs", "faggio", "ratbike", "enduro", "slamvan", "kalahari", "sandking", "boxville3"
+            Case GetHashKey("slamvan"), GetHashKey("carbonrs"), GetHashKey("faggio"), GetHashKey("ratbike"), GetHashKey("enduro"), GetHashKey("slamvan"), GetHashKey("kalahari"), GetHashKey("sandking"), GetHashKey("boxville3")
                 VehPrice = 40000
-            Case "faggio3", "tailgater", "landstalker"
+            Case GetHashKey("faggio3"), GetHashKey("tailgater"), GetHashKey("landstalker")
                 VehPrice = 50000
-            Case "manchez", "gburrito2", "zion", "zion2", "sentinel", "jackal", "schafter2", "cavalcade", "blazer3"
+            Case GetHashKey("manchez"), GetHashKey("gburrito2"), GetHashKey("zion"), GetHashKey("zion2"), GetHashKey("sentinel"), GetHashKey("jackal"), GetHashKey("schafter2"), GetHashKey("cavalcade"), GetHashKey("blazer3")
                 VehPrice = 60000
-            Case "thrust", "bifta", "cavalcade2"
+            Case GetHashKey("thrust"), GetHashKey("bifta"), GetHashKey("cavalcade2")
                 VehPrice = 70000
-            Case "blazer4", "panto", "schwarzer", "f620", "oracle", "rocoto", "oracle2", "hakuchou", "mesa3"
+            Case GetHashKey("blazer4"), GetHashKey("panto"), GetHashKey("schwarzer"), GetHashKey("f620"), GetHashKey("oracle"), GetHashKey("rocoto"), GetHashKey("oracle2"), GetHashKey("hakuchou"), GetHashKey("mesa3")
                 VehPrice = 80000
-            Case "hotknife", "wolfsbane", "zombiea", "bf400", "kuruma", "sentinel2", "buffalo2", "baller", "felon", "felon2", "innovation"
+            Case GetHashKey("hotknife"), GetHashKey("wolfsbane"), GetHashKey("zombiea"), GetHashKey("bf400"), GetHashKey("kuruma"), GetHashKey("sentinel2"), GetHashKey("buffalo2"), GetHashKey("baller"), GetHashKey("felon"), GetHashKey("felon2"), GetHashKey("innovation")
                 VehPrice = 90000
             '100k - 900k
-            Case "fcr", "diablous", "virgo3", "banshee", "comet2", "cog55", "baller3", "schafter3", "virgo", "huntley", "alpha", "khamelion", "cogcabrio", "bullet", "carbonizzare", "coquette", "feltzer2", "ninef", "ninef2"
+            Case GetHashKey("fcr"), GetHashKey("diablous"), GetHashKey("virgo3"), GetHashKey("banshee"), GetHashKey("comet2"), GetHashKey("cog55"), GetHashKey("baller3"), GetHashKey("schafter3"), GetHashKey("virgo"), GetHashKey("huntley"), GetHashKey("alpha"), GetHashKey("khamelion"), GetHashKey("cogcabrio"), GetHashKey("bullet"), GetHashKey("carbonizzare"), GetHashKey("coquette"), GetHashKey("feltzer2"), GetHashKey("ninef"), GetHashKey("ninef2")
                 VehPrice = 100000
-            Case "rapidgt", "rapidgt2", "voltic", "surano", "avarus", "nightblade", "zombieb", "daemon2", "brioso", "gargoyle", "rumpo3", "blade", "warrener", "rhapsody"
+            Case GetHashKey("rapidgt"), GetHashKey("rapidgt2"), GetHashKey("voltic"), GetHashKey("surano"), GetHashKey("avarus"), GetHashKey("nightblade"), GetHashKey("zombieb"), GetHashKey("daemon2"), GetHashKey("brioso"), GetHashKey("gargoyle"), GetHashKey("rumpo3"), GetHashKey("blade"), GetHashKey("warrener"), GetHashKey("rhapsody")
                 VehPrice = 100000
-            Case "chino", "xls", "cognoscenti", "baller4", "schafter4", "chino", "massacro", "jester", "vacca", "exemplar", "superd", "chimera", "contender", "cliffhanger", "glendale", "dubsta3"
+            Case GetHashKey("chino"), GetHashKey("xls"), GetHashKey("cognoscenti"), GetHashKey("baller4"), GetHashKey("schafter4"), GetHashKey("chino"), GetHashKey("massacro"), GetHashKey("jester"), GetHashKey("vacca"), GetHashKey("exemplar"), GetHashKey("superd"), GetHashKey("chimera"), GetHashKey("contender"), GetHashKey("cliffhanger"), GetHashKey("glendale"), GetHashKey("dubsta3")
                 VehPrice = 200000
-            Case "fcr2", "faction2", "faction3", "cog552", "baller5", "schafter5", "jb700", "vortex", "tornado6", "tampa", "massacro2", "jester2"
+            Case GetHashKey("fcr2"), GetHashKey("faction2"), GetHashKey("faction3"), GetHashKey("cog552"), GetHashKey("baller5"), GetHashKey("schafter5"), GetHashKey("jb700"), GetHashKey("vortex"), GetHashKey("tornado6"), GetHashKey("tampa"), GetHashKey("massacro2"), GetHashKey("jester2")
                 VehPrice = 300000
-            Case "diablous2", "buccaneer2", "chino2", "moonbeam2", "primo2", "slamvan3", "virgo2", "voodoo", "schafter6", "furoregt", "monroe", "infernus", "defiler", "guardian", "pigalle"
+            Case GetHashKey("diablous2"), GetHashKey("buccaneer2"), GetHashKey("chino2"), GetHashKey("moonbeam2"), GetHashKey("primo2"), GetHashKey("slamvan3"), GetHashKey("virgo2"), GetHashKey("voodoo"), GetHashKey("schafter6"), GetHashKey("furoregt"), GetHashKey("monroe"), GetHashKey("infernus"), GetHashKey("defiler"), GetHashKey("guardian"), GetHashKey("pigalle")
                 VehPrice = 400000
-            Case "minivan2", "sabregt2", "tornado5", "xls2", "nightshade", "cognoscenti2", "baller6", "turismor", "trophytruck", "kuruma2"
+            Case GetHashKey("minivan2"), GetHashKey("sabregt2"), GetHashKey("tornado5"), GetHashKey("xls2"), GetHashKey("nightshade"), GetHashKey("cognoscenti2"), GetHashKey("baller6"), GetHashKey("turismor"), GetHashKey("trophytruck"), GetHashKey("kuruma2")
                 VehPrice = 500000
-            Case "specter", "banshee2", "raptor", "bestiagts", "verlierer2", "coquette3", "vindicator", "casco", "coquette2", "cheetah", "trophytruck2", "insurgent2"
+            Case GetHashKey("specter"), GetHashKey("banshee2"), GetHashKey("raptor"), GetHashKey("bestiagts"), GetHashKey("verlierer2"), GetHashKey("coquette3"), GetHashKey("vindicator"), GetHashKey("casco"), GetHashKey("coquette2"), GetHashKey("cheetah"), GetHashKey("trophytruck2"), GetHashKey("insurgent2")
                 VehPrice = 600000
-            Case "comet3", "brawler", "lectro", "zentorno", "entityxf", "omnis"
+            Case GetHashKey("comet3"), GetHashKey("brawler"), GetHashKey("lectro"), GetHashKey("zentorno"), GetHashKey("entityxf"), GetHashKey("omnis")
                 VehPrice = 700000
-            Case "specter2", "sultanrs", "penetrator", "windsor", "stinger", "stingergt", "tropos"
+            Case GetHashKey("specter2"), GetHashKey("sultanrs"), GetHashKey("penetrator"), GetHashKey("windsor"), GetHashKey("stinger"), GetHashKey("stingergt"), GetHashKey("tropos")
                 VehPrice = 800000
-            Case "elegy", "hakuchou2", "windsor2", "seven70", "btype3", "mamba", "feltzer3", "ztype", "tampa2", "technical"
+            Case GetHashKey("elegy"), GetHashKey("hakuchou2"), GetHashKey("windsor2"), GetHashKey("seven70"), GetHashKey("btype3"), GetHashKey("mamba"), GetHashKey("feltzer3"), GetHashKey("ztype"), GetHashKey("tampa2"), GetHashKey("technical")
                 VehPrice = 900000
             '1 million
-            Case "adder"
+            Case GetHashKey("adder")
                 VehPrice = 1000000
-            Case "italigtb"
+            Case GetHashKey("italigtb")
                 VehPrice = 1100000
-            Case "tempesta", "rallytruck", "insurgent"
+            Case GetHashKey("tempesta"), GetHashKey("rallytruck"), GetHashKey("insurgent")
                 VehPrice = 1300000
-            Case "nero", "technical2"
+            Case GetHashKey("nero"), GetHashKey("technical2")
                 VehPrice = 1400000
-            Case "reaper"
+            Case GetHashKey("reaper")
                 VehPrice = 1500000
-            Case "italigtb2", "limo2"
+            Case GetHashKey("italigtb2"), GetHashKey("limo2")
                 VehPrice = 1600000
-            Case "lynx", "fmj", "blazer5"
+            Case GetHashKey("lynx"), GetHashKey("fmj"), GetHashKey("blazer5")
                 VehPrice = 1700000
-            Case "sheava", "osiris", "sanctus"
+            Case GetHashKey("sheava"), GetHashKey("osiris"), GetHashKey("sanctus")
                 VehPrice = 1900000
             '2 million
-            Case "nero2"
+            Case GetHashKey("nero2")
                 VehPrice = 2000000
-            Case "shotaro", "t20"
+            Case GetHashKey("shotaro"), GetHashKey("t20")
                 VehPrice = 2200000
-            Case "le7b"
+            Case GetHashKey("le7b")
                 VehPrice = 2400000
-            Case "tyrus"
+            Case GetHashKey("tyrus")
                 VehPrice = 2500000
-            Case "pfister811"
+            Case GetHashKey("pfister811")
                 VehPrice = 2700000
-            Case "boxville5"
+            Case GetHashKey("boxville5")
                 VehPrice = 2900000
             '3 million
-            Case "dune4", "dune5"
+            Case GetHashKey("dune4"), GetHashKey("dune5")
                 VehPrice = 3100000
-            Case "prototipo"
+            Case GetHashKey("prototipo")
                 VehPrice = 3700000
-            Case "voltic2"
+            Case GetHashKey("voltic2")
                 VehPrice = 3800000
             '5 million
-            Case "ruiner2"
+            Case GetHashKey("ruiner2")
                 VehPrice = 5700000
             Case Else
                 VehPrice = 0

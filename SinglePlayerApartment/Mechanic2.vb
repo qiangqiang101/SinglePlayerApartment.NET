@@ -154,7 +154,26 @@ Public Class Mechanic2
             MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
         Else
-            If MPVD >= 30 Then
+            If Not Website.iWillGetThereAsSoonAsICan Then
+                If MPVD >= 30 Then
+                    MPV0.Delete()
+                    ReturnAllVehiclesToGarageNEW()
+                    MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                    MPV0.AddBlip()
+                    MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    MPV0.CurrentBlip.Color = BlipColor2.Michael
+                    MPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
+                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                    WriteCfgValue("Active", "True", SelectedItem_Car)
+                    SetModKit(MPV0, SelectedItem_Car)
+                    CreateMechanicInVehicle(MPV0)
+                    MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
+                    SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
+                Else
+                    UI.ShowSubtitle(Reach10)
+                End If
+            Else
                 MPV0.Delete()
                 ReturnAllVehiclesToGarageNEW()
                 MPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -169,8 +188,6 @@ Public Class Mechanic2
                 CreateMechanicInVehicle(MPV0)
                 MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
-            Else
-                UI.ShowSubtitle(Reach10)
             End If
         End If
     End Sub
@@ -191,7 +208,26 @@ Public Class Mechanic2
             FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
         Else
-            If FPVD >= 30 Then
+            If Not Website.iWillGetThereAsSoonAsICan Then
+                If FPVD >= 30 Then
+                    FPV0.Delete()
+                    ReturnAllVehiclesToGarageNEW()
+                    FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                    FPV0.AddBlip()
+                    FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    FPV0.CurrentBlip.Color = BlipColor2.Franklin
+                    FPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
+                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                    WriteCfgValue("Active", "True", SelectedItem_Car)
+                    SetModKit(FPV0, SelectedItem_Car)
+                    CreateMechanicInVehicle(FPV0)
+                    FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
+                    SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
+                Else
+                    UI.ShowSubtitle(Reach10)
+                End If
+            Else
                 FPV0.Delete()
                 ReturnAllVehiclesToGarageNEW()
                 FPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -206,8 +242,6 @@ Public Class Mechanic2
                 CreateMechanicInVehicle(FPV0)
                 FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
-            Else
-                UI.ShowSubtitle(Reach10)
             End If
         End If
     End Sub
@@ -228,7 +262,26 @@ Public Class Mechanic2
             TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
         Else
-            If TPVD >= 30 Then
+            If Not Website.iWillGetThereAsSoonAsICan Then
+                If TPVD >= 30 Then
+                    TPV0.Delete()
+                    ReturnAllVehiclesToGarageNEW()
+                    TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                    TPV0.AddBlip()
+                    TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    TPV0.CurrentBlip.Color = BlipColor2.Trevor
+                    TPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
+                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                    WriteCfgValue("Active", "True", SelectedItem_Car)
+                    SetModKit(TPV0, SelectedItem_Car)
+                    CreateMechanicInVehicle(TPV0)
+                    TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
+                    SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
+                Else
+                    UI.ShowSubtitle(Reach10)
+                End If
+            Else
                 TPV0.Delete()
                 ReturnAllVehiclesToGarageNEW()
                 TPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -243,8 +296,6 @@ Public Class Mechanic2
                 CreateMechanicInVehicle(TPV0)
                 TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
-            Else
-                UI.ShowSubtitle(Reach10)
             End If
         End If
     End Sub
@@ -265,7 +316,26 @@ Public Class Mechanic2
             PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
         Else
-            If PPVD >= 30 Then
+            If Not Website.iWillGetThereAsSoonAsICan Then
+                If PPVD >= 30 Then
+                    PPV0.Delete()
+                    ReturnAllVehiclesToGarageNEW()
+                    PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
+                    PPV0.AddBlip()
+                    PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
+                    PPV0.CurrentBlip.Color = BlipColor.Yellow
+                    PPV0.CurrentBlip.IsShortRange = True
+                    SetBlipName(PPV0.FriendlyName, PPV0.CurrentBlip)
+                    selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                    WriteCfgValue("Active", "True", SelectedItem_Car)
+                    SetModKit(PPV0, SelectedItem_Car)
+                    CreateMechanicInVehicle(PPV0)
+                    PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
+                    SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
+                Else
+                    UI.ShowSubtitle(Reach10)
+                End If
+            Else
                 PPV0.Delete()
                 ReturnAllVehiclesToGarageNEW()
                 PPV0 = CreateVehicle(VehicleModel, VehicleHash, World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)))
@@ -280,8 +350,6 @@ Public Class Mechanic2
                 CreateMechanicInVehicle(PPV0)
                 PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
-            Else
-                UI.ShowSubtitle(Reach10)
             End If
         End If
     End Sub
