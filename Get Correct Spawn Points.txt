@@ -1,0 +1,49 @@
+Public Enum Nodetype
+    AnyRoad
+    Road
+    Offroad
+    Water
+End Enum
+
+Public Shared Function GenerateSpawnPos(desiredPos As Vector3, roadtype As Nodetype, sidewalk As Boolean) As Vector3
+
+    Dim finalpos As Vector3 = Vector3.Zero
+    Dim ForceOffroad As Boolean = False
+
+
+    Dim outArgA As New OutputArgument()
+    Dim NodeNumber As Integer = 1
+    Dim type As Integer = 0
+
+    If roadtype = Nodetype.AnyRoad Then
+        type = 1
+    End If
+    If roadtype = Nodetype.Road Then
+        type = 0
+    End If
+    If roadtype = Nodetype.Offroad Then
+        type = 1
+        ForceOffroad = True
+    End If
+    If roadtype = Nodetype.Water Then
+        type = 3
+    End If
+
+
+    Dim NodeID As Integer = [Function].[Call](Of Integer)(Hash.GET_NTH_CLOSEST_VEHICLE_NODE_ID, desiredPos.X, desiredPos.Y, desiredPos.Z, NodeNumber, type, _
+        300F, 300F)
+    If ForceOffroad Then
+        While Not [Function].[Call](Of Boolean)(Hash._GET_IS_SLOW_ROAD_FLAG, NodeID) AndAlso NodeNumber < 500
+            NodeNumber += 1
+            NodeID = [Function].[Call](Of Integer)(Hash.GET_NTH_CLOSEST_VEHICLE_NODE_ID, desiredPos.X, desiredPos.Y, desiredPos.Z, NodeNumber, type, _
+                300F, 300F)
+        End While
+    End If
+    [Function].[Call](Hash.GET_VEHICLE_NODE_POSITION, NodeID, outArgA)
+    finalpos = outArgA.GetResult(Of Vector3)()
+
+    If sidewalk Then
+        finalpos = World.GetNextPositionOnSidewalk(finalpos)
+    End If
+    Return finalpos
+End Function

@@ -1,0 +1,11 @@
+Public int GetAccentColour(Vehicle V)
+{
+     OutputArgument ACol = new OutputArgument();
+     Function.Call((Hash)0xB7635E80A5C31BFF, V, ACol);
+     return ACol.GetResult<int>();
+}
+
+Public Void SetAccentColour(Vehicle V,int Colour)
+{
+     Function.Call((Hash)0x6089CDF6A57F326C, V, Colour);
+}
