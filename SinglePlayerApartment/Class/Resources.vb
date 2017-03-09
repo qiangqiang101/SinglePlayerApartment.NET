@@ -666,7 +666,6 @@ Label_005C:
     End Function
 
     Public Shared Sub RadioPlayer(Room As String, Prop As Prop)
-
         Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, Room, True)
         Native.Function.Call(&HE0CD610D5EB6C85L, Room, Prop)
         Native.Function.Call(Hash._0xF1CA12B18AEF5298, Prop, True)
