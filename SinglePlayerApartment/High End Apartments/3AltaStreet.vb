@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class _3AltaStreet
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,7 +17,6 @@ Public Class _3AltaStreet
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("3 Alta Street Apt. ", "57", 223000)
             Apartment.Name = ReadCfgValue("3AltaName", langFile)
             Apartment.Description = ReadCfgValue("3AltaDesc", langFile)
@@ -43,7 +41,7 @@ Public Class _3AltaStreet
             Apartment.PlayerMap = "3Alta"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class _3AltaStreet
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -483,7 +479,7 @@ Public Class _3AltaStreet
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.ThreeAltaStreet = "Enable" Then
                 'Enter Apartment
@@ -584,8 +580,8 @@ Public Class _3AltaStreet
                     HIDE_MAP_OBJECT_THIS_FRAME()
                 End If
 
-                    _menuPool.ProcessMenus()
-                End If
+                _menuPool.ProcessMenus()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -598,7 +594,7 @@ Public Class _3AltaStreet
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

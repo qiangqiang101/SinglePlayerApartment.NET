@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class WeazelPlaza
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,32 +17,31 @@ Public Class WeazelPlaza
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Weazel Plaza Apt. ", "70", 335000)
-                Apartment.Name = ReadCfgValue("WeazelName", langFile)
-                Apartment.Description = ReadCfgValue("WeazelDesc", langFile)
-                Apartment.Owner = ReadCfgValue("WPowner", saveFile)
-                Apartment.Entrance = New Vector3(-913.9732, -455.039, 39.5998)
-                Apartment.Save = New Vector3(-913.0292, -440.8677, 115.3998)
-                Apartment.TeleportInside = New Vector3(-900.6082, -431.0182, 121.607)
-                Apartment.TeleportOutside = New Vector3(-914.3189, -455.2902, 39.5998)
-                Apartment.ApartmentExit = New Vector3(-897.3925, -430.1651, 121.607)
-                Apartment.Wardrobe = New Vector3(-909.721, -445.5214, 115.7431)
-                Apartment.GarageEntrance = New Vector3(-823.0811, -438.4828, 36.6387)
-                Apartment.GarageOutside = New Vector3(-831.567, -430.7581, 36.0904)
-                Apartment.GarageOutHeading = 116.1013
-                Apartment.CameraPosition = New Vector3(-965.4064, -563.0858, 34.91125)
-                Apartment.CameraRotation = New Vector3(24.98755, 0, -31.1508)
-                Apartment.CameraFOV = 50.0
-                Apartment.Interior = New Vector3(-909.054, -441.466, 120.205)
-                Apartment.WardrobeHeading = 296.1297
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
-                Apartment.SaveFile = "WPowner"
-                Apartment.PlayerMap = "Weazel"
+            Apartment.Name = ReadCfgValue("WeazelName", langFile)
+            Apartment.Description = ReadCfgValue("WeazelDesc", langFile)
+            Apartment.Owner = ReadCfgValue("WPowner", saveFile)
+            Apartment.Entrance = New Vector3(-913.9732, -455.039, 39.5998)
+            Apartment.Save = New Vector3(-913.0292, -440.8677, 115.3998)
+            Apartment.TeleportInside = New Vector3(-900.6082, -431.0182, 121.607)
+            Apartment.TeleportOutside = New Vector3(-914.3189, -455.2902, 39.5998)
+            Apartment.ApartmentExit = New Vector3(-897.3925, -430.1651, 121.607)
+            Apartment.Wardrobe = New Vector3(-909.721, -445.5214, 115.7431)
+            Apartment.GarageEntrance = New Vector3(-823.0811, -438.4828, 36.6387)
+            Apartment.GarageOutside = New Vector3(-831.567, -430.7581, 36.0904)
+            Apartment.GarageOutHeading = 116.1013
+            Apartment.CameraPosition = New Vector3(-965.4064, -563.0858, 34.91125)
+            Apartment.CameraRotation = New Vector3(24.98755, 0, -31.1508)
+            Apartment.CameraFOV = 50.0
+            Apartment.Interior = New Vector3(-909.054, -441.466, 120.205)
+            Apartment.WardrobeHeading = 296.1297
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\weazel_plaza\"
+            Apartment.SaveFile = "WPowner"
+            Apartment.PlayerMap = "Weazel"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class WeazelPlaza
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -482,7 +478,7 @@ Public Class WeazelPlaza
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.WeazelPlaza = "Enable" Then
                 'Enter Apartment
@@ -598,7 +594,7 @@ Public Class WeazelPlaza
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class SouthRockfordDr0112
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,28 +17,27 @@ Public Class SouthRockfordDr0112
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("0112 South Rockford Drive Apt. ", "13", 80000)
-                Apartment.Name = ReadCfgValue("0112SouthRockfordName", langFile)
-                Apartment.Description = ReadCfgValue("0112SouthRockfordDesc", langFile)
+            Apartment.Name = ReadCfgValue("0112SouthRockfordName", langFile)
+            Apartment.Description = ReadCfgValue("0112SouthRockfordDesc", langFile)
             Apartment.Owner = ReadCfgValue("0112SRDowner", saveFile)
             Apartment.Entrance = New Vector3(-812.3849, -980.3691, 14.26866)
-                Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
-                Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
-                Apartment.TeleportOutside = New Vector3(-814.8087, -984.2986, 14.03712)
-                Apartment.ApartmentExit = New Vector3(266.1321, -1007.5136, -101.0085)
-                Apartment.Wardrobe = New Vector3(260.0521, -1004.1469, -99.0085)
-                Apartment.GarageEntrance = New Vector3(-812.1517, -954.1611, 15.22835)
-                Apartment.GarageOutside = New Vector3(-822.1036, -955.2672, 15.24641)
-                Apartment.GarageOutHeading = 99.68565
-                Apartment.CameraPosition = New Vector3(-835.3129, -1003.118, 16.48207)
-                Apartment.CameraRotation = New Vector3(3.313114, 0, -32.55415)
-                Apartment.CameraFOV = 50.0
+            Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
+            Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
+            Apartment.TeleportOutside = New Vector3(-814.8087, -984.2986, 14.03712)
+            Apartment.ApartmentExit = New Vector3(266.1321, -1007.5136, -101.0085)
+            Apartment.Wardrobe = New Vector3(260.0521, -1004.1469, -99.0085)
+            Apartment.GarageEntrance = New Vector3(-812.1517, -954.1611, 15.22835)
+            Apartment.GarageOutside = New Vector3(-822.1036, -955.2672, 15.24641)
+            Apartment.GarageOutHeading = 99.68565
+            Apartment.CameraPosition = New Vector3(-835.3129, -1003.118, 16.48207)
+            Apartment.CameraRotation = New Vector3(3.313114, 0, -32.55415)
+            Apartment.CameraFOV = 50.0
             Apartment.WardrobeHeading = 359.818
             Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\0112_south_rockford_dr\"
-                Apartment.SaveFile = "0112SRDowner"
-                Apartment.PlayerMap = "0112SouthRockfordDr"
-                Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
+            Apartment.SaveFile = "0112SRDowner"
+            Apartment.PlayerMap = "0112SouthRockfordDr"
+            Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
             Apartment.Enabled = True
 
             If ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then
@@ -61,8 +59,6 @@ Public Class SouthRockfordDr0112
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -438,7 +434,7 @@ Public Class SouthRockfordDr0112
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.SouthRockfordDr0112 = "Enable" Then
                 'Enter Apartment
@@ -532,7 +528,7 @@ Public Class SouthRockfordDr0112
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

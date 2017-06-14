@@ -5,7 +5,7 @@
     End Sub
 
     Public Shared Sub Log(message As Object)
-        System.IO.File.AppendAllText(".\SPA-" & Now.Month & "-" & Now.Day & "-" & Now.Year & ".log", DateTime.Now & ":" & message & Environment.NewLine)
+        System.IO.File.AppendAllText(".\SPA.log", DateTime.Now & ":" & message & Environment.NewLine)
     End Sub
 
 End Class

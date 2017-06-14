@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class NorthConker2045
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,32 +17,31 @@ Public Class NorthConker2045
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("North Conker Avenue ", "2045", 727000)
-                Apartment.Name = ReadCfgValue("2045Name", langFile)
-                Apartment.Description = ReadCfgValue("2045Desc", langFile)
-                Apartment.Owner = ReadCfgValue("2045NCowner", saveFile)
-                Apartment.Entrance = New Vector3(373.8461, 427.7975, 145.6839)
-                Apartment.Save = New Vector3(377.2632, 407.4584, 142.1256)
-                Apartment.TeleportInside = New Vector3(373.2864, 420.6612, 145.9045)
-                Apartment.TeleportOutside = New Vector3(371.9392, 430.4312, 145.1107)
-                Apartment.ApartmentExit = New Vector3(373.7533, 423.8348, 145.9078)
-                Apartment.Wardrobe = New Vector3(374.4273, 411.5888, 142.1002)
-                Apartment.GarageEntrance = New Vector3(391.3488, 430.2205, 143.1705)
-                Apartment.GarageOutside = New Vector3(392.482, 430.467, 143.0165)
-                Apartment.GarageOutHeading = 298.54
-                Apartment.CameraPosition = New Vector3(366.7971, 447.0355, 148.0793)
-                Apartment.CameraRotation = New Vector3(-8.704479, -2.1593, -156.5936)
-                Apartment.CameraFOV = 50.0
-                Apartment.WardrobeHeading = 166.7329
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
-                Apartment.SaveFile = "2045NCowner"
-                Apartment.PlayerMap = "NConker2045"
-                Apartment.IPL = "apa_stilt_ch2_04_ext2"
+            Apartment.Name = ReadCfgValue("2045Name", langFile)
+            Apartment.Description = ReadCfgValue("2045Desc", langFile)
+            Apartment.Owner = ReadCfgValue("2045NCowner", saveFile)
+            Apartment.Entrance = New Vector3(373.8461, 427.7975, 145.6839)
+            Apartment.Save = New Vector3(377.2632, 407.4584, 142.1256)
+            Apartment.TeleportInside = New Vector3(373.2864, 420.6612, 145.9045)
+            Apartment.TeleportOutside = New Vector3(371.9392, 430.4312, 145.1107)
+            Apartment.ApartmentExit = New Vector3(373.7533, 423.8348, 145.9078)
+            Apartment.Wardrobe = New Vector3(374.4273, 411.5888, 142.1002)
+            Apartment.GarageEntrance = New Vector3(391.3488, 430.2205, 143.1705)
+            Apartment.GarageOutside = New Vector3(392.482, 430.467, 143.0165)
+            Apartment.GarageOutHeading = 298.54
+            Apartment.CameraPosition = New Vector3(366.7971, 447.0355, 148.0793)
+            Apartment.CameraRotation = New Vector3(-8.704479, -2.1593, -156.5936)
+            Apartment.CameraFOV = 50.0
+            Apartment.WardrobeHeading = 166.7329
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2045_north_conker\"
+            Apartment.SaveFile = "2045NCowner"
+            Apartment.PlayerMap = "NConker2045"
+            Apartment.IPL = "apa_stilt_ch2_04_ext2"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.TeleportInside)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class NorthConker2045
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -493,7 +489,7 @@ Public Class NorthConker2045
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.NorthConker2045 = "Enable" Then
                 'Enter Apartment
@@ -612,7 +608,7 @@ Public Class NorthConker2045
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

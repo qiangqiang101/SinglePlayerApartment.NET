@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class DelPerroHeight
-    Inherits Script
 
     Public Shared Apartment, ApartmentHL As Apartment
     Public Shared BuyMenu, ExitMenu, ExitMenuHL, GarageMenu As UIMenu
@@ -18,50 +17,49 @@ Public Class DelPerroHeight
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Del Perro Heights Apt. ", "7", 468000)
-                Apartment.Name = ReadCfgValue("DelPerroName", langFile)
-                Apartment.Description = ReadCfgValue("DelPerroDesc", langFile)
-                Apartment.Owner = ReadCfgValue("DPHwoner", saveFile)
-                Apartment.Entrance = New Vector3(-1443.0578, -544.7794, 34.7418)
-                Apartment.Save = New Vector3(-1471.4473, -533.1909, 50.7216)
-                Apartment.TeleportInside = New Vector3(-1460.3659, -522.0636, 56.929)
-                Apartment.TeleportOutside = New Vector3(-1439.5905, -550.6906, 34.7418)
-                Apartment.ApartmentExit = New Vector3(-1457.5853, -520.3571, 56.929)
-                Apartment.Wardrobe = New Vector3(-1467.6958, -537.2778, 50.7325)
-                Apartment.GarageEntrance = New Vector3(-1457.6473, -500.7265, 32.1985)
-                Apartment.GarageOutside = New Vector3(-1457.4394, -490.838, 33.028)
-                Apartment.GarageOutHeading = 300.666
-                Apartment.CameraPosition = New Vector3(-1392.67, -572.4094, 35.15923)
-                Apartment.CameraRotation = New Vector3(22.16564, 0, 66.90905)
-                Apartment.CameraFOV = 50.0
-                Apartment.Interior = New Vector3(-1477.14, -538.75, 55.5264)
-                Apartment.WardrobeHeading = 314.1525
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
-                Apartment.SaveFile = "DPHwoner"
-                Apartment.PlayerMap = "DelPerro"
+            Apartment.Name = ReadCfgValue("DelPerroName", langFile)
+            Apartment.Description = ReadCfgValue("DelPerroDesc", langFile)
+            Apartment.Owner = ReadCfgValue("DPHwoner", saveFile)
+            Apartment.Entrance = New Vector3(-1443.0578, -544.7794, 34.7418)
+            Apartment.Save = New Vector3(-1471.4473, -533.1909, 50.7216)
+            Apartment.TeleportInside = New Vector3(-1460.3659, -522.0636, 56.929)
+            Apartment.TeleportOutside = New Vector3(-1439.5905, -550.6906, 34.7418)
+            Apartment.ApartmentExit = New Vector3(-1457.5853, -520.3571, 56.929)
+            Apartment.Wardrobe = New Vector3(-1467.6958, -537.2778, 50.7325)
+            Apartment.GarageEntrance = New Vector3(-1457.6473, -500.7265, 32.1985)
+            Apartment.GarageOutside = New Vector3(-1457.4394, -490.838, 33.028)
+            Apartment.GarageOutHeading = 300.666
+            Apartment.CameraPosition = New Vector3(-1392.67, -572.4094, 35.15923)
+            Apartment.CameraRotation = New Vector3(22.16564, 0, 66.90905)
+            Apartment.CameraFOV = 50.0
+            Apartment.Interior = New Vector3(-1477.14, -538.75, 55.5264)
+            Apartment.WardrobeHeading = 314.1525
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights\"
+            Apartment.SaveFile = "DPHwoner"
+            Apartment.PlayerMap = "DelPerro"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             ApartmentHL = New Apartment("Del Perro Heights Apt. ", "4", 936000)
-                ApartmentHL.Name = ReadCfgValue("DelPerroHLName", langFile)
-                ApartmentHL.Description = ReadCfgValue("DelPerroHLDesc", langFile)
-                ApartmentHL.Owner = ReadCfgValue("DPHHLowner", saveFile)
-                ApartmentHL.Save = New Vector3(-1454.6335, -552.5497, 72.8437)
-                ApartmentHL.TeleportInside = New Vector3(-1458.6523, -531.4198, 74.0796)
-                ApartmentHL.TeleportOutside = New Vector3(-1439.5905, -550.6906, 34.7418)
-                ApartmentHL.ApartmentExit = New Vector3(-1456.5989, -534.5363, 74.0445)
+            ApartmentHL.Name = ReadCfgValue("DelPerroHLName", langFile)
+            ApartmentHL.Description = ReadCfgValue("DelPerroHLDesc", langFile)
+            ApartmentHL.Owner = ReadCfgValue("DPHHLowner", saveFile)
+            ApartmentHL.Save = New Vector3(-1454.6335, -552.5497, 72.8437)
+            ApartmentHL.TeleportInside = New Vector3(-1458.6523, -531.4198, 74.0796)
+            ApartmentHL.TeleportOutside = New Vector3(-1439.5905, -550.6906, 34.7418)
+            ApartmentHL.ApartmentExit = New Vector3(-1456.5989, -534.5363, 74.0445)
             ApartmentHL.Wardrobe = New Vector3(-1449.6384, -549.0426, 72.8437)
             ApartmentHL.Interior = New Vector3(-1464.623, -536.5814, 73.47953)
             ApartmentHL.WardrobeHeading = 122.2167
             ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\del_perro_heights_hl\"
-                ApartmentHL.SaveFile = "DPHHLowner"
-                ApartmentHL.PlayerMap = "DelPerroHL"
+            ApartmentHL.SaveFile = "DPHHLowner"
+            ApartmentHL.PlayerMap = "DelPerroHL"
             ApartmentHL.Enabled = True
             ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
-            InteriorIDList.Add(ApartmentHL.InteriorID)
+            If Not ApartmentHL.InteriorID = 0 Then InteriorIDList.Add(ApartmentHL.InteriorID)
 
             If ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -82,8 +80,6 @@ Public Class DelPerroHeight
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -851,7 +847,7 @@ Public Class DelPerroHeight
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.DelPerroHeight = "Enable" Then
                 'Enter Apartment
@@ -1012,7 +1008,7 @@ Public Class DelPerroHeight
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

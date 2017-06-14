@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class HillcrestAve2874
-    Inherits Script
 
     Public Shared _Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,7 +17,6 @@ Public Class HillcrestAve2874
 
     Public Sub New()
         Try
-
             _Apartment = New Apartment("Hillcrest Avenue ", "2874", 571000)
             _Apartment.Name = ReadCfgValue("2874Name", langFile)
             _Apartment.Description = ReadCfgValue("2874Desc", langFile)
@@ -43,7 +41,7 @@ Public Class HillcrestAve2874
             _Apartment.IPL = "apa_stilt_ch2_09b_ext2"
             _Apartment.Enabled = True
             _Apartment.InteriorID = Apartment.GetInteriorID(_Apartment.TeleportInside)
-            InteriorIDList.Add(_Apartment.InteriorID)
+            If Not _Apartment.InteriorID = 0 Then InteriorIDList.Add(_Apartment.InteriorID)
 
             If ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class HillcrestAve2874
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -494,7 +490,7 @@ Public Class HillcrestAve2874
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.Hillcrest2874 = "Enable" Then
                 'Enter _Apartment
@@ -613,7 +609,7 @@ Public Class HillcrestAve2874
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not _Apartment.AptBlip Is Nothing Then _Apartment.AptBlip.Remove()
             If Not _Apartment.GrgBlip Is Nothing Then _Apartment.GrgBlip.Remove()

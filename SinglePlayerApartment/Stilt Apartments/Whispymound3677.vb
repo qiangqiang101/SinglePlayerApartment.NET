@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class Whispymound3677
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,32 +17,31 @@ Public Class Whispymound3677
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Whispymound Drive ", "3677", 478000)
-                Apartment.Name = ReadCfgValue("3677Name", langFile)
-                Apartment.Description = ReadCfgValue("3677Desc", langFile)
-                Apartment.Owner = ReadCfgValue("3677WMDowner", saveFile)
-                Apartment.Entrance = New Vector3(119.3083, 564.0632, 183.9594)
-                Apartment.Save = New Vector3(126.1813, 545.9031, 180.5226)
-                Apartment.TeleportInside = New Vector3(117.5057, 557.3167, 184.3022)
-                Apartment.TeleportOutside = New Vector3(118.8673, 567.283, 183.1295)
-                Apartment.ApartmentExit = New Vector3(117.2371, 560.0856, 184.3048)
-                Apartment.Wardrobe = New Vector3(122.0242, 548.9013, 180.4972)
-                Apartment.GarageEntrance = New Vector3(131.7664, 568.0024, 183.1025)
-                Apartment.GarageOutside = New Vector3(132.723, 568.142, 183.099)
-                Apartment.GarageOutHeading = 335.12
-                Apartment.CameraPosition = New Vector3(112.5791, 574.6387, 190.8119)
-                Apartment.CameraRotation = New Vector3(-21.01317, 0, -144.2139)
-                Apartment.CameraFOV = 50.0
-                Apartment.WardrobeHeading = 182.3311
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
-                Apartment.SaveFile = "3677WMDowner"
-                Apartment.PlayerMap = "Whispy3677"
-                Apartment.IPL = "apa_stilt_ch2_05c_ext1"
+            Apartment.Name = ReadCfgValue("3677Name", langFile)
+            Apartment.Description = ReadCfgValue("3677Desc", langFile)
+            Apartment.Owner = ReadCfgValue("3677WMDowner", saveFile)
+            Apartment.Entrance = New Vector3(119.3083, 564.0632, 183.9594)
+            Apartment.Save = New Vector3(126.1813, 545.9031, 180.5226)
+            Apartment.TeleportInside = New Vector3(117.5057, 557.3167, 184.3022)
+            Apartment.TeleportOutside = New Vector3(118.8673, 567.283, 183.1295)
+            Apartment.ApartmentExit = New Vector3(117.2371, 560.0856, 184.3048)
+            Apartment.Wardrobe = New Vector3(122.0242, 548.9013, 180.4972)
+            Apartment.GarageEntrance = New Vector3(131.7664, 568.0024, 183.1025)
+            Apartment.GarageOutside = New Vector3(132.723, 568.142, 183.099)
+            Apartment.GarageOutHeading = 335.12
+            Apartment.CameraPosition = New Vector3(112.5791, 574.6387, 190.8119)
+            Apartment.CameraRotation = New Vector3(-21.01317, 0, -144.2139)
+            Apartment.CameraFOV = 50.0
+            Apartment.WardrobeHeading = 182.3311
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3677_whispymound\"
+            Apartment.SaveFile = "3677WMDowner"
+            Apartment.PlayerMap = "Whispy3677"
+            Apartment.IPL = "apa_stilt_ch2_05c_ext1"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.TeleportInside)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class Whispymound3677
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -495,7 +491,7 @@ Public Class Whispymound3677
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.Whispymound3677 = "Enable" Then
                 'Enter Apartment
@@ -612,7 +608,7 @@ Public Class Whispymound3677
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

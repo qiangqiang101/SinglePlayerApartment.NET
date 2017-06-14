@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class SpanishAve
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -20,8 +19,8 @@ Public Class SpanishAve
         Try
 
             Apartment = New Apartment("0605 Spanish Avenue Apt. ", "1", 128000)
-                Apartment.Name = ReadCfgValue("SpanishAveName", langFile)
-                Apartment.Description = ReadCfgValue("SpanishAveDesc", langFile)
+            Apartment.Name = ReadCfgValue("SpanishAveName", langFile)
+            Apartment.Description = ReadCfgValue("SpanishAveDesc", langFile)
             Apartment.Owner = ReadCfgValue("SAonwer", saveFile)
             Apartment.Entrance = New Vector3(3.602079, 37.2024, 71.53042)
             Apartment.Save = New Vector3(349.9618, -997.4911, -99.1962)
@@ -61,8 +60,6 @@ Public Class SpanishAve
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -486,7 +483,7 @@ Public Class SpanishAve
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.SpanishAve = "Enable" Then
                 'Enter Apartment
@@ -580,7 +577,7 @@ Public Class SpanishAve
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

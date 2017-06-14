@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class TinselTower
-    Inherits Script
 
     Public Shared Apartment, ApartmentHL As Apartment
     Public Shared BuyMenu, ExitMenu, ExitMenuHL, GarageMenu As UIMenu
@@ -18,50 +17,49 @@ Public Class TinselTower
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Tinsel Tower Apt. ", "29", 492000)
-                Apartment.Name = ReadCfgValue("TinselName", langFile)
-                Apartment.Description = ReadCfgValue("TinselDesc", langFile)
-                Apartment.Owner = ReadCfgValue("TTowner", saveFile)
-                Apartment.Entrance = New Vector3(-614.7656, 37.9, 43.5895)
-                Apartment.Save = New Vector3(-583.2249, 44.9624, 87.4188)
-                Apartment.TeleportInside = New Vector3(-598.9042, 41.8059, 93.6261)
-                Apartment.TeleportOutside = New Vector3(-617.9388, 35.7848, 43.5558)
-                Apartment.ApartmentExit = New Vector3(-601.8906, 42.3395, 93.6261)
-                Apartment.Wardrobe = New Vector3(-583.9974, 50.5919, 87.4296)
-                Apartment.GarageEntrance = New Vector3(-634.3952, 56.0859, 43.7127)
-                Apartment.GarageOutside = New Vector3(-641.8661, 57.0499, 43.4129)
-                Apartment.GarageOutHeading = 84.922
-                Apartment.CameraPosition = New Vector3(-678.4925, -30.95172, 48.26074)
-                Apartment.CameraRotation = New Vector3(16.23258, 0, -43.18668)
-                Apartment.CameraFOV = 50.0
-                Apartment.Interior = New Vector3(-575.305, 42.3233, 92.2236)
-                Apartment.WardrobeHeading = 79.9632
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
-                Apartment.SaveFile = "TTowner"
-                Apartment.PlayerMap = "Tinsel"
+            Apartment.Name = ReadCfgValue("TinselName", langFile)
+            Apartment.Description = ReadCfgValue("TinselDesc", langFile)
+            Apartment.Owner = ReadCfgValue("TTowner", saveFile)
+            Apartment.Entrance = New Vector3(-614.7656, 37.9, 43.5895)
+            Apartment.Save = New Vector3(-583.2249, 44.9624, 87.4188)
+            Apartment.TeleportInside = New Vector3(-598.9042, 41.8059, 93.6261)
+            Apartment.TeleportOutside = New Vector3(-617.9388, 35.7848, 43.5558)
+            Apartment.ApartmentExit = New Vector3(-601.8906, 42.3395, 93.6261)
+            Apartment.Wardrobe = New Vector3(-583.9974, 50.5919, 87.4296)
+            Apartment.GarageEntrance = New Vector3(-634.3952, 56.0859, 43.7127)
+            Apartment.GarageOutside = New Vector3(-641.8661, 57.0499, 43.4129)
+            Apartment.GarageOutHeading = 84.922
+            Apartment.CameraPosition = New Vector3(-678.4925, -30.95172, 48.26074)
+            Apartment.CameraRotation = New Vector3(16.23258, 0, -43.18668)
+            Apartment.CameraFOV = 50.0
+            Apartment.Interior = New Vector3(-575.305, 42.3233, 92.2236)
+            Apartment.WardrobeHeading = 79.9632
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower\"
+            Apartment.SaveFile = "TTowner"
+            Apartment.PlayerMap = "Tinsel"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             ApartmentHL = New Apartment("Tinsel Tower Apt. ", "42", 984000)
-                ApartmentHL.Name = ReadCfgValue("TinselHLName", langFile)
-                ApartmentHL.Description = ReadCfgValue("TinselHLDesc", langFile)
-                ApartmentHL.Owner = ReadCfgValue("TTHLowner", saveFile)
-                ApartmentHL.Save = New Vector3(-594.5658, 50.1804, 96.9996)
-                ApartmentHL.TeleportInside = New Vector3(-614.032, 58.9435, 98.2355)
-                ApartmentHL.TeleportOutside = New Vector3(-617.9388, 35.7848, 43.5558)
-                ApartmentHL.ApartmentExit = New Vector3(-610.6395, 58.8867, 98.2004)
+            ApartmentHL.Name = ReadCfgValue("TinselHLName", langFile)
+            ApartmentHL.Description = ReadCfgValue("TinselHLDesc", langFile)
+            ApartmentHL.Owner = ReadCfgValue("TTHLowner", saveFile)
+            ApartmentHL.Save = New Vector3(-594.5658, 50.1804, 96.9996)
+            ApartmentHL.TeleportInside = New Vector3(-614.032, 58.9435, 98.2355)
+            ApartmentHL.TeleportOutside = New Vector3(-617.9388, 35.7848, 43.5558)
+            ApartmentHL.ApartmentExit = New Vector3(-610.6395, 58.8867, 98.2004)
             ApartmentHL.Wardrobe = New Vector3(-594.8418, 55.761, 96.9996)
             ApartmentHL.Interior = New Vector3(-613.2578, 50.58982, 97.63541)
             ApartmentHL.WardrobeHeading = 173.2113
             ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\tinsel_tower_hl\"
-                ApartmentHL.SaveFile = "TTHLowner"
-                ApartmentHL.PlayerMap = "TinselHL"
+            ApartmentHL.SaveFile = "TTHLowner"
+            ApartmentHL.PlayerMap = "TinselHL"
             ApartmentHL.Enabled = True
             ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
-            InteriorIDList.Add(ApartmentHL.InteriorID)
+            If Not ApartmentHL.InteriorID = 0 Then InteriorIDList.Add(ApartmentHL.InteriorID)
 
             If ReadCfgValue("TinselTower", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -82,8 +80,6 @@ Public Class TinselTower
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -852,7 +848,7 @@ Public Class TinselTower
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.TinselTower = "Enable" Then
                 'Enter Apartment
@@ -1016,7 +1012,7 @@ Public Class TinselTower
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class CougarAve
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,10 +17,9 @@ Public Class CougarAve
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("0069 Cougar Avenue Apt. ", "19", 112000)
-                Apartment.Name = ReadCfgValue("CougarName", langFile)
-                Apartment.Description = ReadCfgValue("CougarDesc", langFile)
+            Apartment.Name = ReadCfgValue("CougarName", langFile)
+            Apartment.Description = ReadCfgValue("CougarDesc", langFile)
             Apartment.Owner = ReadCfgValue("CAowner", saveFile)
             Apartment.Entrance = New Vector3(-1533.488, -326.8141, 47.91118)
             Apartment.Save = New Vector3(349.9618, -997.4911, -99.1962)
@@ -61,8 +59,6 @@ Public Class CougarAve
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -486,7 +482,7 @@ Public Class CougarAve
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.CougarAve = "Enable" Then
                 'Enter Apartment
@@ -580,7 +576,7 @@ Public Class CougarAve
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

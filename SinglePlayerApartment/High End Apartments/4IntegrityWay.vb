@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class _4IntegrityWay
-    Inherits Script
 
     Public Shared Apartment, ApartmentHL As Apartment
     Public Shared BuyMenu, ExitMenu, ExitMenuHL, GarageMenu As UIMenu
@@ -18,50 +17,49 @@ Public Class _4IntegrityWay
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("4 Integrity Way Apt. ", "30", 476000)
-                Apartment.Name = ReadCfgValue("4IntegrityName", langFile)
-                Apartment.Description = ReadCfgValue("4IntegrityDesc", langFile)
-                Apartment.Owner = ReadCfgValue("4IWowner", saveFile)
-                Apartment.Entrance = New Vector3(-48.0058, -587.9324, 37.9529)
-                Apartment.Save = New Vector3(-36.6321, -578.1332, 83.9075)
-                Apartment.TeleportInside = New Vector3(-21.0966, -580.4884, 90.1148)
-                Apartment.TeleportOutside = New Vector3(-49.3243, -583.1716, 37.0333)
-                Apartment.ApartmentExit = New Vector3(-18.0797, -582.1524, 90.1148)
-                Apartment.Wardrobe = New Vector3(-37.8572, -583.7734, 83.9183)
-                Apartment.GarageEntrance = New Vector3(-31.3821, -622.3356, 35.1917)
-                Apartment.GarageOutside = New Vector3(-24.074, -624.9826, 35.0905)
-                Apartment.GarageOutHeading = 251.6195
-                Apartment.CameraPosition = New Vector3(-73.43955, -489.4017, 43.24729)
-                Apartment.CameraRotation = New Vector3(20.34373, 0, -158.8398)
-                Apartment.CameraFOV = 50.0
-                Apartment.Interior = New Vector3(-37.41, -582.82, 88.71)
-                Apartment.WardrobeHeading = 255.3193
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
-                Apartment.SaveFile = "4IWowner"
-                Apartment.PlayerMap = "4Integrity"
+            Apartment.Name = ReadCfgValue("4IntegrityName", langFile)
+            Apartment.Description = ReadCfgValue("4IntegrityDesc", langFile)
+            Apartment.Owner = ReadCfgValue("4IWowner", saveFile)
+            Apartment.Entrance = New Vector3(-48.0058, -587.9324, 37.9529)
+            Apartment.Save = New Vector3(-36.6321, -578.1332, 83.9075)
+            Apartment.TeleportInside = New Vector3(-21.0966, -580.4884, 90.1148)
+            Apartment.TeleportOutside = New Vector3(-49.3243, -583.1716, 37.0333)
+            Apartment.ApartmentExit = New Vector3(-18.0797, -582.1524, 90.1148)
+            Apartment.Wardrobe = New Vector3(-37.8572, -583.7734, 83.9183)
+            Apartment.GarageEntrance = New Vector3(-31.3821, -622.3356, 35.1917)
+            Apartment.GarageOutside = New Vector3(-24.074, -624.9826, 35.0905)
+            Apartment.GarageOutHeading = 251.6195
+            Apartment.CameraPosition = New Vector3(-73.43955, -489.4017, 43.24729)
+            Apartment.CameraRotation = New Vector3(20.34373, 0, -158.8398)
+            Apartment.CameraFOV = 50.0
+            Apartment.Interior = New Vector3(-37.41, -582.82, 88.71)
+            Apartment.WardrobeHeading = 255.3193
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way\"
+            Apartment.SaveFile = "4IWowner"
+            Apartment.PlayerMap = "4Integrity"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             ApartmentHL = New Apartment("4 Integrity Way Apt. ", "28", 952000)
-                ApartmentHL.Name = ReadCfgValue("4IntegrityHLName", langFile)
-                ApartmentHL.Description = ReadCfgValue("4IntegrityHLDesc", langFile)
-                ApartmentHL.Owner = ReadCfgValue("4IWHLowner", saveFile)
-                ApartmentHL.Save = New Vector3(-36.3656, -583.9371, 78.8302)
-                ApartmentHL.TeleportInside = New Vector3(-21.5202, -598.4841, 80.0662)
-                ApartmentHL.TeleportOutside = New Vector3(-49.3243, -583.1716, 37.0333)
-                ApartmentHL.ApartmentExit = New Vector3(-24.4089, -597.69, 80.0311)
+            ApartmentHL.Name = ReadCfgValue("4IntegrityHLName", langFile)
+            ApartmentHL.Description = ReadCfgValue("4IntegrityHLDesc", langFile)
+            ApartmentHL.Owner = ReadCfgValue("4IWHLowner", saveFile)
+            ApartmentHL.Save = New Vector3(-36.3656, -583.9371, 78.8302)
+            ApartmentHL.TeleportInside = New Vector3(-21.5202, -598.4841, 80.0662)
+            ApartmentHL.TeleportOutside = New Vector3(-49.3243, -583.1716, 37.0333)
+            ApartmentHL.ApartmentExit = New Vector3(-24.4089, -597.69, 80.0311)
             ApartmentHL.Wardrobe = New Vector3(-38.1595, -589.3992, 78.8302)
             ApartmentHL.Interior = New Vector3(-18.92107, -591.2064, 79.46609)
             ApartmentHL.WardrobeHeading = 336.2282
             ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\4_integrity_way_hl\"
-                ApartmentHL.SaveFile = "4IWHLowner"
-                ApartmentHL.PlayerMap = "4IntegrityHL"
+            ApartmentHL.SaveFile = "4IWHLowner"
+            ApartmentHL.PlayerMap = "4IntegrityHL"
             ApartmentHL.Enabled = True
             ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
-            InteriorIDList.Add(ApartmentHL.InteriorID)
+            If Not ApartmentHL.InteriorID = 0 Then InteriorIDList.Add(ApartmentHL.InteriorID)
 
             If ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -82,8 +80,6 @@ Public Class _4IntegrityWay
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -852,7 +848,7 @@ Public Class _4IntegrityWay
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.FourIntegrityWay = "Enable" Then
                 'Enter Apartment
@@ -1014,7 +1010,7 @@ Public Class _4IntegrityWay
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

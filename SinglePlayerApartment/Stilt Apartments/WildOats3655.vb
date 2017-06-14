@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class WildOats3655
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,32 +17,31 @@ Public Class WildOats3655
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Wild Oats Drive ", "3655", 800000)
-                Apartment.Name = ReadCfgValue("3655Name", langFile)
-                Apartment.Description = ReadCfgValue("3655Desc", langFile)
-                Apartment.Owner = ReadCfgValue("3655WODowner", saveFile)
-                Apartment.Entrance = New Vector3(-174.606, 502.6157, 137.4205)
-                Apartment.Save = New Vector3(-163.1819, 484.9918, 133.8695)
-                Apartment.TeleportInside = New Vector3(-173.286, 495.0179, 137.667)
-                Apartment.TeleportOutside = New Vector3(-177.3793, 503.8313, 136.8531)
-                Apartment.ApartmentExit = New Vector3(-174.3115, 497.8294, 137.6536)
-                Apartment.Wardrobe = New Vector3(-167.5116, 487.8223, 133.8438)
-                Apartment.GarageEntrance = New Vector3(-189.307, 502.66, 133.9093)
-                Apartment.GarageOutside = New Vector3(-187.563, 502.25, 134.13)
-                Apartment.GarageOutHeading = 332.11
-                Apartment.CameraPosition = New Vector3(-198.8929, 511.1027, 136.112)
-                Apartment.CameraRotation = New Vector3(4.350469, 0, -128.423)
-                Apartment.CameraFOV = 50.0
-                Apartment.WardrobeHeading = 103.0573
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
-                Apartment.SaveFile = "3655WODowner"
-                Apartment.PlayerMap = "WildOats3655"
-                Apartment.IPL = "apa_stilt_ch2_05e_ext1"
+            Apartment.Name = ReadCfgValue("3655Name", langFile)
+            Apartment.Description = ReadCfgValue("3655Desc", langFile)
+            Apartment.Owner = ReadCfgValue("3655WODowner", saveFile)
+            Apartment.Entrance = New Vector3(-174.606, 502.6157, 137.4205)
+            Apartment.Save = New Vector3(-163.1819, 484.9918, 133.8695)
+            Apartment.TeleportInside = New Vector3(-173.286, 495.0179, 137.667)
+            Apartment.TeleportOutside = New Vector3(-177.3793, 503.8313, 136.8531)
+            Apartment.ApartmentExit = New Vector3(-174.3115, 497.8294, 137.6536)
+            Apartment.Wardrobe = New Vector3(-167.5116, 487.8223, 133.8438)
+            Apartment.GarageEntrance = New Vector3(-189.307, 502.66, 133.9093)
+            Apartment.GarageOutside = New Vector3(-187.563, 502.25, 134.13)
+            Apartment.GarageOutHeading = 332.11
+            Apartment.CameraPosition = New Vector3(-198.8929, 511.1027, 136.112)
+            Apartment.CameraRotation = New Vector3(4.350469, 0, -128.423)
+            Apartment.CameraFOV = 50.0
+            Apartment.WardrobeHeading = 103.0573
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\3655_wild_oats\"
+            Apartment.SaveFile = "3655WODowner"
+            Apartment.PlayerMap = "WildOats3655"
+            Apartment.IPL = "apa_stilt_ch2_05e_ext1"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.TeleportInside)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("3655WildOats", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class WildOats3655
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -493,7 +489,7 @@ Public Class WildOats3655
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.WildOats3655 = "Enable" Then
                 'Enter Apartment
@@ -608,7 +604,7 @@ Public Class WildOats3655
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class MiltonRd2117
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,32 +17,31 @@ Public Class MiltonRd2117
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Milton Road ", "2117", 608000)
-                Apartment.Name = ReadCfgValue("2117Name", langFile)
-                Apartment.Description = ReadCfgValue("2117Desc", langFile)
-                Apartment.Owner = ReadCfgValue("2117MRowner", saveFile)
-                Apartment.Entrance = New Vector3(-559.5131, 664.0349, 145.4592)
-                Apartment.Save = New Vector3(-568.4787, 645.6554, 142.0576)
-                Apartment.TeleportInside = New Vector3(-572.4428, 658.958, 145.8364)
-                Apartment.TeleportOutside = New Vector3(-558.0556, 666.2042, 145.1311)
-                Apartment.ApartmentExit = New Vector3(-571.8295, 662.1631, 145.8388)
-                Apartment.Wardrobe = New Vector3(-571.277, 649.8883, 142.0322)
-                Apartment.GarageEntrance = New Vector3(-555.3114, 665.145, 144.6135)
-                Apartment.GarageOutside = New Vector3(-555.117, 666.15, 144.4309)
-                Apartment.GarageOutHeading = 343.26
-                Apartment.CameraPosition = New Vector3(-548.5573, 669.8001, 146.1121)
-                Apartment.CameraRotation = New Vector3(-6.038576, 0, 124.0644)
-                Apartment.CameraFOV = 50.0
-                Apartment.WardrobeHeading = 166.0936
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\"
-                Apartment.SaveFile = "2117MRowner"
-                Apartment.PlayerMap = "MiltonR2117"
-                Apartment.IPL = "apa_stilt_ch2_09c_ext3"
+            Apartment.Name = ReadCfgValue("2117Name", langFile)
+            Apartment.Description = ReadCfgValue("2117Desc", langFile)
+            Apartment.Owner = ReadCfgValue("2117MRowner", saveFile)
+            Apartment.Entrance = New Vector3(-559.5131, 664.0349, 145.4592)
+            Apartment.Save = New Vector3(-568.4787, 645.6554, 142.0576)
+            Apartment.TeleportInside = New Vector3(-572.4428, 658.958, 145.8364)
+            Apartment.TeleportOutside = New Vector3(-558.0556, 666.2042, 145.1311)
+            Apartment.ApartmentExit = New Vector3(-571.8295, 662.1631, 145.8388)
+            Apartment.Wardrobe = New Vector3(-571.277, 649.8883, 142.0322)
+            Apartment.GarageEntrance = New Vector3(-555.3114, 665.145, 144.6135)
+            Apartment.GarageOutside = New Vector3(-555.117, 666.15, 144.4309)
+            Apartment.GarageOutHeading = 343.26
+            Apartment.CameraPosition = New Vector3(-548.5573, 669.8001, 146.1121)
+            Apartment.CameraRotation = New Vector3(-6.038576, 0, 124.0644)
+            Apartment.CameraFOV = 50.0
+            Apartment.WardrobeHeading = 166.0936
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2117_milton_road\"
+            Apartment.SaveFile = "2117MRowner"
+            Apartment.PlayerMap = "MiltonR2117"
+            Apartment.IPL = "apa_stilt_ch2_09c_ext3"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.TeleportInside)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             If ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -64,8 +62,6 @@ Public Class MiltonRd2117
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -494,7 +490,7 @@ Public Class MiltonRd2117
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.MiltonRd2117 = "Enable" Then
                 'Enter Apartment
@@ -613,7 +609,7 @@ Public Class MiltonRd2117
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

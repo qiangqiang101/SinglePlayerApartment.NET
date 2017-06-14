@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class GrapeseedAve
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,28 +17,27 @@ Public Class GrapeseedAve
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Grapeseed Avenue ", "1893", 118000)
-                Apartment.Name = ReadCfgValue("GrapeseedAveName", langFile)
-                Apartment.Description = ReadCfgValue("GrapeseedAveDesc", langFile)
+            Apartment.Name = ReadCfgValue("GrapeseedAveName", langFile)
+            Apartment.Description = ReadCfgValue("GrapeseedAveDesc", langFile)
             Apartment.Owner = ReadCfgValue("GAowner", saveFile)
             Apartment.Entrance = New Vector3(1662.156, 4776.137, 42.01189)
-                Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
-                Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
-                Apartment.TeleportOutside = New Vector3(1665.579, 4776.712, 41.93869)
-                Apartment.ApartmentExit = New Vector3(266.1321, -1007.5136, -101.0085)
-                Apartment.Wardrobe = New Vector3(260.0521, -1004.1469, -99.0085)
-                Apartment.GarageEntrance = New Vector3(1662.088, 4768.009, 41.79552)
-                Apartment.GarageOutside = New Vector3(1667.8, 4768.668, 41.70086)
-                Apartment.GarageOutHeading = 275.8229
-                Apartment.CameraPosition = New Vector3(1683.295, 4774.074, 43.80255)
-                Apartment.CameraRotation = New Vector3(-2.922752, 0, 93.5119)
-                Apartment.CameraFOV = 50.0
+            Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
+            Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
+            Apartment.TeleportOutside = New Vector3(1665.579, 4776.712, 41.93869)
+            Apartment.ApartmentExit = New Vector3(266.1321, -1007.5136, -101.0085)
+            Apartment.Wardrobe = New Vector3(260.0521, -1004.1469, -99.0085)
+            Apartment.GarageEntrance = New Vector3(1662.088, 4768.009, 41.79552)
+            Apartment.GarageOutside = New Vector3(1667.8, 4768.668, 41.70086)
+            Apartment.GarageOutHeading = 275.8229
+            Apartment.CameraPosition = New Vector3(1683.295, 4774.074, 43.80255)
+            Apartment.CameraRotation = New Vector3(-2.922752, 0, 93.5119)
+            Apartment.CameraFOV = 50.0
             Apartment.WardrobeHeading = 359.818
             Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\grapeseed_ave\"
-                Apartment.SaveFile = "GAowner"
-                Apartment.PlayerMap = "GrapeseedAve"
-                Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
+            Apartment.SaveFile = "GAowner"
+            Apartment.PlayerMap = "GrapeseedAve"
+            Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
             Apartment.Enabled = True
 
             If ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then
@@ -61,8 +59,6 @@ Public Class GrapeseedAve
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -438,7 +434,7 @@ Public Class GrapeseedAve
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.GrapeseedAve = "Enable" Then
                 'Enter Apartment
@@ -532,7 +528,7 @@ Public Class GrapeseedAve
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

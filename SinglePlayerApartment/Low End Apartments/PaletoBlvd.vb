@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class PaletoBlvd
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -20,26 +19,26 @@ Public Class PaletoBlvd
         Try
 
             Apartment = New Apartment("Paleto Boulevard ", "0232", 121000)
-                Apartment.Name = ReadCfgValue("PaletoBlvdName", langFile)
-                Apartment.Description = ReadCfgValue("PaletoBlvdDesc", langFile)
+            Apartment.Name = ReadCfgValue("PaletoBlvdName", langFile)
+            Apartment.Description = ReadCfgValue("PaletoBlvdDesc", langFile)
             Apartment.Owner = ReadCfgValue("PBowner", saveFile)
             Apartment.Entrance = New Vector3(-15.24203, 6557.372, 33.24039)
-                Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
-                Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
-                Apartment.TeleportOutside = New Vector3(-12.83225, 6560.163, 31.97093)
-                Apartment.ApartmentExit = New Vector3(266.1321, -1007.5136, -101.0085)
-                Apartment.Wardrobe = New Vector3(260.0521, -1004.1469, -99.0085)
-                Apartment.GarageEntrance = New Vector3(-12.11096, 6563.872, 31.77629)
-                Apartment.GarageOutside = New Vector3(-6.329562, 6558.033, 31.7927)
-                Apartment.GarageOutHeading = 225.0206
-                Apartment.CameraPosition = New Vector3(-0.02845764, 6551.444, 32.63414)
-                Apartment.CameraRotation = New Vector3(7.133693, 0, 85.69931)
-                Apartment.CameraFOV = 50.0
+            Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
+            Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
+            Apartment.TeleportOutside = New Vector3(-12.83225, 6560.163, 31.97093)
+            Apartment.ApartmentExit = New Vector3(266.1321, -1007.5136, -101.0085)
+            Apartment.Wardrobe = New Vector3(260.0521, -1004.1469, -99.0085)
+            Apartment.GarageEntrance = New Vector3(-12.11096, 6563.872, 31.77629)
+            Apartment.GarageOutside = New Vector3(-6.329562, 6558.033, 31.7927)
+            Apartment.GarageOutHeading = 225.0206
+            Apartment.CameraPosition = New Vector3(-0.02845764, 6551.444, 32.63414)
+            Apartment.CameraRotation = New Vector3(7.133693, 0, 85.69931)
+            Apartment.CameraFOV = 50.0
             Apartment.WardrobeHeading = 359.818
             Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\paleto_blvd\"
-                Apartment.SaveFile = "PBowner"
-                Apartment.PlayerMap = "PaletoBlvd"
-                Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
+            Apartment.SaveFile = "PBowner"
+            Apartment.PlayerMap = "PaletoBlvd"
+            Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
             Apartment.Enabled = True
 
             If ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then
@@ -61,8 +60,6 @@ Public Class PaletoBlvd
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -438,7 +435,7 @@ Public Class PaletoBlvd
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.PaletoBlvd = "Enable" Then
                 'Enter Apartment
@@ -532,7 +529,7 @@ Public Class PaletoBlvd
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

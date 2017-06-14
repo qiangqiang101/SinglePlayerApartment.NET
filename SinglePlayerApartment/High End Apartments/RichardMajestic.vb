@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class RichardMajestic
-    Inherits Script
 
     Public Shared Apartment, ApartmentHL As Apartment
     Public Shared BuyMenu, ExitMenu, ExitMenuHL, GarageMenu As UIMenu
@@ -18,48 +17,47 @@ Public Class RichardMajestic
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Richards Majestic Apt. ", "4", 484000)
-                Apartment.Name = ReadCfgValue("RichardName", langFile)
-                Apartment.Description = ReadCfgValue("RichardDesc", langFile)
-                Apartment.Owner = ReadCfgValue("RMowner", saveFile)
-                Apartment.Entrance = New Vector3(-935.4753, -378.6128, 38.9613)
-                Apartment.Save = New Vector3(-900.8789, -374.416, 79.2731)
-                Apartment.TeleportInside = New Vector3(-913.1502, -384.5727, 85.4804)
-                Apartment.TeleportOutside = New Vector3(-933.4771, -383.6144, 38.9613)
-                Apartment.ApartmentExit = New Vector3(-916.3039, -384.9148, 85.4804)
-                Apartment.Wardrobe = New Vector3(-904.1464, -369.6518, 79.2839)
-                Apartment.GarageEntrance = New Vector3(-876.1354, -363.0524, 36.3538)
-                Apartment.GarageOutside = New Vector3(-873.362, -368.5318, 37.3505)
-                Apartment.GarageOutHeading = 207.6679
-                Apartment.CameraPosition = New Vector3(-958.2964, -478.6136, 38.73965)
-                Apartment.CameraRotation = New Vector3(24.18255, 0, -19.8838)
-                Apartment.CameraFOV = 50.0
-                Apartment.Interior = New Vector3(-897.197, -369.246, 84.0779)
-                Apartment.WardrobeHeading = 112.4174
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
-                Apartment.SaveFile = "RMowner"
+            Apartment.Name = ReadCfgValue("RichardName", langFile)
+            Apartment.Description = ReadCfgValue("RichardDesc", langFile)
+            Apartment.Owner = ReadCfgValue("RMowner", saveFile)
+            Apartment.Entrance = New Vector3(-935.4753, -378.6128, 38.9613)
+            Apartment.Save = New Vector3(-900.8789, -374.416, 79.2731)
+            Apartment.TeleportInside = New Vector3(-913.1502, -384.5727, 85.4804)
+            Apartment.TeleportOutside = New Vector3(-933.4771, -383.6144, 38.9613)
+            Apartment.ApartmentExit = New Vector3(-916.3039, -384.9148, 85.4804)
+            Apartment.Wardrobe = New Vector3(-904.1464, -369.6518, 79.2839)
+            Apartment.GarageEntrance = New Vector3(-876.1354, -363.0524, 36.3538)
+            Apartment.GarageOutside = New Vector3(-873.362, -368.5318, 37.3505)
+            Apartment.GarageOutHeading = 207.6679
+            Apartment.CameraPosition = New Vector3(-958.2964, -478.6136, 38.73965)
+            Apartment.CameraRotation = New Vector3(24.18255, 0, -19.8838)
+            Apartment.CameraFOV = 50.0
+            Apartment.Interior = New Vector3(-897.197, -369.246, 84.0779)
+            Apartment.WardrobeHeading = 112.4174
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic\"
+            Apartment.SaveFile = "RMowner"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             ApartmentHL = New Apartment("Richards Majestic Apt. ", "2", 968000)
-                ApartmentHL.Name = ReadCfgValue("RichardHLName", langFile)
-                ApartmentHL.Description = ReadCfgValue("RichardHLDesc", langFile)
-                ApartmentHL.Owner = ReadCfgValue("RMHLowner", saveFile)
-                ApartmentHL.Save = New Vector3(-901.0586, -369.1378, 113.0741)
-                ApartmentHL.TeleportInside = New Vector3(-922.1152, -370.0627, 114.3101)
-                ApartmentHL.TeleportOutside = New Vector3(-933.4771, -383.6144, 38.9613)
-                ApartmentHL.ApartmentExit = New Vector3(-919.3095, -368.5584, 114.275)
+            ApartmentHL.Name = ReadCfgValue("RichardHLName", langFile)
+            ApartmentHL.Description = ReadCfgValue("RichardHLDesc", langFile)
+            ApartmentHL.Owner = ReadCfgValue("RMHLowner", saveFile)
+            ApartmentHL.Save = New Vector3(-901.0586, -369.1378, 113.0741)
+            ApartmentHL.TeleportInside = New Vector3(-922.1152, -370.0627, 114.3101)
+            ApartmentHL.TeleportOutside = New Vector3(-933.4771, -383.6144, 38.9613)
+            ApartmentHL.ApartmentExit = New Vector3(-919.3095, -368.5584, 114.275)
             ApartmentHL.Wardrobe = New Vector3(-903.3266, -364.2998, 113.074)
             ApartmentHL.Interior = New Vector3(-918.4964, -376.7593, 113.7099)
             ApartmentHL.WardrobeHeading = 195.6396
             ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\richard_majestic_hl\"
-                ApartmentHL.SaveFile = "RMHLowner"
+            ApartmentHL.SaveFile = "RMHLowner"
             ApartmentHL.Enabled = True
             ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
-            InteriorIDList.Add(ApartmentHL.InteriorID)
+            If Not ApartmentHL.InteriorID = 0 Then InteriorIDList.Add(ApartmentHL.InteriorID)
 
             If ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -80,8 +78,6 @@ Public Class RichardMajestic
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -851,7 +847,7 @@ Public Class RichardMajestic
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.RichardMajestic = "Enable" Then
 
@@ -1016,7 +1012,7 @@ Public Class RichardMajestic
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

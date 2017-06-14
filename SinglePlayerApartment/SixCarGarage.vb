@@ -56,7 +56,7 @@ Public Class SixCarGarage
                 playerName = "Player3" '"None"
             End If
             InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(193.9493, -1004.425, -99.99999))
-            InteriorIDList.Add(InteriorID)
+            If Not InteriorID = 0 Then InteriorIDList.Add(InteriorID)
 
             AddHandler Tick, AddressOf OnTick
         Catch ex As Exception

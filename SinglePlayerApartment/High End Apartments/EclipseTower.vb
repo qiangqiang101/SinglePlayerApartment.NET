@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class EclipseTower
-    Inherits Script
 
     Public Shared Apartment, ApartmentHL, ApartmentPS1, ApartmentPS2, ApartmentPS3 As Apartment
     Public Shared BuyMenu, ExitMenu, ExitMenuHL, ExitMenuPS1, ExitMenuPS2, ExitMenuPS3, StyleMenuPS1, StyleMenuPS2, StyleMenuPS3, GarageMenu As UIMenu
@@ -18,54 +17,53 @@ Public Class EclipseTower
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("Eclipse Tower Apt. ", "8", 400000)
-                Apartment.Name = ReadCfgValue("EclipseName", langFile)
-                Apartment.Description = ReadCfgValue("EclipseDesc", langFile)
-                Apartment.Owner = ReadCfgValue("ETowner", saveFile)
-                Apartment.Entrance = New Vector3(-770.258, 313.033, 85.6981)
-                Apartment.Save = New Vector3(-795.527, 337.415, 201.413)
-                Apartment.TeleportInside = New Vector3(-780.152, 340.443, 207.621)
-                Apartment.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
-                Apartment.ApartmentExit = New Vector3(-777.584, 340.172, 207.621)
-                Apartment.Wardrobe = New Vector3(-795.0659, 331.7157, 201.4243)
-                Apartment.GarageEntrance = New Vector3(-796.1685, 311.4121, 85.7088)
-                Apartment.GarageOutside = New Vector3(-796.2648, 302.5102, 85.1543)
-                Apartment.GarageOutHeading = 179.532
-                Apartment.CameraPosition = New Vector3(-881.4312, 214.6852, 91.3971)
-                Apartment.CameraRotation = New Vector3(25.6109, 0, -39.32376)
-                Apartment.CameraFOV = 50.0
-                Apartment.Interior = New Vector3(-795.04, 342.37, 206.22)
-                Apartment.WardrobeHeading = 268.5623
-                Apartment.IsAtHome = False
-                Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
-                Apartment.SaveFile = "ETowner"
-                Apartment.PlayerMap = "Eclipse"
+            Apartment.Name = ReadCfgValue("EclipseName", langFile)
+            Apartment.Description = ReadCfgValue("EclipseDesc", langFile)
+            Apartment.Owner = ReadCfgValue("ETowner", saveFile)
+            Apartment.Entrance = New Vector3(-770.258, 313.033, 85.6981)
+            Apartment.Save = New Vector3(-795.527, 337.415, 201.413)
+            Apartment.TeleportInside = New Vector3(-780.152, 340.443, 207.621)
+            Apartment.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
+            Apartment.ApartmentExit = New Vector3(-777.584, 340.172, 207.621)
+            Apartment.Wardrobe = New Vector3(-795.0659, 331.7157, 201.4243)
+            Apartment.GarageEntrance = New Vector3(-796.1685, 311.4121, 85.7088)
+            Apartment.GarageOutside = New Vector3(-796.2648, 302.5102, 85.1543)
+            Apartment.GarageOutHeading = 179.532
+            Apartment.CameraPosition = New Vector3(-881.4312, 214.6852, 91.3971)
+            Apartment.CameraRotation = New Vector3(25.6109, 0, -39.32376)
+            Apartment.CameraFOV = 50.0
+            Apartment.Interior = New Vector3(-795.04, 342.37, 206.22)
+            Apartment.WardrobeHeading = 268.5623
+            Apartment.IsAtHome = False
+            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
+            Apartment.SaveFile = "ETowner"
+            Apartment.PlayerMap = "Eclipse"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
-            InteriorIDList.Add(Apartment.InteriorID)
+            If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
             ApartmentHL = New Apartment("Eclipse Tower Apt. ", "3", 800000)
-                ApartmentHL.Name = ReadCfgValue("EclipseHLName", langFile)
-                ApartmentHL.Description = ReadCfgValue("EclipseHLDesc", langFile)
-                ApartmentHL.Owner = ReadCfgValue("ETHLowner", saveFile)
-                ApartmentHL.Save = New Vector3(-793.2186, 332.4132, 210.7966)
-                ApartmentHL.TeleportInside = New Vector3(-774.3142, 323.8076, 212.0325)
-                ApartmentHL.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
-                ApartmentHL.ApartmentExit = New Vector3(-777.6211, 323.5111, 211.9974)
+            ApartmentHL.Name = ReadCfgValue("EclipseHLName", langFile)
+            ApartmentHL.Description = ReadCfgValue("EclipseHLDesc", langFile)
+            ApartmentHL.Owner = ReadCfgValue("ETHLowner", saveFile)
+            ApartmentHL.Save = New Vector3(-793.2186, 332.4132, 210.7966)
+            ApartmentHL.TeleportInside = New Vector3(-774.3142, 323.8076, 212.0325)
+            ApartmentHL.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
+            ApartmentHL.ApartmentExit = New Vector3(-777.6211, 323.5111, 211.9974)
             ApartmentHL.Wardrobe = New Vector3(-793.4239, 326.7805, 210.7966)
             ApartmentHL.Interior = New Vector3(-773.8549, 331.5905, 211.4325)
             ApartmentHL.WardrobeHeading = 356.4841
             ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
-                ApartmentHL.SaveFile = "ETHLowner"
-                ApartmentHL.PlayerMap = "EclipseHL"
+            ApartmentHL.SaveFile = "ETHLowner"
+            ApartmentHL.PlayerMap = "EclipseHL"
             ApartmentHL.Enabled = True
             ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
-            InteriorIDList.Add(ApartmentHL.InteriorID)
+            If Not ApartmentHL.InteriorID = 0 Then InteriorIDList.Add(ApartmentHL.InteriorID)
 
             ApartmentPS1 = New Apartment("Eclipse, Penthouse Suite ", "1", 985000)
-                ApartmentPS1.Name = ReadCfgValue("EclipsePS1Name", langFile)
-                ApartmentPS1.Description = ReadCfgValue("EclipsePS1Desc", langFile)
+            ApartmentPS1.Name = ReadCfgValue("EclipsePS1Name", langFile)
+            ApartmentPS1.Description = ReadCfgValue("EclipsePS1Desc", langFile)
             ApartmentPS1.Owner = ReadCfgValue("ETP1owner", saveFile)
             ApartmentPS1.Save = New Vector3(-797.7579, 337.3798, 220.4384)
             ApartmentPS1.TeleportInside = New Vector3(-784.0423, 320.9214, 217.439)
@@ -84,7 +82,7 @@ Public Class EclipseTower
             ApartmentPS1.LastIPL = ApartmentPS1.IPL
             ApartmentPS1.Enabled = True
             ApartmentPS1.InteriorID = Apartment.GetInteriorID(ApartmentPS1.Interior)
-            InteriorIDList.Add(ApartmentPS1.InteriorID)
+            If Not ApartmentPS1.InteriorID = 0 Then InteriorIDList.Add(ApartmentPS1.InteriorID)
 
             ApartmentPS2 = New Apartment("Eclipse, Penthouse Suite ", "2", 905000)
             ApartmentPS2.Name = ReadCfgValue("EclipsePS2Name", langFile)
@@ -107,7 +105,7 @@ Public Class EclipseTower
             ApartmentPS2.LastIPL = ApartmentPS2.IPL
             ApartmentPS2.Enabled = True
             ApartmentPS2.InteriorID = Apartment.GetInteriorID(ApartmentPS2.Interior)
-            InteriorIDList.Add(ApartmentPS2.InteriorID)
+            If Not ApartmentPS2.InteriorID = 0 Then InteriorIDList.Add(ApartmentPS2.InteriorID)
 
             ApartmentPS3 = New Apartment("Eclipse, Penthouse Suite ", "3", 1100000)
             ApartmentPS3.Name = ReadCfgValue("EclipsePS3Name", langFile)
@@ -130,7 +128,7 @@ Public Class EclipseTower
             ApartmentPS3.LastIPL = ApartmentPS3.IPL
             ApartmentPS3.Enabled = True
             ApartmentPS3.InteriorID = Apartment.GetInteriorID(ApartmentPS3.Interior)
-            InteriorIDList.Add(ApartmentPS3.InteriorID)
+            If Not ApartmentPS3.InteriorID = 0 Then InteriorIDList.Add(ApartmentPS3.InteriorID)
 
             If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
                 Garage = ReadCfgValue("Garage", langFile)
@@ -160,8 +158,6 @@ Public Class EclipseTower
                 SeductiveStyle = ReadCfgValue("SeductiveStyle", langFile)
                 RegalStyle = ReadCfgValue("RegalStyle", langFile)
                 AquaStyle = ReadCfgValue("AquaStyle", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -2572,7 +2568,7 @@ Public Class EclipseTower
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.EclipseTower = "Enable" Then
                 'Enter Apartment
@@ -2860,7 +2856,7 @@ Public Class EclipseTower
                 _menuPool.ProcessMenus()
             End If
         Catch ex As Exception
-        logger.Log(ex.Message & " " & ex.StackTrace)
+            logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
@@ -2876,7 +2872,7 @@ Public Class EclipseTower
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() ' Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

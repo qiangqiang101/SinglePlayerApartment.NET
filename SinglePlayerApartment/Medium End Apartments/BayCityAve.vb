@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class BayCityAve
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,10 +17,9 @@ Public Class BayCityAve
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("0115 Bay City Avenue Apt. ", "45", 150000)
-                Apartment.Name = ReadCfgValue("BayCityName", langFile)
-                Apartment.Description = ReadCfgValue("BayCityDesc", langFile)
+            Apartment.Name = ReadCfgValue("BayCityName", langFile)
+            Apartment.Description = ReadCfgValue("BayCityDesc", langFile)
             Apartment.Owner = ReadCfgValue("BCAowner", saveFile)
             Apartment.Entrance = New Vector3(-969.2759, -1431.104, 7.763627)
             Apartment.Save = New Vector3(349.9618, -997.4911, -99.1962)
@@ -61,8 +59,6 @@ Public Class BayCityAve
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -303,7 +299,7 @@ Public Class BayCityAve
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso apartment.Owner = playerName Then
+            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = playerName Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
@@ -486,7 +482,7 @@ Public Class BayCityAve
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.BayCityAve = "Enable" Then
                 'Enter Apartment
@@ -580,7 +576,7 @@ Public Class BayCityAve
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

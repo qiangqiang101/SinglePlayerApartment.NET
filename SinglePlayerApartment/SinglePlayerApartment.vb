@@ -124,8 +124,8 @@ Public Class SinglePlayerApartment
 
             LoadSettingFromCFG()
             If My.Settings.AlwaysEnableMPMaps = True Then LoadMPDLCMap()
-            InteriorIDList.Add(INMNative.Apartment.GetInteriorID(New Vector3(263.86999, -998.78002, -99.010002)))
-            InteriorIDList.Add(INMNative.Apartment.GetInteriorID(New Vector3(343.85, -999.08, -99.198)))
+            If Not Apartment.GetInteriorID(New Vector3(263.86999, -998.78002, -99.010002)) = 0 Then InteriorIDList.Add(Apartment.GetInteriorID(New Vector3(263.86999, -998.78002, -99.010002)))
+            If Not Apartment.GetInteriorID(New Vector3(343.85, -999.08, -99.198)) = 0 Then InteriorIDList.Add(Apartment.GetInteriorID(New Vector3(343.85, -999.08, -99.198)))
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -305,7 +305,7 @@ Public Class SinglePlayerApartment
         End If
         If Not Vector3 = Nothing Then
             Dim intID As Integer = INMNative.Apartment.GetInteriorID(Vector3)
-            If Not InteriorIDList.Contains(intID) Then InteriorIDList.Add(intID)
+            If Not InteriorIDList.Contains(intID) AndAlso Not intID = 0 Then InteriorIDList.Add(intID)
         End If
     End Sub
 
@@ -321,7 +321,7 @@ Public Class SinglePlayerApartment
         Native.Function.Call(Hash.REQUEST_IPL, New InputArgument() {NewIplName})
         If Not Vector3 = Nothing Then
             Dim intID As Integer = INMNative.Apartment.GetInteriorID(Vector3)
-            If Not InteriorIDList.Contains(intID) Then InteriorIDList.Add(intID)
+            If Not InteriorIDList.Contains(intID) AndAlso Not intID = 0 Then InteriorIDList.Add(intID)
         End If
     End Sub
 

@@ -10,7 +10,6 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class TheRoyale
-    Inherits Script
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -20,8 +19,8 @@ Public Class TheRoyale
         Try
 
             Apartment = New Apartment("The Royale Apt. ", "19", 125000)
-                Apartment.Name = ReadCfgValue("TheRoyaleName", langFile)
-                Apartment.Description = ReadCfgValue("TheRoyaleDesc", langFile)
+            Apartment.Name = ReadCfgValue("TheRoyaleName", langFile)
+            Apartment.Description = ReadCfgValue("TheRoyaleDesc", langFile)
             Apartment.Owner = ReadCfgValue("TRowner", saveFile)
             Apartment.Entrance = New Vector3(-197.7387, 85.69609, 69.75623)
             Apartment.Save = New Vector3(349.9618, -997.4911, -99.1962)
@@ -61,8 +60,6 @@ Public Class TheRoyale
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -486,7 +483,7 @@ Public Class TheRoyale
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.TheRoyale = "Enable" Then
                 'Enter Apartment
@@ -580,7 +577,7 @@ Public Class TheRoyale
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()

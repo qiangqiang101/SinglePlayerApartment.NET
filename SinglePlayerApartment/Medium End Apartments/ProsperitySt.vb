@@ -10,7 +10,7 @@ Imports SinglePlayerApartment.INMNative
 Imports SinglePlayerApartment.Resources
 
 Public Class ProsperitySt
-    Inherits Script
+
 
     Public Shared Apartment As Apartment
     Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
@@ -18,10 +18,9 @@ Public Class ProsperitySt
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("1237 Prosperity Street Apt. ", "21", 105000)
-                Apartment.Name = ReadCfgValue("ProsperityStName", langFile)
-                Apartment.Description = ReadCfgValue("ProsperityStDesc", langFile)
+            Apartment.Name = ReadCfgValue("ProsperityStName", langFile)
+            Apartment.Description = ReadCfgValue("ProsperityStDesc", langFile)
             Apartment.Owner = ReadCfgValue("PPSowner", saveFile)
             Apartment.Entrance = New Vector3(-1564.456, -406.2599, 42.38398)
             Apartment.Save = New Vector3(349.9618, -997.4911, -99.1962)
@@ -61,8 +60,6 @@ Public Class ProsperitySt
                 ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
                 _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
                 CannotStore = ReadCfgValue("CannotStore", langFile)
-
-                AddHandler Tick, AddressOf OnTick
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -486,7 +483,7 @@ Public Class ProsperitySt
         End If
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick()
         Try
             If My.Settings.ProsperitySt = "Enable" Then
                 'Enter Apartment
@@ -580,7 +577,7 @@ Public Class ProsperitySt
         End Try
     End Sub
 
-    Public Sub OnAborted() Handles MyBase.Aborted
+    Public Sub OnAborted() ' Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
