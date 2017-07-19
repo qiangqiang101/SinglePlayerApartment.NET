@@ -10,10 +10,11 @@ Imports SinglePlayerApartment.INMNative
 Public Class Mechanic
     Inherits Script
 
-    Public Shared MVDict As New Dictionary(Of String, String)
-    Public Shared FVDict As New Dictionary(Of String, String)
-    Public Shared TVDict As New Dictionary(Of String, String)
-    Public Shared PVDict As New Dictionary(Of String, String)
+    Public Shared MPersVeh As PersonalVehicle = New PersonalVehicle(), FPersVeh As PersonalVehicle = New PersonalVehicle(), TPersVeh As PersonalVehicle = New PersonalVehicle(), PPersVeh As PersonalVehicle = New PersonalVehicle()
+    'Public Shared MVDict As New Dictionary(Of String, String)
+    'Public Shared FVDict As New Dictionary(Of String, String)
+    'Public Shared TVDict As New Dictionary(Of String, String)
+    'Public Shared PVDict As New Dictionary(Of String, String)
     Public Shared Path As String
     Public Shared playerHash As String
     Public Shared GarageMenu, GarageMenu2, GrgMoveMenu, GrgTransMenu, MechanicMenu, PhoneMenu, AS3Menu, IW4Menu, IW4HLMenu, DPHMenu, DPHHLMenu, DTMenu, ETMenu, ETHLMenu, RMMenu, RMHLMenu, TTMenu, TTHLMenu, WPMenu, VBMenu As UIMenu

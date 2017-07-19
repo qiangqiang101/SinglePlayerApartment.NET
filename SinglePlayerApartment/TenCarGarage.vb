@@ -408,20 +408,24 @@ Public Class TenCarGarage
         If playerPed.IsInVehicle Then
             Select Case playerName
                 Case "Michael"
-                    If Mechanic.MVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                        Mechanic.MVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                    If Mechanic.MPersVeh.Exist Then 'Mechanic.MVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                        Mechanic.MPersVeh.Delete()
+                        'Mechanic.MVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
                     End If
                 Case "Franklin"
-                    If Mechanic.FVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                        Mechanic.FVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                    If Mechanic.FPersVeh.Exist Then 'Mechanic.FVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                        Mechanic.FPersVeh.Delete()
+                        'Mechanic.FVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
                     End If
                 Case "Trevor"
-                    If Mechanic.TVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                        Mechanic.TVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                    If Mechanic.TPersVeh.Exist Then 'Mechanic.TVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                        Mechanic.TPersVeh.Delete()
+                        'Mechanic.TVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
                     End If
                 Case "Player3"
-                    If Mechanic.PVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                        Mechanic.PVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                    If Mechanic.PPersVeh.Exist Then 'Mechanic.PVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                        Mechanic.FPersVeh.Delete()
+                        'Mechanic.PVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
                     End If
             End Select
         End If
@@ -430,24 +434,24 @@ Public Class TenCarGarage
     Public Shared Sub IfTransferVehicle()
         Select Case playerName
             Case "Michael"
-                If Mechanic.MVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                    IO.File.Delete(Mechanic.MVDict.Item(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)))
-                    Mechanic.MVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                If Mechanic.MPersVeh.Exist Then
+                    IO.File.Delete(Mechanic.MPersVeh.FilePath)
+                    Mechanic.MPersVeh.Delete()
                 End If
             Case "Franklin"
-                If Mechanic.FVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                    IO.File.Delete(Mechanic.FVDict.Item(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)))
-                    Mechanic.FVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                If Mechanic.FPersVeh.Exist Then
+                    IO.File.Delete(Mechanic.FPersVeh.FilePath)
+                    Mechanic.FPersVeh.Delete()
                 End If
             Case "Trevor"
-                If Mechanic.TVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                    IO.File.Delete(Mechanic.TVDict.Item(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)))
-                    Mechanic.TVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                If Mechanic.TPersVeh.Exist Then
+                    IO.File.Delete(Mechanic.TPersVeh.FilePath)
+                    Mechanic.TPersVeh.Delete()
                 End If
             Case "Player3"
-                If Mechanic.PVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)) Then
-                    IO.File.Delete(Mechanic.PVDict.Item(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate)))
-                    Mechanic.PVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
+                If Mechanic.PPersVeh.Exist Then
+                    IO.File.Delete(Mechanic.PPersVeh.FilePath)
+                    Mechanic.FPersVeh.Delete()
                 End If
         End Select
     End Sub
@@ -850,7 +854,8 @@ Public Class TenCarGarage
                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
-                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.MPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
+                    'Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.MPV0.Delete()
                     Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -862,7 +867,8 @@ Public Class TenCarGarage
                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
-                    Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.MPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
+                    'Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Franklin" Then
                 If Mechanic.FPV0 = Nothing Then
@@ -875,7 +881,8 @@ Public Class TenCarGarage
                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
-                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.FPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
+                    'Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.FPV0.Delete()
                     Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -887,7 +894,8 @@ Public Class TenCarGarage
                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
-                    Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.FPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
+                    'Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Trevor" Then
                 If Mechanic.TPV0 = Nothing Then
@@ -900,7 +908,8 @@ Public Class TenCarGarage
                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
-                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.TPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
+                    'Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.TPV0.Delete()
                     Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -912,7 +921,8 @@ Public Class TenCarGarage
                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
-                    Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.TPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
+                    'Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Player3" Then
                 If Mechanic.PPV0 = Nothing Then
@@ -925,7 +935,8 @@ Public Class TenCarGarage
                     Mechanic.PPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
-                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.PPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
+                    'Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.PPV0.Delete()
                     Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -937,7 +948,8 @@ Public Class TenCarGarage
                     Mechanic.PPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
-                    Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.PPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
+                    'Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             End If
 

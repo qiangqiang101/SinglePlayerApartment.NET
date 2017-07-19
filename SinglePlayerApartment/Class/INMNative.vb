@@ -597,6 +597,73 @@ Namespace INMNative
 
     End Class
 
+    Public Class PersonalVehicle
+
+        Private _owner As String
+        Public Property Owner() As String
+            Get
+                Return _owner
+            End Get
+            Set(value As String)
+                _owner = value
+            End Set
+        End Property
+
+        Private _file As String
+        Public Property FilePath() As String
+            Get
+                Return _file
+            End Get
+            Set(value As String)
+                _file = value
+            End Set
+        End Property
+
+        Private _vehicle As Vehicle
+        Public Property Vehicle() As Vehicle
+            Get
+                Return _vehicle
+            End Get
+            Set(value As Vehicle)
+                _vehicle = value
+            End Set
+        End Property
+
+        Private _enable As Boolean
+        Public Property Enable() As Boolean
+            Get
+                Return _enable
+            End Get
+            Set(value As Boolean)
+                _enable = value
+            End Set
+        End Property
+
+        Public ReadOnly Property Exist() As Boolean
+            Get
+                Return Not _file = Nothing
+            End Get
+        End Property
+
+        Public Sub New()
+            _enable = False
+        End Sub
+
+        Public Sub New(Owner As String, FilePath As String, ByRef Vehicle As Vehicle)
+            _owner = Owner
+            _file = FilePath
+            _vehicle = Vehicle
+            _enable = True
+        End Sub
+
+        Public Sub Delete()
+            Owner = Nothing
+            FilePath = Nothing
+            Vehicle = Nothing
+            Enable = False
+        End Sub
+    End Class
+
     Public Enum INMBlipColor
         White = 0
         Franklin = 43
