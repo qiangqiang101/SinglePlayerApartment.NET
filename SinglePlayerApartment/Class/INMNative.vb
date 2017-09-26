@@ -645,6 +645,19 @@ Namespace INMNative
             End Get
         End Property
 
+        Private _insurance As Integer
+        Public Property Insurance() As Integer
+            Get
+                'Dim result As Integer = 0
+                'If Resources.DecorIsRegisteredAsType("LUXE_VEH_INSTANCE_ID", Resources.eDecorType.DECOR_TYPE_INT) Then result = Native.Function.Call(Of Integer)(Hash.DECOR_GET_INT, Vehicle, "Heist_Veh_ID")
+                Return _insurance
+            End Get
+            Set(value As Integer)
+                'If Resources.DecorIsRegisteredAsType("LUXE_VEH_INSTANCE_ID", Resources.eDecorType.DECOR_TYPE_INT) Then Native.Function.Call(Hash.DECOR_SET_INT, Vehicle, value)
+                _insurance = value
+            End Set
+        End Property
+
         Public Sub New()
             _enable = False
         End Sub

@@ -181,7 +181,9 @@ Public Class SinglePlayerApartment
             Dim day As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_DAY_OF_MONTH)
             Dim month As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_MONTH)
             Dim year As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_YEAR)
-            Native.Function.Call(Hash.ADD_TO_CLOCK_TIME, hour + SleepHour, minute, second)
+            Dim sleep As Integer = hour + SleepHour
+            Native.Function.Call(Hash.ADD_TO_CLOCK_TIME, sleep, minute, second)
+            'Native.Function.Call(Hash.ADVANCE_CLOCK_TIME_TO, SleepHour, minute, second)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -702,32 +704,79 @@ Public Class SinglePlayerApartment
             trevorPubSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(96.154197692871, -1290.7312011719, 29.266660690308))
             floydSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-1155.31, -1518.57, 10.63135))
 
-            Dim Safehouses As List(Of Integer) = New List(Of Integer)() From {michaelSafeHouse, franklinAuntSafeHouse, franklinSafeHouse, trevorTrailerSafeHouse, trevorPubSafeHouse, floydSafeHouse}
-            If Safehouses.Contains(playerInterior) Then
-                If Not teleported Then LoadPosition()
+            If player.CanControlCharacter AndAlso Not teleported Then
+                If World.GetDistance(playerPed.Position, getPlayerLastLocationCoords) >= 10.0 Then
+                    If Not teleported Then LoadPosition()
+                End If
             End If
 
             If InteriorIDList.Contains(playerInterior) Then
-                teleported = Not teleported
+                teleported = True
             End If
 
             If hideHud Then
                 Native.Function.Call(Hash.HIDE_HUD_AND_RADAR_THIS_FRAME)
             End If
 
-            If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso Not player.WantedLevel > 0 Then
-                Resources.Disable_Switch_Characters()
-                Resources.Disable_Weapons()
-                Resources.Disable_Controls()
-                If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
-                If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
-            ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso player.WantedLevel > 0 Then
-                Resources.Disable_Switch_Characters()
+            If playerName = "Player3" Then
+                If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not player.WantedLevel > 0 Then
+                    Resources.Disable_Switch_Characters()
+                    Resources.Disable_Weapons()
+                    Resources.Disable_Controls()
+                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
+                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.CustomApartment)
+                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.OldApartment)
+                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.StiltsApartment)
+                ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso player.WantedLevel > 0 Then
+                    Resources.Disable_Switch_Characters()
+                Else
+                    Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                End If
             Else
-                Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso Not player.WantedLevel > 0 Then
+                    Resources.Disable_Switch_Characters()
+                    Resources.Disable_Weapons()
+                    Resources.Disable_Controls()
+                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
+                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.CustomApartment)
+                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.OldApartment)
+                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.StiltsApartment)
+                ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso player.WantedLevel > 0 Then
+                    Resources.Disable_Switch_Characters()
+                Else
+                    Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                End If
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
+
+    Public Function getPlayerLastLocationCoords() As Vector3
+        Dim lastPosX, lastPosY, lastPosZ As Single
+
+        Select Case playerName
+            Case "Michael"
+                lastPosX = My.Settings.MlastPosX
+                lastPosY = My.Settings.MlastPosY
+                lastPosZ = My.Settings.MlastPosZ
+            Case "Franklin"
+                lastPosX = My.Settings.FlastPosX
+                lastPosY = My.Settings.FlastPosY
+                lastPosZ = My.Settings.FlastPosZ
+            Case "Trevor"
+                lastPosX = My.Settings.TlastPosX
+                lastPosY = My.Settings.TlastPosY
+                lastPosZ = My.Settings.TlastPosZ
+            Case "Player3"
+                lastPosX = My.Settings.TlastPosX
+                lastPosY = My.Settings.TlastPosY
+                lastPosZ = My.Settings.TlastPosZ
+        End Select
+
+        Return New Vector3(lastPosX, lastPosY, lastPosZ)
+    End Function
+
 End Class

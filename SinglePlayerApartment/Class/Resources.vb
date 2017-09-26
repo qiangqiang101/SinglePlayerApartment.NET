@@ -665,11 +665,41 @@ Label_005C:
         Return Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, RadioID)
     End Function
 
-    Public Shared Sub RadioPlayer(Room As String, Prop As Prop)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, Room, True)
-        Native.Function.Call(&HE0CD610D5EB6C85L, Room, Prop)
-        Native.Function.Call(Hash._0xF1CA12B18AEF5298, Prop, True)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, Room, GetPlayerCurrentRadioStation())
+    Public Enum AptType
+        OldApartment
+        StiltsApartment
+        CustomApartment
+        Office
+    End Enum
+
+    Public Shared Sub RadioPlayer(type As AptType)
+        Select Case type
+            Case AptType.OldApartment
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Yacht_Bedroom", GetPlayerCurrentRadioStation())
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom_02", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Yacht_Bedroom_02", GetPlayerCurrentRadioStation())
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom_03", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Yacht_Bedroom_03", GetPlayerCurrentRadioStation())
+            Case AptType.StiltsApartment
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Stilts_A_Living_Room", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Stilts_A_Living_Room", GetPlayerCurrentRadioStation())
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Stilts_A_Bedroom", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Stilts_A_Bedroom", GetPlayerCurrentRadioStation())
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Stilts_A_Heist_Room", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Stilts_A_Heist_Room", GetPlayerCurrentRadioStation())
+            Case AptType.CustomApartment, AptType.Office
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Custom_Living_Room", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Custom_Living_Room", GetPlayerCurrentRadioStation())
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Custom_Bedroom", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Custom_Bedroom", GetPlayerCurrentRadioStation())
+                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Custom_Heist_Room", True)
+                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Custom_Heist_Room", GetPlayerCurrentRadioStation())
+        End Select
+        'Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, Room, True)
+        'Native.Function.Call(&HE0CD610D5EB6C85L, Room, Prop)
+        'Native.Function.Call(Hash._0xF1CA12B18AEF5298, Prop, True)
+        'Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, Room, GetPlayerCurrentRadioStation())
     End Sub
 
     Public Shared Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
@@ -695,5 +725,17 @@ Label_005C:
             s += By.ToString("x2")
         Next
         Return s
+    End Function
+
+    Enum eDecorType
+        DECOR_TYPE_FLOAT = 1
+        DECOR_TYPE_BOOL
+        DECOR_TYPE_INT
+        DECOR_TYPE_UNK
+        DECOR_TYPE_TIME
+    End Enum
+
+    Public Shared Function DecorIsRegisteredAsType(decorator As String, type As eDecorType) As Boolean
+        Return Native.Function.Call(Of Boolean)(Hash.DECOR_IS_REGISTERED_AS_TYPE, decorator, type)
     End Function
 End Class

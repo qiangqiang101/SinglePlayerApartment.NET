@@ -855,6 +855,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
                     Mechanic.MPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
+                    Mechanic.MPersVeh.Insurance = 1
                     'Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.MPV0.Delete()
@@ -868,6 +869,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
                     Mechanic.MPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
+                    Mechanic.MPersVeh.Insurance = 1
                     'Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Franklin" Then
@@ -882,6 +884,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
                     Mechanic.FPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
+                    Mechanic.FPersVeh.Insurance = 1
                     'Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.FPV0.Delete()
@@ -895,6 +898,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
                     Mechanic.FPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
+                    Mechanic.FPersVeh.Insurance = 1
                     'Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Trevor" Then
@@ -909,6 +913,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
                     Mechanic.TPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
+                    Mechanic.TPersVeh.Insurance = 1
                     'Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.TPV0.Delete()
@@ -922,6 +927,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
                     Mechanic.TPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
+                    Mechanic.TPersVeh.Insurance = 1
                     'Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             ElseIf playerName = "Player3" Then
@@ -936,6 +942,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
                     Mechanic.PPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
+                    Mechanic.PPersVeh.Insurance = 1
                     'Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 Else
                     Mechanic.PPV0.Delete()
@@ -949,6 +956,7 @@ Public Class TenCarGarage
                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
                     Mechanic.PPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
+                    Mechanic.PPersVeh.Insurance = 1
                     'Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
                 End If
             End If

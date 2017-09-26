@@ -1,11 +1,11 @@
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\HelperSPA.dll
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\HelperSPA.pdb
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\HelperSPA.xml
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\ScriptHookVDotNet2.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\ScriptHookVDotNet2.xml
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\SPAHelper.vbprojResolveAssemblyReference.cache
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\SPAHelper.Resources.resources
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\SPAHelper.vbproj.GenerateResource.Cache
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.dll
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.xml
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.pdb
-F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\ScriptHookVDotNet2.dll
-F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\ScriptHookVDotNet2.xml

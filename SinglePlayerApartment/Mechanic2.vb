@@ -81,7 +81,7 @@ Public Class Mechanic2
         If My.Settings.VehicleSpawn = 1 Then
             MechanicPed = Vehicle.CreatePedOnSeat(VehicleSeat.Driver, PedHash.Autoshop01SMM)
             'MechanicPed.AlwaysKeepTask = True
-            DriveTo(MechanicPed, Vehicle, playerPed.Position, 20.0, 15.0)
+            DriveTo(MechanicPed, Vehicle, playerPed.Position, 20.0, 15.0, DrivingStyle.Normal)
             MechanicPed.DrivingStyle = DrivingStyle.Normal
         Else
             Wait(5000)
@@ -154,8 +154,10 @@ Public Class Mechanic2
             If MPersVeh.Exist() Then
                 MPersVeh.Delete()
                 MPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, MPV0)
+                MPersVeh.Insurance = 1
             Else
                 MPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, MPV0)
+                MPersVeh.Insurance = 1
             End If
             'MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -177,8 +179,10 @@ Public Class Mechanic2
                     If MPersVeh.Exist() Then
                         MPersVeh.Delete()
                         MPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, MPV0)
+                        MPersVeh.Insurance = 1
                     Else
                         MPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, MPV0)
+                        MPersVeh.Insurance = 1
                     End If
                     'MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
                     SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -201,8 +205,10 @@ Public Class Mechanic2
                 If MPersVeh.Exist() Then
                     MPersVeh.Delete()
                     MPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, MPV0)
+                    MPersVeh.Insurance = 1
                 Else
                     MPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, MPV0)
+                    MPersVeh.Insurance = 1
                 End If
                 'MVDict.Add(MD5Gen(MPV0.DisplayName & MPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -226,8 +232,10 @@ Public Class Mechanic2
             If FPersVeh.Exist() Then
                 FPersVeh.Delete()
                 FPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, FPV0)
+                FPersVeh.Insurance = 1
             Else
                 FPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, FPV0)
+                FPersVeh.Insurance = 1
             End If
             'FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -249,8 +257,10 @@ Public Class Mechanic2
                     If FPersVeh.Exist() Then
                         FPersVeh.Delete()
                         FPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, FPV0)
+                        FPersVeh.Insurance = 1
                     Else
                         FPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, FPV0)
+                        FPersVeh.Insurance = 1
                     End If
                     'FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
                     SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -273,8 +283,10 @@ Public Class Mechanic2
                 If FPersVeh.Exist() Then
                     FPersVeh.Delete()
                     FPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, FPV0)
+                    FPersVeh.Insurance = 1
                 Else
                     FPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, FPV0)
+                    FPersVeh.Insurance = 1
                 End If
                 'FVDict.Add(MD5Gen(FPV0.DisplayName & FPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -298,8 +310,10 @@ Public Class Mechanic2
             If TPersVeh.Exist() Then
                 TPersVeh.Delete()
                 TPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, TPV0)
+                TPersVeh.Insurance = 1
             Else
                 TPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, TPV0)
+                TPersVeh.Insurance = 1
             End If
             'TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -321,8 +335,10 @@ Public Class Mechanic2
                     If TPersVeh.Exist() Then
                         TPersVeh.Delete()
                         TPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, TPV0)
+                        TPersVeh.Insurance = 1
                     Else
                         TPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, TPV0)
+                        TPersVeh.Insurance = 1
                     End If
                     'TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
                     SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -345,8 +361,10 @@ Public Class Mechanic2
                 If TPersVeh.Exist() Then
                     TPersVeh.Delete()
                     TPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, TPV0)
+                    TPersVeh.Insurance = 1
                 Else
                     TPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, TPV0)
+                    TPersVeh.Insurance = 1
                 End If
                 'TVDict.Add(MD5Gen(TPV0.DisplayName & TPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -370,8 +388,10 @@ Public Class Mechanic2
             If PPersVeh.Exist() Then
                 PPersVeh.Delete()
                 PPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, PPV0)
+                PPersVeh.Insurance = 1
             Else
                 PPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, PPV0)
+                PPersVeh.Insurance = 1
             End If
             'PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
             SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -393,8 +413,10 @@ Public Class Mechanic2
                     If PPersVeh.Exist() Then
                         PPersVeh.Delete()
                         PPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, PPV0)
+                        PPersVeh.Insurance = 1
                     Else
                         PPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, PPV0)
+                        PPersVeh.Insurance = 1
                     End If
                     'PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
                     SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -417,8 +439,10 @@ Public Class Mechanic2
                 If PPersVeh.Exist() Then
                     PPersVeh.Delete()
                     PPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, PPV0)
+                    PPersVeh.Insurance = 1
                 Else
                     PPersVeh = New PersonalVehicle(playerName, SelectedItem_Car, PPV0)
+                    PPersVeh.Insurance = 1
                 End If
                 'PVDict.Add(MD5Gen(PPV0.DisplayName & PPV0.NumberPlate), SelectedItem_Car)
                 SoundPlayer(SoundPathDir & "mechanic_get_there_as_soon_as_i_can.wav")
@@ -573,38 +597,42 @@ Public Class Mechanic2
 
             Select Case playerName
                 Case "Michael"
-                    If MPersVeh.Exist Then 'MVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    If MPersVeh.Exist AndAlso Not MPersVeh.Insurance = 0 Then 'MVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                         If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                         Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                         DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
                         WriteCfgValue("Active", "False", MPersVeh.FilePath) 'MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                        MPersVeh.Insurance = 0
                         MPersVeh.Delete()
                         'MVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                     End If
                 Case "Franklin"
-                    If FPersVeh.Exist Then 'FVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    If FPersVeh.Exist AndAlso Not FPersVeh.Insurance = 0 Then 'FVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                         If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                         Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                         DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
                         WriteCfgValue("Active", "False", FPersVeh.FilePath) 'MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                        FPersVeh.Insurance = 0
                         FPersVeh.Delete()
                         'FVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                     End If
                 Case "Trevor"
-                    If TPersVeh.Exist Then 'TVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    If TPersVeh.Exist AndAlso Not TPersVeh.Insurance = 0 Then 'TVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                         If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                         Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                         DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
                         WriteCfgValue("Active", "False", TPersVeh.FilePath) 'MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                        TPersVeh.Insurance = 0
                         TPersVeh.Delete()
                         'TVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                     End If
                 Case "Player3"
-                    If PPersVeh.Exist Then 'PVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                    If PPersVeh.Exist AndAlso Not PPersVeh.Insurance = 0 Then 'PVDict.ContainsKey(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                         If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
                         Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
                         DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
                         WriteCfgValue("Active", "False", PPersVeh.FilePath) 'MVDict.Item(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
+                        PPersVeh.Insurance = 0
                         PPersVeh.Delete()
                         'PVDict.Remove(MD5Gen(vehicle.DisplayName & vehicle.NumberPlate))
                     End If
@@ -789,13 +817,16 @@ Public Class Mechanic2
             End If
 
             If Not MechanicPed = Nothing AndAlso My.Settings.VehicleSpawn = 1 Then
-                If MechanicPed.Position.DistanceTo(playerPed.Position) < 5.0 Then
-                    If MechanicPed.IsInVehicle Then
-                        MechanicPed.Task.LeaveVehicle()
-                    Else
-                        MechanicPed.Task.RunTo(World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)), False)
-                        If MechanicPed.Position.DistanceTo(playerPed.Position) > 100.0 Then MechanicPed.Delete()
-                    End If
+                Dim veh As Vehicle = MechanicPed.LastVehicle
+                If MechanicPed.IsInVehicle AndAlso MechanicPed.Position.DistanceTo(playerPed.Position) < 5.0 Then
+                    MechanicPed.Task.LeaveVehicle()
+                ElseIf Not MechanicPed.IsInVehicle Then
+                    MechanicPed.Task.ReactAndFlee(playerPed)
+                    MechanicPed.MarkAsNoLongerNeeded()
+                    '    MechanicPed.Task.ReactAndFlee(playerPed)
+                    '    'MechanicPed.Task.RunTo(World.GetNextPositionOnStreet(playerPed.Position.Around(100.0)), False)
+                    '    If MechanicPed.Position.DistanceTo(playerPed.Position) > 50.0 Then MechanicPed.Delete()
+                    '    MechanicPed.MarkAsNoLongerNeeded()
                 End If
             End If
         Catch ex As Exception

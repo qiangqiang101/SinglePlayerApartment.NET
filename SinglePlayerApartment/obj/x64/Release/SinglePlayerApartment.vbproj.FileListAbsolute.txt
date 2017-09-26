@@ -1,14 +1,14 @@
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\ScriptHookVDotNet2.dll
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.dll.config
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.dll
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.pdb
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.xml
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\iFruitAddon.dll
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\INMNativeUI.dll
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\ScriptHookVDotNet2.xml
+F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.Resources.resources
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.vbproj.GenerateResource.Cache
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.dll
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.xml
 F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.pdb
-F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
-F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\ScriptHookVDotNet2.dll
-F:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\ScriptHookVDotNet2.xml
