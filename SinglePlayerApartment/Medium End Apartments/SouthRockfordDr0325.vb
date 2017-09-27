@@ -7,7 +7,6 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Imports INMNativeUI
 Imports SinglePlayerApartment.Wardrobe
 Imports SinglePlayerApartment.INMNative
-Imports SinglePlayerApartment.Resources
 
 Public Class SouthRockfordDrive0325
 
@@ -17,7 +16,6 @@ Public Class SouthRockfordDrive0325
 
     Public Sub New()
         Try
-
             Apartment = New Apartment("0325 South Rockford Drive Apt. ", "1", 137000)
             Apartment.Name = ReadCfgValue("0325SouthRockfordName", langFile)
             Apartment.Description = ReadCfgValue("0325SouthRockfordDesc", langFile)
@@ -42,24 +40,7 @@ Public Class SouthRockfordDrive0325
             Apartment.Enabled = True
 
             If ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then
-                Garage = ReadCfgValue("Garage", langFile)
-                AptOptions = ReadCfgValue("AptOptions", langFile)
-                ExitApt = ReadCfgValue("ExitApt", langFile)
-                SellApt = ReadCfgValue("SellApt", langFile)
-                EnterGarage = ReadCfgValue("EnterGarage", langFile)
-                GrgOptions = ReadCfgValue("GrgOptions", langFile)
-                ForSale = ReadCfgValue("ForSale", langFile)
-                PropPurchased = ReadCfgValue("PropPurchased", langFile)
-                Maze = ReadCfgValue("Maze", langFile)
-                Fleeca = ReadCfgValue("Fleeca", langFile)
-                BOL = ReadCfgValue("BOL", langFile)
-                InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
-                EnterApartment = ReadCfgValue("EnterApartment", langFile)
-                SaveGame = ReadCfgValue("SaveGame", langFile)
-                ExitApartment = ReadCfgValue("ExitApartment", langFile)
-                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
-                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
-                CannotStore = ReadCfgValue("CannotStore", langFile)
+                Translate()
 
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
@@ -265,11 +246,11 @@ Public Class SouthRockfordDrive0325
             If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
                 'Buy Apartment
                 If playerCash > Apartment.Cost Then
-                    WriteCfgValue(Apartment.SaveFile, playerName, saveFile)
+                    WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
                     Wait(&H3E8)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
-                    Apartment.Owner = playerName
+                    Apartment.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     Create0325SouthRockfordDr()
@@ -279,28 +260,28 @@ Public Class SouthRockfordDrive0325
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
                     BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
-                    If playerName = "Michael" Then
+                    If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                    ElseIf playerName = "Franklin" Then
+                    ElseIf GetPlayerName() = "Franklin" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                    ElseIf playerName = "Trevor" Then
+                    ElseIf GetPlayerName() = "Trevor" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                    ElseIf playerName = "Player3" Then
+                    ElseIf GetPlayerName() = "Player3" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                     End If
                     selectedItem.SetRightLabel("")
                 Else
-                    If playerName = "Michael" Then
+                    If GetPlayerName() = "Michael" Then
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
-                    ElseIf playerName = "Franklin" Then
+                    ElseIf GetPlayerName() = "Franklin" Then
                         DisplayNotificationThisFrame(Fleeca, "", InsFundApartment, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
-                    ElseIf playerName = "Trevor" Then
+                    ElseIf GetPlayerName() = "Trevor" Then
                         DisplayNotificationThisFrame(BOL, "", InsFundApartment, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
-                    ElseIf playerName = "Player3" Then
+                    ElseIf GetPlayerName() = "Player3" Then
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = playerName Then
+            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetPlayerName() Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
@@ -485,95 +466,97 @@ Public Class SouthRockfordDrive0325
 
     Public Sub OnTick()
         Try
-            If My.Settings.SouthRockfordDr0325 = "Enable" Then
-                'Enter Apartment
-                If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
-                    DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
-                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        Game.FadeScreenOut(500)
-                        Wait(&H3E8)
-                        BuyMenu.Visible = True
-                        World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
-                        hideHud = True
-                        Wait(500)
-                        Game.FadeScreenIn(500)
+            If Not Game.IsLoading Then
+                If My.Settings.SouthRockfordDr0325 = "Enable" Then
+                    'Enter Apartment
+                    If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
+                        DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
+                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                            Game.FadeScreenOut(500)
+                            Wait(&H3E8)
+                            BuyMenu.Visible = True
+                            World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
+                            hideHud = True
+                            Wait(500)
+                            Game.FadeScreenIn(500)
+                        End If
                     End If
-                End If
 
-                'Save Game
-                If (MediumEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.SaveDistance < 2.0) Then
-                    DisplayHelpTextThisFrame(SaveGame)
-                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        playerMap = Apartment.PlayerMap
-                        Game.FadeScreenOut(500)
-                        Wait(&H3E8)
-                        TimeLapse(8)
-                        Game.ShowSaveMenu()
-                        SavePosition()
-                        Wait(500)
-                        Game.FadeScreenIn(500)
+                    'Save Game
+                    If (MediumEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.SaveDistance < 2.0) Then
+                        DisplayHelpTextThisFrame(SaveGame)
+                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                            playerMap = Apartment.PlayerMap
+                            Game.FadeScreenOut(500)
+                            Wait(&H3E8)
+                            TimeLapse(8)
+                            Game.ShowSaveMenu()
+                            SavePosition()
+                            Wait(500)
+                            Game.FadeScreenIn(500)
+                        End If
                     End If
-                End If
 
-                'Exit Apartment
-                If (MediumEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.ExitDistance < 2.0) Then
-                    DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
-                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        ExitMenu.Visible = True
+                    'Exit Apartment
+                    If (MediumEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.ExitDistance < 2.0) Then
+                        DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
+                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                            ExitMenu.Visible = True
+                        End If
                     End If
-                End If
 
-                'Wardrobe
-                If (MediumEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = playerName) AndAlso Apartment.WardrobeDistance < 1.0) Then
-                    DisplayHelpTextThisFrame(ChangeClothes)
-                    If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        WardrobeVector = Apartment.Wardrobe
-                        WardrobeHead = Apartment.WardrobeHeading
-                        WardrobeScriptStatus = 0
-                        If playerName = "Michael" Then
-                            Player0W.Visible = True
-                            MakeACamera()
-                        ElseIf playerName = "Franklin" Then
-                            Player1W.Visible = True
-                            MakeACamera()
-                        ElseIf playerName = “Trevor"
-                            Player2W.Visible = True
-                            MakeACamera()
-                        ElseIf playerName = "Player3" Then
-                            If playerHash = "1885233650" Then
-                                Player3_MW.Visible = True
+                    'Wardrobe
+                    If (MediumEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.WardrobeDistance < 1.0) Then
+                        DisplayHelpTextThisFrame(ChangeClothes)
+                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                            WardrobeVector = Apartment.Wardrobe
+                            WardrobeHead = Apartment.WardrobeHeading
+                            WardrobeScriptStatus = 0
+                            If GetPlayerName() = "Michael" Then
+                                Player0W.Visible = True
                                 MakeACamera()
-                            ElseIf playerHash = "-1667301416" Then
-                                Player3_FW.Visible = True
+                            ElseIf GetPlayerName() = "Franklin" Then
+                                Player1W.Visible = True
                                 MakeACamera()
+                            ElseIf GetPlayerName() = “Trevor"
+                                Player2W.Visible = True
+                                MakeACamera()
+                            ElseIf GetPlayerName() = "Player3" Then
+                                If Game.Player.Character.Model.GetHashCode = 1885233650 Then
+                                    Player3_MW.Visible = True
+                                    MakeACamera()
+                                ElseIf Game.Player.Character.Model.GetHashCode = -1667301416 Then
+                                    Player3_FW.Visible = True
+                                    MakeACamera()
+                                End If
                             End If
                         End If
                     End If
-                End If
 
-                'Enter Garage
-                If (Not playerPed.IsDead AndAlso Apartment.Owner = playerName) AndAlso Apartment.GarageDistance < 5.0 Then
-                    If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                        DisplayHelpTextThisFrame(_EnterGarage & Garage)
-                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                            GarageMenu.Visible = True
-                        End If
-                    ElseIf playerPed.IsInVehicle Then
-                        If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
-                            DisplayHelpTextThisFrame(CannotStore)
-                        ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
+                    'Enter Garage
+                    If (Not playerPed.IsDead AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.GarageDistance < 5.0 Then
+                        If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
                             DisplayHelpTextThisFrame(_EnterGarage & Garage)
                             If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                 GarageMenu.Visible = True
                             End If
+                        ElseIf playerPed.IsInVehicle Then
+                            If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
+                                DisplayHelpTextThisFrame(CannotStore)
+                            ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
+                                DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                                If Game.IsControlJustPressed(0, GTA.Control.Context) Then
+                                    GarageMenu.Visible = True
+                                End If
+                            End If
                         End If
                     End If
-                End If
 
-                _menuPool.ProcessMenus()
+                    _menuPool.ProcessMenus()
+                End If
             End If
         Catch ex As Exception
-            logger.Log(ex.Message & " " & ex.StackTrace)
+                logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 

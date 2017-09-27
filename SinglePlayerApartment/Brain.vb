@@ -2,7 +2,6 @@
 Imports GTA.Native
 Imports GTA.Math
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports SinglePlayerApartment.Resources
 
 Public Class Brain
     Inherits Script
@@ -79,18 +78,8 @@ Public Class Brain
 
     Public Sub New()
         Try
-            _TVOn = ReadCfgValue("TVOn", langFile)
-            _TVOff = ReadCfgValue("TVOff", langFile)
-            _TVChannel = _TVOff & "~n~" & ReadCfgValue("TVChannel", langFile)
-            _Bong = ReadCfgValue("Bong", langFile)
-            _Whiskey = ReadCfgValue("Whiskey", langFile)
-            _Wine = ReadCfgValue("Wine", langFile)
-            _Wheat = ReadCfgValue("Wheat", langFile)
-            _Shower = ReadCfgValue("Shower", langFile)
-            _RadioSwitchStation = ReadCfgValue("Radio", langFile)
+            Translate()
             drunkTimer = New Timer(60000)
-
-            AddHandler Tick, AddressOf OnTick
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -375,7 +364,7 @@ Public Class Brain
 
             Select Case ShowerTaskScriptStatus
                 Case 0
-                    If playerName = "Michael" Then
+                    If GetPlayerName() = "Michael" Then
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
@@ -414,7 +403,7 @@ Public Class Brain
                         Wait(9000)
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
                         Wait(9000)
-                    ElseIf playerName = "Franklin" Then
+                    ElseIf GetPlayerName() = "Franklin" Then
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
@@ -452,7 +441,7 @@ Public Class Brain
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_idle_d", -1)
                         Wait(9000)
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
-                    ElseIf playerName = “Trevor"
+                    ElseIf GetPlayerName() = “Trevor"
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
@@ -491,8 +480,8 @@ Public Class Brain
                         Wait(9000)
                         TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
                         Wait(9000)
-                    ElseIf playerName = "Player3" Then
-                        If playerHash = "1885233650" Then
+                    ElseIf GetPlayerName() = "Player3" Then
+                        If Game.Player.Character.Model.GetHashCode = 1885233650 Then
                             GetPlayerClothes()
 
                             Game.FadeScreenOut(500)
@@ -531,7 +520,7 @@ Public Class Brain
                             Wait(9000)
                             TaskPlayAnim(playerPed, "mp_safehouseshower@male@", "male_shower_towel_dry_to_get_dressed", -1)
                             Wait(9000)
-                        ElseIf playerHash = "-1667301416" Then
+                        ElseIf Game.Player.Character.Model.GetHashCode = -1667301416 Then
                             GetPlayerClothes()
 
                             Game.FadeScreenOut(500)
@@ -811,36 +800,38 @@ Public Class Brain
         End Try
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            MichaelHouseDistance = World.GetDistance(playerPed.Position, MichaelHouseVector)
-            FranklinHouseDistance = World.GetDistance(playerPed.Position, FranklinHouseVector)
+            If Not Game.IsLoading Then
+                MichaelHouseDistance = World.GetDistance(playerPed.Position, MichaelHouseVector)
+                FranklinHouseDistance = World.GetDistance(playerPed.Position, FranklinHouseVector)
 
-            If (MichaelHouseDistance > 50.0 AndAlso FranklinHouseDistance > 50.0) AndAlso InteriorIDList.Contains(playerInterior) Then
-                BongOnTick()
-                WhiskeyOnTick()
-                WineOnTick()
-                WheatOnTick()
-                ShowerOnTick()
-                TVOnTick()
-                RadioOnTick()
-            End If
-
-            If drunkTimer.Enabled Then
-
-                If Game.GameTime > drunkTimer.Waiter Then
-                    drunkTimer.Enabled = False
-                    GameplayCamera.StopShaking()
-                    Native.Function.Call(Hash.SET_PED_IS_DRUNK, playerPed.Handle, False)
-                    Native.Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, playerPed.Handle, 0.0)
-                    DrunkStage = 1
+                If (MichaelHouseDistance > 50.0 AndAlso FranklinHouseDistance > 50.0) AndAlso InteriorIDList.Contains(playerInterior) Then
+                    BongOnTick()
+                    WhiskeyOnTick()
+                    WineOnTick()
+                    WheatOnTick()
+                    ShowerOnTick()
+                    TVOnTick()
+                    RadioOnTick()
                 End If
-            End If
 
-            If TVOn Then
-                Native.Function.Call(Hash.SET_TEXT_RENDER_ID, rendertargetid)
-                Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
-                Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
+                If drunkTimer.Enabled Then
+
+                    If Game.GameTime > drunkTimer.Waiter Then
+                        drunkTimer.Enabled = False
+                        GameplayCamera.StopShaking()
+                        Native.Function.Call(Hash.SET_PED_IS_DRUNK, playerPed.Handle, False)
+                        Native.Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, playerPed.Handle, 0.0)
+                        DrunkStage = 1
+                    End If
+                End If
+
+                If TVOn Then
+                    Native.Function.Call(Hash.SET_TEXT_RENDER_ID, rendertargetid)
+                    Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
+                    Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
+                End If
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

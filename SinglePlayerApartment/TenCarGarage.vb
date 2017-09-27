@@ -2,7 +2,6 @@
 Imports GTA.Native
 Imports GTA.Math
 Imports SinglePlayerApartment.SinglePlayerApartment
-Imports SinglePlayerApartment.Resources
 Imports SinglePlayerApartment.INMNative
 
 Public Class TenCarGarage
@@ -40,29 +39,10 @@ Public Class TenCarGarage
 
     Public Sub New()
         Try
-            'New Language
-            Garage = ReadCfgValue("Garage", langFile)
-            GrgFull = ReadCfgValue("GrgFull", langFile)
-            EnterElevator = ReadCfgValue("EnterElevator", langFile)
-            ExitGarage = ReadCfgValue("ExitGarage", langFile)
-            ManageGarage = ReadCfgValue("ManageGarage", langFile)
-            'End Language
+            Translate()
 
-            If playerHash = "225514697" Then
-                playerName = "Michael"
-            ElseIf playerHash = "-1692214353" Then
-                playerName = "Franklin"
-            ElseIf playerHash = "-1686040670" Then
-                playerName = "Trevor"
-            ElseIf playerHash = "1885233650" Or "-1667301416" Then
-                playerName = "Player3"
-            Else
-                playerName = "Player3" '"None"
-            End If
             InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(222.592, -968.1, -99))
             If Not InteriorID = 0 Then InteriorIDList.Add(InteriorID)
-
-            AddHandler Tick, AddressOf OnTick
 
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -315,124 +295,23 @@ Public Class TenCarGarage
         End Try
     End Sub
 
-    Public Shared Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String, EngineRunning As Boolean)
-        Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, _Vehicle, 0)
-        _Vehicle.DirtLevel = 0F
-        _Vehicle.PrimaryColor = ReadCfgValue("PrimaryColor", VehicleCfgFile)
-        _Vehicle.SecondaryColor = ReadCfgValue("SecondaryColor", VehicleCfgFile)
-        _Vehicle.PearlescentColor = ReadCfgValue("PearlescentColor", VehicleCfgFile)
-        If ReadCfgValue("HasCustomPrimaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomPrimaryColor = Drawing.Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorBlue", VehicleCfgFile))
-        If ReadCfgValue("HasCustomSecondaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomSecondaryColor = Drawing.Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorBlue", VehicleCfgFile))
-        _Vehicle.RimColor = ReadCfgValue("RimColor", VehicleCfgFile)
-        If ReadCfgValue("HasNeonLightBack", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Back, True)
-        If ReadCfgValue("HasNeonLightFront", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Front, True)
-        If ReadCfgValue("HasNeonLightLeft", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Left, True)
-        If ReadCfgValue("HasNeonLightRight", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Right, True)
-        _Vehicle.NeonLightsColor = Drawing.Color.FromArgb(ReadCfgValue("NeonColorRed", VehicleCfgFile), ReadCfgValue("NeonColorGreen", VehicleCfgFile), ReadCfgValue("NeonColorBlue", VehicleCfgFile))
-        _Vehicle.WheelType = ReadCfgValue("WheelType", VehicleCfgFile)
-        _Vehicle.Livery = ReadCfgValue("Livery", VehicleCfgFile)
-        Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, _Vehicle, CInt(ReadCfgValue("PlateType", VehicleCfgFile)))
-        _Vehicle.NumberPlate = ReadCfgValue("PlateNumber", VehicleCfgFile)
-        _Vehicle.WindowTint = ReadCfgValue("WindowTint", VehicleCfgFile)
-        _Vehicle.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", VehicleCfgFile), True)
-        If ReadCfgValue("FrontTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), False)
-        If ReadCfgValue("BackTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), False)
-        _Vehicle.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
-        _Vehicle.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", VehicleCfgFile), True)
-        _Vehicle.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", VehicleCfgFile), True)
-        _Vehicle.SetMod(25, ReadCfgValue("TwentyFive", VehicleCfgFile), True)
-        _Vehicle.SetMod(26, ReadCfgValue("TwentySix", VehicleCfgFile), True)
-        _Vehicle.SetMod(27, ReadCfgValue("TwentySeven", VehicleCfgFile), True)
-        _Vehicle.SetMod(28, ReadCfgValue("TwentyEight", VehicleCfgFile), True)
-        _Vehicle.SetMod(29, ReadCfgValue("TwentyNine", VehicleCfgFile), True)
-        _Vehicle.SetMod(30, ReadCfgValue("ThirtyZero", VehicleCfgFile), True)
-        _Vehicle.SetMod(31, ReadCfgValue("ThirtyOne", VehicleCfgFile), True)
-        _Vehicle.SetMod(32, ReadCfgValue("ThirtyTwo", VehicleCfgFile), True)
-        _Vehicle.SetMod(33, ReadCfgValue("ThirtyThree", VehicleCfgFile), True)
-        _Vehicle.SetMod(34, ReadCfgValue("ThirtyFour", VehicleCfgFile), True)
-        _Vehicle.SetMod(35, ReadCfgValue("ThirtyFive", VehicleCfgFile), True)
-        _Vehicle.SetMod(36, ReadCfgValue("ThirtySix", VehicleCfgFile), True)
-        _Vehicle.SetMod(37, ReadCfgValue("ThirtySeven", VehicleCfgFile), True)
-        _Vehicle.SetMod(38, ReadCfgValue("ThirtyEight", VehicleCfgFile), True)
-        _Vehicle.SetMod(39, ReadCfgValue("ThirtyNine", VehicleCfgFile), True)
-        _Vehicle.SetMod(40, ReadCfgValue("ForthyZero", VehicleCfgFile), True)
-        _Vehicle.SetMod(41, ReadCfgValue("ForthyOne", VehicleCfgFile), True)
-        _Vehicle.SetMod(42, ReadCfgValue("ForthyTwo", VehicleCfgFile), True)
-        _Vehicle.SetMod(43, ReadCfgValue("ForthyThree", VehicleCfgFile), True)
-        _Vehicle.SetMod(44, ReadCfgValue("ForthyFour", VehicleCfgFile), True)
-        _Vehicle.SetMod(45, ReadCfgValue("ForthyFive", VehicleCfgFile), True)
-        _Vehicle.SetMod(46, ReadCfgValue("ForthySix", VehicleCfgFile), True)
-        _Vehicle.SetMod(47, ReadCfgValue("ForthySeven", VehicleCfgFile), True)
-        _Vehicle.SetMod(48, ReadCfgValue("ForthyEight", VehicleCfgFile), True)
-        _Vehicle.SetMod(50, ReadCfgValue("RoofTrim", VehicleCfgFile), True)
-        If ReadCfgValue("XenonHeadlights", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
-        If ReadCfgValue("Turbo", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.Turbo, True)
-        _Vehicle.ToggleMod(VehicleToggleMod.TireSmoke, True)
-        _Vehicle.TireSmokeColor = Drawing.Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", VehicleCfgFile), ReadCfgValue("TyreSmokeColorGreen", VehicleCfgFile), ReadCfgValue("TyreSmokeColorBlue", VehicleCfgFile))
-        _Vehicle.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", VehicleCfgFile), True)
-        If ReadCfgValue("BulletproofTyres", VehicleCfgFile) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, _Vehicle, False)
-        'Added on v1.3.4
-        'Fixed on v1.3.4.2
-        If My.Settings.HasLowriderUpdate = True Then Native.Function.Call(&H6089CDF6A57F326C, _Vehicle.Handle, CInt(ReadCfgValue("DashboardColor", VehicleCfgFile)))
-        If My.Settings.HasLowriderUpdate = True Then Native.Function.Call(&HF40DD601A65F7F19UL, _Vehicle.Handle, CInt(ReadCfgValue("TrimColor", VehicleCfgFile)))
-        'End of Added on v1.3.4
-        _Vehicle.RoofState = CInt(ReadCfgValue("VehicleRoof", VehicleCfgFile))
-        'Added on v1.3.3
-        If ReadCfgValue("ExtraOne", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, -1)
-        If ReadCfgValue("ExtraTwo", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 2, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 2, -1)
-        If ReadCfgValue("ExtraThree", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 3, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 3, -1)
-        If ReadCfgValue("ExtraFour", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 4, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 4, -1)
-        If ReadCfgValue("ExtraFive", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 5, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 5, -1)
-        If ReadCfgValue("ExtraSix", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 6, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 6, -1)
-        If ReadCfgValue("ExtraSeven", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, -1)
-        If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
-        If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
-        If EngineRunning = True Then _Vehicle.EngineRunning = True
-        'Make sure it is set to correct Engine
-        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
-    End Sub
-
     Public Shared Sub IfReturnedVehicle()
         If playerPed.IsInVehicle Then
-            Select Case playerName
+            Select Case GetPlayerName()
                 Case "Michael"
-                    If Mechanic.MPersVeh.Exist Then 'Mechanic.MVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                        Mechanic.MPersVeh.Delete()
-                        'Mechanic.MVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                    End If
+                    If Mechanic.MPersVeh.Exist Then Mechanic.MPersVeh.Delete()
                 Case "Franklin"
-                    If Mechanic.FPersVeh.Exist Then 'Mechanic.FVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                        Mechanic.FPersVeh.Delete()
-                        'Mechanic.FVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                    End If
+                    If Mechanic.FPersVeh.Exist Then Mechanic.FPersVeh.Delete()
                 Case "Trevor"
-                    If Mechanic.TPersVeh.Exist Then 'Mechanic.TVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                        Mechanic.TPersVeh.Delete()
-                        'Mechanic.TVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                    End If
+                    If Mechanic.TPersVeh.Exist Then Mechanic.TPersVeh.Delete()
                 Case "Player3"
-                    If Mechanic.PPersVeh.Exist Then 'Mechanic.PVDict.ContainsKey(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                        Mechanic.FPersVeh.Delete()
-                        'Mechanic.PVDict.Remove(MD5Gen(playerPed.CurrentVehicle.DisplayName & playerPed.CurrentVehicle.NumberPlate))
-                    End If
+                    If Mechanic.PPersVeh.Exist Then Mechanic.FPersVeh.Delete()
             End Select
         End If
     End Sub
 
     Public Shared Sub IfTransferVehicle()
-        Select Case playerName
+        Select Case GetPlayerName()
             Case "Michael"
                 If Mechanic.MPersVeh.Exist Then
                     IO.File.Delete(Mechanic.MPersVeh.FilePath)
@@ -683,10 +562,6 @@ Public Class TenCarGarage
         WriteCfgValue("WheelType", playerPed.CurrentVehicle.WheelType, file)
         WriteCfgValue("Livery", playerPed.CurrentVehicle.Livery, file)
         WriteCfgValue("PlateType", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, playerPed.CurrentVehicle), file)
-        If playerPed.CurrentVehicle.NumberPlate.Contains("MENYOO") Or playerPed.CurrentVehicle.NumberPlate.Contains("ENHANCED") Then
-            Dim g As Guid = Guid.NewGuid()
-            playerPed.CurrentVehicle.NumberPlate = g.ToString()
-        End If
         WriteCfgValue("PlateNumber", playerPed.CurrentVehicle.NumberPlate, file)
         WriteCfgValue("WindowTint", playerPed.CurrentVehicle.WindowTint, file)
         WriteCfgValue("Spoiler", Native.Function.Call(Of Integer)(Hash.GET_VEHICLE_MOD, playerPed.CurrentVehicle, 0), file)
@@ -754,49 +629,55 @@ Public Class TenCarGarage
         WriteCfgValue("ExtraEight", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 8), file)
         WriteCfgValue("ExtraNine", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 9), file)
         'Added on v1.3.4
-        WriteCfgValue("TrimColor", GetVehicleInteriorTrimColor2(playerPed.CurrentVehicle), file)
-        WriteCfgValue("DashboardColor", GetVehicleInteriorDashboardColor2(playerPed.CurrentVehicle), file)
+        'Updated on v1.9.2
+        WriteCfgValue("TrimColor", playerPed.CurrentVehicle.TrimColor, file)
+        WriteCfgValue("DashboardColor", playerPed.CurrentVehicle.DashboardColor, file)
+        'Added on v1.9.2
+        WriteCfgValue("ExtraTen", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, playerPed.CurrentVehicle, 10), file)
+        WriteCfgValue("CustomRoof", GetTornadoCustomRoof(playerPed.CurrentVehicle), file)
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            ElevatorDistance = World.GetDistance(playerPed.Position, Elevator)
-            GarageDoorLDistance = World.GetDistance(playerPed.Position, GarageDoorL)
-            GarageDoorRDistance = World.GetDistance(playerPed.Position, GarageDoorR)
-            'GarageMiddleDistance = World.GetDistance(playerPed.Position, GarageMiddle)
-            GarageMarkerDistance = World.GetDistance(playerPed.Position, MenuActivator)
+            If Not Game.IsLoading Then
+                ElevatorDistance = World.GetDistance(playerPed.Position, Elevator)
+                GarageDoorLDistance = World.GetDistance(playerPed.Position, GarageDoorL)
+                GarageDoorRDistance = World.GetDistance(playerPed.Position, GarageDoorR)
+                'GarageMiddleDistance = World.GetDistance(playerPed.Position, GarageMiddle)
+                GarageMarkerDistance = World.GetDistance(playerPed.Position, MenuActivator)
 
-            If InteriorID = playerInterior Then
-                World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
-                If My.Settings.RefreshGrgVehs = True Then RefreshGarageVehicles(CurrentPath)
-            Else
-                If Not Game.Player.Character.IsInVehicle Then
-                    If Not veh0 = Nothing Then veh0.Delete()
-                    If Not veh1 = Nothing Then veh1.Delete()
-                    If Not veh2 = Nothing Then veh2.Delete()
-                    If Not veh3 = Nothing Then veh3.Delete()
-                    If Not veh4 = Nothing Then veh4.Delete()
-                    If Not veh5 = Nothing Then veh5.Delete()
-                    If Not veh6 = Nothing Then veh6.Delete()
-                    If Not veh7 = Nothing Then veh7.Delete()
-                    If Not veh8 = Nothing Then veh8.Delete()
-                    If Not veh9 = Nothing Then veh9.Delete()
+                If InteriorID = playerInterior Then
+                    World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
+                    If My.Settings.RefreshGrgVehs = True Then RefreshGarageVehicles(CurrentPath)
+                Else
+                    If Not Game.Player.Character.IsInVehicle Then
+                        If Not veh0 = Nothing Then veh0.Delete()
+                        If Not veh1 = Nothing Then veh1.Delete()
+                        If Not veh2 = Nothing Then veh2.Delete()
+                        If Not veh3 = Nothing Then veh3.Delete()
+                        If Not veh4 = Nothing Then veh4.Delete()
+                        If Not veh5 = Nothing Then veh5.Delete()
+                        If Not veh6 = Nothing Then veh6.Delete()
+                        If Not veh7 = Nothing Then veh7.Delete()
+                        If Not veh8 = Nothing Then veh8.Delete()
+                        If Not veh9 = Nothing Then veh9.Delete()
+                    End If
                 End If
-            End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
-                DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
-            End If
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
+                End If
 
-            If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
-                DisplayHelpTextThisFrame(ExitGarage & Garage)
-            End If
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
+                    DisplayHelpTextThisFrame(ExitGarage & Garage)
+                End If
 
-            If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
-                DisplayHelpTextThisFrame(ManageGarage)
-            End If
+                If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
+                    DisplayHelpTextThisFrame(ManageGarage)
+                End If
 
-            ControlsKeyDown()
+                ControlsKeyDown()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -843,7 +724,7 @@ Public Class TenCarGarage
             Wait(&H3E8)
 
             playerPed.CurrentVehicle.Delete()
-            If playerName = "Michael" Then
+            If GetPlayerName() = "Michael" Then
                 If Mechanic.MPV0 = Nothing Then
                     Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.MPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
@@ -854,9 +735,7 @@ Public Class TenCarGarage
                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
-                    Mechanic.MPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
-                    Mechanic.MPersVeh.Insurance = 1
-                    'Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.MPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
                 Else
                     Mechanic.MPV0.Delete()
                     Mechanic.MPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -868,11 +747,9 @@ Public Class TenCarGarage
                     Mechanic.MPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.MPV0.FriendlyName, Mechanic.MPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.MPV0, VehicleSeat.Driver)
-                    Mechanic.MPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
-                    Mechanic.MPersVeh.Insurance = 1
-                    'Mechanic.MVDict.Add(MD5Gen(Mechanic.MPV0.DisplayName & Mechanic.MPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.MPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.MPV0)
                 End If
-            ElseIf playerName = "Franklin" Then
+            ElseIf GetPlayerName() = "Franklin" Then
                 If Mechanic.FPV0 = Nothing Then
                     Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.FPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
@@ -883,9 +760,7 @@ Public Class TenCarGarage
                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
-                    Mechanic.FPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
-                    Mechanic.FPersVeh.Insurance = 1
-                    'Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.FPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
                 Else
                     Mechanic.FPV0.Delete()
                     Mechanic.FPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -897,11 +772,9 @@ Public Class TenCarGarage
                     Mechanic.FPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.FPV0.FriendlyName, Mechanic.FPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.FPV0, VehicleSeat.Driver)
-                    Mechanic.FPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
-                    Mechanic.FPersVeh.Insurance = 1
-                    'Mechanic.FVDict.Add(MD5Gen(Mechanic.FPV0.DisplayName & Mechanic.FPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.FPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.FPV0)
                 End If
-            ElseIf playerName = "Trevor" Then
+            ElseIf GetPlayerName() = "Trevor" Then
                 If Mechanic.TPV0 = Nothing Then
                     Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.TPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
@@ -912,9 +785,7 @@ Public Class TenCarGarage
                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
-                    Mechanic.TPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
-                    Mechanic.TPersVeh.Insurance = 1
-                    'Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.TPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
                 Else
                     Mechanic.TPV0.Delete()
                     Mechanic.TPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -926,11 +797,9 @@ Public Class TenCarGarage
                     Mechanic.TPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.TPV0.FriendlyName, Mechanic.TPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.TPV0, VehicleSeat.Driver)
-                    Mechanic.TPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
-                    Mechanic.TPersVeh.Insurance = 1
-                    'Mechanic.TVDict.Add(MD5Gen(Mechanic.TPV0.DisplayName & Mechanic.TPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.TPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.TPV0)
                 End If
-            ElseIf playerName = "Player3" Then
+            ElseIf GetPlayerName() = "Player3" Then
                 If Mechanic.PPV0 = Nothing Then
                     Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
                     SetModKit(Mechanic.PPV0, CurrentPath & "vehicle_" & PPCV & ".cfg", True)
@@ -941,9 +810,7 @@ Public Class TenCarGarage
                     Mechanic.PPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
-                    Mechanic.PPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
-                    Mechanic.PPersVeh.Insurance = 1
-                    'Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.PPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
                 Else
                     Mechanic.PPV0.Delete()
                     Mechanic.PPV0 = CreateVehicle(ReadCfgValue("VehicleModel", CurrentPath & "vehicle_" & PPCV & ".cfg"), ReadCfgValue("VehicleHash", CurrentPath & "vehicle_" & PPCV & ".cfg"), lastLocationGarageOutVector, lastLocationGarageOutHeading)
@@ -955,9 +822,7 @@ Public Class TenCarGarage
                     Mechanic.PPV0.CurrentBlip.IsShortRange = True
                     SetBlipName(Mechanic.PPV0.FriendlyName, Mechanic.PPV0.CurrentBlip)
                     SetIntoVehicle(playerPed, Mechanic.PPV0, VehicleSeat.Driver)
-                    Mechanic.PPersVeh = New PersonalVehicle(playerName, CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
-                    Mechanic.PPersVeh.Insurance = 1
-                    'Mechanic.PVDict.Add(MD5Gen(Mechanic.PPV0.DisplayName & Mechanic.PPV0.NumberPlate), CurrentPath & "vehicle_" & PPCV & ".cfg")
+                    Mechanic.PPersVeh = New PersonalVehicle(GetPlayerName(), CurrentPath & "vehicle_" & PPCV & ".cfg", Mechanic.PPV0)
                 End If
             End If
 

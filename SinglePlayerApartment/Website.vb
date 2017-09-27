@@ -6,6 +6,7 @@ Imports INMNativeUI
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.Mechanic
 Imports SinglePlayerApartment.INMNative
+Imports GTA.Math
 
 Public Class Website
     Inherits Script
@@ -31,9 +32,8 @@ Public Class Website
     Public Shared Parameters As String() = {"[name]", "[price]", "[model]", "[gxt]", "[make]", "[category]", "[desc]"}
     Public Shared ImagePathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\Images\"
     Public Shared Caller, CallerImg, Subtitle As String
-    Public Shared image As String = ""
-    Public Shared pointX As Integer
-    Public Shared pointY As Integer
+    Public Shared WebsiteCam As Camera
+    Public Shared SpinHeading As Single = 314.2483
 
     Public Shared _menuPool As MenuPool
 
@@ -41,28 +41,14 @@ Public Class Website
     Public Shared merryChristmas As Boolean = False
     Public Shared freeWheels As Boolean = False
     Public Shared iWillGetThereAsSoonAsICan As Boolean = False
+    Public Shared Rectangle As UIResRectangle = New UIResRectangle()
 
     Public Sub New()
-        'New Language
-        ChooseApt = ReadCfgValue("ChooseApt", langFile)
-        BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
-        DockTease = ReadCfgValue("DockTease", langFile)
-        LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
-        ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
-        PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
-        SouthernSA = ReadCfgValue("SouthernSA", langFile)
-        WarstockCache = ReadCfgValue("WarstockCache", langFile)
-        YourNew = ReadCfgValue("YourNew", langFile)
-        IsConfirm = ReadCfgValue("IsConfirm", langFile)
-        Maze = ReadCfgValue("Maze", langFile)
-        Fleeca = ReadCfgValue("Fleeca", langFile)
-        BOL = ReadCfgValue("BOL", langFile)
-        InsFundVehicle = ReadCfgValue("InsFundVehicle", langFile)
-        'End Language
-
-        AddHandler Tick, AddressOf OnTick
+        Translate()
 
         _menuPool = New MenuPool()
+
+        Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
 
         ReadBenny()
         ReadDockTease()
@@ -79,10 +65,9 @@ Public Class Website
     Public Shared Sub ReadWarstock()
         Try
             Dim Format As New Reader(WarstockFile, Parameters)
-            WarstockMenu = New UIMenu("", WarstockCache.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            WarstockMenu = New UIMenu("", WarstockCache.ToUpper(), New Point(0, 107))
             WarstockMenu.SetBannerType(Rectangle)
+            WarstockMenu.MouseEdgeEnabled = False
             _menuPool.Add(WarstockMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -108,10 +93,9 @@ Public Class Website
     Public Shared Sub ReadSouthernSA()
         Try
             Dim Format As New Reader(SouthernFile, Parameters)
-            SouthernMenu = New UIMenu("", SouthernSA.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            SouthernMenu = New UIMenu("", SouthernSA.ToUpper(), New Point(0, 107))
             SouthernMenu.SetBannerType(Rectangle)
+            SouthernMenu.MouseEdgeEnabled = False
             _menuPool.Add(SouthernMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -137,10 +121,9 @@ Public Class Website
     Public Shared Sub ReadPedalToMetal()
         Try
             Dim Format As New Reader(PedalFile, Parameters)
-            PedalMenu = New UIMenu("", PedalToMetal.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            PedalMenu = New UIMenu("", PedalToMetal.ToUpper(), New Point(0, 107))
             PedalMenu.SetBannerType(Rectangle)
+            PedalMenu.MouseEdgeEnabled = False
             _menuPool.Add(PedalMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -166,10 +149,9 @@ Public Class Website
     Public Shared Sub ReadLegendary()
         Try
             Dim Format As New Reader(LegendaryFile, Parameters)
-            LegendaryMenu = New UIMenu("", LegendaryMotorsport.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            LegendaryMenu = New UIMenu("", LegendaryMotorsport.ToUpper(), New Point(0, 107))
             LegendaryMenu.SetBannerType(Rectangle)
+            LegendaryMenu.MouseEdgeEnabled = False
             _menuPool.Add(LegendaryMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -195,10 +177,9 @@ Public Class Website
     Public Shared Sub ReadElitasTravel()
         Try
             Dim Format As New Reader(ElitasFile, Parameters)
-            ElitasMenu = New UIMenu("", ElitasTravel.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            ElitasMenu = New UIMenu("", ElitasTravel.ToUpper(), New Point(0, 107))
             ElitasMenu.SetBannerType(Rectangle)
+            ElitasMenu.MouseEdgeEnabled = False
             _menuPool.Add(ElitasMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -224,10 +205,9 @@ Public Class Website
     Public Shared Sub ReadDockTease()
         Try
             Dim Format As New Reader(DockFile, Parameters)
-            DockMenu = New UIMenu("", DockTease.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            DockMenu = New UIMenu("", DockTease.ToUpper(), New Point(0, 107))
             DockMenu.SetBannerType(Rectangle)
+            DockMenu.MouseEdgeEnabled = False
             _menuPool.Add(DockMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -253,10 +233,9 @@ Public Class Website
     Public Shared Sub ReadBenny()
         Try
             Dim Format As New Reader(BennyFile, Parameters)
-            BennyMenu = New UIMenu("", BennysOriginal.ToUpper(), New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            BennyMenu = New UIMenu("", BennysOriginal.ToUpper(), New Point(0, 107))
             BennyMenu.SetBannerType(Rectangle)
+            BennyMenu.MouseEdgeEnabled = False
             _menuPool.Add(BennyMenu)
             For i As Integer = 0 To Format.Count - 1
                 Price = Format(i)("price")
@@ -281,10 +260,9 @@ Public Class Website
 
     Public Shared Sub CreateDeliveryMenu()
         Try
-            DeliveryMenu = New UIMenu("", ChooseApt, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            DeliveryMenu = New UIMenu("", ChooseApt, New Point(0, 107))
             DeliveryMenu.SetBannerType(Rectangle)
+            DeliveryMenu.MouseEdgeEnabled = False
             _menuPool.Add(DeliveryMenu)
             DeliveryMenu.RefreshIndex()
             AddHandler DeliveryMenu.OnItemSelect, AddressOf DeliveryItemSelectHandler
@@ -296,153 +274,55 @@ Public Class Website
 
     Public Shared Sub UpdateDeliveryMenu()
         Try
-            Dim Alta As Integer = IO.Directory.GetFiles(AltaPathDir, "*.cfg").Count
-            Dim Integrity As Integer = IO.Directory.GetFiles(IntegrityPathDir, "*.cfg").Count
-            Dim Integrity2 As Integer = IO.Directory.GetFiles(Integrity2PathDir, "*.cfg").Count
-            Dim Perro As Integer = IO.Directory.GetFiles(PerroPathDir, "*.cfg").Count
-            Dim Perro2 As Integer = IO.Directory.GetFiles(Perro2PathDir, "*.cfg").Count
-            Dim Dream As Integer = IO.Directory.GetFiles(DreamPathDir, "*.cfg").Count
-            Dim Eclipse As Integer = IO.Directory.GetFiles(EclipsePathDir, "*.cfg").Count
-            Dim Eclipse2 As Integer = IO.Directory.GetFiles(Eclipse2PathDir, "*.cfg").Count
-            Dim Richard As Integer = IO.Directory.GetFiles(RichardPathDir, "*.cfg").Count
-            Dim Richard2 As Integer = IO.Directory.GetFiles(Richard2PathDir, "*.cfg").Count
-            Dim Tinsel As Integer = IO.Directory.GetFiles(TinselPathDir, "*.cfg").Count
-            Dim Tinsel2 As Integer = IO.Directory.GetFiles(Tinsel2PathDir, "*.cfg").Count
-            Dim Weazel As Integer = IO.Directory.GetFiles(WeazelPathDir, "*.cfg").Count
-            Dim Vespucci As Integer = IO.Directory.GetFiles(VespucciPathDir, "*.cfg").Count
-            Dim NConker2044 As Integer = IO.Directory.GetFiles(NorthConker2044Dir, "*.cfg").Count
-            Dim Hillcrest2862 As Integer = IO.Directory.GetFiles(HillcrestAve2862Dir, "*.cfg").Count
-            Dim Hillcrest2868 As Integer = IO.Directory.GetFiles(HillcrestAve2868Dir, "*.cfg").Count
-            Dim Wild3655 As Integer = IO.Directory.GetFiles(WildOats3655Dir, "*.cfg").Count
-            Dim NConker2045 As Integer = IO.Directory.GetFiles(NorthConker2045Dir, "*.cfg").Count
-            Dim MiltonR2117 As Integer = IO.Directory.GetFiles(MiltonRoad2117Dir, "*.cfg").Count
-            Dim Hillcrest2874 As Integer = IO.Directory.GetFiles(HillcrestAve2874Dir, "*.cfg").Count
-            Dim _Whispymound3677 As Integer = IO.Directory.GetFiles(Whispymound3677Dir, "*.cfg").Count
-            Dim _MadWayne2113 As Integer = IO.Directory.GetFiles(MadWayne2113Dri, "*.cfg").Count
-            Dim EclipseP1 As Integer = IO.Directory.GetFiles(EclipseP1PathDir, "*.cfg").Count
-            Dim EclipseP2 As Integer = IO.Directory.GetFiles(EclipseP2PathDir, "*.cfg").Count
-            Dim EclipseP3 As Integer = IO.Directory.GetFiles(EclipseP3PathDir, "*.cfg").Count
-            Dim BayCity As Integer = IO.Directory.GetFiles(BayCityAveDir, "*.cfg").Count
-            Dim BlvdDP As Integer = IO.Directory.GetFiles(BlvdDelPerroDir, "*.cfg").Count
-            Dim Cougar As Integer = IO.Directory.GetFiles(CougarAveDir, "*.cfg").Count
-            Dim Hangman As Integer = IO.Directory.GetFiles(HangmanAveDir, "*.cfg").Count
-            Dim Lagunas0604 As Integer = IO.Directory.GetFiles(LasLagunas0604Dir, "*.cfg").Count
-            Dim Lagunas2143 As Integer = IO.Directory.GetFiles(LasLagunas2143Dir, "*.cfg").Count
-            Dim MiltonR0184 As Integer = IO.Directory.GetFiles(MiltonRd0184Dir, "*.cfg").Count
-            Dim _PowerSt As Integer = IO.Directory.GetFiles(PowerStDir, "*.cfg").Count
-            Dim Procopio4401 As Integer = IO.Directory.GetFiles(ProcopioDr4401Dir, "*.cfg").Count
-            Dim Procopio4584 As Integer = IO.Directory.GetFiles(ProcopioDr4584Dir, "*.cfg").Count
-            Dim Prosperity As Integer = IO.Directory.GetFiles(ProsperityStDir, "*.cfg").Count
-            Dim SanVitas As Integer = IO.Directory.GetFiles(SanVitasStDir, "*.cfg").Count
-            Dim SouthMo As Integer = IO.Directory.GetFiles(SouthMoMiltonDir, "*.cfg").Count
-            Dim Rockford0325 As Integer = IO.Directory.GetFiles(SouthRockford0325Dir, "*.cfg").Count
-            Dim Spanish As Integer = IO.Directory.GetFiles(SpanishAveDir, "*.cfg").Count
-            Dim Sustancia As Integer = IO.Directory.GetFiles(SustanciaRdDir, "*.cfg").Count
-            Dim Royale As Integer = IO.Directory.GetFiles(TheRoyaleDir, "*.cfg").Count
-            Dim Grapeseed As Integer = IO.Directory.GetFiles(GrapeseedAveDir, "*.cfg").Count
-            Dim _PaletoBlvd As Integer = IO.Directory.GetFiles(PaletoBlvdDir, "*.cfg").Count
-            Dim Rockford0112 As Integer = IO.Directory.GetFiles(SouthRockford0012Dir, "*.cfg").Count
-            Dim Zancudo As Integer = IO.Directory.GetFiles(ZancudoAveDir, "*.cfg").Count
-
             DeliveryMenu.MenuItems.Clear()
-
-            AS3 = ReadCfgValue("3ASowner", saveFile)
-            IW4 = ReadCfgValue("4IWowner", saveFile)
-            IW4HL = ReadCfgValue("4IWHLowner", saveFile)
-            DPH = ReadCfgValue("DPHwoner", saveFile)
-            DPHHL = ReadCfgValue("DPHHLowner", saveFile)
-            DT = ReadCfgValue("SSowner", saveFile)
-            ET = ReadCfgValue("ETowner", saveFile)
-            ETHL = ReadCfgValue("ETHLowner", saveFile)
-            RM = ReadCfgValue("RMowner", saveFile)
-            RMHL = ReadCfgValue("RMHLowner", saveFile)
-            TT = ReadCfgValue("TTowner", saveFile)
-            TTHL = ReadCfgValue("TTHLowner", saveFile)
-            WP = ReadCfgValue("WPowner", saveFile)
-            VB = ReadCfgValue("VPBowner", saveFile)
-            NC2044 = ReadCfgValue("2044NCowner", saveFile)
-            HA2862 = ReadCfgValue("2862HAowner", saveFile)
-            HA2868 = ReadCfgValue("2868HAowner", saveFile)
-            WO3655 = ReadCfgValue("3655WODowner", saveFile)
-            NC2045 = ReadCfgValue("2045NCowner", saveFile)
-            MR2117 = ReadCfgValue("2117MRowner", saveFile)
-            HA2874 = ReadCfgValue("2874HAowner", saveFile)
-            WD3677 = ReadCfgValue("3677WMDowner", saveFile)
-            MW2113 = ReadCfgValue("2113MWTowner", saveFile)
-            ETP1 = ReadCfgValue("ETP1owner", saveFile)
-            ETP2 = ReadCfgValue("ETP2owner", saveFile)
-            ETP3 = ReadCfgValue("ETP3owner", saveFile)
-            BCA = ReadCfgValue("BCAowner", saveFile)
-            BDP = ReadCfgValue("BDPowner", saveFile)
-            CA = ReadCfgValue("CAowner", saveFile)
-            HA = ReadCfgValue("HAowner", saveFile)
-            LLB0604 = ReadCfgValue("0604LLBowner", saveFile)
-            LLB2143 = ReadCfgValue("2143LLBowner", saveFile)
-            MR0184 = ReadCfgValue("0184MRowner", saveFile)
-            POWER = ReadCfgValue("PSowner", saveFile)
-            PD4401 = ReadCfgValue("4401PDowner", saveFile)
-            PD4584 = ReadCfgValue("4584PDowner", saveFile)
-            PPS = ReadCfgValue("PPSowner", saveFile)
-            SVS = ReadCfgValue("SVSowner", saveFile)
-            SMMD = ReadCfgValue("SMMowner", saveFile)
-            SRD0325 = ReadCfgValue("0325SRDowner", saveFile)
-            SA = ReadCfgValue("SAonwer", saveFile)
-            SR = ReadCfgValue("SRowner", saveFile)
-            TR = ReadCfgValue("TRowner", saveFile)
-            GA = ReadCfgValue("GAowner", saveFile)
-            PB = ReadCfgValue("PBowner", saveFile)
-            SRD0112 = ReadCfgValue("0112SRDowner", saveFile)
-            ZA = ReadCfgValue("ZAowner", saveFile)
-
             ReadMenuItems()
-
-            If AS3 = playerName AndAlso Not Alta = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
-            If IW4 = playerName AndAlso Not Integrity = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
-            If IW4HL = playerName AndAlso Not Integrity2 = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4HL)
-            If DPH = playerName AndAlso Not Perro = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPH)
-            If DPHHL = playerName AndAlso Not Perro2 = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPHHL)
-            If DT = playerName AndAlso Not Dream = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDT)
-            If ET = playerName AndAlso Not Eclipse = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemET)
-            If ETHL = playerName AndAlso Not Eclipse2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETHL)
-            If RM = playerName AndAlso Not Richard = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRM)
-            If RMHL = playerName AndAlso Not Richard2 = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRMHL)
-            If TT = playerName AndAlso Not Tinsel = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTT)
-            If TTHL = playerName AndAlso Not Tinsel2 = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTTHL)
-            If WP = playerName AndAlso Not Weazel = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWP)
-            If VB = playerName AndAlso Not Vespucci = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemVB)
-            If NC2044 = playerName AndAlso Not NConker2044 = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2044)
-            If HA2862 = playerName AndAlso Not Hillcrest2862 = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2862)
-            If HA2868 = playerName AndAlso Not Hillcrest2868 = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2868)
-            If WO3655 = playerName AndAlso Not Wild3655 = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWO3655)
-            If NC2045 = playerName AndAlso Not NConker2045 = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2045)
-            If MR2117 = playerName AndAlso Not MiltonR2117 = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR2117)
-            If HA2874 = playerName AndAlso Not Hillcrest2874 = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2874)
-            If WD3677 = playerName AndAlso Not _Whispymound3677 = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
-            If MW2113 = playerName AndAlso Not _MadWayne2113 = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
-            If ETP1 = playerName AndAlso Not EclipseP1 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
-            If ETP2 = playerName AndAlso Not EclipseP2 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
-            If ETP3 = playerName AndAlso Not EclipseP3 = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
-            If BCA = playerName AndAlso Not BayCity = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBCA)
-            If BDP = playerName AndAlso Not BlvdDP = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBDP)
-            If CA = playerName AndAlso Not Cougar = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemCA)
-            If HA = playerName AndAlso Not Hangman = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA)
-            If LLB0604 = playerName AndAlso Not Lagunas0604 = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
-            If LLB2143 = playerName AndAlso Not Lagunas2143 = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
-            If MR0184 = playerName AndAlso Not MiltonR0184 = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
-            If POWER = playerName AndAlso Not _PowerSt = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
-            If PD4401 = playerName AndAlso Not Procopio4401 = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
-            If PD4584 = playerName AndAlso Not Procopio4584 = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
-            If PPS = playerName AndAlso Not Prosperity = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
-            If SVS = playerName AndAlso Not SanVitas = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSVS)
-            If SMMD = playerName AndAlso Not SouthMo = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSMMD)
-            If SRD0325 = playerName AndAlso Not Rockford0325 = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0325)
-            If SA = playerName AndAlso Not Spanish = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSA)
-            If SR = playerName AndAlso Not Sustancia = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
-            If TR = playerName AndAlso Not Royale = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
-            If GA = playerName AndAlso Not Grapeseed = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
-            If PB = playerName AndAlso Not _PaletoBlvd = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
-            If SRD0112 = playerName AndAlso Not Rockford0112 = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
-            If ZA = playerName AndAlso Not Zancudo = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
+            If _3AltaStreet.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
+            If _4IntegrityWay.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
+            If _4IntegrityWay.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4HL)
+            If DelPerroHeight.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPH)
+            If DelPerroHeight.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPHHL)
+            If DreamTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDT)
+            If EclipseTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemET)
+            If EclipseTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETHL)
+            If RichardMajestic.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRM)
+            If RichardMajestic.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRMHL)
+            If TinselTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTT)
+            If TinselTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTTHL)
+            If WeazelPlaza.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWP)
+            If VespucciBlvd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemVB)
+            If NorthConker2044.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2044)
+            If HillcrestAve2862.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2862)
+            If HillcrestAve2868.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2868)
+            If WildOats3655.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWO3655)
+            If NorthConker2045.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2045)
+            If MiltonRd2117.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR2117)
+            If HillcrestAve2874._Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2874)
+            If Whispymound3677.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
+            If MadWayne2113.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
+            If EclipseTower.ApartmentPS1.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
+            If EclipseTower.ApartmentPS2.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
+            If EclipseTower.ApartmentPS3.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
+            If BayCityAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBCA)
+            If BlvdDelPerro.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBDP)
+            If CougarAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemCA)
+            If HangmanAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA)
+            If LasLagunasBlvd0604.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
+            If LasLagunasBlvd2143.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
+            If MiltonRd0184.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
+            If PowerSt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
+            If ProcopioDr4401.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
+            If ProcopioDr4584.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
+            If ProsperitySt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
+            If SanVitasSt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSVS)
+            If SouthMoMiltonDr.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSMMD)
+            If SouthRockfordDrive0325.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0325)
+            If SpanishAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSA)
+            If SustanciaRd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
+            If TheRoyale.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
+            If GrapeseedAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
+            If PaletoBlvd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
+            If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
+            If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
 
             DeliveryMenu.RefreshIndex()
         Catch ex As Exception
@@ -453,6 +333,9 @@ Public Class Website
     Public Shared Sub DeliveryMenuCloseHandler(sender As UIMenu)
         Try
             If Not VehPreview = Nothing Then VehPreview.Delete()
+            World.DestroyAllCameras()
+            World.RenderingCamera = Nothing
+            hideHud = False
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -460,10 +343,12 @@ Public Class Website
 
     Public Shared Sub VehicleMenuCloseHandler(sender As UIMenu)
         Try
-            image = ""
             If Not DeliveryMenu.Visible = True Then
                 If Not VehPreview = Nothing Then VehPreview.Delete()
             End If
+            World.DestroyAllCameras()
+            World.RenderingCamera = Nothing
+            hideHud = False
         Catch ex As Exception
 
         End Try
@@ -474,99 +359,99 @@ Public Class Website
             Dim TargetPathDir As String = Nothing
             Select Case selectedItem.Text
                 Case itemAS3.Text
-                    TargetPathDir = AltaPathDir
+                    TargetPathDir = _3AltaStreet.Apartment.GaragePath
                 Case itemIW4.Text
-                    TargetPathDir = IntegrityPathDir
+                    TargetPathDir = _4IntegrityWay.Apartment.GaragePath
                 Case itemIW4HL.Text
-                    TargetPathDir = Integrity2PathDir
+                    TargetPathDir = _4IntegrityWay.Apartment.GaragePath
                 Case itemDPH.Text
-                    TargetPathDir = PerroPathDir
+                    TargetPathDir = DelPerroHeight.Apartment.GaragePath
                 Case itemDPHHL.Text
-                    TargetPathDir = Perro2PathDir
+                    TargetPathDir = DelPerroHeight.ApartmentHL.GaragePath
                 Case itemDT.Text
-                    TargetPathDir = DreamPathDir
+                    TargetPathDir = DreamTower.Apartment.GaragePath
                 Case itemET.Text
-                    TargetPathDir = EclipsePathDir
+                    TargetPathDir = EclipseTower.Apartment.GaragePath
                 Case itemETHL.Text
-                    TargetPathDir = Eclipse2PathDir
+                    TargetPathDir = EclipseTower.ApartmentHL.GaragePath
                 Case itemRM.Text
-                    TargetPathDir = RichardPathDir
+                    TargetPathDir = RichardMajestic.Apartment.GaragePath
                 Case itemRMHL.Text
-                    TargetPathDir = Richard2PathDir
+                    TargetPathDir = RichardMajestic.ApartmentHL.GaragePath
                 Case itemTT.Text
-                    TargetPathDir = TinselPathDir
+                    TargetPathDir = TinselTower.Apartment.GaragePath
                 Case itemTTHL.Text
-                    TargetPathDir = Tinsel2PathDir
+                    TargetPathDir = TinselTower.ApartmentHL.GaragePath
                 Case itemWP.Text
-                    TargetPathDir = WeazelPathDir
+                    TargetPathDir = WeazelPlaza.Apartment.GaragePath
                 Case itemVB.Text
-                    TargetPathDir = VespucciPathDir
+                    TargetPathDir = VespucciBlvd.Apartment.GaragePath
                 Case itemNC2044.Text
-                    TargetPathDir = NorthConker2044Dir
+                    TargetPathDir = NorthConker2044.Apartment.GaragePath
                 Case itemHA2862.Text
-                    TargetPathDir = HillcrestAve2862Dir
+                    TargetPathDir = HillcrestAve2862.Apartment.GaragePath
                 Case itemHA2868.Text
-                    TargetPathDir = HillcrestAve2868Dir
+                    TargetPathDir = HillcrestAve2868.Apartment.GaragePath
                 Case itemWO3655.Text
-                    TargetPathDir = WildOats3655Dir
+                    TargetPathDir = WildOats3655.Apartment.GaragePath
                 Case itemNC2045.Text
-                    TargetPathDir = NorthConker2045Dir
+                    TargetPathDir = NorthConker2045.Apartment.GaragePath
                 Case itemMR2117.Text
-                    TargetPathDir = MiltonRoad2117Dir
+                    TargetPathDir = MiltonRd2117.Apartment.GaragePath
                 Case itemHA2874.Text
-                    TargetPathDir = HillcrestAve2874Dir
+                    TargetPathDir = HillcrestAve2874._Apartment.GaragePath
                 Case itemWD3677.Text
-                    TargetPathDir = Whispymound3677Dir
+                    TargetPathDir = Whispymound3677.Apartment.GaragePath
                 Case itemMW2113.Text
-                    TargetPathDir = MadWayne2113Dri
+                    TargetPathDir = MadWayne2113.Apartment.GaragePath
                 Case itemETP1.Text
-                    TargetPathDir = EclipseP1PathDir
+                    TargetPathDir = EclipseTower.ApartmentPS1.GaragePath
                 Case itemETP2.Text
-                    TargetPathDir = EclipseP2PathDir
+                    TargetPathDir = EclipseTower.ApartmentPS2.GaragePath
                 Case itemETP3.Text
-                    TargetPathDir = EclipseP3PathDir
+                    TargetPathDir = EclipseTower.ApartmentPS3.GaragePath
                 Case itemBCA.Text
-                    TargetPathDir = BayCityAveDir
+                    TargetPathDir = BayCityAve.Apartment.GaragePath
                 Case itemBDP.Text
-                    TargetPathDir = BlvdDelPerroDir
+                    TargetPathDir = BlvdDelPerro.Apartment.GaragePath
                 Case itemCA.Text
-                    TargetPathDir = CougarAveDir
+                    TargetPathDir = CougarAve.Apartment.GaragePath
                 Case itemHA.Text
-                    TargetPathDir = HangmanAveDir
+                    TargetPathDir = HangmanAve.Apartment.GaragePath
                 Case itemLLB0604.Text
-                    TargetPathDir = LasLagunas0604Dir
+                    TargetPathDir = LasLagunasBlvd0604.Apartment.GaragePath
                 Case itemLLB2143.Text
-                    TargetPathDir = LasLagunas2143Dir
+                    TargetPathDir = LasLagunasBlvd2143.Apartment.GaragePath
                 Case itemMR0184.Text
-                    TargetPathDir = MiltonRd0184Dir
+                    TargetPathDir = MiltonRd0184.Apartment.GaragePath
                 Case itemPower.Text
-                    TargetPathDir = PowerStDir
+                    TargetPathDir = PowerSt.Apartment.GaragePath
                 Case itemPD4401.Text
-                    TargetPathDir = ProcopioDr4401Dir
+                    TargetPathDir = ProcopioDr4401.Apartment.GaragePath
                 Case itemPD4584.Text
-                    TargetPathDir = ProcopioDr4584Dir
+                    TargetPathDir = ProcopioDr4584.Apartment.GaragePath
                 Case itemProsperity.Text
-                    TargetPathDir = ProsperityStDir
+                    TargetPathDir = ProsperitySt.Apartment.GaragePath
                 Case itemSVS.Text
-                    TargetPathDir = SanVitasStDir
+                    TargetPathDir = SanVitasSt.Apartment.GaragePath
                 Case itemSMMD.Text
-                    TargetPathDir = SouthMoMiltonDir
+                    TargetPathDir = SouthMoMiltonDr.Apartment.GaragePath
                 Case itemSRD0325.Text
-                    TargetPathDir = SouthRockford0325Dir
+                    TargetPathDir = SouthRockfordDrive0325.Apartment.GaragePath
                 Case itemSA.Text
-                    TargetPathDir = SpanishAveDir
+                    TargetPathDir = SpanishAve.Apartment.GaragePath
                 Case itemSR.Text
-                    TargetPathDir = SustanciaRdDir
+                    TargetPathDir = SustanciaRd.Apartment.GaragePath
                 Case itemTR.Text
-                    TargetPathDir = TheRoyaleDir
+                    TargetPathDir = TheRoyale.Apartment.GaragePath
                 Case itemGA.Text
-                    TargetPathDir = GrapeseedAveDir
+                    TargetPathDir = GrapeseedAve.Apartment.GaragePath
                 Case itemPB.Text
-                    TargetPathDir = PaletoBlvdDir
+                    TargetPathDir = PaletoBlvd.Apartment.GaragePath
                 Case itemSRD0112.Text
-                    TargetPathDir = SouthRockford0012Dir
+                    TargetPathDir = SouthRockfordDr0112.Apartment.GaragePath
                 Case itemZA.Text
-                    TargetPathDir = ZancudoAveDir
+                    TargetPathDir = ZancudoAve.Apartment.GaragePath
             End Select
 
             If IO.File.Exists(TargetPathDir & "vehicle_0.cfg") = False Then
@@ -659,23 +544,23 @@ Public Class Website
 
     Public Shared Sub VehicleIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            image = sender.MenuItems(index).SubString1 & ".jpg"
-            pointX = sender.MenuItems(index).Offset.X + My.Settings.PreviewPointX
-            pointY = sender.MenuItems(index).Offset.Y + My.Settings.PreviewPointY
-            'UI.DrawTexture(ImagePathDir & image, 0, 0, 2000, New Point(290, 0), New Size(600, 333), 0.0, Color.White)
+            If VehPreview = Nothing Then
+                VehPreview = CreateVehicle(sender.MenuItems(index).SubString1, Nothing, New Vector3(457.6332, 1006.618, 327.0871), SpinHeading)
+            Else
+                VehPreview.Delete()
+                VehPreview = CreateVehicle(sender.MenuItems(index).SubString1, Nothing, New Vector3(457.6332, 1006.618, 327.0871), SpinHeading)
+            End If
+            SelectedVehicle = VehPreview.FriendlyName
+            VehPreview.FreezePosition = True
+            VehPreview.HasCollision = False
+            WebsiteCam.PointAt(VehPreview)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Shared Sub DrawTexture()
-        If Not image = "" Then
-            UI.DrawTexture(ImagePathDir & image, 0, 0, 60, New Point(pointX, pointY), New Size(300, 166), 0.0, Color.White)
-        End If
-    End Sub
-
     Public Shared Sub VehicleSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        image = ""
+        'image = ""
         Subtitle = sender.Subtitle.Caption
         Select Case Subtitle
             Case BennysOriginal.ToUpper()
@@ -703,17 +588,16 @@ Public Class Website
 
         VehiclePrice = selectedItem.SubInteger1
         If VehPreview = Nothing Then
-            VehPreview = Resources.CreateVehicle(selectedItem.SubString1, Nothing, playerPed.Position, playerPed.Heading)
-        Else
-            VehPreview.Delete()
-            VehPreview = Resources.CreateVehicle(selectedItem.SubString1, Nothing, playerPed.Position, playerPed.Heading)
+            VehPreview = CreateVehicle(selectedItem.SubString1, Nothing, New Vector3(457.6332, 1006.618, 327.0871), SpinHeading) ' playerPed.Position, playerPed.Heading)
         End If
         SelectedVehicle = VehPreview.FriendlyName
-        VehPreview.Alpha = 0
+        'VehPreview.Alpha = 0
+        VehPreview.FreezePosition = True
         VehPreview.HasCollision = False
+        WebsiteCam.PointAt(VehPreview)
         Category = selectedItem.SubString2
         If Category = "Pegasus" Then
-            Select Case playerName
+            Select Case GetPlayerName()
                 Case "Michael"
                     If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(MichaelPathDir & VehPreview.NumberPlate & ".cfg") Then
@@ -754,7 +638,7 @@ Public Class Website
                         DisplayNotificationThisFrame(BOL, "", InsFundVehicle, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
                     End If
                 Case "Player3"
-                    If PlayerCash > VehiclePrice Then
+                    If playerCash > VehiclePrice Then
                         If Not IO.File.Exists(Player3PathDir & VehPreview.NumberPlate & ".cfg") Then
                             Resources.CreateFile(Player3PathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(Player3PathDir & VehPreview.NumberPlate & ".cfg")
@@ -767,12 +651,12 @@ Public Class Website
                     End If
             End Select
         Else
-            If PlayerCash > VehiclePrice Then
+            If playerCash > VehiclePrice Then
                 UpdateDeliveryMenu()
                 DeliveryMenu.Visible = Not DeliveryMenu.Visible
                 sender.Visible = False
             Else
-                Select Case playerName
+                Select Case GetPlayerName()
                     Case "Michael"
                         DisplayNotificationThisFrame(Maze, "", InsFundVehicle, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     Case "Franklin"
@@ -786,37 +670,42 @@ Public Class Website
         End If
     End Sub
 
-    Public Shared Sub OnTick(o As Object, e As EventArgs)
+    Public Shared Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            _menuPool.ProcessMenus()
-            DrawTexture()
-
-            If Cheating("FREEREALESTATE") Then
-                freeRealEstate = Not freeRealEstate
-                If freeRealEstate Then UI.Notify("Cheat activated: ~n~Free Apartment.") Else UI.Notify("Cheat deactivated: ~n~Free Apartment.")
-            End If
-
-            If Cheating("FREEWHEELS") Then
-                freeWheels = Not freeWheels
-                If freeWheels Then UI.Notify("Cheat activated: ~n~Free Vehicles.") Else UI.Notify("Cheat deactivated: ~n~Free Vehicles.")
-            End If
-
-            If Cheating("MERRYCHRISTMAS") Then
-                merryChristmas = Not merryChristmas
-                If merryChristmas Then
-                    UI.Notify("Cheat activated: ~n~Christmas Tree.")
-                Else
-                    UI.Notify("Cheat deactivated: ~n~Christmas Tree.")
-                    If Not PropXmasTree = Nothing Then PropXmasTree.Delete()
+            If Not Game.IsLoading Then
+                _menuPool.ProcessMenus()
+                If BennyMenu.Visible Or DockMenu.Visible Or ElitasMenu.Visible Or LegendaryMenu.Visible Or PedalMenu.Visible Or SouthernMenu.Visible Or WarstockMenu.Visible Or DeliveryMenu.Visible Then
+                    SpinHeading += 0.3
+                    VehPreview.Heading = SpinHeading
                 End If
-            End If
 
-            If Cheating("IWILLGETTHEREASSOONASICAN") Then
-                iWillGetThereAsSoonAsICan = Not iWillGetThereAsSoonAsICan
-                If iWillGetThereAsSoonAsICan Then
-                    UI.Notify("Cheat activated: ~n~Disable Restrict to Call Mechanic when you too close to your vehicle.")
-                Else
-                    UI.Notify("Cheat deactivated: ~n~Disable Restrict to Call Mechanic when you too close to your vehicle.")
+                If Cheating("FREEREALESTATE") Then
+                    freeRealEstate = Not freeRealEstate
+                    If freeRealEstate Then UI.Notify("Cheat activated: ~n~Free Apartment.") Else UI.Notify("Cheat deactivated: ~n~Free Apartment.")
+                End If
+
+                If Cheating("FREEWHEELS") Then
+                    freeWheels = Not freeWheels
+                    If freeWheels Then UI.Notify("Cheat activated: ~n~Free Vehicles.") Else UI.Notify("Cheat deactivated: ~n~Free Vehicles.")
+                End If
+
+                If Cheating("MERRYCHRISTMAS") Then
+                    merryChristmas = Not merryChristmas
+                    If merryChristmas Then
+                        UI.Notify("Cheat activated: ~n~Christmas Tree.")
+                    Else
+                        UI.Notify("Cheat deactivated: ~n~Christmas Tree.")
+                        If Not PropXmasTree = Nothing Then PropXmasTree.Delete()
+                    End If
+                End If
+
+                If Cheating("IWILLGETTHEREASSOONASICAN") Then
+                    iWillGetThereAsSoonAsICan = Not iWillGetThereAsSoonAsICan
+                    If iWillGetThereAsSoonAsICan Then
+                        UI.Notify("Cheat activated: ~n~Disable Restrict to Call Mechanic when you too close to your vehicle.")
+                    Else
+                        UI.Notify("Cheat deactivated: ~n~Disable Restrict to Call Mechanic when you too close to your vehicle.")
+                    End If
                 End If
             End If
         Catch ex As Exception
@@ -830,30 +719,37 @@ Public Class Website
 
     Public Shared Sub Call_Benny()
         BennyMenu.Visible = Not BennyMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub Call_DockTease()
         DockMenu.Visible = Not DockMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub Call_Legendary()
         LegendaryMenu.Visible = Not LegendaryMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub Call_SouthernSA()
         SouthernMenu.Visible = Not SouthernMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub Call_PedalToMetal()
         PedalMenu.Visible = Not PedalMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub Call_Warstock()
         WarstockMenu.Visible = Not WarstockMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub Call_ElitasTravel()
         ElitasMenu.Visible = Not ElitasMenu.Visible
+        MakeACamera()
     End Sub
 
     Public Shared Sub SavePegasusVehicle(file As String)
@@ -952,11 +848,33 @@ Public Class Website
             WriteCfgValue("ExtraEight", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, VehPreview, 8), file)
             WriteCfgValue("ExtraNine", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, VehPreview, 9), file)
             'Added on v1.3.4
-            WriteCfgValue("TrimColor", Resources.GetVehicleInteriorTrimColor(VehPreview), file)
-            WriteCfgValue("DashboardColor", Resources.GetVehicleInteriorDashboardColor(VehPreview), file)
+            'Updated on v1.9.2
+            WriteCfgValue("TrimColor", VehPreview.TrimColor, file)
+            WriteCfgValue("DashboardColor", VehPreview.DashboardColor, file)
+            'Added on v1.9.2
+            WriteCfgValue("ExtraTen", Native.Function.Call(Of Boolean)(Hash.IS_VEHICLE_EXTRA_TURNED_ON, VehPreview, 10), file)
+            WriteCfgValue("CustomRoof", GetTornadoCustomRoof(VehPreview), file)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Public Shared Sub MakeACamera()
+        SetInteriorActive2(404.2812, -963.2419, -99.00419) 'Underground Parking
+        WebsiteCam = New Camera(1)
+        WebsiteCam = World.CreateCamera(New Vector3(450.6018, 1000.792, 329.5135), New Vector3(-7.764421, 0, -50.35685), 50)
+        If VehPreview = Nothing Then
+            VehPreview = CreateVehicle("adder", Nothing, New Vector3(457.6332, 1006.618, 327.0871), SpinHeading)
+        Else
+            VehPreview.Delete()
+            VehPreview = CreateVehicle("adder", Nothing, New Vector3(457.6332, 1006.618, 327.0871), SpinHeading)
+        End If
+        SelectedVehicle = VehPreview.FriendlyName
+        VehPreview.FreezePosition = True
+        VehPreview.HasCollision = False
+        WebsiteCam.PointAt(VehPreview)
+        World.RenderingCamera = WebsiteCam
+        hideHud = True
     End Sub
 
     Public Sub OnAborted() Handles MyBase.Aborted

@@ -6,9 +6,9 @@ Imports GTA.Native
 Imports GTA.Math
 Imports System.Text
 Imports System.Media
-Imports SinglePlayerApartment.INMNative
+Imports SinglePlayerApartment.SinglePlayerApartment
 
-Public Class Resources
+Public Module Resources
 
     Public Enum BlipColor2
         Franklin = 43
@@ -37,7 +37,7 @@ Public Class Resources
         PROP_EARS = 2
     End Enum
 
-    Public Shared Sub ShowXmasTree(Location As Vector3)
+    Public Sub ShowXmasTree(Location As Vector3)
         If Not Website.PropXmasTree = Nothing Then
             Website.PropXmasTree.Delete()
             Website.PropXmasTree = World.CreateProp("prop_xmas_tree_int", New Vector3(Location.X, Location.Y, Location.Z - 1), False, False)
@@ -46,7 +46,7 @@ Public Class Resources
         End If
     End Sub
 
-    Public Shared Function GetHashKey(ByVal s As String) As Integer
+    Public Function GetHashKey(ByVal s As String) As Integer
         Dim Args As InputArgument() = New InputArgument() {s}
         Return Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, Args)
     End Function
@@ -59,7 +59,7 @@ Public Class Resources
         Public Traction As Single
     End Structure
 
-    Public Shared Function GetVehicleStats(ByVal v As Vehicle) As VehicleStats
+    Public Function GetVehicleStats(ByVal v As Vehicle) As VehicleStats
         Dim num As Single = 1.0!
         Dim stats As New VehicleStats
         Dim arguments As InputArgument() = New InputArgument() {v}
@@ -73,7 +73,7 @@ Public Class Resources
         Return stats
     End Function
 
-    Public Shared Function GetVehiclePrice(file As String) As Integer
+    Public Function GetVehiclePrice(file As String) As Integer
         Dim VehHash As Integer = CInt(ReadCfgValue("VehicleHash", file))
         Dim VehPrice As Integer
         Select Case VehHash
@@ -209,7 +209,7 @@ Public Class Resources
         Outline = 2
     End Enum
 
-    Public Shared Sub DrawText(ByVal [Text] As String, ByVal Position As PointF, ByVal Scale As Single, ByVal color As Color, ByVal Font As GTAFont, ByVal Alignment As GTAFontAlign, ByVal Options As GTAFontStyleOptions)
+    Public Sub DrawText(ByVal [Text] As String, ByVal Position As PointF, ByVal Scale As Single, ByVal color As Color, ByVal Font As GTAFont, ByVal Alignment As GTAFontAlign, ByVal Options As GTAFontStyleOptions)
         Dim arguments As InputArgument() = New InputArgument() {Font}
         Native.Function.Call(Hash._0x66E0276CC5F6B9DA, arguments)
         Dim argumentArray2 As InputArgument() = New InputArgument() {1.0!, Scale}
@@ -236,7 +236,7 @@ Public Class Resources
         Native.Function.Call(Hash._0xCD015E5BB0D96A57, argumentArray7)
     End Sub
 
-    Public Shared Sub PushBigString(ByVal [Text] As String)
+    Public Sub PushBigString(ByVal [Text] As String)
         Dim strArray As String() = SplitStringEveryNth([Text], &H63)
         Dim i As Integer
         For i = 0 To strArray.Length - 1
@@ -245,7 +245,7 @@ Public Class Resources
         Next i
     End Sub
 
-    Private Shared Function SplitStringEveryNth(ByVal [text] As String, ByVal Nth As Integer) As String()
+    Private Function SplitStringEveryNth(ByVal [text] As String, ByVal Nth As Integer) As String()
         Dim list As New List(Of String)
         Dim item As String = ""
         Dim num As Integer = 0
@@ -273,7 +273,7 @@ Public Class Resources
         Public UIntValue As UInt32
     End Structure
 
-    Public Shared Function GetModelFromHash(Vehicle As Vehicle) As String
+    Public Function GetModelFromHash(Vehicle As Vehicle) As String
         Dim Result As String = Nothing
         Dim VhNames As Array = GTA.Native.VehicleHash.GetNames(GetType(VehicleHash))
         Dim VhHash As Array = GTA.Native.VehicleHash.GetValues(GetType(VehicleHash))
@@ -290,47 +290,7 @@ Public Class Resources
         Return Result
     End Function
 
-    Public Shared Function GetVehicleInteriorTrimColor2(Vehicle As Vehicle) As Integer
-        Dim arg As New OutputArgument()
-        If My.Settings.HasLowriderUpdate = True Then
-            Native.Function.Call(&H7D1464D472D32136L, Vehicle.Handle, arg)
-        Else
-            Return 0
-        End If
-        Return arg.GetResult(Of Integer)()
-    End Function
-
-    Public Shared Function GetVehicleInteriorDashboardColor2(Vehicle As Vehicle) As Integer
-        Dim arg As New OutputArgument()
-        If My.Settings.HasLowriderUpdate = True Then
-            Native.Function.Call(&HB7635E80A5C31BFFUL, Vehicle.Handle, arg)
-        Else
-            Return 0
-        End If
-        Return arg.GetResult(Of Integer)()
-    End Function
-
-    Public Shared Function GetVehicleInteriorTrimColor(Vehicle As Vehicle) As Integer
-        Dim arg As New OutputArgument()
-        If My.Settings.HasLowriderUpdate = True Then
-            Native.Function.Call(&H7D1464D472D32136L, Vehicle.Handle, arg)
-        Else
-            Return 0
-        End If
-        Return arg.GetResult(Of Integer)()
-    End Function
-
-    Public Shared Function GetVehicleInteriorDashboardColor(Vehicle As Vehicle) As Integer
-        Dim arg As New OutputArgument()
-        If My.Settings.HasLowriderUpdate = True Then
-            Native.Function.Call(&HB7635E80A5C31BFFUL, Vehicle.Handle, arg)
-        Else
-            Return 0
-        End If
-        Return arg.GetResult(Of Integer)()
-    End Function
-
-    Public Shared Function GetVehicleClass(Vehicle As Vehicle) As String
+    Public Function GetVehicleClass(Vehicle As Vehicle) As String
         Dim Result As String = Nothing
         Try
             Select Case Vehicle.ClassType
@@ -347,7 +307,7 @@ Public Class Resources
         Return Result
     End Function
 
-    Public Shared Sub TaskPlayAnim(ByVal ped As Ped, ByVal animDict As String, ByVal animFile As String, ByVal duration As Integer)
+    Public Sub TaskPlayAnim(ByVal ped As Ped, ByVal animDict As String, ByVal animFile As String, ByVal duration As Integer)
         Native.Function.Call(Hash._0xD3BD40951412FEF6, New InputArgument() {animDict})
         Dim time As DateTime = (DateTime.Now + New TimeSpan(0, 0, 0, 0, &H3E8))
 Label_005C:
@@ -362,7 +322,7 @@ Label_005C:
         Native.Function.Call(Hash._0xEA47FE3719165B94, New InputArgument() {ped, animDict, animFile, 8.0, -4.0, duration, 8, 0, 0, 0, 0})
     End Sub
 
-    Public Shared Sub TaskPlayAnimLoop(ByVal ped As Ped, ByVal animDict As String, ByVal animFile As String, ByVal duration As Integer)
+    Public Sub TaskPlayAnimLoop(ByVal ped As Ped, ByVal animDict As String, ByVal animFile As String, ByVal duration As Integer)
         Native.Function.Call(Hash._0xD3BD40951412FEF6, New InputArgument() {animDict})
         Dim time As DateTime = (DateTime.Now + New TimeSpan(0, 0, 0, 0, &H3E8))
 Label_005C:
@@ -377,7 +337,7 @@ Label_005C:
         Native.Function.Call(Hash._0xEA47FE3719165B94, New InputArgument() {ped, animDict, animFile, 8.0, -4.0, duration, 9, 0, 0, 0, 0})
     End Sub
 
-    Public Shared Sub Disable_Weapons()
+    Public Sub Disable_Weapons()
         Game.DisableControlThisFrame(0, GTA.Control.NextWeapon)
         Game.DisableControlThisFrame(0, GTA.Control.PrevWeapon)
         Game.DisableControlThisFrame(0, GTA.Control.MeleeAttack1)
@@ -393,11 +353,11 @@ Label_005C:
         End Select
     End Sub
 
-    Public Shared Sub Disable_Switch_Characters()
+    Public Sub Disable_Switch_Characters()
         Game.DisableControlThisFrame(0, GTA.Control.CharacterWheel)
     End Sub
 
-    Public Shared Sub Disable_Controls()
+    Public Sub Disable_Controls()
         Game.DisableControlThisFrame(0, GTA.Control.Jump)
         Game.DisableControlThisFrame(0, GTA.Control.Attack)
         Game.DisableControlThisFrame(0, GTA.Control.Attack2)
@@ -412,13 +372,13 @@ Label_005C:
         End If
     End Sub
 
-    Public Shared Function GetCurrentWeaponPedUsing() As Integer
+    Public Function GetCurrentWeaponPedUsing() As Integer
         Dim arg As New OutputArgument()
         Native.Function.Call(Hash.GET_CURRENT_PED_WEAPON, Game.Player.Character, arg, True)
         Return arg.GetResult(Of Integer)()
     End Function
 
-    Public Shared Function GetPlayerZoneForPlane(PlayerPed As Ped) As Vector3
+    Public Function GetPlayerZoneForPlane(PlayerPed As Ped) As Vector3
         Dim ZoneID As String = Native.Function.Call(Of String)(Hash.GET_NAME_OF_ZONE, PlayerPed.Position.X, PlayerPed.Position.Y, PlayerPed.Position.Z)
         Dim result As Vector3
         Select Case ZoneID
@@ -440,68 +400,64 @@ Label_005C:
         Return result
     End Function
 
-    Public Shared Function GetPlayerZoneForBoat(PlayerPed As Ped) As Vector3
-        Dim ZoneID As String = Native.Function.Call(Of String)(Hash.GET_NAME_OF_ZONE, PlayerPed.Position.X, PlayerPed.Position.Y, PlayerPed.Position.Z)
-        Dim result As Vector3
-        Select Case ZoneID
-            'Puerto Del Sol Marina
-            Case "AIRP", "ALTA", "DOWNT", "DTVINE", "PBOX", "TEXTI", "SKID", "VINE", "HAWICK", "HORS", "LEGSQU", "LMESA", "OCEANA", "WVINE", "DELSOL"
-                result = New Vector3(-806.1055, -1418.486, 0.05737)
-            'Galilee/Alamo Sea
-            Case "ALAMO", "GALFISH", "CALAFB", "SLAB", "SANDY", "GRAPES", "DESRT", "HARMO", "HUMLAB", "RTRAK", "SANCHIA"
-                result = New Vector3(1309.472, 4220.357, 30.59586)
-            'Fort Zancudo
-            Case "ARMYB", "GREATC", "LAGO", "ZANCUDO"
-                result = New Vector3(-2793.24, 2993.928, 0.325136)
-            'Chumash
-            Case "BANHAMC", "BHAMCA", "CHU", "RGLEN", "TONGVAH", "TONGVAV"
-                result = New Vector3(-3426.098, 946.6072, 0.265534)
-            'Banning
-            Case "BANNING", "RANCHO", "DAVIS", "STAD"
-                result = New Vector3(-71.40706, -2278.731, -1.8116798)
-            'Vespucci Beach
-            Case "BEACH", "LOSPUER", "VCANA", "KOREAT", "CHAMH", "STRAW", "VESP"
-                result = New Vector3(-1455.539, -1582.167, 2.106417)
-            'Procopio Beach
-            Case "BRADP", "PROCOB", "MTGORDO", "ELGORL", "MTCHIL", "BRADT", "SanAnd"
-                result = New Vector3(1530.962, 6669.952, 1.560777)
-            'Del Perro Beach
-            Case "DELBE", "BURTON", "DELPE", "MOVIE", "MORN", "ROCKF", "EAST_V"
-                result = New Vector3(-1964.126, -769.2186, 0.857546)
-            'Cassidy Creek
-            Case "CCREAK", "CANNY"
-                result = New Vector3(-227.2128, 4347.626, 29.81935)
-            'Pacific Bluffs
-            Case "CHIL", "PBLUFF", "RICHM", "golf"
-                result = New Vector3(-2409.3, -361.9779, 0.422128)
-            'Paleto Cove
-            Case "CMSW", "PALCOV", "PALFOR"
-                result = New Vector3(-1594.215, 5242.16, 0.055142)
-            'Cypress Flats
-            Case "EBURO", "CYPRE", "MURRI"
-                result = New Vector3(652.9036, -1845.649, 8.01015)
-            'Elysian Island
-            Case "ELYSIAN", "TERMINA", "ZP_ORT"
-                result = New Vector3(-87.24967, -2758.894, 0.025953)
-            'Tataviam Mountains
-            Case "TATAMO", "JAIL", "LACT", "PALMPOW", "WINDF", "ZQ_UAR", "LDAM", "NOOSE", "MIRR"
-                result = New Vector3(2964.583, 652.6611, 0.759929)
-            'North Chumash
-            Case "MTJOSE", "NCHU"
-                result = New Vector3(-2111.801, 4636.586, -1.9802314)
-            'Paleto Bay
-            Case "PALETO"
-                result = New Vector3(-288.9354, 6621.431, 0.910775)
-            'Palomino Highlands
-            Case "PALHIGH"
-                result = New Vector3(2322.33, -2155.006, 0.389739)
-            Case Else
-                result = PlayerPed.Position
-        End Select
-        Return result
+    Public Enum Nodetype
+        AnyRoad
+        Road
+        Offroad
+        Water
+    End Enum
+
+    Function GenerateSpawnPos(desiredPos As Vector3, roadtype As Nodetype, sidewalk As Boolean) As Vector3
+        Dim finalpos As Vector3 = Vector3.Zero
+
+        Try
+            Dim ForceOffroad As Boolean = False
+
+            Dim outArgA As New OutputArgument()
+            Dim NodeNumber As Integer = 1
+            Dim type As Integer = 0
+
+            If roadtype = Nodetype.AnyRoad Then
+                type = 1
+            End If
+            If roadtype = Nodetype.Road Then
+                type = 0
+            End If
+            If roadtype = Nodetype.Offroad Then
+                type = 1
+                ForceOffroad = True
+            End If
+            If roadtype = Nodetype.Water Then
+                type = 3
+            End If
+
+            Dim NodeID As Integer = [Function].[Call](Of Integer)(Hash.GET_NTH_CLOSEST_VEHICLE_NODE_ID, desiredPos.X, desiredPos.Y, desiredPos.Z, NodeNumber, type,
+            300.0F, 300.0F)
+            If ForceOffroad Then
+                While Not [Function].[Call](Of Boolean)(Hash._GET_IS_SLOW_ROAD_FLAG, NodeID) AndAlso NodeNumber < 500
+                    NodeNumber += 1
+                    NodeID = [Function].[Call](Of Integer)(Hash.GET_NTH_CLOSEST_VEHICLE_NODE_ID, desiredPos.X, desiredPos.Y, desiredPos.Z, NodeNumber, type,
+                    300.0F, 300.0F)
+                End While
+            End If
+            [Function].[Call](Hash.GET_VEHICLE_NODE_POSITION, NodeID, outArgA)
+            finalpos = outArgA.GetResult(Of Vector3)()
+
+            If sidewalk Then
+                finalpos = World.GetNextPositionOnSidewalk(finalpos)
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+
+        Return finalpos
     End Function
 
-    Public Shared Function GetPlayerZoneForHeli(PlayerPed As Ped) As Vector3
+    Public Function GetPlayerZoneForBoat(PlayerPed As Ped) As Vector3
+        Return GenerateSpawnPos(PlayerPed.Position, Nodetype.Water, False)
+    End Function
+
+    Public Function GetPlayerZoneForHeli(PlayerPed As Ped) As Vector3
         Dim ZoneID As String = Native.Function.Call(Of String)(Hash.GET_NAME_OF_ZONE, PlayerPed.Position.X, PlayerPed.Position.Y, PlayerPed.Position.Z)
         Dim result As Vector3
         Select Case ZoneID
@@ -538,7 +494,7 @@ Label_005C:
         Return result
     End Function
 
-    Public Shared Sub CreateFile(vehFileName As String)
+    Public Sub CreateFile(vehFileName As String)
         Select Case My.Settings.CreateFileMethod
             Case 1
                 IO.File.WriteAllText(vehFileName, My.Resources.vehicle)
@@ -552,15 +508,15 @@ Label_005C:
         End Select
     End Sub
 
-    Public Shared Sub DriveTo(ped As Ped, vehicle As Vehicle, target As Vector3, radius As Single, speed As Single, Optional drivingstyle As Integer = 0)
+    Public Sub DriveTo(ped As Ped, vehicle As Vehicle, target As Vector3, radius As Single, speed As Single, Optional drivingstyle As Integer = 0)
         Native.Function.Call(Hash.TASK_VEHICLE_DRIVE_TO_COORD_LONGRANGE, ped.Handle, vehicle.Handle, target.X, target.Y, target.Z, speed, drivingstyle, radius)
     End Sub
 
-    Public Shared Sub SetIntoVehicle(ped As Ped, vehicle As Vehicle, seat As VehicleSeat)
+    Public Sub SetIntoVehicle(ped As Ped, vehicle As Vehicle, seat As VehicleSeat)
         Native.Function.Call(Hash.SET_PED_INTO_VEHICLE, ped, vehicle.Handle, seat)
     End Sub
 
-    Public Shared Function WorldCreateVehicle(model As Model, position As Vector3, Optional heading As Single = 0F) As Vehicle
+    Public Function WorldCreateVehicle(model As Model, position As Vector3, Optional heading As Single = 0F) As Vehicle
         If Not model.IsVehicle OrElse Not model.Request(1000) Then
             Return Nothing
         End If
@@ -569,14 +525,14 @@ Label_005C:
         False, False))
     End Function
 
-    Public Shared Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As Vehicle
+    Public Function CreateVehicle(VehicleModel As String, VehicleHash As Integer, Position As Vector3, Optional Heading As Single = 0) As Vehicle
         Dim Result As Vehicle = Nothing
         If VehicleModel = "" Then
             Dim model = New Model(VehicleHash)
             model.Request(250)
             If model.IsInCdImage AndAlso model.IsValid Then
                 While Not model.IsLoaded
-                    Script.Wait(50)
+                    Script.Wait(0)
                 End While
                 Result = WorldCreateVehicle(model, Position, Heading)
             End If
@@ -586,7 +542,7 @@ Label_005C:
             model.Request(250)
             If model.IsInCdImage AndAlso model.IsValid Then
                 While Not model.IsLoaded
-                    Script.Wait(50)
+                    Script.Wait(0)
                 End While
                 Result = WorldCreateVehicle(model, Position, Heading)
             End If
@@ -595,7 +551,7 @@ Label_005C:
         Return Result
     End Function
 
-    Public Shared Function CreateProp(PropHash As Integer, Position As Vector3, Rotation As Vector3, Optional Heading As Single = 0) As Prop
+    Public Function CreateProp(PropHash As Integer, Position As Vector3, Rotation As Vector3, Optional Heading As Single = 0) As Prop
         Dim Result As Prop = Nothing
         Dim model = New Model(PropHash)
         model.Request(250)
@@ -610,7 +566,7 @@ Label_005C:
         Return Result
     End Function
 
-    Public Shared Function IsInGarageVehicle(PlayerPed As Ped) As Boolean
+    Public Function IsInGarageVehicle(PlayerPed As Ped) As Boolean
         Dim Result As Boolean
         Select Case PlayerPed.CurrentVehicle
             Case TenCarGarage.veh0, TenCarGarage.veh1, TenCarGarage.veh2, TenCarGarage.veh3, TenCarGarage.veh4, TenCarGarage.veh5, TenCarGarage.veh6, TenCarGarage.veh7, TenCarGarage.veh8, TenCarGarage.veh9
@@ -623,20 +579,20 @@ Label_005C:
         Return Result
     End Function
 
-    Public Shared Sub ptfx_triggerOnEntity(ByVal ent As Entity, ByVal sPTFX As String, ByVal sAsset As String, ByVal Optional offset As Vector3 = Nothing, ByVal Optional rot As Vector3 = Nothing, ByVal Optional size As Double = 1)
+    Public Sub ptfx_triggerOnEntity(ByVal ent As Entity, ByVal sPTFX As String, ByVal sAsset As String, ByVal Optional offset As Vector3 = Nothing, ByVal Optional rot As Vector3 = Nothing, ByVal Optional size As Double = 1)
         If (sAsset <> "") Then
             Native.Function.Call(Hash._0x6C38AF3693A69A91, New InputArgument() {sAsset})
         End If
         Native.Function.Call(Hash._0x0D53A3B8DA0809D2, New InputArgument() {sPTFX, ent, offset.X, offset.Y, offset.Z, rot.X, rot.Y, rot.Z, size, 0, 0, 0})
     End Sub
 
-    Public Shared Sub PlayPTFX(Entity As Entity, PTFX As String, Asset As String, Offset As Vector3, Rotation As Vector3)
+    Public Sub PlayPTFX(Entity As Entity, PTFX As String, Asset As String, Offset As Vector3, Rotation As Vector3)
         Native.Function.Call(Hash.REQUEST_NAMED_PTFX_ASSET, Asset)
         Native.Function.Call(Hash._SET_PTFX_ASSET_NEXT_CALL, Asset)
         Native.Function.Call(Hash.START_PARTICLE_FX_NON_LOOPED_ON_ENTITY, PTFX, Entity, Offset.X, Offset.Y, Offset.Z, Rotation.X, Rotation.Y, Rotation.Z, False, False, False)
     End Sub
 
-    Public Shared Sub PlayPTFXLoop(ptfx As String, effectname As String, heading As Single, pitch As Single, offset As Vector3)
+    Public Sub PlayPTFXLoop(ptfx As String, effectname As String, heading As Single, pitch As Single, offset As Vector3)
         If Native.Function.Call(Of Boolean)(Hash.HAS_NAMED_PTFX_ASSET_LOADED, ptfx) Then
             Native.Function.Call(Hash._SET_PTFX_ASSET_NEXT_CALL, ptfx)
             Native.Function.Call(Of Integer)(Hash.START_PARTICLE_FX_NON_LOOPED_AT_COORD, effectname, offset.X, offset.Y, offset.Z, 0, pitch, heading - 90, 1, False, False, False)
@@ -645,13 +601,13 @@ Label_005C:
         End If
     End Sub
 
-    Public Shared Function Decode(String2Decode As String) As String
+    Public Function Decode(String2Decode As String) As String
         Dim decodedBytes As Byte()
         decodedBytes = Convert.FromBase64String(String2Decode)
         Return Encoding.UTF8.GetString(decodedBytes)
     End Function
 
-    Public Shared Sub SoundPlayer(waveFile As String)
+    Public Sub SoundPlayer(waveFile As String)
         Using stream As New WaveStream(IO.File.OpenRead(waveFile))
             stream.Volume = My.Settings.Volume
             Using player As New SoundPlayer(stream)
@@ -660,7 +616,7 @@ Label_005C:
         End Using
     End Sub
 
-    Public Shared Function GetPlayerCurrentRadioStation() As String
+    Public Function GetPlayerCurrentRadioStation() As String
         Dim RadioID As Integer = Native.Function.Call(Of Integer)(Hash.GET_PLAYER_RADIO_STATION_INDEX)
         Return Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, RadioID)
     End Function
@@ -672,7 +628,7 @@ Label_005C:
         Office
     End Enum
 
-    Public Shared Sub RadioPlayer(type As AptType)
+    Public Sub RadioPlayer(type As AptType)
         Select Case type
             Case AptType.OldApartment
                 Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom", True)
@@ -702,7 +658,7 @@ Label_005C:
         'Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, Room, GetPlayerCurrentRadioStation())
     End Sub
 
-    Public Shared Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
+    Public Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
         Dim result As Prop = Nothing
 
         Dim model = New Model(PropModel)
@@ -717,7 +673,7 @@ Label_005C:
         Return result
     End Function
 
-    Public Shared Function MD5Gen(strText As String) As String
+    Public Function MD5Gen(strText As String) As String
         Dim MD5Service As New System.Security.Cryptography.MD5CryptoServiceProvider
         Dim Bytes() As Byte = MD5Service.ComputeHash(System.Text.Encoding.ASCII.GetBytes(strText))
         Dim s As String = Nothing
@@ -735,7 +691,355 @@ Label_005C:
         DECOR_TYPE_TIME
     End Enum
 
-    Public Shared Function DecorIsRegisteredAsType(decorator As String, type As eDecorType) As Boolean
+    Public Function DecorIsRegisteredAsType(decorator As String, type As eDecorType) As Boolean
         Return Native.Function.Call(Of Boolean)(Hash.DECOR_IS_REGISTERED_AS_TYPE, decorator, type)
     End Function
-End Class
+
+    Public Function GetPlayerName() As String
+        Dim Name As String = "Player3"
+        Select Case Game.Player.Character.Model.GetHashCode
+            Case 225514697
+                Name = "Michael"
+            Case -1692214353
+                Name = "Franklin"
+            Case -1686040670
+                Name = "Trevor"
+            Case Else
+                Name = "Player3"
+        End Select
+        Return Name
+    End Function
+
+    Public Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String, EngineRunning As Boolean)
+        Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, _Vehicle, 0)
+        _Vehicle.DirtLevel = 0F
+        _Vehicle.PrimaryColor = ReadCfgValue("PrimaryColor", VehicleCfgFile)
+        _Vehicle.SecondaryColor = ReadCfgValue("SecondaryColor", VehicleCfgFile)
+        _Vehicle.PearlescentColor = ReadCfgValue("PearlescentColor", VehicleCfgFile)
+        If ReadCfgValue("HasCustomPrimaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomPrimaryColor = Drawing.Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorBlue", VehicleCfgFile))
+        If ReadCfgValue("HasCustomSecondaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomSecondaryColor = Drawing.Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorBlue", VehicleCfgFile))
+        _Vehicle.RimColor = ReadCfgValue("RimColor", VehicleCfgFile)
+        If ReadCfgValue("HasNeonLightBack", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Back, True)
+        If ReadCfgValue("HasNeonLightFront", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Front, True)
+        If ReadCfgValue("HasNeonLightLeft", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Left, True)
+        If ReadCfgValue("HasNeonLightRight", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Right, True)
+        _Vehicle.NeonLightsColor = Drawing.Color.FromArgb(ReadCfgValue("NeonColorRed", VehicleCfgFile), ReadCfgValue("NeonColorGreen", VehicleCfgFile), ReadCfgValue("NeonColorBlue", VehicleCfgFile))
+        _Vehicle.WheelType = ReadCfgValue("WheelType", VehicleCfgFile)
+        _Vehicle.Livery = ReadCfgValue("Livery", VehicleCfgFile)
+        Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, _Vehicle, CInt(ReadCfgValue("PlateType", VehicleCfgFile)))
+        _Vehicle.NumberPlate = ReadCfgValue("PlateNumber", VehicleCfgFile)
+        _Vehicle.WindowTint = ReadCfgValue("WindowTint", VehicleCfgFile)
+        _Vehicle.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", VehicleCfgFile), True)
+        If ReadCfgValue("FrontTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), False)
+        If ReadCfgValue("BackTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), False)
+        _Vehicle.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
+        _Vehicle.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", VehicleCfgFile), True)
+        _Vehicle.SetMod(25, ReadCfgValue("TwentyFive", VehicleCfgFile), True)
+        _Vehicle.SetMod(26, ReadCfgValue("TwentySix", VehicleCfgFile), True)
+        _Vehicle.SetMod(27, ReadCfgValue("TwentySeven", VehicleCfgFile), True)
+        _Vehicle.SetMod(28, ReadCfgValue("TwentyEight", VehicleCfgFile), True)
+        _Vehicle.SetMod(29, ReadCfgValue("TwentyNine", VehicleCfgFile), True)
+        _Vehicle.SetMod(30, ReadCfgValue("ThirtyZero", VehicleCfgFile), True)
+        _Vehicle.SetMod(31, ReadCfgValue("ThirtyOne", VehicleCfgFile), True)
+        _Vehicle.SetMod(32, ReadCfgValue("ThirtyTwo", VehicleCfgFile), True)
+        _Vehicle.SetMod(33, ReadCfgValue("ThirtyThree", VehicleCfgFile), True)
+        _Vehicle.SetMod(34, ReadCfgValue("ThirtyFour", VehicleCfgFile), True)
+        _Vehicle.SetMod(35, ReadCfgValue("ThirtyFive", VehicleCfgFile), True)
+        _Vehicle.SetMod(36, ReadCfgValue("ThirtySix", VehicleCfgFile), True)
+        _Vehicle.SetMod(37, ReadCfgValue("ThirtySeven", VehicleCfgFile), True)
+        _Vehicle.SetMod(38, ReadCfgValue("ThirtyEight", VehicleCfgFile), True)
+        _Vehicle.SetMod(39, ReadCfgValue("ThirtyNine", VehicleCfgFile), True)
+        _Vehicle.SetMod(40, ReadCfgValue("ForthyZero", VehicleCfgFile), True)
+        _Vehicle.SetMod(41, ReadCfgValue("ForthyOne", VehicleCfgFile), True)
+        _Vehicle.SetMod(42, ReadCfgValue("ForthyTwo", VehicleCfgFile), True)
+        _Vehicle.SetMod(43, ReadCfgValue("ForthyThree", VehicleCfgFile), True)
+        _Vehicle.SetMod(44, ReadCfgValue("ForthyFour", VehicleCfgFile), True)
+        _Vehicle.SetMod(45, ReadCfgValue("ForthyFive", VehicleCfgFile), True)
+        _Vehicle.SetMod(46, ReadCfgValue("ForthySix", VehicleCfgFile), True)
+        _Vehicle.SetMod(47, ReadCfgValue("ForthySeven", VehicleCfgFile), True)
+        _Vehicle.SetMod(48, ReadCfgValue("ForthyEight", VehicleCfgFile), True)
+        If ReadCfgValue("XenonHeadlights", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+        If ReadCfgValue("Turbo", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.Turbo, True)
+        _Vehicle.ToggleMod(VehicleToggleMod.TireSmoke, True)
+        _Vehicle.TireSmokeColor = Drawing.Color.FromArgb(ReadCfgValue("TyreSmokeColorRed", VehicleCfgFile), ReadCfgValue("TyreSmokeColorGreen", VehicleCfgFile), ReadCfgValue("TyreSmokeColorBlue", VehicleCfgFile))
+        _Vehicle.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", VehicleCfgFile), True)
+        If ReadCfgValue("BulletproofTyres", VehicleCfgFile) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, _Vehicle, False)
+        'Added on v1.3.4
+        'Fixed on v1.3.4.2
+        'Updated on v1.9.2
+        _Vehicle.DashboardColor = ReadCfgValue("DashboardColor", VehicleCfgFile)
+        _Vehicle.TrimColor = ReadCfgValue("TrimColor", VehicleCfgFile)
+        'End of Added on v1.3.4
+        _Vehicle.RoofState = CInt(ReadCfgValue("VehicleRoof", VehicleCfgFile))
+        'Added on v1.3.3
+        If ReadCfgValue("ExtraOne", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, -1)
+        If ReadCfgValue("ExtraTwo", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 2, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 2, -1)
+        If ReadCfgValue("ExtraThree", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 3, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 3, -1)
+        If ReadCfgValue("ExtraFour", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 4, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 4, -1)
+        If ReadCfgValue("ExtraFive", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 5, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 5, -1)
+        If ReadCfgValue("ExtraSix", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 6, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 6, -1)
+        If ReadCfgValue("ExtraSeven", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, -1)
+        If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
+        If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
+        If EngineRunning = True Then _Vehicle.EngineRunning = True
+        'Added on v1.9.2
+        If ReadCfgValue("ExtraTen", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 10, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 10, -1)
+        SetTornadoCustomRoof(_Vehicle, ReadCfgValue("CustomRoof", VehicleCfgFile))
+        'Make sure it is set to correct Engine
+        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
+    End Sub
+
+    Public Sub SetModKit(_Vehicle As Vehicle, VehicleCfgFile As String)
+        Native.Function.Call(Hash.SET_VEHICLE_MOD_KIT, _Vehicle, 0)
+        _Vehicle.DirtLevel = 0F
+        _Vehicle.PrimaryColor = CInt(ReadCfgValue("PrimaryColor", VehicleCfgFile))
+        _Vehicle.SecondaryColor = CInt(ReadCfgValue("SecondaryColor", VehicleCfgFile))
+        _Vehicle.PearlescentColor = CInt(ReadCfgValue("PearlescentColor", VehicleCfgFile))
+        If ReadCfgValue("HasCustomPrimaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomPrimaryColor = Color.FromArgb(ReadCfgValue("CustomPrimaryColorRed", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomPrimaryColorBlue", VehicleCfgFile))
+        If ReadCfgValue("HasCustomSecondaryColor", VehicleCfgFile) = "True" Then _Vehicle.CustomSecondaryColor = Color.FromArgb(ReadCfgValue("CustomSecondaryColorRed", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorGreen", VehicleCfgFile), ReadCfgValue("CustomSecondaryColorBlue", VehicleCfgFile))
+        _Vehicle.RimColor = CInt(ReadCfgValue("RimColor", VehicleCfgFile))
+        If ReadCfgValue("HasNeonLightBack", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Back, True)
+        If ReadCfgValue("HasNeonLightFront", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Front, True)
+        If ReadCfgValue("HasNeonLightLeft", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Left, True)
+        If ReadCfgValue("HasNeonLightRight", VehicleCfgFile) = "True" Then _Vehicle.SetNeonLightsOn(VehicleNeonLight.Right, True)
+        _Vehicle.NeonLightsColor = Color.FromArgb(ReadCfgValue("NeonColorRed", VehicleCfgFile), ReadCfgValue("NeonColorGreen", VehicleCfgFile), ReadCfgValue("NeonColorBlue", VehicleCfgFile))
+        _Vehicle.WheelType = ReadCfgValue("WheelType", VehicleCfgFile)
+        _Vehicle.Livery = ReadCfgValue("Livery", VehicleCfgFile)
+        Native.Function.Call(Hash.SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX, _Vehicle, CInt(ReadCfgValue("PlateType", VehicleCfgFile)))
+        _Vehicle.NumberPlate = ReadCfgValue("PlateNumber", VehicleCfgFile)
+        _Vehicle.WindowTint = ReadCfgValue("WindowTint", VehicleCfgFile)
+        _Vehicle.SetMod(VehicleMod.Spoilers, ReadCfgValue("Spoiler", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.FrontBumper, ReadCfgValue("FrontBumper", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.RearBumper, ReadCfgValue("RearBumper", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.SideSkirt, ReadCfgValue("SideSkirt", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Frame, ReadCfgValue("Frame", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Grille, ReadCfgValue("Grille", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Hood, ReadCfgValue("Hood", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Fender, ReadCfgValue("Fender", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.RightFender, ReadCfgValue("RightFender", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Roof, ReadCfgValue("Roof", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Exhaust, ReadCfgValue("Exhaust", VehicleCfgFile), True)
+        If ReadCfgValue("FrontTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.FrontWheels, ReadCfgValue("FrontWheels", VehicleCfgFile), False)
+        If ReadCfgValue("BackTireVariation", VehicleCfgFile) = "True" Then _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), True) Else _Vehicle.SetMod(VehicleMod.BackWheels, ReadCfgValue("BackWheels", VehicleCfgFile), False)
+        _Vehicle.SetMod(VehicleMod.Suspension, ReadCfgValue("Suspension", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Engine, ReadCfgValue("Engine", VehicleCfgFile), False)
+        _Vehicle.SetMod(VehicleMod.Brakes, ReadCfgValue("Brakes", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Transmission, ReadCfgValue("Transmission", VehicleCfgFile), True)
+        _Vehicle.SetMod(VehicleMod.Armor, ReadCfgValue("Armor", VehicleCfgFile), True)
+        _Vehicle.SetMod(25, ReadCfgValue("TwentyFive", VehicleCfgFile), True)
+        _Vehicle.SetMod(26, ReadCfgValue("TwentySix", VehicleCfgFile), True)
+        _Vehicle.SetMod(27, ReadCfgValue("TwentySeven", VehicleCfgFile), True)
+        _Vehicle.SetMod(28, ReadCfgValue("TwentyEight", VehicleCfgFile), True)
+        _Vehicle.SetMod(29, ReadCfgValue("TwentyNine", VehicleCfgFile), True)
+        _Vehicle.SetMod(30, ReadCfgValue("ThirtyZero", VehicleCfgFile), True)
+        _Vehicle.SetMod(31, ReadCfgValue("ThirtyOne", VehicleCfgFile), True)
+        _Vehicle.SetMod(32, ReadCfgValue("ThirtyTwo", VehicleCfgFile), True)
+        _Vehicle.SetMod(33, ReadCfgValue("ThirtyThree", VehicleCfgFile), True)
+        _Vehicle.SetMod(34, ReadCfgValue("ThirtyFour", VehicleCfgFile), True)
+        _Vehicle.SetMod(35, ReadCfgValue("ThirtyFive", VehicleCfgFile), True)
+        _Vehicle.SetMod(36, ReadCfgValue("ThirtySix", VehicleCfgFile), True)
+        _Vehicle.SetMod(37, ReadCfgValue("ThirtySeven", VehicleCfgFile), True)
+        _Vehicle.SetMod(38, ReadCfgValue("ThirtyEight", VehicleCfgFile), True)
+        _Vehicle.SetMod(39, ReadCfgValue("ThirtyNine", VehicleCfgFile), True)
+        _Vehicle.SetMod(40, ReadCfgValue("ForthyZero", VehicleCfgFile), True)
+        _Vehicle.SetMod(41, ReadCfgValue("ForthyOne", VehicleCfgFile), True)
+        _Vehicle.SetMod(42, ReadCfgValue("ForthyTwo", VehicleCfgFile), True)
+        _Vehicle.SetMod(43, ReadCfgValue("ForthyThree", VehicleCfgFile), True)
+        _Vehicle.SetMod(44, ReadCfgValue("ForthyFour", VehicleCfgFile), True)
+        _Vehicle.SetMod(45, ReadCfgValue("ForthyFive", VehicleCfgFile), True)
+        _Vehicle.SetMod(46, ReadCfgValue("ForthySix", VehicleCfgFile), True)
+        _Vehicle.SetMod(47, ReadCfgValue("ForthySeven", VehicleCfgFile), True)
+        _Vehicle.SetMod(48, ReadCfgValue("ForthyEight", VehicleCfgFile), True)
+        If ReadCfgValue("XenonHeadlights", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.XenonHeadlights, True)
+        If ReadCfgValue("Turbo", VehicleCfgFile) = "True" Then _Vehicle.ToggleMod(VehicleToggleMod.Turbo, True)
+        _Vehicle.ToggleMod(VehicleToggleMod.TireSmoke, True)
+        _Vehicle.TireSmokeColor = Color.FromArgb(CInt(ReadCfgValue("TyreSmokeColorRed", VehicleCfgFile)), CInt(ReadCfgValue("TyreSmokeColorGreen", VehicleCfgFile)), CInt(ReadCfgValue("TyreSmokeColorBlue", VehicleCfgFile)))
+        _Vehicle.SetMod(VehicleMod.Horns, ReadCfgValue("Horn", VehicleCfgFile), True)
+        If ReadCfgValue("BulletproofTyres", VehicleCfgFile) = "False" Then Native.Function.Call(Hash.SET_VEHICLE_TYRES_CAN_BURST, _Vehicle, False)
+        'Added on v1.3.4
+        'Fixed on v1.3.4.2
+        'Updated on v1.9.2
+        _Vehicle.DashboardColor = ReadCfgValue("DashboardColor", VehicleCfgFile)
+        _Vehicle.TrimColor = ReadCfgValue("TrimColor", VehicleCfgFile)
+        'End of Added on v1.3.4
+        _Vehicle.IsPersistent = True
+        _Vehicle.RoofState = CInt(ReadCfgValue("VehicleRoof", VehicleCfgFile))
+        'Added on v1.3.3
+        If ReadCfgValue("ExtraOne", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 1, -1)
+        If ReadCfgValue("ExtraTwo", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 2, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 2, -1)
+        If ReadCfgValue("ExtraThree", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 3, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 3, -1)
+        If ReadCfgValue("ExtraFour", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 4, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 4, -1)
+        If ReadCfgValue("ExtraFive", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 5, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 5, -1)
+        If ReadCfgValue("ExtraSix", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 6, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 6, -1)
+        If ReadCfgValue("ExtraSeven", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 7, -1)
+        If ReadCfgValue("ExtraEight", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 8, -1)
+        If ReadCfgValue("ExtraNine", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 9, -1)
+        'Added on v1.9.2
+        If ReadCfgValue("ExtraTen", VehicleCfgFile) = "True" Then Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 10, 0) Else Native.Function.Call(Hash.SET_VEHICLE_EXTRA, _Vehicle, 10, -1)
+        SetTornadoCustomRoof(_Vehicle, ReadCfgValue("CustomRoof", VehicleCfgFile))
+    End Sub
+
+    Public Function GetTornadoCustomRoof(veh As Vehicle) As Integer
+        Return Native.Function.Call(Of Integer)(DirectCast(&H60190048C0764A26UL, Hash), veh.Handle)
+    End Function
+
+    Public Sub SetTornadoCustomRoof(veh As Vehicle, liv As Integer)
+        Native.Function.Call(DirectCast(&HA6D3A8750DC73270UL, Hash), veh.Handle, liv)
+    End Sub
+
+    Public Sub Translate()
+        Website.BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
+        Website.DockTease = ReadCfgValue("DockTease", langFile)
+        Website.LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
+        Website.ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
+        Website.PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
+        Website.SouthernSA = ReadCfgValue("SouthernSA", langFile)
+        Website.WarstockCache = ReadCfgValue("WarstockCache", langFile)
+        Website.YourNew = ReadCfgValue("YourNew", langFile)
+        Website.IsConfirm = ReadCfgValue("IsConfirm", langFile)
+        Website.InsFundVehicle = ReadCfgValue("InsFundVehicle", langFile)
+        ExitApt = ReadCfgValue("ExitApt", langFile)
+        SellApt = ReadCfgValue("SellApt", langFile)
+        EnterGarage = ReadCfgValue("EnterGarage", langFile)
+        AptOptions = ReadCfgValue("AptOptions", langFile)
+        Garage = ReadCfgValue("Garage", langFile)
+        GrgOptions = ReadCfgValue("GrgOptions", langFile)
+        GrgRemove = ReadCfgValue("GrgRemove", langFile)
+        GrgRemoveAndDrive = ReadCfgValue("GrgRemoveAndDrive", langFile)
+        GrgMove = ReadCfgValue("GrgMove", langFile)
+        GrgSell = ReadCfgValue("GrgSell", langFile)
+        GrgSelectVeh = ReadCfgValue("GrgSelectVeh", langFile)
+        GrgTooHot = ReadCfgValue("GrgTooHot", langFile)
+        GrgPlate = ReadCfgValue("GrgPlate", langFile)
+        GrgRename = ReadCfgValue("GrgRename", langFile)
+        GrgTransfer = ReadCfgValue("GrgTransfer", langFile)
+        _Mechanic = ReadCfgValue("_Mechanic", langFile)
+        _Pegasus = ReadCfgValue("_Pegasus", langFile)
+        PegasusDeliver = ReadCfgValue("PegasusDeliver", langFile)
+        PegasusDelete = ReadCfgValue("PegasusDelete", langFile)
+        _Phone = ReadCfgValue("_Phone", langFile)
+        ChooseApt = ReadCfgValue("ChooseApt", langFile)
+        ChooseVeh = ReadCfgValue("ChooseVeh", langFile)
+        ChooseVehDesc = ReadCfgValue("ChooseVehDesc", langFile)
+        ReturnVeh = ReadCfgValue("ReturnVeh", langFile)
+        AptStyle = ReadCfgValue("AptStyle", langFile)
+        MechanicBill = ReadCfgValue("MechanicBill", langFile)
+        GrgFull = ReadCfgValue("GrgFull", langFile)
+        EnterElevator = ReadCfgValue("EnterElevator", langFile)
+        ExitGarage = ReadCfgValue("ExitGarage", langFile)
+        ManageGarage = ReadCfgValue("ManageGarage", langFile)
+        Maze = ReadCfgValue("Maze", langFile)
+        Insurance1 = ReadCfgValue("InsuranceLineOne", langFile)
+        Insurance2 = ReadCfgValue("InsuranceLineTwo", langFile)
+        Insurance3 = ReadCfgValue("InsuranceLineThree", langFile)
+        Insurance4 = ReadCfgValue("InsuranceLineFour", langFile)
+        MorsMutual = ReadCfgValue("MorsMutual", langFile)
+        Fleeca = ReadCfgValue("Fleeca", langFile)
+        BOL = ReadCfgValue("BOL", langFile)
+        ForSale = ReadCfgValue("ForSale", langFile)
+        PropPurchased = ReadCfgValue("PropPurchased", langFile)
+        InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
+        EnterApartment = ReadCfgValue("EnterApartment", langFile)
+        SaveGame = ReadCfgValue("SaveGame", langFile)
+        ExitApartment = ReadCfgValue("ExitApartment", langFile)
+        ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
+        _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
+        CannotStore = ReadCfgValue("CannotStore", langFile)
+        Brain._TVOn = ReadCfgValue("TVOn", langFile)
+        Brain._TVOff = ReadCfgValue("TVOff", langFile)
+        Brain._TVChannel = Brain._TVOff & "~n~" & ReadCfgValue("TVChannel", langFile)
+        Brain._Bong = ReadCfgValue("Bong", langFile)
+        Brain._Whiskey = ReadCfgValue("Whiskey", langFile)
+        Brain._Wine = ReadCfgValue("Wine", langFile)
+        Brain._Wheat = ReadCfgValue("Wheat", langFile)
+        Brain._Shower = ReadCfgValue("Shower", langFile)
+        Brain._RadioSwitchStation = ReadCfgValue("Radio", langFile)
+        Wardrobe.__Clothing = ReadCfgValue("__Clothing", langFile)
+        Wardrobe.__Outfits = ReadCfgValue("__Outfits", langFile)
+        Wardrobe._Outfits.Text = ReadCfgValue("_Outfits", langFile)
+        Wardrobe.__FullSuit = ReadCfgValue("__FullSuit", langFile)
+        Wardrobe._FullSuits.Text = ReadCfgValue("_FullSuits", langFile)
+        Wardrobe.__SuitJacket = ReadCfgValue("__SuitJacket", langFile)
+        Wardrobe._SuitJackets.Text = ReadCfgValue("_SuitJackets", langFile)
+        Wardrobe.__SuitPants = ReadCfgValue("__SuitPants", langFile)
+        Wardrobe._SuitPants.Text = ReadCfgValue("_SuitPants", langFile)
+        Wardrobe.__Glasses = ReadCfgValue("__Glasses", langFile)
+        Wardrobe._Glasses.Text = ReadCfgValue("_Glasses", langFile)
+        Wardrobe._Glass.Text = ReadCfgValue("_Glass", langFile)
+        Wardrobe.__SuitVest = ReadCfgValue("__SuitVest", langFile)
+        Wardrobe._SuitVests.Text = ReadCfgValue("_SuitVests", langFile)
+        Wardrobe.__Suits = ReadCfgValue("__Suits", langFile)
+        Wardrobe._Suits.Text = ReadCfgValue("_Suits", langFile)
+        Wardrobe.__SportsShades = ReadCfgValue("__SportsShades", langFile)
+        Wardrobe._SportsShades.Text = ReadCfgValue("_SportsShades", langFile)
+        Wardrobe.__StreetShades = ReadCfgValue("__StreetShades", langFile)
+        Wardrobe._StreetShades.Text = ReadCfgValue("_StreetShades", langFile)
+        Wardrobe.__Hoodies = ReadCfgValue("__Hoodies", langFile)
+        Wardrobe._Hoodies.Text = ReadCfgValue("_Hoodies", langFile)
+        Wardrobe.__Jackets = ReadCfgValue("__Jackets", langFile)
+        Wardrobe._Jackets.Text = ReadCfgValue("_Jackets", langFile)
+        Wardrobe._CasualJacketJackets.Text = ReadCfgValue("_CasualJacketJackets", langFile)
+        Wardrobe.__Pants = ReadCfgValue("__Pants", langFile)
+        Wardrobe._Pants.Text = ReadCfgValue("_Pants", langFile)
+        Wardrobe.__PoloShirts = ReadCfgValue("__PoloShirts", langFile)
+        Wardrobe._PoloShirt.Text = ReadCfgValue("_PoloShirt", langFile)
+        Wardrobe.__Shoes = ReadCfgValue("__Shoes", langFile)
+        Wardrobe._Shoes.Text = ReadCfgValue("_Shoes", langFile)
+        Wardrobe.__Shirts = ReadCfgValue("__Shirts", langFile)
+        Wardrobe._Shirt.Text = ReadCfgValue("_Shirt", langFile)
+        Wardrobe._CasualJacketShirts.Text = ReadCfgValue("_CasualJacketShirts", langFile)
+        Wardrobe.__TShirts = ReadCfgValue("__TShirts", langFile)
+        Wardrobe._TShirt.Text = ReadCfgValue("_TShirt", langFile)
+        Wardrobe._CasualJacketTShirts.Text = ReadCfgValue("_CasualJacketTShirts", langFile)
+        Wardrobe.__Shorts = ReadCfgValue("__Shorts", langFile)
+        Wardrobe._Shorts.Text = ReadCfgValue("_Shorts", langFile)
+        Wardrobe.__TankTops = ReadCfgValue("__TankTops", langFile)
+        Wardrobe._TankTops.Text = ReadCfgValue("_TankTops", langFile)
+        Wardrobe.__Tops = ReadCfgValue("__Tops", langFile)
+        Wardrobe._Tops.Text = ReadCfgValue("_Tops", langFile)
+        Wardrobe.__SuitJacketbuttoned = ReadCfgValue("__SuitJacketbuttoned", langFile)
+        Wardrobe._SuitJacketsButtoned.Text = ReadCfgValue("_SuitJacketsButtoned", langFile)
+        Wardrobe.__Ties = ReadCfgValue("__Ties", langFile)
+        Wardrobe._SuitTies.Text = ReadCfgValue("_SuitTies", langFile)
+        Wardrobe.__Earrings = ReadCfgValue("__Earrings", langFile)
+        Wardrobe._Earrings.Text = ReadCfgValue("_Earrings", langFile)
+        Wardrobe.__Hats = ReadCfgValue("__Hats", langFile)
+        Wardrobe._Hats.Text = ReadCfgValue("_Hats", langFile)
+        Wardrobe._HatsTrevor.Text = ReadCfgValue("_HatsTrevor", langFile)
+        Wardrobe.__CapsForward = ReadCfgValue("__CapsForward", langFile)
+        Wardrobe._CapsForward.Text = ReadCfgValue("_CapsForward", langFile)
+        Wardrobe.__CapsBackward = ReadCfgValue("__CapsBackward", langFile)
+        Wardrobe._CapsBackward.Text = ReadCfgValue("_CapsBackward", langFile)
+        Wardrobe.__SmartShoes = ReadCfgValue("__SmartShoes", langFile)
+        Wardrobe._SmartShoes.Text = ReadCfgValue("_SmartShoes", langFile)
+        Wardrobe.__Vests = ReadCfgValue("__Vests", langFile)
+        Wardrobe._Vests.Text = ReadCfgValue("_Vests", langFile)
+        Wardrobe.__OpenShirts = ReadCfgValue("__OpenShirts", langFile)
+        Wardrobe._OpenShirts.Text = ReadCfgValue("_OpenShirts", langFile)
+        Wardrobe.__CasualJackets = ReadCfgValue("__CasualJackets", langFile)
+        Wardrobe._CasualJackets.Text = ReadCfgValue("_CasualJackets", langFile)
+        Wardrobe._Chains.Text = ReadCfgValue("_Chains", langFile)
+        Wardrobe.__Chains = ReadCfgValue("__Chains", langFile)
+        ModernStyle = ReadCfgValue("ModernStyle", langFile)
+        MoodyStyle = ReadCfgValue("MoodyStyle", langFile)
+        VibrantStyle = ReadCfgValue("VibrantStyle", langFile)
+        SharpStyle = ReadCfgValue("SharpStyle", langFile)
+        MonochromeStyle = ReadCfgValue("MonochromeStyle", langFile)
+        SeductiveStyle = ReadCfgValue("SeductiveStyle", langFile)
+        RegalStyle = ReadCfgValue("RegalStyle", langFile)
+        AquaStyle = ReadCfgValue("AquaStyle", langFile)
+    End Sub
+End Module

@@ -12,8 +12,6 @@ Public Class SinglePlayerApartment
     Public Shared playerPed As Ped
     Public Shared playerInterior As Integer
     Public Shared playerCash As Integer
-    Public Shared playerName As String
-    Public Shared playerHash As String
     Public Shared saveFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\MySave.cfg"
     Public Shared settingFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\setting.cfg"
     Public Shared langFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Languages\" & Game.Language.ToString & ".cfg"
@@ -25,7 +23,7 @@ Public Class SinglePlayerApartment
     'Translate
     Public Shared ExitApt, SellApt, EnterGarage, AptOptions, Garage, GrgOptions, GrgRemove, GrgRemoveAndDrive, GrgMove, GrgSell, GrgSelectVeh, GrgTooHot, GrgPlate, GrgRename, GrgTransfer, _Mechanic, _Pegasus, ChooseApt As String
     Public Shared ModernStyle, MoodyStyle, VibrantStyle, SharpStyle, MonochromeStyle, SeductiveStyle, RegalStyle, AquaStyle, ChooseVeh, ChooseVehDesc, ReturnVeh, AptStyle, _Phone, PegasusDeliver, PegasusDelete, CannotStore As String
-    Public Shared GrgFull, Reach10, MechanicBill, EnterElevator, ExitGarage, ManageGarage, Maze, Fleeca, BOL, ForSale, PropPurchased, InsFundApartment, EnterApartment, SaveGame, ExitApartment, ChangeClothes, _EnterGarage As String
+    Public Shared GrgFull, MechanicBill, EnterElevator, ExitGarage, ManageGarage, Maze, Fleeca, BOL, ForSale, PropPurchased, InsFundApartment, EnterApartment, SaveGame, ExitApartment, ChangeClothes, _EnterGarage As String
     Public Shared Insurance1, Insurance2, Insurance3, Insurance4, MorsMutual As String
 
     Private teleported As Boolean = False
@@ -37,19 +35,7 @@ Public Class SinglePlayerApartment
         Try
             player = Game.Player
             playerPed = Game.Player.Character
-            playerHash = player.Character.Model.GetHashCode().ToString
-            If playerHash = "225514697" Then
-                playerName = "Michael"
-            ElseIf playerHash = "-1692214353" Then
-                playerName = "Franklin"
-            ElseIf playerHash = "-1686040670" Then
-                playerName = "Trevor"
-            ElseIf playerHash = "1885233650" Or "-1667301416" Then
-                playerName = "Player3"
-            Else
-                playerName = "Player3" 'None
-            End If
-            If playerName = "Player3" Then
+            If GetPlayerName() = "Player3" Then
                 playerCash = 1000000000
             Else
                 playerCash = player.Money
@@ -62,65 +48,7 @@ Public Class SinglePlayerApartment
             trevorPubSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(96.154197692871, -1290.7312011719, 29.266660690308))
             floydSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-1155.31, -1518.57, 10.63135))
 
-            'New Language
-            Website.BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
-            Website.DockTease = ReadCfgValue("DockTease", langFile)
-            Website.LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
-            Website.ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
-            Website.PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
-            Website.SouthernSA = ReadCfgValue("SouthernSA", langFile)
-            Website.WarstockCache = ReadCfgValue("WarstockCache", langFile)
-            ExitApt = ReadCfgValue("ExitApt", langFile)
-            SellApt = ReadCfgValue("SellApt", langFile)
-            EnterGarage = ReadCfgValue("EnterGarage", langFile)
-            AptOptions = ReadCfgValue("AptOptions", langFile)
-            Garage = ReadCfgValue("Garage", langFile)
-            GrgOptions = ReadCfgValue("GrgOptions", langFile)
-            GrgRemove = ReadCfgValue("GrgRemove", langFile)
-            GrgRemoveAndDrive = ReadCfgValue("GrgRemoveAndDrive", langFile)
-            GrgMove = ReadCfgValue("GrgMove", langFile)
-            GrgSell = ReadCfgValue("GrgSell", langFile)
-            GrgSelectVeh = ReadCfgValue("GrgSelectVeh", langFile)
-            GrgTooHot = ReadCfgValue("GrgTooHot", langFile)
-            GrgPlate = ReadCfgValue("GrgPlate", langFile)
-            GrgRename = ReadCfgValue("GrgRename", langFile)
-            GrgTransfer = ReadCfgValue("GrgTransfer", langFile)
-            _Mechanic = ReadCfgValue("_Mechanic", langFile)
-            _Pegasus = ReadCfgValue("_Pegasus", langFile)
-            PegasusDeliver = ReadCfgValue("PegasusDeliver", langFile)
-            PegasusDelete = ReadCfgValue("PegasusDelete", langFile)
-            _Phone = ReadCfgValue("_Phone", langFile)
-            ChooseApt = ReadCfgValue("ChooseApt", langFile)
-            ChooseVeh = ReadCfgValue("ChooseVeh", langFile)
-            ChooseVehDesc = ReadCfgValue("ChooseVehDesc", langFile)
-            ReturnVeh = ReadCfgValue("ReturnVeh", langFile)
-            AptStyle = ReadCfgValue("AptStyle", langFile)
-            Reach10 = ReadCfgValue("Reach10", langFile)
-            MechanicBill = ReadCfgValue("MechanicBill", langFile)
-            GrgFull = ReadCfgValue("GrgFull", langFile)
-            EnterElevator = ReadCfgValue("EnterElevator", langFile)
-            ExitGarage = ReadCfgValue("ExitGarage", langFile)
-            ManageGarage = ReadCfgValue("ManageGarage", langFile)
-            Maze = ReadCfgValue("Maze", langFile)
-            Insurance1 = ReadCfgValue("InsuranceLineOne", langFile)
-            Insurance2 = ReadCfgValue("InsuranceLineTwo", langFile)
-            Insurance3 = ReadCfgValue("InsuranceLineThree", langFile)
-            Insurance4 = ReadCfgValue("InsuranceLineFour", langFile)
-            MorsMutual = ReadCfgValue("MorsMutual", langFile)
-            Fleeca = ReadCfgValue("Fleeca", langFile)
-            BOL = ReadCfgValue("BOL", langFile)
-            ForSale = ReadCfgValue("ForSale", langFile)
-            PropPurchased = ReadCfgValue("PropPurchased", langFile)
-            InsFundApartment = ReadCfgValue("InsFundApartment", langFile)
-            EnterApartment = ReadCfgValue("EnterApartment", langFile)
-            SaveGame = ReadCfgValue("SaveGame", langFile)
-            ExitApartment = ReadCfgValue("ExitApartment", langFile)
-            ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
-            _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
-            CannotStore = ReadCfgValue("CannotStore", langFile)
-            'End Language
-
-            AddHandler Tick, AddressOf OnTick
+            Translate()
 
             LoadSettingFromCFG()
             If My.Settings.AlwaysEnableMPMaps = True Then LoadMPDLCMap()
@@ -153,25 +81,6 @@ Public Class SinglePlayerApartment
         End While
         Native.Function.Call(Hash._DISPLAY_HELP_TEXT_FROM_STRING_LABEL, 0, 0, 1, Shape)
     End Sub
-
-    'Public Shared Sub DisplayHelpTextThisFrame(ByVal [text] As String, Optional Shape As Integer = -1)
-    '    Try
-    '        Dim arguments As InputArgument() = New InputArgument() {"STRING"} 'STRING
-    '        Native.Function.Call(Hash._SET_TEXT_COMPONENT_FORMAT, arguments)
-    '        Dim argumentArray2 As InputArgument() = New InputArgument() {[text]}
-    '        Native.Function.Call(Hash._0x6C188BE134E074AA, argumentArray2)
-    '        'Const maxStringLength As Integer = 99
-    '        'Dim i As Integer = 0
-    '        'While i < text.Length
-    '        '    Native.Function.Call(Hash._0x6C188BE134E074AA, text.Substring(i, System.Math.Min(maxStringLength, text.Length)))
-    '        '    i += maxStringLength
-    '        'End While
-    '        Dim argumentArray3 As InputArgument() = New InputArgument() {0, 0, 1, Shape}
-    '        Native.Function.Call(Hash._DISPLAY_HELP_TEXT_FROM_STRING_LABEL, argumentArray3)
-    '    Catch ex As Exception
-    '        logger.Log(ex.Message & " " & ex.StackTrace)
-    '    End Try
-    'End Sub
 
     Public Shared Sub TimeLapse(ByVal SleepHour As Integer)
         Try
@@ -380,22 +289,22 @@ Public Class SinglePlayerApartment
 
     Public Shared Sub SavePosition()
         Try
-            If playerName = "Michael" Then
+            If GetPlayerName() = "Michael" Then
                 WriteCfgValue("MlastInterior", playerMap, saveFile)
                 WriteCfgValue("MlastPosX", playerPed.Position.X.ToString, saveFile)
                 WriteCfgValue("MlastPosY", playerPed.Position.Y.ToString, saveFile)
                 WriteCfgValue("MlastPosZ", playerPed.Position.Z.ToString, saveFile)
-            ElseIf playerName = "Franklin" Then
+            ElseIf GetPlayerName() = "Franklin" Then
                 WriteCfgValue("FlastInterior", playerMap, saveFile)
                 WriteCfgValue("FlastPosX", playerPed.Position.X.ToString, saveFile)
                 WriteCfgValue("FlastPosY", playerPed.Position.Y.ToString, saveFile)
                 WriteCfgValue("FlastPosZ", playerPed.Position.Z.ToString, saveFile)
-            ElseIf playerName = "Trevor" Then
+            ElseIf GetPlayerName() = "Trevor" Then
                 WriteCfgValue("TlastInterior", playerMap, saveFile)
                 WriteCfgValue("TlastPosX", playerPed.Position.X.ToString, saveFile)
                 WriteCfgValue("TlastPosY", playerPed.Position.Y.ToString, saveFile)
                 WriteCfgValue("TlastPosZ", playerPed.Position.Z.ToString, saveFile)
-            ElseIf playerName = "Player3" Then
+            ElseIf GetPlayerName() = "Player3" Then
                 WriteCfgValue("3lastInterior", playerMap, saveFile)
                 WriteCfgValue("3lastPosX", playerPed.Position.X.ToString, saveFile)
                 WriteCfgValue("3lastPosY", playerPed.Position.Y.ToString, saveFile)
@@ -408,13 +317,13 @@ Public Class SinglePlayerApartment
 
     Public Shared Sub SavePosition2()
         Try
-            If playerName = "Michael" Then
+            If GetPlayerName() = "Michael" Then
                 WriteCfgValue("MlastInterior", "None", saveFile)
-            ElseIf playerName = "Franklin" Then
+            ElseIf GetPlayerName() = "Franklin" Then
                 WriteCfgValue("FlastInterior", "None", saveFile)
-            ElseIf playerName = "Trevor" Then
+            ElseIf GetPlayerName() = "Trevor" Then
                 WriteCfgValue("TlastInterior", "None", saveFile)
-            ElseIf playerName = "Player3" Then
+            ElseIf GetPlayerName() = "Player3" Then
                 WriteCfgValue("3lastInterior", "None", saveFile)
             End If
         Catch ex As Exception
@@ -508,22 +417,22 @@ Public Class SinglePlayerApartment
         Try
             Dim lastInterior As String = Nothing
             Dim lastPosX, lastPosY, lastPosZ As Single
-            If playerName = "Michael" Then
+            If GetPlayerName() = "Michael" Then
                 lastInterior = ReadCfgValue("MlastInterior", saveFile)
                 lastPosX = My.Settings.MlastPosX
                 lastPosY = My.Settings.MlastPosY
                 lastPosZ = My.Settings.MlastPosZ
-            ElseIf playerName = "Franklin" Then
+            ElseIf GetPlayerName() = "Franklin" Then
                 lastInterior = ReadCfgValue("FlastInterior", saveFile)
                 lastPosX = My.Settings.FlastPosX
                 lastPosY = My.Settings.FlastPosY
                 lastPosZ = My.Settings.FlastPosZ
-            ElseIf playerName = "Trevor" Then
+            ElseIf GetPlayerName() = "Trevor" Then
                 lastInterior = ReadCfgValue("TlastInterior", saveFile)
                 lastPosX = My.Settings.TlastPosX
                 lastPosY = My.Settings.TlastPosY
                 lastPosZ = My.Settings.TlastPosZ
-            ElseIf playerName = "Player3" Then
+            ElseIf GetPlayerName() = "Player3" Then
                 lastInterior = ReadCfgValue("3lastInterior", saveFile)
                 lastPosX = My.Settings.TlastPosX
                 lastPosY = My.Settings.TlastPosY
@@ -575,8 +484,6 @@ Public Class SinglePlayerApartment
                     SetInteriorActive2(-897.197, -369.246, 84.0779) 'richards majestic 4
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     RichardMajestic.Apartment.IsAtHome = True
-                'Case "Richman"
-                '    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                 Case "SinnerSt", "CougarAve", "BayCityAve", "0184MiltonRd", "0325SouthRockfordDr", "SouthMoMiltonDr", "0604LasLagunasBlvd", "SpanishAve", "BlvdDelPerro", "PowerSt", "ProsperitySt", "SanVitasSt", "2143LasLagunasBlvd", "TheRoyale", "HangmanAve", "SustanciaRd", "4401ProcopioDr", "4584ProcopioDr"
                     SetInteriorActive2(343.85, -999.08, -99.198) 'midrange apartment
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
@@ -663,90 +570,75 @@ Public Class SinglePlayerApartment
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     EclipseTower.Apartment.IsAtHome = True
-                    'Case Else
-                    '    SetInteriorActive2(Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z)
-                    '    If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                    '    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
+                Case "None"
+                    teleported = True
             End Select
-
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            player = Game.Player
-            playerPed = Game.Player.Character
-            playerInterior = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_FROM_ENTITY, Game.Player.Character)
-            playerHash = player.Character.Model.GetHashCode().ToString
-            If playerHash = "225514697" Then
-                playerName = "Michael"
-            ElseIf playerHash = "-1692214353" Then
-                playerName = "Franklin"
-            ElseIf playerHash = "-1686040670" Then
-                playerName = "Trevor"
-            ElseIf playerHash = "1885233650" Or "-1667301416" Then
-                playerName = "Player3"
-            Else
-                playerName = "Player3" '"None"
-            End If
-            If playerName = "Player3" Then
-                playerCash = 1000000000
-            Else
-                playerCash = player.Money
-            End If
-
-            michaelSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-813.60302734375, 179.47380065918, 72.158325195313))
-            franklinAuntSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-9.96562, -1438.54, 31.10151))
-            franklinSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(7.1190319061279, 536.61511230469, 176.02365112305))
-            trevorTrailerSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(1972.6002197266, 3817.0407714844, 33.426822662354))
-            trevorPubSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(96.154197692871, -1290.7312011719, 29.266660690308))
-            floydSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-1155.31, -1518.57, 10.63135))
-
-            If player.CanControlCharacter AndAlso Not teleported Then
-                If World.GetDistance(playerPed.Position, getPlayerLastLocationCoords) >= 10.0 Then
-                    If Not teleported Then LoadPosition()
-                End If
-            End If
-
-            If InteriorIDList.Contains(playerInterior) Then
-                teleported = True
-            End If
-
-            If hideHud Then
-                Native.Function.Call(Hash.HIDE_HUD_AND_RADAR_THIS_FRAME)
-            End If
-
-            If playerName = "Player3" Then
-                If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not player.WantedLevel > 0 Then
-                    Resources.Disable_Switch_Characters()
-                    Resources.Disable_Weapons()
-                    Resources.Disable_Controls()
-                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
-                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
-                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.CustomApartment)
-                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.OldApartment)
-                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.StiltsApartment)
-                ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso player.WantedLevel > 0 Then
-                    Resources.Disable_Switch_Characters()
+            If Not Game.IsLoading Then
+                player = Game.Player
+                playerPed = Game.Player.Character
+                playerInterior = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_FROM_ENTITY, Game.Player.Character)
+                If GetPlayerName() = "Player3" Then
+                    playerCash = 1000000000
                 Else
-                    Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                    playerCash = player.Money
                 End If
-            Else
-                If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso Not player.WantedLevel > 0 Then
-                    Resources.Disable_Switch_Characters()
-                    Resources.Disable_Weapons()
-                    Resources.Disable_Controls()
-                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
-                    If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
-                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.CustomApartment)
-                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.OldApartment)
-                    'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.StiltsApartment)
-                ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso player.WantedLevel > 0 Then
-                    Resources.Disable_Switch_Characters()
+
+                michaelSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-813.60302734375, 179.47380065918, 72.158325195313))
+                franklinAuntSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-9.96562, -1438.54, 31.10151))
+                franklinSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(7.1190319061279, 536.61511230469, 176.02365112305))
+                trevorTrailerSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(1972.6002197266, 3817.0407714844, 33.426822662354))
+                trevorPubSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(96.154197692871, -1290.7312011719, 29.266660690308))
+                floydSafeHouse = INMNative.Apartment.GetInteriorID(New Vector3(-1155.31, -1518.57, 10.63135))
+
+                If hideHud Then
+                    Native.Function.Call(Hash.HIDE_HUD_AND_RADAR_THIS_FRAME)
+                End If
+
+                If GetPlayerName() = "Player3" Then
+                    If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not player.WantedLevel > 0 Then
+                        Resources.Disable_Switch_Characters()
+                        Resources.Disable_Weapons()
+                        Resources.Disable_Controls()
+                        If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                        If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
+                        'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.CustomApartment)
+                        'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.OldApartment)
+                        'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.StiltsApartment)
+                    ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso player.WantedLevel > 0 Then
+                        Resources.Disable_Switch_Characters()
+                    Else
+                        Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                    End If
                 Else
-                    Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                    If Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso Not player.WantedLevel > 0 Then
+                        Resources.Disable_Switch_Characters()
+                        Resources.Disable_Weapons()
+                        Resources.Disable_Controls()
+                        If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                        If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
+                        'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.CustomApartment)
+                        'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.OldApartment)
+                        'If Brain.RadioOn Then Resources.RadioPlayer(Resources.AptType.StiltsApartment)
+                    ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso player.WantedLevel > 0 Then
+                        Resources.Disable_Switch_Characters()
+                    Else
+                        Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
+                    End If
+                End If
+
+                If Not teleported Then
+                    If World.GetDistance(playerPed.Position, getPlayerLastLocationCoords) >= 10.0 Then LoadPosition()
+                    If InteriorIDList.Contains(playerInterior) Then
+                        SavePosition2()
+                        teleported = True
+                    End If
                 End If
             End If
         Catch ex As Exception
@@ -757,7 +649,7 @@ Public Class SinglePlayerApartment
     Public Function getPlayerLastLocationCoords() As Vector3
         Dim lastPosX, lastPosY, lastPosZ As Single
 
-        Select Case playerName
+        Select Case GetPlayerName()
             Case "Michael"
                 lastPosX = My.Settings.MlastPosX
                 lastPosY = My.Settings.MlastPosY

@@ -17,21 +17,9 @@ Public Class Phone
 
     Public Sub New()
         Try
-            'New Language
-            BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
-            DockTease = ReadCfgValue("DockTease", langFile)
-            LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
-            ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
-            PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
-            SouthernSA = ReadCfgValue("SouthernSA", langFile)
-            WarstockCache = ReadCfgValue("WarstockCache", langFile)
-            _Mechanic = ReadCfgValue("_Mechanic", langFile)
-            _Pegasus = ReadCfgValue("_Pegasus", langFile)
-            'End Language
+            Translate()
 
             ifruit = New CustomiFruit()
-
-            AddHandler Tick, AddressOf OnTick
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
@@ -106,24 +94,26 @@ Public Class Phone
         Call_Pegasus(True)
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
+    Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            If phoneContact = "True" Then
-                ifruit.Update()
+            If Not Game.IsLoading Then
+                If phoneContact = "True" Then
+                    ifruit.Update()
 
-                If Game.IsControlJustPressed(0, GTA.Control.Phone) Then
-                    ifruit.Contacts.Clear()
+                    If Game.IsControlJustPressed(0, GTA.Control.Phone) Then
+                        ifruit.Contacts.Clear()
 
-                    Select Case playerName
-                        Case "Franklin"
-                            AddPhoneContacts(FIndex)
-                        Case "Michael"
-                            AddPhoneContacts(MIndex)
-                        Case "Trevor"
-                            AddPhoneContacts(TIndex)
-                        Case "Player3"
-                            AddPhoneContacts(1)
-                    End Select
+                        Select Case GetPlayerName()
+                            Case "Franklin"
+                                AddPhoneContacts(FIndex)
+                            Case "Michael"
+                                AddPhoneContacts(MIndex)
+                            Case "Trevor"
+                                AddPhoneContacts(TIndex)
+                            Case "Player3"
+                                AddPhoneContacts(1)
+                        End Select
+                    End If
                 End If
             End If
         Catch ex As Exception

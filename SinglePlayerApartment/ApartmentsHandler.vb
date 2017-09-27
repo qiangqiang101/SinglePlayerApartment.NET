@@ -87,52 +87,54 @@ Public Class ApartmentsHandler
 
     Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            'High End Apartments
-            _3as.OnTick()
-            _4iw.OnTick()
-            dph.OnTick()
-            et.OnTick()
-            rm.OnTick()
-            tt.OnTick()
-            wp.OnTick()
+            If Not Game.IsLoading Then
+                'High End Apartments
+                _3as.OnTick()
+                _4iw.OnTick()
+                dph.OnTick()
+                et.OnTick()
+                rm.OnTick()
+                tt.OnTick()
+                wp.OnTick()
 
-            'Stilts Apartment
-            ha2862.OnTick()
-            ha2868.OnTick()
-            ha2874.OnTick()
-            mw2113.OnTick()
-            mr2117.OnTick()
-            nc2044.OnTick()
-            nc2045.OnTick()
-            wm3677.OnTick()
-            wo3655.OnTick()
+                'Stilts Apartment
+                ha2862.OnTick()
+                ha2868.OnTick()
+                ha2874.OnTick()
+                mw2113.OnTick()
+                mr2117.OnTick()
+                nc2044.OnTick()
+                nc2045.OnTick()
+                wm3677.OnTick()
+                wo3655.OnTick()
 
-            'Medium Range Apartment
-            bca.OnTick()
-            bdp.OnTick()
-            ca.OnTick()
-            dt.OnTick()
-            ha.OnTick()
-            llb0604.OnTick()
-            llb2143.OnTick()
-            mr0184.OnTick()
-            ps.OnTick()
-            pd4401.OnTick()
-            pd4584.OnTick()
-            pps.OnTick()
-            svs.OnTick()
-            smmd.OnTick()
-            srd0325.OnTick()
-            sa.OnTick()
-            sr.OnTick()
-            tr.OnTick()
+                'Medium Range Apartment
+                bca.OnTick()
+                bdp.OnTick()
+                ca.OnTick()
+                dt.OnTick()
+                ha.OnTick()
+                llb0604.OnTick()
+                llb2143.OnTick()
+                mr0184.OnTick()
+                ps.OnTick()
+                pd4401.OnTick()
+                pd4584.OnTick()
+                pps.OnTick()
+                svs.OnTick()
+                smmd.OnTick()
+                srd0325.OnTick()
+                sa.OnTick()
+                sr.OnTick()
+                tr.OnTick()
 
-            'Low Range Apartment
-            gs.OnTick()
-            pb.OnTick()
-            srd0112.OnTick()
-            vb.OnTick()
-            za.OnTick()
+                'Low Range Apartment
+                gs.OnTick()
+                pb.OnTick()
+                srd0112.OnTick()
+                vb.OnTick()
+                za.OnTick()
+            End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try

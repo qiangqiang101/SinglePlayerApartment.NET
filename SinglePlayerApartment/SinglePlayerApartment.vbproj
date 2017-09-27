@@ -105,7 +105,6 @@
     <Compile Include="Class\INMNative.vb" />
     <Compile Include="Class\Scaleform.vb" />
     <Compile Include="Class\SoundPlayer.vb" />
-    <Compile Include="Class\VersionChecker.vb" />
     <Compile Include="ApartmentsHandler.vb" />
     <Compile Include="Medium End Apartments\HangmanAve.vb" />
     <Compile Include="High End Apartments\3AltaStreet.vb" />
@@ -130,7 +129,6 @@
     <Compile Include="Class\Reader.vb" />
     <Compile Include="Class\Resources.vb" />
     <Compile Include="Mechanic.vb" />
-    <Compile Include="Mechanic2.vb" />
     <Compile Include="Medium End Apartments\LasLagunasBlvd0604.vb" />
     <Compile Include="Medium End Apartments\LasLagunasBlvd2143.vb" />
     <Compile Include="Medium End Apartments\MiltonRd0184.vb" />

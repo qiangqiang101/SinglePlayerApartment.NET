@@ -175,88 +175,7 @@ Public Class Wardrobe
 
     Public Sub New()
         Try
-            'New Language
-            __Clothing = ReadCfgValue("__Clothing", langFile)
-            __Outfits = ReadCfgValue("__Outfits", langFile)
-            _Outfits.Text = ReadCfgValue("_Outfits", langFile)
-            __FullSuit = ReadCfgValue("__FullSuit", langFile)
-            _FullSuits.Text = ReadCfgValue("_FullSuits", langFile)
-            __SuitJacket = ReadCfgValue("__SuitJacket", langFile)
-            _SuitJackets.Text = ReadCfgValue("_SuitJackets", langFile)
-            __SuitPants = ReadCfgValue("__SuitPants", langFile)
-            _SuitPants.Text = ReadCfgValue("_SuitPants", langFile)
-            __Glasses = ReadCfgValue("__Glasses", langFile)
-            _Glasses.Text = ReadCfgValue("_Glasses", langFile)
-            _Glass.Text = ReadCfgValue("_Glass", langFile)
-            __SuitVest = ReadCfgValue("__SuitVest", langFile)
-            _SuitVests.Text = ReadCfgValue("_SuitVests", langFile)
-            __Suits = ReadCfgValue("__Suits", langFile)
-            _Suits.Text = ReadCfgValue("_Suits", langFile)
-            __SportsShades = ReadCfgValue("__SportsShades", langFile)
-            _SportsShades.Text = ReadCfgValue("_SportsShades", langFile)
-            __StreetShades = ReadCfgValue("__StreetShades", langFile)
-            _StreetShades.Text = ReadCfgValue("_StreetShades", langFile)
-            __Hoodies = ReadCfgValue("__Hoodies", langFile)
-            _Hoodies.Text = ReadCfgValue("_Hoodies", langFile)
-            __Jackets = ReadCfgValue("__Jackets", langFile)
-            _Jackets.Text = ReadCfgValue("_Jackets", langFile)
-            _CasualJacketJackets.Text = ReadCfgValue("_CasualJacketJackets", langFile)
-            __Pants = ReadCfgValue("__Pants", langFile)
-            _Pants.Text = ReadCfgValue("_Pants", langFile)
-            __PoloShirts = ReadCfgValue("__PoloShirts", langFile)
-            _PoloShirt.Text = ReadCfgValue("_PoloShirt", langFile)
-            __Shoes = ReadCfgValue("__Shoes", langFile)
-            _Shoes.Text = ReadCfgValue("_Shoes", langFile)
-            __Shirts = ReadCfgValue("__Shirts", langFile)
-            _Shirt.Text = ReadCfgValue("_Shirt", langFile)
-            _CasualJacketShirts.Text = ReadCfgValue("_CasualJacketShirts", langFile)
-            __TShirts = ReadCfgValue("__TShirts", langFile)
-            _TShirt.Text = ReadCfgValue("_TShirt", langFile)
-            _CasualJacketTShirts.Text = ReadCfgValue("_CasualJacketTShirts", langFile)
-            __Shorts = ReadCfgValue("__Shorts", langFile)
-            _Shorts.Text = ReadCfgValue("_Shorts", langFile)
-            __TankTops = ReadCfgValue("__TankTops", langFile)
-            _TankTops.Text = ReadCfgValue("_TankTops", langFile)
-            __Tops = ReadCfgValue("__Tops", langFile)
-            _Tops.Text = ReadCfgValue("_Tops", langFile)
-            __SuitJacketbuttoned = ReadCfgValue("__SuitJacketbuttoned", langFile)
-            _SuitJacketsButtoned.Text = ReadCfgValue("_SuitJacketsButtoned", langFile)
-            __Ties = ReadCfgValue("__Ties", langFile)
-            _SuitTies.Text = ReadCfgValue("_SuitTies", langFile)
-            __Earrings = ReadCfgValue("__Earrings", langFile)
-            _Earrings.Text = ReadCfgValue("_Earrings", langFile)
-            __Hats = ReadCfgValue("__Hats", langFile)
-            _Hats.Text = ReadCfgValue("_Hats", langFile)
-            _HatsTrevor.Text = ReadCfgValue("_HatsTrevor", langFile)
-            __CapsForward = ReadCfgValue("__CapsForward", langFile)
-            _CapsForward.Text = ReadCfgValue("_CapsForward", langFile)
-            __CapsBackward = ReadCfgValue("__CapsBackward", langFile)
-            _CapsBackward.Text = ReadCfgValue("_CapsBackward", langFile)
-            __SmartShoes = ReadCfgValue("__SmartShoes", langFile)
-            _SmartShoes.Text = ReadCfgValue("_SmartShoes", langFile)
-            __Vests = ReadCfgValue("__Vests", langFile)
-            _Vests.Text = ReadCfgValue("_Vests", langFile)
-            __OpenShirts = ReadCfgValue("__OpenShirts", langFile)
-            _OpenShirts.Text = ReadCfgValue("_OpenShirts", langFile)
-            __CasualJackets = ReadCfgValue("__CasualJackets", langFile)
-            _CasualJackets.Text = ReadCfgValue("_CasualJackets", langFile)
-            _Chains.Text = ReadCfgValue("_Chains", langFile)
-            __Chains = ReadCfgValue("__Chains", langFile)
-            'End Language
-
-            If playerHash = "225514697" Then
-                playerName = "Michael"
-            ElseIf playerHash = "-1692214353" Then
-                playerName = "Franklin"
-            ElseIf playerHash = "-1686040670" Then
-                playerName = "Trevor"
-            ElseIf playerHash = "1885233650" Or "-1667301416" Then
-                playerName = "Player3"
-            Else
-                playerName = "Player3" '"None"
-            End If
-
-            AddHandler Tick, AddressOf OnTick
+            Translate()
 
             _menuPool = New MenuPool()
 
@@ -1089,7 +1008,7 @@ Public Class Wardrobe
 
     Public Sub UpperbodyIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            If playerName = "Franklin" Then
+            If GetPlayerName() = "Franklin" Then
                 Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
@@ -1200,7 +1119,7 @@ Public Class Wardrobe
 
     Public Sub SuitVestIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            If playerName = "Franklin" Then
+            If GetPlayerName() = "Franklin" Then
                 Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d11 As Integer = Set1(1).Trim
                 Dim t11 As Integer = Set1(2).Trim
@@ -1269,7 +1188,7 @@ Public Class Wardrobe
 
     Public Sub SuitJacketIndexChangeHandler(sender As UIMenu, index As Integer)
         Try
-            If playerName = "Franklin" Then
+            If GetPlayerName() = "Franklin" Then
                 Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
@@ -1284,7 +1203,7 @@ Public Class Wardrobe
                 Else
                     Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, d3, t3, 2)
                 End If
-            Else 'If playerName = "Michael" Then
+            Else
                 Dim Set1() As String = sender.MenuItems(index).SubString1.Split("#"c)
                 Dim d3 As Integer = Set1(1).Trim
                 Dim t3 As Integer = Set1(2).Trim
@@ -1471,24 +1390,26 @@ Public Class Wardrobe
         End Try
     End Sub
 
-    Public Sub OnTick(o As Object, e As EventArgs)
-        WardrobeDistance = World.GetDistance(playerPed.Position, WardrobeVector)
+    Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
+        If Not Game.IsLoading Then
+            WardrobeDistance = World.GetDistance(playerPed.Position, WardrobeVector)
 
-        If DrawSpotLight = True Then
-            World.DrawSpotLightWithShadow(playerPed.Position + Vector3.WorldUp * 2 + Vector3.WorldNorth * 2, Vector3.WorldSouth + Vector3.WorldDown, Color.White, 10, 30, 100, 50, -1)
-        End If
-
-        'Control
-        If Game.IsControlJustPressed(0, GTA.Control.Jump) AndAlso WardrobeDistance < 2.0 AndAlso (Player0W.Visible = True Or Player1W.Visible = True Or Player2W.Visible = True Or Player3_MW.Visible = True Or Player3_FW.Visible = True) Then
-            If DrawSpotLight = False Then
-                DrawSpotLight = True
-            Else
-                DrawSpotLight = False
+            If DrawSpotLight = True Then
+                World.DrawSpotLightWithShadow(playerPed.Position + Vector3.WorldUp * 2 + Vector3.WorldNorth * 2, Vector3.WorldSouth + Vector3.WorldDown, Color.White, 10, 30, 100, 50, -1)
             End If
 
-        End If
-        'End Control
+            'Control
+            If Game.IsControlJustPressed(0, GTA.Control.Jump) AndAlso WardrobeDistance < 2.0 AndAlso (Player0W.Visible = True Or Player1W.Visible = True Or Player2W.Visible = True Or Player3_MW.Visible = True Or Player3_FW.Visible = True) Then
+                If DrawSpotLight = False Then
+                    DrawSpotLight = True
+                Else
+                    DrawSpotLight = False
+                End If
 
-        _menuPool.ProcessMenus()
+            End If
+            'End Control
+
+            _menuPool.ProcessMenus()
+        End If
     End Sub
 End Class
