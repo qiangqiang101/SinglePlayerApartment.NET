@@ -20,7 +20,6 @@ Public Class Website
 
     Public Shared BennysOriginal, DockTease, ElitasTravel, LegendaryMotorsport, PedalToMetal, SouthernSA, WarstockCache, YourNew, IsConfirm, InsFundVehicle As String
     Public Shared BennyMenu, DockMenu, ElitasMenu, LegendaryMenu, PedalMenu, SouthernMenu, WarstockMenu, DeliveryMenu As UIMenu
-    Public Shared GarageMenu As UIMenu
 
     Public Shared BennyFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\bennysoriginalmotorworks.cfg"
     Public Shared DockFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\docktease.cfg"
@@ -536,6 +535,9 @@ Public Class Website
             If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
             If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
             sender.Visible = False
+            World.DestroyAllCameras()
+            World.RenderingCamera = Nothing
+            hideHud = False
             GarageMenu.Visible = True
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

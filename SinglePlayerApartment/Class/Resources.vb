@@ -626,36 +626,57 @@ Label_005C:
         StiltsApartment
         CustomApartment
         Office
+        TenCarGarage
+        SixCarGarage
     End Enum
 
     Public Sub RadioPlayer(type As AptType)
+        'Dim closestProp As Prop = World.GetClosest(Of Prop)(playerPed.Position, World.GetAllProps)
+        'Dim Radio As Prop = Nothing
+        'If Brain.RadioModels.Contains(closestProp.Model) Then
+        '    Radio = closestProp
+        'End If
         Select Case type
             Case AptType.OldApartment
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Yacht_Bedroom", GetPlayerCurrentRadioStation())
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom_02", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Yacht_Bedroom_02", GetPlayerCurrentRadioStation())
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Yacht_Bedroom_03", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Yacht_Bedroom_03", GetPlayerCurrentRadioStation())
+                PlayRadio("SE_DLC_APT_Yacht_Bedroom")
+                PlayRadio("SE_DLC_APT_Yacht_Bedroom_02")
+                PlayRadio("SE_DLC_APT_Yacht_Bedroom_03")
             Case AptType.StiltsApartment
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Stilts_A_Living_Room", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Stilts_A_Living_Room", GetPlayerCurrentRadioStation())
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Stilts_A_Bedroom", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Stilts_A_Bedroom", GetPlayerCurrentRadioStation())
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Stilts_A_Heist_Room", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Stilts_A_Heist_Room", GetPlayerCurrentRadioStation())
+                PlayRadio("SE_DLC_APT_Stilts_A_Living_Room")
+                PlayRadio("SE_DLC_APT_Stilts_A_Bedroom")
+                PlayRadio("SE_DLC_APT_Stilts_A_Heist_Room")
+                PlayRadio("SE_DLC_APT_Stilts_B_Living_Room")
+                PlayRadio("SE_DLC_APT_Stilts_B_Bedroom")
+                PlayRadio("SE_DLC_APT_Stilts_B_Heist_Room")
             Case AptType.CustomApartment, AptType.Office
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Custom_Living_Room", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Custom_Living_Room", GetPlayerCurrentRadioStation())
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Custom_Bedroom", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Custom_Bedroom", GetPlayerCurrentRadioStation())
-                Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, "SE_DLC_APT_Custom_Heist_Room", True)
-                Native.Function.Call(&H409501D338C02053, "SE_DLC_APT_Custom_Heist_Room", GetPlayerCurrentRadioStation())
+                PlayRadio("SE_DLC_APT_Custom_Living_Room")
+                PlayRadio("SE_DLC_APT_Custom_Bedroom")
+                PlayRadio("SE_DLC_APT_Custom_Heist_Room")
+            Case AptType.TenCarGarage
+                PlayRadio("SE_MP_GARAGE_L_RADIO")
+            Case AptType.SixCarGarage
+                PlayRadio("SE_MP_GARAGE_M_RADIO")
         End Select
         'Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, Room, True)
         'Native.Function.Call(&HE0CD610D5EB6C85L, Room, Prop)
         'Native.Function.Call(Hash._0xF1CA12B18AEF5298, Prop, True)
         'Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, Room, GetPlayerCurrentRadioStation())
+    End Sub
+
+    Private Sub PlayRadio(room As String, radio As Prop)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, room, True)
+        'Native.Function.Call(&HE0CD610D5EB6C85L, room, radio)
+        'Native.Function.Call(Hash._0xF1CA12B18AEF5298, radio, True)
+        Native.Function.Call(Hash.SET_USER_RADIO_CONTROL_ENABLED, True)
+        Native.Function.Call(&H409501D338C02053, room, GetPlayerCurrentRadioStation())
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, room, GetPlayerCurrentRadioStation())
+    End Sub
+
+    Private Sub PlayRadio(room As String)
+        If Not Native.Function.Call(Of Boolean)(Hash.IS_RADIO_RETUNING) Then
+            Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, room, True)
+            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, room, "RADIO_01_CLASS_ROCK")
+        End If
     End Sub
 
     Public Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
@@ -1042,4 +1063,442 @@ Label_005C:
         RegalStyle = ReadCfgValue("RegalStyle", langFile)
         AquaStyle = ReadCfgValue("AquaStyle", langFile)
     End Sub
+
+    Public Enum BlipSprite2
+        Destination = 0
+        Standard
+        BigBlip
+        PoliceOfficer
+        PoliceArea
+        Square
+        Player
+        North
+        Waypoint
+        BigCircle
+        BigCircleOutline = 10
+        ArrowUpOutlined
+        ArrowDownOutlined
+        ArrowUp
+        ArrowDown
+        PoliceHelicopterAnimated
+        Jet
+        Number1
+        Number2
+        Number3
+        Number4 = 20
+        Number5
+        Number6
+        Number7
+        Number8
+        Number9
+        Number10
+        GTAOCrew
+        GTAOFriendly
+        CableCar = 36
+        RaceFinish = 38
+        Safehouse = 40
+        PoliceOfficer2
+        PoliceCarDotAnimated
+        PoliceHelicopter
+        ChatBubble = 47
+        Garage2 = 50
+        Drugs
+        Store
+        PoliceCar = 56
+        PolicePlayer
+        CriminalWanted
+        StoreHeist
+        PoliceStation = 60
+        Hospital
+        Helicopter = 64
+        StrangersAndFreaks = 66
+        ArmoredTruck
+        TowTruck
+        Barber = 71
+        LosSantosCustoms
+        Clothes
+        TattooParlor = 75
+        Simeon
+        Lester
+        Michael
+        Trevor
+        Heist = 80
+        Rampage = 84
+        VinewoodTours
+        LamarF
+        Franklin = 88
+        Chinese
+        Airport = 90
+        Bar = 93
+        BaseJump
+        Heist2 = 96
+        CarWash = 100
+        ComedyClub = 102
+        Dart
+        Heist3
+        Heist4
+        FIB
+        Heist5
+        DollarSign
+        Golf
+        AmmuNation = 110
+        Exile = 112
+        CutHeist
+        Heist6 = 118
+        ShootingRange = 119
+        Solomon
+        StripClub
+        Tennis
+        Exile2
+        Michael2
+        Triathlon = 126
+        OffRoadRaceFinish
+        GangPolice
+        GangMexican
+        GangBikers = 130
+        ChatBubble2 = 133
+        Key
+        MovieTheater
+        Music
+        PoliceStation2
+        Marijuana = 140
+        Hunting
+        ArmsTraffickingGround = 147
+        Circle
+        Nigel
+        AssaultRifle = 150
+        Bat
+        Grenade
+        Health
+        Knife
+        Molotov
+        Pistol
+        RPG
+        Shotgun
+        SMG
+        Sniper = 160
+        SonicWave
+        PointOfInterest
+        GTAOPassive
+        GTAOUsingMenu
+        Link = 171
+        Minigun = 173
+        GrenadeLauncher
+        Armor
+        Castle
+        Link2
+        Link3
+        Castle2 = 181
+        Castle3
+        Castle4
+        Camera
+        Player2
+        Key2
+        Key3
+        Handcuffs
+        Handcuffs2
+        Yoga = 197
+        Cab
+        Number11
+        Number12 = 200
+        Number13
+        Number14
+        Number15
+        Number16
+        Shrink
+        Epsilon
+        DollarSign2
+        Trevor2
+        Trevor3
+        Franklin2 = 210
+        Franklin3
+        FranklinC = 214
+        PersonalVehicleCar = 225
+        PersonalVehicleBike
+        PersonalVehicleCar2
+        GunCar = 229
+        Link4 = 233
+        Custody = 237
+        Custody2
+        RedSquareNumber1 = 240
+        RedSquareNumber2
+        RedSquareNumber3
+        RedSquareNumber4
+        RedSquareNumber5
+        ArmsTraffickingAir = 251
+        Handcuff3
+        Custody3
+        Key4 = 255
+        Link5
+        Fairground = 266
+        PropertyManagement
+        Link6
+        Altruist = 269
+        Enemy = 270
+        GTAOOnMission
+        CashPickup
+        Chop
+        Dead
+        CashPickup2 = 276
+        CashPickup3
+        CashPickup4
+        Hooker
+        [Friend] = 280
+        CustodyDropoff = 285
+        Garage3 = 289
+        Garage4 = 290
+        Garage5
+        SimeonFamily = 293
+        BountyHit = 303
+        GTAOMission
+        GTAOSurvival
+        CrateDrop
+        PlaneDrop
+        Submarine
+        Race
+        Deathmatch = 310
+        ArmWrestling
+        AmmuNationShootingRange = 313
+        RaceAir
+        RaceCar
+        RaceSea
+        Towtruck2
+        GarbageTruck
+        GetawayCar = 326
+        PersonalVehicleBike2 = 348
+        SafehouseForSale = 350
+        Package
+        MartinMadrazo
+        EnemyHelicopter
+        Boost
+        Devin
+        Marina
+        Garage
+        GolfFlag
+        Hangar
+        Helipad = 360
+        JerryCan
+        Masks
+        HeistSetup
+        Incapacitated
+        PickupSpawn
+        BoilerSuit
+        Completed
+        Rockets
+        GarageForSale
+        HelipadForSale = 370
+        MarinaForSale
+        HangarForSale
+        Circle2
+        Business
+        BusinessForSale
+        RaceBike
+        Parachute
+        TeamDeathmatch
+        RaceFoot
+        VehicleDeathmatch = 380
+        Barry
+        Dom
+        MaryAnn
+        Cletus
+        Josh
+        Minute
+        Omega
+        Tonya
+        Paparazzo
+        Crosshair = 390
+        CrateDropBackground
+        GreenObjectiveOutlinedRed
+        GreenObjectiveOutlinedPurple
+        GreenObjectiveOutlinedPink
+        GreenObjectiveOutlinedBlue
+        EnemyOutlined
+        EnemyOutlined2
+        Creator
+        CreatorDirection
+        Abigail = 400
+        Blimp
+        Repair
+        Testosterone
+        Dinghy
+        Fanatic
+        Information = 407
+        CaptureBriefcase
+        LastTeamStanding
+        Boat = 410
+        CaptureHouse
+        GTAOCrew2
+        CaptureBackground
+        Capture
+        JerryCan2
+        RP
+        GTAOPlayerSafehouse
+        GTAOPlayerSafehouseDead
+        CaptureAmericanFlag
+        CaptureFlag = 420
+        Tank
+        HelicopterAnimated
+        Plane
+        Jet2
+        PlayerNoColor = 425
+        AmouredGunCar
+        Speedboat
+        Heist7
+        Stopwatch = 430
+        DollarSignCircled
+        Crosshair2
+        Crosshair3
+        DollarSignSquared
+        'SHVDN until here
+        StuntRace
+        HotProperty
+        KillListCompetitive
+        Castle5
+        King
+        DeadDrop = 440
+        PennedIn
+        Beast
+        CrossTheLinePointer
+        CrossTheLine
+        LamarD
+        Bennys
+        LamarDNumber1
+        LamarDNumber2
+        LamarDNumber3
+        LamarDNumber4 = 450
+        LamarDNumber5
+        LamarDNumber6
+        LamarDNumber7
+        LamarDNumber8
+        Yacht
+        FindersKeepers
+        Briefcase2
+        ExecutiveSearch
+        Wifi
+        TurretedLimo = 460
+        AssetRecovery
+        YachtLocation
+        Beasted
+        Loading
+        SlowTime = 466
+        Flip
+        ThermalVision
+        Doped
+        Railgun = 470
+        Seashark
+        Blind
+        Warehouse
+        WarehouseForSale
+        Office
+        OfficeForSale
+        Truck
+        SpecialCargo
+        Trailer
+        VIP = 480
+        Cargobob
+        AreaCutline
+        Jammed
+        Ghost
+        Detonator
+        Bomb
+        Shield
+        Stunt
+        Heart
+        StuntPremium = 490
+        Adversary
+        BikerClubhouse
+        CagedIn
+        TurfWar
+        Joust
+        Weed
+        Cocaine
+        IdentityCard
+        Meth
+        DollarBill = 500
+        Package2
+        Capture1
+        Capture2
+        Capture3
+        Capture4
+        Capture5
+        Capture6
+        Capture7
+        Capture8
+        Capture9 = 510
+        Capture10
+        Quadbike
+        Bus
+        DrugPackage
+        Hop
+        Adversary4
+        Adversary8
+        Adversary10
+        Adversary12
+        Adversary16 = 520
+        Laptop
+        Motorcycle
+        SportsCar
+        VehicleWarehouse
+        Document
+        PoliceStationInverted
+        Junkyard
+        PhantomWedge
+        ArmoredBoxville
+        Ruiner2000 = 530
+        RampBuggy
+        Wastelander
+        RocketVoltic
+        TechnicalAqua
+        TargetA
+        TargetB
+        TargetC
+        TargetD
+        TargetE
+        TargetF = 540
+        TargetG
+        TargetH
+        Juggernaut
+        Repair2
+        SteeringWheel
+        Cup
+        RocketBoost
+        Rocket
+        MachineGun
+        Parachute2 = 550
+        FiveSeconds
+        TenSeconds
+        FifteenSeconds
+        TwentySeconds
+        ThirtySeconds
+        WeaponSupplies
+        Bunker
+        APC
+        Oppressor
+        HalfTrack = 560
+        DuneFAV
+        WeaponizedTampa
+        WeaponizedTrailer
+        MobileOperationsCenter
+        AdversaryBunker
+        BunkerVehicleWorkshop
+        WeaponWorkshop
+        Cargo
+        GTAOHangar
+        TransformCheckpoint = 570
+        TransformRace
+        AlphaZ1
+        Bombushka
+        Havok
+        HowardNX25
+        Hunter
+        Ultralight
+        Mogul
+        V65Molotok
+        P45Nokota = 580
+        Pyro
+        Rogue
+        Starling
+        Seabreeze
+        Tula
+    End Enum
 End Module
