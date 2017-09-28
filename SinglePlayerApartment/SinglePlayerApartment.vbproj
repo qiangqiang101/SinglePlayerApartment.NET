@@ -155,6 +155,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Class\timer.vb" />
+    <Compile Include="Offices\MazeBankWest.vb" />
     <Compile Include="Phone.vb" />
     <Compile Include="Medium End Apartments\ProcopioDr4401.vb" />
     <Compile Include="Medium End Apartments\ProcopioDr4584.vb" />
@@ -200,6 +201,7 @@
     <None Include="Resources\MySave.cfg" />
     <None Include="Resources\vehicle.cfg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>COPY "$(TargetDir)$(TargetFileName)" "F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts"</PostBuildEvent>
