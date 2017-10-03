@@ -21,7 +21,7 @@ Public Class _3AltaStreet
             Apartment.Description = ReadCfgValue("3AltaDesc", langFile)
             Apartment.Owner = ReadCfgValue("3ASowner", saveFile)
             Apartment.Entrance = New Vector3(-261.768, -970.4873, 31.2199)
-            Apartment.Save = New Vector3(-283.0112, -958.7992, 86.3036)
+            Apartment.Save = New Vector3(-284.4262, -958.5359, 86.3036)
             Apartment.TeleportInside = New Vector3(-281.0908, -943.2817, 92.5108)
             Apartment.TeleportOutside = New Vector3(-258.1236, -969.0657, 31.2199)
             Apartment.ApartmentExit = New Vector3(-279.2097, -940.9369, 92.5108)
@@ -41,6 +41,12 @@ Public Class _3AltaStreet
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
             If Not Apartment.InteriorID = 0 Then If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
+            Apartment.BedRoomEmitter = "SE_DLC_APT_Yacht_Bedroom"
+            Apartment.HeistRoomEmitter = "SE_DLC_APT_Yacht_Bedroom_02"
+            Apartment.LivingRoomEmitter = "SE_DLC_APT_Yacht_Bedroom_03"
+            Apartment.BedRoomRadioPosition = New Vector3(-280.0596, -959.3243, 87.32481)
+            Apartment.HeistRoomRadioPosition = New Vector3(-272.2168, -943.6053, 92.23109)
+            Apartment.LivingRoomRadioPosition = New Vector3(-273.6588, -967.6356, 91.06019)
 
             If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then
                 Translate()
@@ -581,6 +587,9 @@ Public Class _3AltaStreet
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+            If Not Apartment.BedRoomRadio = Nothing Then Apartment.BedRoomRadio.Delete()
+            If Not Apartment.HeistRoomRadio = Nothing Then Apartment.HeistRoomRadio.Delete()
+            If Not Apartment.LivingRoomRadio = Nothing Then Apartment.LivingRoomRadio.Delete()
         Catch ex As Exception
         End Try
     End Sub

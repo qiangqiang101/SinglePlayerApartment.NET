@@ -621,62 +621,109 @@ Label_005C:
         Return Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, RadioID)
     End Function
 
-    Public Enum AptType
-        OldApartment
-        StiltsApartment
-        CustomApartment
-        Office
-        TenCarGarage
-        SixCarGarage
-    End Enum
-
-    Public Sub RadioPlayer(type As AptType)
-        'Dim closestProp As Prop = World.GetClosest(Of Prop)(playerPed.Position, World.GetAllProps)
-        'Dim Radio As Prop = Nothing
-        'If Brain.RadioModels.Contains(closestProp.Model) Then
-        '    Radio = closestProp
-        'End If
-        Select Case type
-            Case AptType.OldApartment
-                PlayRadio("SE_DLC_APT_Yacht_Bedroom")
-                PlayRadio("SE_DLC_APT_Yacht_Bedroom_02")
-                PlayRadio("SE_DLC_APT_Yacht_Bedroom_03")
-            Case AptType.StiltsApartment
-                PlayRadio("SE_DLC_APT_Stilts_A_Living_Room")
-                PlayRadio("SE_DLC_APT_Stilts_A_Bedroom")
-                PlayRadio("SE_DLC_APT_Stilts_A_Heist_Room")
-                PlayRadio("SE_DLC_APT_Stilts_B_Living_Room")
-                PlayRadio("SE_DLC_APT_Stilts_B_Bedroom")
-                PlayRadio("SE_DLC_APT_Stilts_B_Heist_Room")
-            Case AptType.CustomApartment, AptType.Office
-                PlayRadio("SE_DLC_APT_Custom_Living_Room")
-                PlayRadio("SE_DLC_APT_Custom_Bedroom")
-                PlayRadio("SE_DLC_APT_Custom_Heist_Room")
-            Case AptType.TenCarGarage
-                PlayRadio("SE_MP_GARAGE_L_RADIO")
-            Case AptType.SixCarGarage
-                PlayRadio("SE_MP_GARAGE_M_RADIO")
+    Public Function GetPlayerCurrentApartment() As INMNative.Apartment
+        Dim result As INMNative.Apartment = Nothing
+        Select Case playerInterior
+            Case _3AltaStreet.Apartment.InteriorID
+                result = _3AltaStreet.Apartment
+            Case _4IntegrityWay.Apartment.InteriorID
+                result = _4IntegrityWay.Apartment
+            Case _4IntegrityWay.ApartmentHL.InteriorID
+                result = _4IntegrityWay.ApartmentHL
+            Case DelPerroHeight.Apartment.InteriorID
+                result = DelPerroHeight.Apartment
+            Case DelPerroHeight.ApartmentHL.InteriorID
+                result = DelPerroHeight.ApartmentHL
+            Case EclipseTower.Apartment.InteriorID
+                result = EclipseTower.Apartment
+            Case EclipseTower.ApartmentHL.InteriorID
+                result = EclipseTower.ApartmentHL
+            Case EclipseTower.ApartmentPS1.InteriorID
+                result = EclipseTower.ApartmentPS1
+            Case EclipseTower.ApartmentPS2.InteriorID
+                result = EclipseTower.ApartmentPS2
+            Case EclipseTower.ApartmentPS3.InteriorID
+                result = EclipseTower.ApartmentPS3
+            Case RichardMajestic.Apartment.InteriorID
+                result = RichardMajestic.Apartment
+            Case RichardMajestic.ApartmentHL.InteriorID
+                result = RichardMajestic.ApartmentHL
+            Case TinselTower.Apartment.InteriorID
+                result = TinselTower.Apartment
+            Case TinselTower.ApartmentHL.InteriorID
+                result = TinselTower.ApartmentHL
+            Case WeazelPlaza.Apartment.InteriorID
+                result = WeazelPlaza.Apartment
+            Case HillcrestAve2862.Apartment.InteriorID
+                result = HillcrestAve2862.Apartment
+            Case HillcrestAve2868.Apartment.InteriorID
+                result = HillcrestAve2868.Apartment
+            Case HillcrestAve2874._Apartment.InteriorID
+                result = HillcrestAve2874._Apartment
+            Case MadWayne2113.Apartment.InteriorID
+                result = MadWayne2113.Apartment
+            Case MiltonRd2117.Apartment.InteriorID
+                result = MiltonRd2117.Apartment
+            Case NorthConker2044.Apartment.InteriorID
+                result = NorthConker2044.Apartment
+            Case NorthConker2045.Apartment.InteriorID
+                result = NorthConker2045.Apartment
+            Case Whispymound3677.Apartment.InteriorID
+                result = Whispymound3677.Apartment
+            Case WildOats3655.Apartment.InteriorID
+                result = WildOats3655.Apartment
+            Case TenCarGarage.InteriorID
+                result = New INMNative.Apartment("TenCarGarage", Nothing, 0, Nothing) With {.InteriorID = TenCarGarage.InteriorID}
+            Case SixCarGarage.InteriorID
+                result = New INMNative.Apartment("SixCarGarage", Nothing, 0, Nothing) With {.InteriorID = SixCarGarage.InteriorID}
+            Case INMNative.Apartment.GetInteriorID(New Vector3(263.86999, -998.78002, -99.010002)) 'Low End Apartment
+                result = GrapeseedAve.Apartment
+            Case INMNative.Apartment.GetInteriorID(New Vector3(343.85, -999.08, -99.198)) 'Medium End Apartment
+                result = BayCityAve.Apartment
         End Select
-        'Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, Room, True)
-        'Native.Function.Call(&HE0CD610D5EB6C85L, Room, Prop)
-        'Native.Function.Call(Hash._0xF1CA12B18AEF5298, Prop, True)
-        'Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, Room, GetPlayerCurrentRadioStation())
+        Return result
+    End Function
+
+    Public Sub TurnOnRadio(ByVal BedRoomRadio As Prop, ByVal HeistRoomRadio As Prop, ByVal LivingRoomProp As Prop, BedRoomEmitter As String, HeistRoomEmitter As String, LivingRoomEmitter As String)
+        Native.Function.Call(&H0E0CD610D5EB6C85, BedRoomEmitter, BedRoomRadio)
+        SetRadioProperties(BedRoomRadio)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, BedRoomEmitter, True)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, BedRoomEmitter, "RADIO_01_CLASS_ROCK")
+
+        Native.Function.Call(&H0E0CD610D5EB6C85, HeistRoomEmitter, HeistRoomRadio)
+        SetRadioProperties(HeistRoomRadio)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, HeistRoomEmitter, True)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, HeistRoomEmitter, "RADIO_01_CLASS_ROCK")
+
+        Native.Function.Call(&H0E0CD610D5EB6C85, LivingRoomEmitter, LivingRoomProp)
+        SetRadioProperties(LivingRoomProp)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, LivingRoomEmitter, True)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, LivingRoomEmitter, "RADIO_01_CLASS_ROCK")
     End Sub
 
-    Private Sub PlayRadio(room As String, radio As Prop)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, room, True)
-        'Native.Function.Call(&HE0CD610D5EB6C85L, room, radio)
-        'Native.Function.Call(Hash._0xF1CA12B18AEF5298, radio, True)
-        Native.Function.Call(Hash.SET_USER_RADIO_CONTROL_ENABLED, True)
-        Native.Function.Call(&H409501D338C02053, room, GetPlayerCurrentRadioStation())
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, room, GetPlayerCurrentRadioStation())
+    Public Sub TurnOffRadio(ByVal BedRoomRadio As Prop, ByVal HeistRoomRadio As Prop, ByVal LivingRoomProp As Prop, BedRoomEmitter As String, HeistRoomEmitter As String, LivingRoomEmitter As String)
+        Native.Function.Call(&H0E0CD610D5EB6C85, BedRoomEmitter, BedRoomRadio)
+        SetRadioProperties(BedRoomRadio)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, BedRoomEmitter, False)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, BedRoomEmitter, "RADIO_01_CLASS_ROCK")
+
+        Native.Function.Call(&H0E0CD610D5EB6C85, HeistRoomEmitter, HeistRoomRadio)
+        SetRadioProperties(HeistRoomRadio)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, HeistRoomEmitter, False)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, HeistRoomEmitter, "RADIO_01_CLASS_ROCK")
+
+        Native.Function.Call(&H0E0CD610D5EB6C85, LivingRoomEmitter, LivingRoomProp)
+        SetRadioProperties(LivingRoomProp)
+        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, LivingRoomEmitter, False)
+        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, LivingRoomEmitter, "RADIO_01_CLASS_ROCK")
     End Sub
 
-    Private Sub PlayRadio(room As String)
-        If Not Native.Function.Call(Of Boolean)(Hash.IS_RADIO_RETUNING) Then
-            Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, room, True)
-            Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, room, "RADIO_01_CLASS_ROCK")
-        End If
+    Public Sub SetRadioProperties(ByVal Radio As Prop)
+        Radio.IsInvincible = True
+        Radio.FreezePosition = True
+        Radio.HasCollision = False
+        Radio.IsVisible = False
+        Native.Function.Call(Hash._0xF1CA12B18AEF5298, Radio, True)
     End Sub
 
     Public Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop

@@ -9,12 +9,14 @@ Namespace INMNative
     Public Class Apartment
 
         Private _cost, _interiorID, _radio As Integer
-        Private _radioRoomList As List(Of String) = New List(Of String)
         Private _owner, _name, _desc, _unit, _grgpath, _savefile, _playermap, _ipl, _lastipl As String
         Private _aptblip, _grgblip As Blip
         Private _entrance, _save, _telin, _telout, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot As Vector3
         Private _grgoutheading, _camerafov, _wardrobeheading, _ascamerafov As Single
         Private _isathome, _enabled As Boolean
+        Private _lrRadio, _hrRadio, _brRadio As Prop
+        Private lrEmitter, hrEmitter, brEmitter As String
+        Private lrPosition, hrPosition, brPosition As Vector3
 
         Public Sub New(Name As String, Unit As String, Cost As Integer, Optional Description As String = "")
             _name = Name
@@ -355,6 +357,87 @@ Namespace INMNative
             End Get
             Set(value As Integer)
                 _interiorID = value
+            End Set
+        End Property
+
+        Public Property LivingRoomRadio() As Prop
+            Get
+                Return _lrRadio
+            End Get
+            Set(value As Prop)
+                _lrRadio = value
+            End Set
+        End Property
+
+        Public Property BedRoomRadio() As Prop
+            Get
+                Return _brRadio
+            End Get
+            Set(value As Prop)
+                _brRadio = value
+            End Set
+        End Property
+
+        Public Property HeistRoomRadio() As Prop
+            Get
+                Return _hrRadio
+            End Get
+            Set(value As Prop)
+                _hrRadio = value
+            End Set
+        End Property
+
+        Public Property LivingRoomEmitter() As String
+            Get
+                Return lrEmitter
+            End Get
+            Set(value As String)
+                lrEmitter = value
+            End Set
+        End Property
+
+        Public Property BedRoomEmitter() As String
+            Get
+                Return brEmitter
+            End Get
+            Set(value As String)
+                brEmitter = value
+            End Set
+        End Property
+
+        Public Property HeistRoomEmitter() As String
+            Get
+                Return hrEmitter
+            End Get
+            Set(value As String)
+                hrEmitter = value
+            End Set
+        End Property
+
+        Public Property LivingRoomRadioPosition() As Vector3
+            Get
+                Return lrPosition
+            End Get
+            Set(value As Vector3)
+                lrPosition = value
+            End Set
+        End Property
+
+        Public Property BedRoomRadioPosition() As Vector3
+            Get
+                Return brPosition
+            End Get
+            Set(value As Vector3)
+                brPosition = value
+            End Set
+        End Property
+
+        Public Property HeistRoomRadioPosition() As Vector3
+            Get
+                Return hrPosition
+            End Get
+            Set(value As Vector3)
+                hrPosition = value
             End Set
         End Property
 

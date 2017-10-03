@@ -664,7 +664,15 @@ Public Class Brain
                     If Game.IsControlJustPressed(0, GTA.Control.VehicleRadioWheel) Then
                         RadioTaskScriptStatus = 0
                     ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        RadioOn = Not RadioOn
+                        Dim tempAPA As INMNative.Apartment = GetPlayerCurrentApartment()
+                        If tempAPA.BedRoomRadio = Nothing Then tempAPA.BedRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.BedRoomRadioPosition, False)
+                        If tempAPA.LivingRoomRadio = Nothing Then tempAPA.LivingRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.LivingRoomRadioPosition, False)
+                        If tempAPA.HeistRoomRadio = Nothing Then tempAPA.HeistRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.HeistRoomRadioPosition, False)
+                        If RadioOn Then
+                            TurnOffRadio(tempAPA.BedRoomRadio, tempAPA.HeistRoomRadio, tempAPA.LivingRoomRadio, tempAPA.BedRoomEmitter, tempAPA.HeistRoomEmitter, tempAPA.LivingRoomEmitter)
+                        Else
+                            TurnOnRadio(tempAPA.BedRoomRadio, tempAPA.HeistRoomRadio, tempAPA.LivingRoomRadio, tempAPA.BedRoomEmitter, tempAPA.HeistRoomEmitter, tempAPA.LivingRoomEmitter)
+                        End If
                     End If
                 End If
             Next i

@@ -610,25 +610,6 @@ Public Class SinglePlayerApartment
                         Disable_Controls()
                         'If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
                         'If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.CustomApartment)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.OldApartment)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.StiltsApartment)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.TenCarGarage)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.SixCarGarage)
-                        If Brain.RadioOn Then
-                            Select Case playerInterior
-                                Case _3AltaStreet.Apartment.InteriorID, _4IntegrityWay.Apartment.InteriorID, _4IntegrityWay.ApartmentHL.InteriorID, DelPerroHeight.Apartment.InteriorID, DelPerroHeight.ApartmentHL.InteriorID, EclipseTower.Apartment.InteriorID, EclipseTower.ApartmentHL.InteriorID, RichardMajestic.Apartment.InteriorID, RichardMajestic.ApartmentHL.InteriorID, TinselTower.Apartment.InteriorID, TinselTower.ApartmentHL.InteriorID, WeazelPlaza.Apartment.InteriorID, Apartment.GetInteriorID(GrapeseedAve.Apartment.Interior), Apartment.GetInteriorID(BayCityAve.Apartment.Interior)
-                                    RadioPlayer(AptType.OldApartment)
-                                Case EclipseTower.ApartmentPS1.InteriorID, EclipseTower.ApartmentPS2.InteriorID, EclipseTower.ApartmentPS3.InteriorID
-                                    RadioPlayer(AptType.CustomApartment)
-                                Case HillcrestAve2862.Apartment.InteriorID, HillcrestAve2868.Apartment.InteriorID, HillcrestAve2874._Apartment.InteriorID, MadWayne2113.Apartment.InteriorID, MiltonRd2117.Apartment.InteriorID, NorthConker2044.Apartment.InteriorID, NorthConker2045.Apartment.InteriorID, Whispymound3677.Apartment.InteriorID, WildOats3655.Apartment.InteriorID
-                                    RadioPlayer(AptType.StiltsApartment)
-                                Case TenCarGarage.InteriorID
-                                    RadioPlayer(AptType.TenCarGarage)
-                                Case SixCarGarage.InteriorID
-                                    RadioPlayer(AptType.SixCarGarage)
-                            End Select
-                        End If
                     ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso player.WantedLevel > 0 Then
                         Disable_Switch_Characters()
                     Else
@@ -641,25 +622,6 @@ Public Class SinglePlayerApartment
                         Disable_Controls()
                         'If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, True) Else Native.Function.Call(Hash.SET_MOBILE_RADIO_ENABLED_DURING_GAMEPLAY, False)
                         'If Brain.RadioOn Then Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, True) Else Native.Function.Call(Hash.SET_MOBILE_PHONE_RADIO_STATE, False)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.CustomApartment)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.OldApartment)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.StiltsApartment)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.TenCarGarage)
-                        'If Brain.RadioOn Then RadioPlayer(AptType.SixCarGarage)
-                        If Brain.RadioOn Then
-                            Select Case playerInterior
-                                Case _3AltaStreet.Apartment.InteriorID, _4IntegrityWay.Apartment.InteriorID, _4IntegrityWay.ApartmentHL.InteriorID, DelPerroHeight.Apartment.InteriorID, DelPerroHeight.ApartmentHL.InteriorID, EclipseTower.Apartment.InteriorID, EclipseTower.ApartmentHL.InteriorID, RichardMajestic.Apartment.InteriorID, RichardMajestic.ApartmentHL.InteriorID, TinselTower.Apartment.InteriorID, TinselTower.ApartmentHL.InteriorID, WeazelPlaza.Apartment.InteriorID, Apartment.GetInteriorID(GrapeseedAve.Apartment.Interior), Apartment.GetInteriorID(BayCityAve.Apartment.Interior)
-                                    RadioPlayer(AptType.OldApartment)
-                                Case EclipseTower.ApartmentPS1.InteriorID, EclipseTower.ApartmentPS2.InteriorID, EclipseTower.ApartmentPS3.InteriorID
-                                    RadioPlayer(AptType.CustomApartment)
-                                Case HillcrestAve2862.Apartment.InteriorID, HillcrestAve2868.Apartment.InteriorID, HillcrestAve2874._Apartment.InteriorID, MadWayne2113.Apartment.InteriorID, MiltonRd2117.Apartment.InteriorID, NorthConker2044.Apartment.InteriorID, NorthConker2045.Apartment.InteriorID, Whispymound3677.Apartment.InteriorID, WildOats3655.Apartment.InteriorID
-                                    RadioPlayer(AptType.StiltsApartment)
-                                Case TenCarGarage.InteriorID
-                                    RadioPlayer(AptType.TenCarGarage)
-                                Case SixCarGarage.InteriorID
-                                    RadioPlayer(AptType.SixCarGarage)
-                            End Select
-                        End If
                     ElseIf Not playerInterior = 0 AndAlso InteriorIDList.Contains(playerInterior) AndAlso Not Game.MissionFlag AndAlso player.WantedLevel > 0 Then
                         Disable_Switch_Characters()
                     Else
