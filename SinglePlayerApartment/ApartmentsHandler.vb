@@ -42,6 +42,8 @@ Public Class ApartmentsHandler
     Dim srd0112 As SouthRockfordDr0112
     Dim vb As VespucciBlvd
     Dim za As ZancudoAve
+    '1.10 update
+    Dim mbw As MazeBankWest
 
     Public Sub New()
         _3as = New _3AltaStreet()
@@ -83,6 +85,8 @@ Public Class ApartmentsHandler
         srd0112 = New SouthRockfordDr0112()
         vb = New VespucciBlvd()
         za = New ZancudoAve()
+        '1.10 update
+        mbw = New MazeBankWest()
     End Sub
 
     Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
@@ -134,6 +138,9 @@ Public Class ApartmentsHandler
                 srd0112.OnTick()
                 vb.OnTick()
                 za.OnTick()
+
+                'Office
+                mbw.OnTick()
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -187,5 +194,8 @@ Public Class ApartmentsHandler
         srd0112.OnAborted()
         vb.OnAborted()
         za.OnAborted()
+
+        'Office
+        mbw.OnAborted()
     End Sub
 End Class

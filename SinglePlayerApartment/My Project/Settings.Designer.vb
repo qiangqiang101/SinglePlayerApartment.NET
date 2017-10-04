@@ -797,6 +797,18 @@ Namespace My
                 Me("RefreshGrgVehs") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Enable")>  _
+        Public Property MazeBankWest() As String
+            Get
+                Return CType(Me("MazeBankWest"),String)
+            End Get
+            Set
+                Me("MazeBankWest") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

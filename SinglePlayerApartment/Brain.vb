@@ -6,14 +6,15 @@ Imports SinglePlayerApartment.SinglePlayerApartment
 Public Class Brain
     Inherits Script
 
-    Public Shared Bong, Whiskey, WhiskeyGlass, Wine, WineGlass, Wheat, Shower, TV As Prop
+    Public Shared Bong, Whiskey, WhiskeyGlass, Wine, WineGlass, Wheat, Shower, TV, OrgNameProp As Prop
     Public Shared BongPosition, WhiskeyPosition, WhiskeyGlassPosition, WinePosition, WineGlassPosition, WheatPosition, ShowerPosition As Vector3
     Public Shared BongRotation, WhiskeyRotation, WhiskeyGlassRotation, WineRotation, WineGlassRotation, WheatRotation, ShowerRotation As Vector3
     Public Shared DrunkStage As Integer = 1
 
+    Public Shared OrgNameModels As List(Of Model) = New List(Of Model) From {-2082168399}
     '<-- TV -->
-    Public Shared TVModels As List(Of Model) = New List(Of Model) From {1036195894, 777010715, -1073182005, 1653710254, 170618079, -897601557, -1546399138, -1223496606, -1820646534}
-    Public Shared rendertargetid As Integer
+    Public Shared TVModels As List(Of Model) = New List(Of Model) From {1036195894, 777010715, -1073182005, 1653710254, 170618079, -897601557, -1546399138, -1223496606, -1820646534, 608950395}
+    Public Shared rendertargetid, ex_rendertargetid, rendertargetid2 As Integer
     Public Shared TVOn As Boolean = False, SubtitleOn As Boolean = False
     Public Shared TV_Volume As Integer = 0
     Public Shared TV_Channel As Integer
@@ -664,15 +665,16 @@ Public Class Brain
                     If Game.IsControlJustPressed(0, GTA.Control.VehicleRadioWheel) Then
                         RadioTaskScriptStatus = 0
                     ElseIf Game.IsControlJustPressed(0, GTA.Control.Context) Then
-                        Dim tempAPA As INMNative.Apartment = GetPlayerCurrentApartment()
-                        If tempAPA.BedRoomRadio = Nothing Then tempAPA.BedRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.BedRoomRadioPosition, False)
-                        If tempAPA.LivingRoomRadio = Nothing Then tempAPA.LivingRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.LivingRoomRadioPosition, False)
-                        If tempAPA.HeistRoomRadio = Nothing Then tempAPA.HeistRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.HeistRoomRadioPosition, False)
-                        If RadioOn Then
-                            TurnOffRadio(tempAPA.BedRoomRadio, tempAPA.HeistRoomRadio, tempAPA.LivingRoomRadio, tempAPA.BedRoomEmitter, tempAPA.HeistRoomEmitter, tempAPA.LivingRoomEmitter)
-                        Else
-                            TurnOnRadio(tempAPA.BedRoomRadio, tempAPA.HeistRoomRadio, tempAPA.LivingRoomRadio, tempAPA.BedRoomEmitter, tempAPA.HeistRoomEmitter, tempAPA.LivingRoomEmitter)
-                        End If
+                        'Dim tempAPA As INMNative.Apartment = GetPlayerCurrentApartment()
+                        'If tempAPA.BedRoomRadio = Nothing Then tempAPA.BedRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.BedRoomRadioPosition, False)
+                        'If tempAPA.LivingRoomRadio = Nothing Then tempAPA.LivingRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.LivingRoomRadioPosition, False)
+                        'If tempAPA.HeistRoomRadio = Nothing Then tempAPA.HeistRoomRadio = CreatePropNoOffset("prop_boombox_01", tempAPA.HeistRoomRadioPosition, False)
+                        'If RadioOn Then
+                        '    TurnOffRadio(tempAPA.BedRoomRadio, tempAPA.HeistRoomRadio, tempAPA.LivingRoomRadio, tempAPA.BedRoomEmitter, tempAPA.HeistRoomEmitter, tempAPA.LivingRoomEmitter)
+                        'Else
+                        '    TurnOnRadio(tempAPA.BedRoomRadio, tempAPA.HeistRoomRadio, tempAPA.LivingRoomRadio, tempAPA.BedRoomEmitter, tempAPA.HeistRoomEmitter, tempAPA.LivingRoomEmitter)
+                        'End If
+                        RadioOn = Not RadioOn
                     End If
                 End If
             Next i
@@ -699,9 +701,13 @@ Public Class Brain
                         If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "tvscreen") Then
                             Native.Function.Call(Hash.REGISTER_NAMED_RENDERTARGET, "tvscreen", False)
                         End If
+                        If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "ex_tvscreen") Then
+                            Native.Function.Call(Hash.REGISTER_NAMED_RENDERTARGET, "ex_tvscreen", False)
+                        End If
                         If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_LINKED, TV.Model) Then
                             Native.Function.Call(Hash.LINK_NAMED_RENDERTARGET, TV.Model)
                             rendertargetid = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, "tvscreen")
+                            ex_rendertargetid = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, "ex_tvscreen")
                         End If
                         Dim r As Random = New Random()
                         TV_Channel = r.Next(2)
@@ -715,6 +721,9 @@ Public Class Brain
                         Wait(1000)
                         If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "tvscreen") Then
                             Native.Function.Call(Hash.RELEASE_NAMED_RENDERTARGET, "tvscreen")
+                        End If
+                        If Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "ex_tvscreen") Then
+                            Native.Function.Call(Hash.RELEASE_NAMED_RENDERTARGET, "ex_tvscreen")
                         End If
                         TVOn = False
                     ElseIf Game.IsControlJustPressed(0, GTA.Control.VehicleRadioWheel) Then
@@ -733,6 +742,39 @@ Public Class Brain
                         Native.Function.Call(Hash.ENABLE_MOVIE_SUBTITLES, False)
                         SubtitleOn = False
                     End If
+                End If
+            Next i
+        Catch ex As Exception
+            'logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub OrganisationNameOnTick()
+        Try
+            Dim nearbyProps As Prop() = World.GetNearbyProps(Game.Player.Character.Position, 3.0)
+            For i As Integer = 0 To nearbyProps.Length - 1
+                If (((OrgNameModels.Contains(nearbyProps(i).Model) AndAlso (playerPed.Position.DistanceTo(nearbyProps(i).Position) <= 10.0)))) Then
+                    OrgNameProp = nearbyProps(i)
+                    Native.Function.Call(Hash.ATTACH_TV_AUDIO_TO_ENTITY, OrgNameProp)
+                    Native.Function.Call(&H67D02A194A2FC2BD, "ORGANISATION_NAME")
+
+                    If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_REGISTERED, "prop_ex_office_text") Then
+                        Native.Function.Call(Hash.REGISTER_NAMED_RENDERTARGET, "prop_ex_office_text", False)
+                    End If
+                    If Not Native.Function.Call(Of Boolean)(Hash.IS_NAMED_RENDERTARGET_LINKED, OrgNameProp.Model) Then
+                        Native.Function.Call(Hash.LINK_NAMED_RENDERTARGET, OrgNameProp.Model)
+                        rendertargetid2 = Native.Function.Call(Of Integer)(Hash.GET_NAMED_RENDERTARGET_RENDER_ID, "prop_ex_office_text")
+                        Native.Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, rendertargetid2, "SET_ORGANISATION_NAME")
+                    End If
+                    Dim r As Random = New Random()
+
+
+                    Native.Function.Call(Hash.SET_TEXT_RENDER_ID, rendertargetid2)
+                    Native.Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, rendertargetid2, "SET_ORGANISATION_NAME")
+                    Native.Function.Call(&H77FE3402004CD1B0, "SPA")
+                    Native.Function.Call(Hash.SET_TV_CHANNEL, -1)
+                    Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
+                    Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
                 End If
             Next i
         Catch ex As Exception
@@ -822,6 +864,7 @@ Public Class Brain
                     ShowerOnTick()
                     TVOnTick()
                     RadioOnTick()
+                    OrganisationNameOnTick()
                 End If
 
                 If drunkTimer.Enabled Then
@@ -839,7 +882,14 @@ Public Class Brain
                     Native.Function.Call(Hash.SET_TEXT_RENDER_ID, rendertargetid)
                     Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
                     Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
+
+                    Native.Function.Call(Hash.SET_TEXT_RENDER_ID, ex_rendertargetid)
+                    Native.Function.Call(Hash.DRAW_TV_CHANNEL, 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
+                    Native.Function.Call(Hash.SET_TEXT_RENDER_ID, Native.Function.Call(Of Integer)(Hash.GET_DEFAULT_SCRIPT_RENDERTARGET_RENDER_ID))
                 End If
+
+
+
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

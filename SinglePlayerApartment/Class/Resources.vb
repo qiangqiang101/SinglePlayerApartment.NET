@@ -621,125 +621,125 @@ Label_005C:
         Return Native.Function.Call(Of String)(Hash.GET_RADIO_STATION_NAME, RadioID)
     End Function
 
-    Public Function GetPlayerCurrentApartment() As INMNative.Apartment
-        Dim result As INMNative.Apartment = Nothing
-        Select Case playerInterior
-            Case _3AltaStreet.Apartment.InteriorID
-                result = _3AltaStreet.Apartment
-            Case _4IntegrityWay.Apartment.InteriorID
-                result = _4IntegrityWay.Apartment
-            Case _4IntegrityWay.ApartmentHL.InteriorID
-                result = _4IntegrityWay.ApartmentHL
-            Case DelPerroHeight.Apartment.InteriorID
-                result = DelPerroHeight.Apartment
-            Case DelPerroHeight.ApartmentHL.InteriorID
-                result = DelPerroHeight.ApartmentHL
-            Case EclipseTower.Apartment.InteriorID
-                result = EclipseTower.Apartment
-            Case EclipseTower.ApartmentHL.InteriorID
-                result = EclipseTower.ApartmentHL
-            Case EclipseTower.ApartmentPS1.InteriorID
-                result = EclipseTower.ApartmentPS1
-            Case EclipseTower.ApartmentPS2.InteriorID
-                result = EclipseTower.ApartmentPS2
-            Case EclipseTower.ApartmentPS3.InteriorID
-                result = EclipseTower.ApartmentPS3
-            Case RichardMajestic.Apartment.InteriorID
-                result = RichardMajestic.Apartment
-            Case RichardMajestic.ApartmentHL.InteriorID
-                result = RichardMajestic.ApartmentHL
-            Case TinselTower.Apartment.InteriorID
-                result = TinselTower.Apartment
-            Case TinselTower.ApartmentHL.InteriorID
-                result = TinselTower.ApartmentHL
-            Case WeazelPlaza.Apartment.InteriorID
-                result = WeazelPlaza.Apartment
-            Case HillcrestAve2862.Apartment.InteriorID
-                result = HillcrestAve2862.Apartment
-            Case HillcrestAve2868.Apartment.InteriorID
-                result = HillcrestAve2868.Apartment
-            Case HillcrestAve2874._Apartment.InteriorID
-                result = HillcrestAve2874._Apartment
-            Case MadWayne2113.Apartment.InteriorID
-                result = MadWayne2113.Apartment
-            Case MiltonRd2117.Apartment.InteriorID
-                result = MiltonRd2117.Apartment
-            Case NorthConker2044.Apartment.InteriorID
-                result = NorthConker2044.Apartment
-            Case NorthConker2045.Apartment.InteriorID
-                result = NorthConker2045.Apartment
-            Case Whispymound3677.Apartment.InteriorID
-                result = Whispymound3677.Apartment
-            Case WildOats3655.Apartment.InteriorID
-                result = WildOats3655.Apartment
-            Case TenCarGarage.InteriorID
-                result = New INMNative.Apartment("TenCarGarage", Nothing, 0, Nothing) With {.InteriorID = TenCarGarage.InteriorID}
-            Case SixCarGarage.InteriorID
-                result = New INMNative.Apartment("SixCarGarage", Nothing, 0, Nothing) With {.InteriorID = SixCarGarage.InteriorID}
-            Case INMNative.Apartment.GetInteriorID(New Vector3(263.86999, -998.78002, -99.010002)) 'Low End Apartment
-                result = GrapeseedAve.Apartment
-            Case INMNative.Apartment.GetInteriorID(New Vector3(343.85, -999.08, -99.198)) 'Medium End Apartment
-                result = BayCityAve.Apartment
-        End Select
-        Return result
-    End Function
+    'Public Function GetPlayerCurrentApartment() As INMNative.Apartment
+    '    Dim result As INMNative.Apartment = Nothing
+    '    Select Case playerInterior
+    '        Case _3AltaStreet.Apartment.InteriorID
+    '            result = _3AltaStreet.Apartment
+    '        Case _4IntegrityWay.Apartment.InteriorID
+    '            result = _4IntegrityWay.Apartment
+    '        Case _4IntegrityWay.ApartmentHL.InteriorID
+    '            result = _4IntegrityWay.ApartmentHL
+    '        Case DelPerroHeight.Apartment.InteriorID
+    '            result = DelPerroHeight.Apartment
+    '        Case DelPerroHeight.ApartmentHL.InteriorID
+    '            result = DelPerroHeight.ApartmentHL
+    '        Case EclipseTower.Apartment.InteriorID
+    '            result = EclipseTower.Apartment
+    '        Case EclipseTower.ApartmentHL.InteriorID
+    '            result = EclipseTower.ApartmentHL
+    '        Case EclipseTower.ApartmentPS1.InteriorID
+    '            result = EclipseTower.ApartmentPS1
+    '        Case EclipseTower.ApartmentPS2.InteriorID
+    '            result = EclipseTower.ApartmentPS2
+    '        Case EclipseTower.ApartmentPS3.InteriorID
+    '            result = EclipseTower.ApartmentPS3
+    '        Case RichardMajestic.Apartment.InteriorID
+    '            result = RichardMajestic.Apartment
+    '        Case RichardMajestic.ApartmentHL.InteriorID
+    '            result = RichardMajestic.ApartmentHL
+    '        Case TinselTower.Apartment.InteriorID
+    '            result = TinselTower.Apartment
+    '        Case TinselTower.ApartmentHL.InteriorID
+    '            result = TinselTower.ApartmentHL
+    '        Case WeazelPlaza.Apartment.InteriorID
+    '            result = WeazelPlaza.Apartment
+    '        Case HillcrestAve2862.Apartment.InteriorID
+    '            result = HillcrestAve2862.Apartment
+    '        Case HillcrestAve2868.Apartment.InteriorID
+    '            result = HillcrestAve2868.Apartment
+    '        Case HillcrestAve2874._Apartment.InteriorID
+    '            result = HillcrestAve2874._Apartment
+    '        Case MadWayne2113.Apartment.InteriorID
+    '            result = MadWayne2113.Apartment
+    '        Case MiltonRd2117.Apartment.InteriorID
+    '            result = MiltonRd2117.Apartment
+    '        Case NorthConker2044.Apartment.InteriorID
+    '            result = NorthConker2044.Apartment
+    '        Case NorthConker2045.Apartment.InteriorID
+    '            result = NorthConker2045.Apartment
+    '        Case Whispymound3677.Apartment.InteriorID
+    '            result = Whispymound3677.Apartment
+    '        Case WildOats3655.Apartment.InteriorID
+    '            result = WildOats3655.Apartment
+    '        Case TenCarGarage.InteriorID
+    '            result = New INMNative.Apartment("TenCarGarage", Nothing, 0, Nothing) With {.InteriorID = TenCarGarage.InteriorID}
+    '        Case SixCarGarage.InteriorID
+    '            result = New INMNative.Apartment("SixCarGarage", Nothing, 0, Nothing) With {.InteriorID = SixCarGarage.InteriorID}
+    '        Case INMNative.Apartment.GetInteriorID(New Vector3(263.86999, -998.78002, -99.010002)) 'Low End Apartment
+    '            result = GrapeseedAve.Apartment
+    '        Case INMNative.Apartment.GetInteriorID(New Vector3(343.85, -999.08, -99.198)) 'Medium End Apartment
+    '            result = BayCityAve.Apartment
+    '    End Select
+    '    Return result
+    'End Function
 
-    Public Sub TurnOnRadio(ByVal BedRoomRadio As Prop, ByVal HeistRoomRadio As Prop, ByVal LivingRoomProp As Prop, BedRoomEmitter As String, HeistRoomEmitter As String, LivingRoomEmitter As String)
-        Native.Function.Call(&H0E0CD610D5EB6C85, BedRoomEmitter, BedRoomRadio)
-        SetRadioProperties(BedRoomRadio)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, BedRoomEmitter, True)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, BedRoomEmitter, "RADIO_01_CLASS_ROCK")
+    'Public Sub TurnOnRadio(ByVal BedRoomRadio As Prop, ByVal HeistRoomRadio As Prop, ByVal LivingRoomProp As Prop, BedRoomEmitter As String, HeistRoomEmitter As String, LivingRoomEmitter As String)
+    '    Native.Function.Call(&H0E0CD610D5EB6C85, BedRoomEmitter, BedRoomRadio)
+    '    SetRadioProperties(BedRoomRadio)
+    '    Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, BedRoomEmitter, True)
+    '    Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, BedRoomEmitter, "RADIO_01_CLASS_ROCK")
 
-        Native.Function.Call(&H0E0CD610D5EB6C85, HeistRoomEmitter, HeistRoomRadio)
-        SetRadioProperties(HeistRoomRadio)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, HeistRoomEmitter, True)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, HeistRoomEmitter, "RADIO_01_CLASS_ROCK")
+    '    Native.Function.Call(&H0E0CD610D5EB6C85, HeistRoomEmitter, HeistRoomRadio)
+    '    SetRadioProperties(HeistRoomRadio)
+    '    Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, HeistRoomEmitter, True)
+    '    Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, HeistRoomEmitter, "RADIO_01_CLASS_ROCK")
 
-        Native.Function.Call(&H0E0CD610D5EB6C85, LivingRoomEmitter, LivingRoomProp)
-        SetRadioProperties(LivingRoomProp)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, LivingRoomEmitter, True)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, LivingRoomEmitter, "RADIO_01_CLASS_ROCK")
-    End Sub
+    '    Native.Function.Call(&H0E0CD610D5EB6C85, LivingRoomEmitter, LivingRoomProp)
+    '    SetRadioProperties(LivingRoomProp)
+    '    Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, LivingRoomEmitter, True)
+    '    Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, LivingRoomEmitter, "RADIO_01_CLASS_ROCK")
+    'End Sub
 
-    Public Sub TurnOffRadio(ByVal BedRoomRadio As Prop, ByVal HeistRoomRadio As Prop, ByVal LivingRoomProp As Prop, BedRoomEmitter As String, HeistRoomEmitter As String, LivingRoomEmitter As String)
-        Native.Function.Call(&H0E0CD610D5EB6C85, BedRoomEmitter, BedRoomRadio)
-        SetRadioProperties(BedRoomRadio)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, BedRoomEmitter, False)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, BedRoomEmitter, "RADIO_01_CLASS_ROCK")
+    'Public Sub TurnOffRadio(ByVal BedRoomRadio As Prop, ByVal HeistRoomRadio As Prop, ByVal LivingRoomProp As Prop, BedRoomEmitter As String, HeistRoomEmitter As String, LivingRoomEmitter As String)
+    '    Native.Function.Call(&H0E0CD610D5EB6C85, BedRoomEmitter, BedRoomRadio)
+    '    SetRadioProperties(BedRoomRadio)
+    '    Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, BedRoomEmitter, False)
+    '    Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, BedRoomEmitter, "RADIO_01_CLASS_ROCK")
 
-        Native.Function.Call(&H0E0CD610D5EB6C85, HeistRoomEmitter, HeistRoomRadio)
-        SetRadioProperties(HeistRoomRadio)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, HeistRoomEmitter, False)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, HeistRoomEmitter, "RADIO_01_CLASS_ROCK")
+    '    Native.Function.Call(&H0E0CD610D5EB6C85, HeistRoomEmitter, HeistRoomRadio)
+    '    SetRadioProperties(HeistRoomRadio)
+    '    Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, HeistRoomEmitter, False)
+    '    Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, HeistRoomEmitter, "RADIO_01_CLASS_ROCK")
 
-        Native.Function.Call(&H0E0CD610D5EB6C85, LivingRoomEmitter, LivingRoomProp)
-        SetRadioProperties(LivingRoomProp)
-        Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, LivingRoomEmitter, False)
-        Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, LivingRoomEmitter, "RADIO_01_CLASS_ROCK")
-    End Sub
+    '    Native.Function.Call(&H0E0CD610D5EB6C85, LivingRoomEmitter, LivingRoomProp)
+    '    SetRadioProperties(LivingRoomProp)
+    '    Native.Function.Call(Hash.SET_STATIC_EMITTER_ENABLED, LivingRoomEmitter, False)
+    '    Native.Function.Call(Hash.SET_EMITTER_RADIO_STATION, LivingRoomEmitter, "RADIO_01_CLASS_ROCK")
+    'End Sub
 
-    Public Sub SetRadioProperties(ByVal Radio As Prop)
-        Radio.IsInvincible = True
-        Radio.FreezePosition = True
-        Radio.HasCollision = False
-        Radio.IsVisible = False
-        Native.Function.Call(Hash._0xF1CA12B18AEF5298, Radio, True)
-    End Sub
+    'Public Sub SetRadioProperties(ByVal Radio As Prop)
+    '    Radio.IsInvincible = True
+    '    Radio.FreezePosition = True
+    '    Radio.HasCollision = False
+    '    Radio.IsVisible = False
+    '    Native.Function.Call(Hash._0xF1CA12B18AEF5298, Radio, True)
+    'End Sub
 
-    Public Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
-        Dim result As Prop = Nothing
+    'Public Function CreatePropNoOffset(PropModel As String, Position As Vector3, Dynamic As Boolean) As Prop
+    '    Dim result As Prop = Nothing
 
-        Dim model = New Model(PropModel)
-        model.Request(250)
-        If model.IsInCdImage AndAlso model.IsValid Then
-            While Not model.IsLoaded
-                Script.Wait(50)
-            End While
-            result = Native.Function.Call(Of Prop)(Hash.CREATE_OBJECT_NO_OFFSET, Game.GenerateHash(PropModel), Position.X, Position.Y, Position.Z, True, True, Dynamic)
-        End If
-        model.MarkAsNoLongerNeeded()
-        Return result
-    End Function
+    '    Dim model = New Model(PropModel)
+    '    model.Request(250)
+    '    If model.IsInCdImage AndAlso model.IsValid Then
+    '        While Not model.IsLoaded
+    '            Script.Wait(50)
+    '        End While
+    '        result = Native.Function.Call(Of Prop)(Hash.CREATE_OBJECT_NO_OFFSET, Game.GenerateHash(PropModel), Position.X, Position.Y, Position.Z, True, True, Dynamic)
+    '    End If
+    '    model.MarkAsNoLongerNeeded()
+    '    Return result
+    'End Function
 
     Public Function MD5Gen(strText As String) As String
         Dim MD5Service As New System.Security.Cryptography.MD5CryptoServiceProvider
@@ -1109,6 +1109,19 @@ Label_005C:
         SeductiveStyle = ReadCfgValue("SeductiveStyle", langFile)
         RegalStyle = ReadCfgValue("RegalStyle", langFile)
         AquaStyle = ReadCfgValue("AquaStyle", langFile)
+        ExecRich = ReadCfgValue("ExecRich", langFile)
+        ExecCool = ReadCfgValue("ExecCool", langFile)
+        ExecContrast = ReadCfgValue("ExecContrast", langFile)
+        OldSpiClassical = ReadCfgValue("OldSpiClassical", langFile)
+        OldSpiVintage = ReadCfgValue("OldSpiVintage", langFile)
+        OldSpiWarms = ReadCfgValue("OldSpiWarms", langFile)
+        PowBrkConservative = ReadCfgValue("PowBrkConservative", langFile)
+        PowBrkPolished = ReadCfgValue("PowBrkPolished", langFile)
+        PowBrkIce = ReadCfgValue("PowBrkIce", langFile)
+        OfficeGarage1 = ReadCfgValue("OfficeGarage1", langFile)
+        OfficeGarage2 = ReadCfgValue("OfficeGarage2", langFile)
+        OfficeGarage3 = ReadCfgValue("OfficeGarage3", langFile)
+        OfficeAutoShop = ReadCfgValue("OfficeAutoShop", langFile)
     End Sub
 
     Public Enum BlipSprite2

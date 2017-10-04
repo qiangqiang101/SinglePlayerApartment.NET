@@ -188,5 +188,8 @@
     <Setting Name="RefreshGrgVehs" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="MazeBankWest" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enable</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -16,6 +16,7 @@ Public Class Mechanic
     Public Shared NC2044Menu, HA2862Menu, HA2868Menu, WO3655Menu, NC2045Menu, MR2117Menu, HA2874Menu, WD3677Menu, MW2113Menu, ETP1Menu, ETP2Menu, ETP3Menu As UIMenu
     Public Shared BCAMenu, BDPMenu, CAMenu, HAMenu, LLB0604Menu, LLB2143Menu, MR0184Menu, PowerMenu, PD4401Menu, PD4584Menu, ProsperityMenu, SVSMenu, SMMDMenu, SRD0325Menu, SAMenu, SRMenu, TRMenu As UIMenu
     Public Shared GAMenu, PBMenu, SRD0112Menu, ZAMenu As UIMenu
+    Public Shared MBWMenu As UIMenu '1.10 update
     Public Shared MichaelPegasusMenu, FranklinPegasusMenu, TrevorPegasusMenu, Player3PegasusMenu, PegasusConfirmMenu As UIMenu
     Public Shared _menuPool As MenuPool
     Public Shared MPV0, FPV0, TPV0, PPV0 As Vehicle
@@ -28,6 +29,7 @@ Public Class Mechanic
     Public Shared itemNC2044, itemHA2862, itemHA2868, itemWO3655, itemNC2045, itemMR2117, itemHA2874, itemWD3677, itemMW2113, itemETP1, itemETP2, itemETP3 As UIMenuItem
     Public Shared itemBCA, itemBDP, itemCA, itemHA, itemLLB0604, itemLLB2143, itemMR0184, itemPower, itemPD4401, itemPD4584, itemProsperity, itemSVS, itemSMMD, itemSRD0325, itemSA, itemSR, itemTR As UIMenuItem
     Public Shared itemGA, itemPB, itemSRD0112, itemZA As UIMenuItem
+    Public Shared itemMBW As UIMenuItem '1.10 update
     Public Shared GarageMenuItem(10) As UIMenuItem
     Public Shared GrgMoveMenuItem(10) As UIMenuItem
     Public Shared GrgTransMenuItem(10) As UIMenuItem

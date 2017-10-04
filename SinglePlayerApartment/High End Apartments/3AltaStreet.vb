@@ -41,12 +41,12 @@ Public Class _3AltaStreet
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
             If Not Apartment.InteriorID = 0 Then If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
-            Apartment.BedRoomEmitter = "SE_DLC_APT_Yacht_Bedroom"
-            Apartment.HeistRoomEmitter = "SE_DLC_APT_Yacht_Bedroom_02"
-            Apartment.LivingRoomEmitter = "SE_DLC_APT_Yacht_Bedroom_03"
-            Apartment.BedRoomRadioPosition = New Vector3(-280.0596, -959.3243, 87.32481)
-            Apartment.HeistRoomRadioPosition = New Vector3(-272.2168, -943.6053, 92.23109)
-            Apartment.LivingRoomRadioPosition = New Vector3(-273.6588, -967.6356, 91.06019)
+            'Apartment.BedRoomEmitter = "SE_DLC_APT_Yacht_Bedroom"
+            'Apartment.HeistRoomEmitter = "SE_DLC_APT_Yacht_Bedroom_02"
+            'Apartment.LivingRoomEmitter = "SE_DLC_APT_Yacht_Bedroom_03"
+            'Apartment.BedRoomRadioPosition = New Vector3(-280.0596, -959.3243, 87.32481)
+            'Apartment.HeistRoomRadioPosition = New Vector3(-272.2168, -943.6053, 92.23109)
+            'Apartment.LivingRoomRadioPosition = New Vector3(-273.6588, -967.6356, 91.06019)
 
             If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then
                 Translate()

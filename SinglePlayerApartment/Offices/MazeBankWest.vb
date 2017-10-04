@@ -11,7 +11,7 @@ Imports SinglePlayerApartment.INMNative
 Public Class MazeBankWest
 
     Public Shared Apartment As Apartment
-    Public Shared BuyMenu, ExitMenu, GarageMenu As UIMenu
+    Public Shared BuyMenu, ExitMenu, GarageMenu, StyleMenu As UIMenu
     Public Shared _menuPool As MenuPool
 
     Public Sub New()
@@ -25,7 +25,7 @@ Public Class MazeBankWest
             Apartment.TeleportInside = New Vector3(-1386.939, -478.6686, 72.04206) '/
             Apartment.TeleportOutside = New Vector3(-1374.719, -507.18, 33.15739) '/
             Apartment.ApartmentExit = New Vector3(-1394.197, -479.7351, 72.04206)  '/
-            Apartment.Wardrobe = New Vector3(-1380.657, -470.9049, 72.04206) '/
+            Apartment.Wardrobe = New Vector3(-1381.067, -471.002, 72.04206) '/
             Apartment.GarageEntrance = New Vector3(-1362.143, -471.9992, 31.12832)  '/
             Apartment.GarageOutside = New Vector3(-1380.679, -475.1819, 31.12212)  '/
             Apartment.GarageOutHeading = 101.4345  '/
@@ -33,20 +33,30 @@ Public Class MazeBankWest
             Apartment.CameraRotation = New Vector3(19.04649, 1.3806443, 39.66655) '/
             Apartment.CameraFOV = 50.0
             Apartment.Interior = New Vector3(-1382.3, -477.9, 72.03836)  '/
-            Apartment.WardrobeHeading = 1.628347  '/
+            Apartment.WardrobeHeading = 299.8581  '/
+            Apartment.ApartmentStyleCameraPosition = New Vector3(-1367.114, -480.3311, 72.04215)
+            Apartment.ApartmentStyleCameraRotation = New Vector3(-5.396699, 0, 45.76079)
+            Apartment.ApartmentStyleCameraFOV = 50.0
             Apartment.IsAtHome = False
             Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\maze_bank_west\" '/
             Apartment.SaveFile = "MBWowner"  '/
             Apartment.PlayerMap = "MazeBankWest"  '/
+            Apartment.IPL = ReadCfgValue("MBWipl", saveFile) '/
+            Apartment.LastIPL = Apartment.IPL  '/
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
             If Not Apartment.InteriorID = 0 Then If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
+            Apartment.AssistantPosition = New Vector3(-1379.698, -477.5231, 71.0375)
+            Apartment.AssistantHeading = 277.4893
+            Apartment.CEOPosition = New Vector3(-1372.387, -464.3324, 71.04401)
+            Apartment.CEOHeading = 9.861806
 
             If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then
                 Translate()
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
                 CreateExitMenu()
+                CreateAptStyleMenu()
                 CreateGarageMenu()
 
                 AddHandler BuyMenu.OnMenuClose, AddressOf MenuCloseHandler
@@ -54,6 +64,9 @@ Public Class MazeBankWest
                 AddHandler BuyMenu.OnItemSelect, AddressOf BuyItemSelectHandler
                 AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
                 AddHandler GarageMenu.OnItemSelect, AddressOf GarageItemSelectHandler
+                AddHandler StyleMenu.OnMenuClose, AddressOf MenuCloseHandler
+                AddHandler StyleMenu.OnItemSelect, AddressOf ItemSelectHandler
+                AddHandler StyleMenu.OnIndexChange, AddressOf IndexChangeHandler
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -112,8 +125,8 @@ Public Class MazeBankWest
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
-        With item
+        Dim Garage1 As New UIMenuItem(OfficeGarage1)
+        With Garage1
             If Apartment.Owner = "Michael" Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
             ElseIf Apartment.Owner = "Franklin" Then
@@ -126,8 +139,75 @@ Public Class MazeBankWest
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
-        GarageMenu.AddItem(item)
+        GarageMenu.AddItem(Garage1)
+        Dim Garage2 As New UIMenuItem(OfficeGarage2)
+        With Garage2
+            If Apartment.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf Apartment.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf Apartment.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Apartment.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+            Else
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        GarageMenu.AddItem(Garage2)
+        Dim Garage3 As New UIMenuItem(OfficeGarage3)
+        With Garage3
+            If Apartment.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf Apartment.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf Apartment.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Apartment.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+            Else
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        GarageMenu.AddItem(Garage3)
+        Dim AutoShop As New UIMenuItem(OfficeAutoShop)
+        With AutoShop
+            If Apartment.Owner = "Michael" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+            ElseIf Apartment.Owner = "Franklin" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+            ElseIf Apartment.Owner = "Trevor" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+            ElseIf Apartment.Owner = "Player3" Then
+                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+            Else
+                .SetRightBadge(UIMenuItem.BadgeStyle.None)
+            End If
+        End With
+        GarageMenu.AddItem(AutoShop)
         GarageMenu.RefreshIndex()
+    End Sub
+
+    Public Shared Sub CreateAptStyleMenu()
+        Try
+            StyleMenu = New UIMenu("", AptStyle.ToUpper, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            StyleMenu.SetBannerType(Rectangle)
+            _menuPool.Add(StyleMenu)
+            StyleMenu.AddItem(New UIMenuItem(ExecRich))
+            StyleMenu.AddItem(New UIMenuItem(ExecCool))
+            StyleMenu.AddItem(New UIMenuItem(ExecContrast))
+            StyleMenu.AddItem(New UIMenuItem(OldSpiClassical))
+            StyleMenu.AddItem(New UIMenuItem(OldSpiVintage))
+            StyleMenu.AddItem(New UIMenuItem(OldSpiWarms))
+            StyleMenu.AddItem(New UIMenuItem(PowBrkConservative))
+            StyleMenu.AddItem(New UIMenuItem(PowBrkPolished))
+            StyleMenu.AddItem(New UIMenuItem(PowBrkIce))
+            StyleMenu.RefreshIndex()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
     End Sub
 
     Public Shared Sub CreateExitMenu()
@@ -138,8 +218,12 @@ Public Class MazeBankWest
             ExitMenu.SetBannerType(Rectangle)
             _menuPool.Add(ExitMenu)
             ExitMenu.AddItem(New UIMenuItem(ExitApt))
-            ExitMenu.AddItem(New UIMenuItem(EnterGarage))
+            ExitMenu.AddItem(New UIMenuItem(OfficeGarage1))
+            ExitMenu.AddItem(New UIMenuItem(OfficeGarage2))
+            ExitMenu.AddItem(New UIMenuItem(OfficeGarage3))
+            ExitMenu.AddItem(New UIMenuItem(OfficeAutoShop))
             ExitMenu.AddItem(New UIMenuItem(SellApt))
+            ExitMenu.AddItem(New UIMenuItem(AptStyle))
             ExitMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -153,8 +237,8 @@ Public Class MazeBankWest
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
-            With item
+            Dim Garage1 As New UIMenuItem(OfficeGarage1)
+            With Garage1
                 If Apartment.Owner = "Michael" Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                 ElseIf Apartment.Owner = "Franklin" Then
@@ -167,7 +251,52 @@ Public Class MazeBankWest
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
-            GarageMenu.AddItem(item)
+            GarageMenu.AddItem(Garage1)
+            Dim Garage2 As New UIMenuItem(OfficeGarage2)
+            With Garage2
+                If Apartment.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf Apartment.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf Apartment.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Apartment.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+                Else
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            GarageMenu.AddItem(Garage2)
+            Dim Garage3 As New UIMenuItem(OfficeGarage3)
+            With Garage3
+                If Apartment.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf Apartment.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf Apartment.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Apartment.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+                Else
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            GarageMenu.AddItem(Garage3)
+            Dim AutoShop As New UIMenuItem(OfficeAutoShop)
+            With AutoShop
+                If Apartment.Owner = "Michael" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
+                ElseIf Apartment.Owner = "Franklin" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
+                ElseIf Apartment.Owner = "Trevor" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
+                ElseIf Apartment.Owner = "Player3" Then
+                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
+                Else
+                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
+                End If
+            End With
+            GarageMenu.AddItem(AutoShop)
             GarageMenu.RefreshIndex()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -234,6 +363,205 @@ Public Class MazeBankWest
                 ExitMenu.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
+            ElseIf selectedItem.Text = AptStyle Then
+                ExitMenu.Visible = False
+                StyleMenu.Visible = True
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                World.RenderingCamera = World.CreateCamera(Apartment.ApartmentStyleCameraPosition, Apartment.ApartmentStyleCameraRotation, Apartment.ApartmentStyleCameraFOV)
+                hideHud = True
+                Wait(500)
+                Game.FadeScreenIn(500)
+            End If
+
+            If selectedItem.Text = OldSpiWarms Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_01a", saveFile)
+                Apartment.IPL = "ex_sm_15_office_01a"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = OldSpiClassical Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_01b", saveFile)
+                Apartment.IPL = "ex_sm_15_office_01b"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = OldSpiVintage Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_01c", saveFile)
+                Apartment.IPL = "ex_sm_15_office_01c"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = ExecContrast Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_02a", saveFile)
+                Apartment.IPL = "ex_sm_15_office_02a"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = ExecRich Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_02b", saveFile)
+                Apartment.IPL = "ex_sm_15_office_02b"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = ExecCool Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_02c", saveFile)
+                Apartment.IPL = "ex_sm_15_office_02c"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = PowBrkice Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_03a", saveFile)
+                Apartment.IPL = "ex_sm_15_office_03a"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = PowBrkConservative Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_03b", saveFile)
+                Apartment.IPL = "ex_sm_15_office_03b"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            ElseIf selectedItem.Text = PowBrkPolished Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                WriteCfgValue("MBWipl", "ex_sm_15_office_03c", saveFile)
+                Apartment.IPL = "ex_sm_15_office_03c"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+                StyleMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub IndexChangeHandler(sender As UIMenu, index As Integer)
+        Try
+            If sender.MenuItems(index).Text = OldSpiWarms Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_01a", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_01a"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = OldSpiClassical Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_01b", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_01b"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = OldSpiVintage Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_01c", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_01c"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = ExecContrast Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_02a", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_02a"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = Execrich Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_02b", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_02b"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = ExecCool Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_02c", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_02c"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = PowBrkIce Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_03a", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_03a"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = PowBrkConservative Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_03b", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_03b"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf sender.MenuItems(index).Text = PowBrkPolished Then
+                Game.FadeScreenOut(500)
+                Wait(&H3E8)
+                ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_03c", Apartment.Interior)
+                Apartment.LastIPL = "ex_sm_15_office_03c"
+                RefreshOfficeProps()
+                Wait(500)
+                Game.FadeScreenIn(500)
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -286,6 +614,8 @@ Public Class MazeBankWest
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
+                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                ToggleIPL(ReadCfgValue("MBWipl", saveFile))
 
                 Apartment.SetInteriorActive()
                 Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
@@ -463,7 +793,7 @@ Public Class MazeBankWest
     Public Sub OnTick()
         Try
             If Not Game.IsLoading Then
-                If My.Settings.ThreeAltaStreet = "Enable" Then
+                If My.Settings.MazeBankWest = "Enable" Then
                     'Enter Apartment
                     If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
                         DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
@@ -554,12 +884,14 @@ Public Class MazeBankWest
                         Case Apartment.InteriorID
                             Apartment.IsAtHome = True
                             HIDE_MAP_OBJECT_THIS_FRAME()
+                            CreateOfficeAssistant()
                         Case Else
                             Apartment.IsAtHome = False
                     End Select
 
                     If Apartment.IsAtHome Then
                         HIDE_MAP_OBJECT_THIS_FRAME()
+                        CreateOfficeAssistant()
                     End If
 
                     _menuPool.ProcessMenus()
@@ -572,15 +904,87 @@ Public Class MazeBankWest
 
     Public Sub HIDE_MAP_OBJECT_THIS_FRAME()
         Native.Function.Call(Hash._0x4B5CFC83122DF602)
-        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "hei_dt1_20_build2"))
-        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "dt1_20_dt1_emissive_dt1_20"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_bld2_dtl"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "hei_sm_15_bld2"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_bld2_LOD"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_bld2_dtl3"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_bld1_dtl3"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_bld2_railing"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_emissive"))
+        Native.Function.Call(Hash._HIDE_MAP_OBJECT_THIS_FRAME, Native.Function.Call(Of Integer)(Hash.GET_HASH_KEY, "sm_15_emissive_LOD"))
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
+    End Sub
+
+    Public Sub CreateOfficeAssistant()
+        If Apartment.AssistantChair = Nothing Then
+            Apartment.AssistantChair = World.CreateProp(1580642483, Apartment.AssistantPosition, False, False)
+            Apartment.AssistantChair.Heading = Apartment.AssistantHeading
+            Apartment.AssistantChair.FreezePosition = True
+            Apartment.AssistantChair.IsInvincible = True
+        End If
+        If Apartment.OfficeAssistant = Nothing Then
+            Apartment.OfficeAssistant = World.CreatePed(PedHash.ExecutivePAFemale02, Apartment.AssistantPosition)
+            Apartment.OfficeAssistant.AttachTo(Apartment.AssistantChair, 0, New Vector3(0, -0.1, 0.43), New Vector3(0, 180, 0))
+            Apartment.OfficeAssistant.Task.PlayAnimation("anim@amb@office@pa@female@", "pa_base", 8.0, -1, True, -1.0)
+            Apartment.OfficeAssistant.Heading = Apartment.AssistantHeading - 180
+            Apartment.OfficeAssistant.FreezePosition = True
+            Apartment.OfficeAssistant.IsInvincible = True
+            Apartment.OfficeAssistant.RelationshipGroup = &H6F0783F5
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 0, 1, 3, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 2, 2, 0, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 3, 2, 0, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 4, 1, 2, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 6, 2, 2, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 7, 2, 0, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 8, 0, 0, 0)
+            Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 11, 1, 2, 0)
+        End If
+        If Apartment.CEOChair = Nothing Then
+            Apartment.CEOChair = World.CreateProp(-853526657, Apartment.CEOPosition, False, False)
+            Apartment.CEOChair.Heading = Apartment.CEOHeading
+            Apartment.CEOChair.FreezePosition = True
+            Apartment.CEOChair.IsInvincible = True
+        End If
+    End Sub
+
+    Public Sub RefreshOfficeProps()
+        Apartment.AssistantChair.Delete()
+        Apartment.AssistantChair = World.CreateProp(1580642483, Apartment.AssistantPosition, False, False)
+        Apartment.AssistantChair.Heading = Apartment.AssistantHeading
+        Apartment.AssistantChair.FreezePosition = True
+        Apartment.AssistantChair.IsInvincible = True
+
+        Apartment.OfficeAssistant.Delete()
+        Apartment.OfficeAssistant = World.CreatePed(PedHash.ExecutivePAFemale02, Apartment.AssistantPosition)
+        Apartment.OfficeAssistant.AttachTo(Apartment.AssistantChair, 0, New Vector3(0, -0.1, 0.43), New Vector3(0, 180, 0))
+        Apartment.OfficeAssistant.Task.PlayAnimation("anim@amb@office@pa@female@", "pa_base", 8.0, -1, True, -1.0)
+        Apartment.OfficeAssistant.Heading = Apartment.AssistantHeading - 180
+        Apartment.OfficeAssistant.FreezePosition = True
+        Apartment.OfficeAssistant.IsInvincible = True
+        Apartment.OfficeAssistant.RelationshipGroup = &H6F0783F5
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 0, 1, 3, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 2, 2, 0, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 3, 2, 0, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 4, 1, 2, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 6, 2, 2, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 7, 2, 0, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 8, 0, 0, 0)
+        Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 11, 1, 2, 0)
+
+        Apartment.CEOChair.Delete()
+        Apartment.CEOChair = World.CreateProp(-853526657, Apartment.CEOPosition, False, False)
+        Apartment.CEOChair.Heading = Apartment.CEOHeading
+        Apartment.CEOChair.FreezePosition = True
+        Apartment.CEOChair.IsInvincible = True
     End Sub
 
     Public Sub OnAborted() 'Handles MyBase.Aborted
         Try
             If Not Apartment.AptBlip Is Nothing Then Apartment.AptBlip.Remove()
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
+            If Not Apartment.OfficeAssistant = Nothing Then Apartment.OfficeAssistant.Delete()
+            If Not Apartment.AssistantChair = Nothing Then Apartment.AssistantChair.Delete()
+            If Not Apartment.CEOChair = Nothing Then Apartment.CEOChair.Delete()
         Catch ex As Exception
         End Try
     End Sub
