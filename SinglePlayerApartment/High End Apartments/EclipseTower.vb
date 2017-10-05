@@ -684,7 +684,7 @@ Public Class EclipseTower
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
@@ -695,7 +695,7 @@ Public Class EclipseTower
                 WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
                 Apartment.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -710,7 +710,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
@@ -736,7 +736,7 @@ Public Class EclipseTower
                 'Exit Apt
                 ExitMenuHL.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentHL.TeleportOutside
                 Wait(500)
@@ -748,7 +748,7 @@ Public Class EclipseTower
                 WriteCfgValue(ApartmentHL.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentHL.Cost)
                 ApartmentHL.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -764,7 +764,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
@@ -790,9 +790,10 @@ Public Class EclipseTower
                 'Exit Apt
                 ExitMenuPS1.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentPS1.TeleportOutside
+                RemoveIPL(ReadCfgValue("ETP1ipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
@@ -802,7 +803,7 @@ Public Class EclipseTower
                 WriteCfgValue(ApartmentPS1.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentPS1.Cost)
                 ApartmentPS1.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -810,6 +811,7 @@ Public Class EclipseTower
                 CreateEclipseTower()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
+                RemoveIPL(ReadCfgValue("ETP1ipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
@@ -818,7 +820,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = ApartmentPS1.Name & ApartmentPS1.Unit
@@ -829,6 +831,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentPS1.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
+                RemoveIPL(ReadCfgValue("ETP1ipl", saveFile))
                 ExitMenuPS1.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -836,7 +839,7 @@ Public Class EclipseTower
                 ExitMenuPS1.Visible = False
                 StyleMenuPS1.Visible = True
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 World.RenderingCamera = World.CreateCamera(ApartmentPS1.ApartmentStyleCameraPosition, ApartmentPS1.ApartmentStyleCameraRotation, ApartmentPS1.ApartmentStyleCameraFOV)
                 hideHud = True
                 Wait(500)
@@ -845,7 +848,7 @@ Public Class EclipseTower
 
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_01_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_01_a"
                 Wait(500)
@@ -856,7 +859,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_02_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_02_a"
                 Wait(500)
@@ -867,7 +870,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_03_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_03_a"
                 Wait(500)
@@ -878,7 +881,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_04_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_04_a"
                 Wait(500)
@@ -889,7 +892,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_05_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_05_a"
                 Wait(500)
@@ -900,7 +903,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_06_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_06_a"
                 Wait(500)
@@ -911,7 +914,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_07_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_07_a"
                 Wait(500)
@@ -922,7 +925,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP1ipl", "apa_v_mp_h_08_a", saveFile)
                 ApartmentPS1.IPL = "apa_v_mp_h_08_a"
                 Wait(500)
@@ -943,9 +946,10 @@ Public Class EclipseTower
                 'Exit Apt
                 ExitMenuPS2.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentPS2.TeleportOutside
+                RemoveIPL(ReadCfgValue("ETP2ipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
@@ -955,7 +959,7 @@ Public Class EclipseTower
                 WriteCfgValue(ApartmentPS2.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentPS2.Cost)
                 ApartmentPS2.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -963,6 +967,7 @@ Public Class EclipseTower
                 CreateEclipseTower()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
+                RemoveIPL(ReadCfgValue("ETP2ipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
@@ -971,7 +976,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = ApartmentPS2.Name & ApartmentPS2.Unit
@@ -982,6 +987,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentPS2.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
+                RemoveIPL(ReadCfgValue("ETP2ipl", saveFile))
                 ExitMenuPS2.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -989,7 +995,7 @@ Public Class EclipseTower
                 ExitMenuPS2.Visible = False
                 StyleMenuPS2.Visible = True
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 World.RenderingCamera = World.CreateCamera(ApartmentPS2.ApartmentStyleCameraPosition, ApartmentPS2.ApartmentStyleCameraRotation, ApartmentPS2.ApartmentStyleCameraFOV)
                 hideHud = True
                 Wait(500)
@@ -998,7 +1004,7 @@ Public Class EclipseTower
 
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_01_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_01_b"
                 Wait(500)
@@ -1009,7 +1015,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_02_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_02_b"
                 Wait(500)
@@ -1020,7 +1026,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_03_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_03_b"
                 Wait(500)
@@ -1031,7 +1037,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_04_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_04_b"
                 Wait(500)
@@ -1042,7 +1048,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_05_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_05_b"
                 Wait(500)
@@ -1053,7 +1059,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_06_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_06_b"
                 Wait(500)
@@ -1064,7 +1070,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_07_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_07_b"
                 Wait(500)
@@ -1075,7 +1081,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP2ipl", "apa_v_mp_h_08_b", saveFile)
                 ApartmentPS2.IPL = "apa_v_mp_h_08_b"
                 Wait(500)
@@ -1096,9 +1102,10 @@ Public Class EclipseTower
                 'Exit Apt
                 ExitMenuPS3.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentPS3.TeleportOutside
+                RemoveIPL(ReadCfgValue("ETP3ipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 UnLoadMPDLCMap()
@@ -1108,7 +1115,7 @@ Public Class EclipseTower
                 WriteCfgValue(ApartmentPS3.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentPS3.Cost)
                 ApartmentPS3.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -1116,6 +1123,7 @@ Public Class EclipseTower
                 CreateEclipseTower()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
+                RemoveIPL(ReadCfgValue("ETP3ipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
@@ -1124,7 +1132,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = ApartmentPS3.Name & ApartmentPS3.Unit
@@ -1135,6 +1143,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentPS3.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
+                RemoveIPL(ReadCfgValue("ETP3ipl", saveFile))
                 ExitMenuPS3.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1142,7 +1151,7 @@ Public Class EclipseTower
                 ExitMenuPS3.Visible = False
                 StyleMenuPS3.Visible = True
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 World.RenderingCamera = World.CreateCamera(ApartmentPS3.ApartmentStyleCameraPosition, ApartmentPS3.ApartmentStyleCameraRotation, ApartmentPS3.ApartmentStyleCameraFOV)
                 hideHud = True
                 Wait(500)
@@ -1151,7 +1160,7 @@ Public Class EclipseTower
 
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_01_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_01_c"
                 Wait(500)
@@ -1162,7 +1171,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_02_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_02_c"
                 Wait(500)
@@ -1173,7 +1182,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_03_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_03_c"
                 Wait(500)
@@ -1184,7 +1193,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_04_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_04_c"
                 Wait(500)
@@ -1195,7 +1204,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_05_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_05_c"
                 Wait(500)
@@ -1206,7 +1215,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_06_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_06_c"
                 Wait(500)
@@ -1217,7 +1226,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_07_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_07_c"
                 Wait(500)
@@ -1228,7 +1237,7 @@ Public Class EclipseTower
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("ETP3ipl", "apa_v_mp_h_08_c", saveFile)
                 ApartmentPS3.IPL = "apa_v_mp_h_08_c"
                 Wait(500)
@@ -1247,56 +1256,56 @@ Public Class EclipseTower
         Try
             If sender.MenuItems(index).Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_01_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_01_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_02_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_02_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_03_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_03_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_04_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_04_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_05_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_05_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_06_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_06_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_07_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_07_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS1.LastIPL, "apa_v_mp_h_08_a", ApartmentPS1.Interior)
                 ApartmentPS1.LastIPL = "apa_v_mp_h_08_a"
                 Wait(500)
@@ -1312,56 +1321,56 @@ Public Class EclipseTower
         Try
             If sender.MenuItems(index).Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_01_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_01_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_02_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_02_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_03_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_03_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_04_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_04_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_05_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_05_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_06_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_06_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_07_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_07_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS2.LastIPL, "apa_v_mp_h_08_b", ApartmentPS2.Interior)
                 ApartmentPS2.LastIPL = "apa_v_mp_h_08_b"
                 Wait(500)
@@ -1377,56 +1386,56 @@ Public Class EclipseTower
         Try
             If sender.MenuItems(index).Text = ModernStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_01_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_01_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_02_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_02_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_03_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_03_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SharpStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_04_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_04_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_05_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_05_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_06_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_06_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = RegalStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_07_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_07_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = AquaStyle Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(ApartmentPS3.LastIPL, "apa_v_mp_h_08_c", ApartmentPS3.Interior)
                 ApartmentPS3.LastIPL = "apa_v_mp_h_08_c"
                 Wait(500)
@@ -1446,7 +1455,7 @@ Public Class EclipseTower
                 If playerCash > Apartment.Cost Then
                     WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -1488,7 +1497,7 @@ Public Class EclipseTower
 
                 Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = Apartment.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-787.8336, 342.3493, 206.2184))
                 Wait(500)
@@ -1501,7 +1510,7 @@ Public Class EclipseTower
                 If playerCash > ApartmentHL.Cost Then
                     WriteCfgValue(ApartmentHL.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
                     ApartmentHL.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -1544,7 +1553,7 @@ Public Class EclipseTower
 
                 ApartmentHL.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = ApartmentHL.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-769.3657, 324.1958, 211.9971))
                 Wait(500)
@@ -1557,7 +1566,7 @@ Public Class EclipseTower
                 If playerCash > ApartmentPS1.Cost Then
                     WriteCfgValue(ApartmentPS1.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS1.Cost)
                     ApartmentPS1.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -1601,7 +1610,7 @@ Public Class EclipseTower
 
                 ApartmentPS1.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = ApartmentPS1.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-788.0755, 319.9557, 217.0382))
                 Wait(500)
@@ -1614,7 +1623,7 @@ Public Class EclipseTower
                 If playerCash > ApartmentPS2.Cost Then
                     WriteCfgValue(ApartmentPS2.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS2.Cost)
                     ApartmentPS2.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -1658,7 +1667,7 @@ Public Class EclipseTower
 
                 ApartmentPS2.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = ApartmentPS2.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-772.9551, 337.914, 196.086))
                 Wait(500)
@@ -1671,7 +1680,7 @@ Public Class EclipseTower
                 If playerCash > ApartmentPS3.Cost Then
                     WriteCfgValue(ApartmentPS3.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS3.Cost)
                     ApartmentPS3.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -1715,7 +1724,7 @@ Public Class EclipseTower
 
                 ApartmentPS3.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = ApartmentPS3.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-788.2332, 319.9676, 187.3132))
                 Wait(500)
@@ -1732,7 +1741,7 @@ Public Class EclipseTower
             'Teleport to Garage
 
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
             TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
@@ -1773,7 +1782,7 @@ Public Class EclipseTower
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1784,7 +1793,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1795,7 +1804,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1806,7 +1815,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1817,7 +1826,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1828,7 +1837,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1839,7 +1848,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1850,7 +1859,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1861,7 +1870,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1872,7 +1881,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1892,7 +1901,7 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
 
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentHL.SetInteriorActive()
             TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
@@ -1937,7 +1946,7 @@ Public Class EclipseTower
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1948,7 +1957,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1959,7 +1968,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1970,7 +1979,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1981,7 +1990,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -1992,7 +2001,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2003,7 +2012,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2014,7 +2023,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2025,7 +2034,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2036,7 +2045,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentHL.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentHL.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2056,7 +2065,7 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             ToggleIPL(ReadCfgValue("ETP1ipl", saveFile))
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS1.SetInteriorActive()
             TenCarGarage.LastLocationName = ApartmentPS1.Name & ApartmentPS1.Unit
@@ -2100,7 +2109,7 @@ Public Class EclipseTower
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2111,7 +2120,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2122,7 +2131,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2133,7 +2142,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2144,7 +2153,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2155,7 +2164,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2166,7 +2175,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2177,7 +2186,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2188,7 +2197,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2199,7 +2208,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS1.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2219,7 +2228,7 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             ToggleIPL(ReadCfgValue("ETP2ipl", saveFile))
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS2.SetInteriorActive()
             TenCarGarage.LastLocationName = ApartmentPS2.Name & ApartmentPS2.Unit
@@ -2263,7 +2272,7 @@ Public Class EclipseTower
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2274,7 +2283,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2285,7 +2294,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2296,7 +2305,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2307,7 +2316,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2318,7 +2327,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2329,7 +2338,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2340,7 +2349,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2351,7 +2360,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2362,7 +2371,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS2.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2382,7 +2391,7 @@ Public Class EclipseTower
             If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
             ToggleIPL(ReadCfgValue("ETP3ipl", saveFile))
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS3.SetInteriorActive()
             TenCarGarage.LastLocationName = ApartmentPS3.Name & ApartmentPS3.Unit
@@ -2426,7 +2435,7 @@ Public Class EclipseTower
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2437,7 +2446,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2448,7 +2457,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2459,7 +2468,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2470,7 +2479,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2481,7 +2490,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2492,7 +2501,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2503,7 +2512,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2514,7 +2523,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2525,7 +2534,7 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(ApartmentPS3.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -2550,7 +2559,7 @@ Public Class EclipseTower
                         DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             BuyMenu.Visible = True
                             World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                             hideHud = True
@@ -2565,7 +2574,7 @@ Public Class EclipseTower
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()
@@ -2578,7 +2587,7 @@ Public Class EclipseTower
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentHL.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()
@@ -2591,7 +2600,7 @@ Public Class EclipseTower
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentPS1.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()
@@ -2604,7 +2613,7 @@ Public Class EclipseTower
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentPS2.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()
@@ -2617,7 +2626,7 @@ Public Class EclipseTower
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentPS3.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()

@@ -193,7 +193,7 @@ Public Class DreamTower
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Brain.TVOn = False
                 Wait(500)
@@ -205,7 +205,7 @@ Public Class DreamTower
                 WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
                 Apartment.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -221,7 +221,7 @@ Public Class DreamTower
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 playerPed.Position = TenCarGarage.Elevator
@@ -249,7 +249,7 @@ Public Class DreamTower
                 If playerCash > Apartment.Cost Then
                     WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -292,7 +292,7 @@ Public Class DreamTower
 
                 Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = Apartment.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(338.1914, -993.7443, -99.19624))
                 Wait(500)
@@ -308,7 +308,7 @@ Public Class DreamTower
             'Teleport to Garage
 
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
             playerPed.Position = TenCarGarage.GarageDoorL
@@ -350,7 +350,7 @@ Public Class DreamTower
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -361,7 +361,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -372,7 +372,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -383,7 +383,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -394,7 +394,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -405,7 +405,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -416,7 +416,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -427,7 +427,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -438,7 +438,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -449,7 +449,7 @@ Public Class DreamTower
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -474,7 +474,7 @@ Public Class DreamTower
                         DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             BuyMenu.Visible = True
                             World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                             hideHud = True
@@ -489,7 +489,7 @@ Public Class DreamTower
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()

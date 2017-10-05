@@ -224,7 +224,7 @@ Public Class Brain
                         Native.Function.Call(Hash.SET_PED_TO_RAGDOLL, playerPed, 650, 650, 1, 1, 1, 0)
                         Wait(2000)
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         TimeLapse(8)
                         GameplayCamera.StopShaking()
                         Native.Function.Call(Hash.SET_PED_IS_DRUNK, playerPed.Handle, False)
@@ -323,7 +323,7 @@ Public Class Brain
                         Native.Function.Call(Hash.SET_PED_TO_RAGDOLL, playerPed, 650, 650, 1, 1, 1, 0)
                         Wait(2000)
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         TimeLapse(8)
                         GameplayCamera.StopShaking()
                         Native.Function.Call(Hash.SET_PED_IS_DRUNK, playerPed.Handle, False)
@@ -369,7 +369,7 @@ Public Class Brain
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 26, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 18, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
@@ -408,7 +408,7 @@ Public Class Brain
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 26, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 18, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
@@ -446,7 +446,7 @@ Public Class Brain
                         GetPlayerClothes()
 
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 16, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 22, 0, 2)
                         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
@@ -486,7 +486,7 @@ Public Class Brain
                             GetPlayerClothes()
 
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 15, 0, 2)
                             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 14, 0, 2)
                             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
@@ -525,7 +525,7 @@ Public Class Brain
                             GetPlayerClothes()
 
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 3, 15, 0, 2)
                             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 4, 15, 0, 2)
                             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 5, 0, 0, 2)
@@ -565,7 +565,7 @@ Public Class Brain
                     ShowerTaskScriptStatus = 1
                 Case 1
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 0, a_d0, a_t0, 2)
                     Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 1, a_d1, a_t1, 2)
                     Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, playerPed, 2, a_d2, a_t2, 2)

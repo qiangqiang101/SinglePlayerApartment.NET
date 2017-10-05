@@ -200,7 +200,7 @@ Public Class _3AltaStreet
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Wait(500)
@@ -211,7 +211,7 @@ Public Class _3AltaStreet
                 WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
                 Apartment.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -226,7 +226,7 @@ Public Class _3AltaStreet
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
@@ -253,7 +253,7 @@ Public Class _3AltaStreet
                 If playerCash > Apartment.Cost Then
                     WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -296,7 +296,7 @@ Public Class _3AltaStreet
                 Apartment.SetInteriorActive()
                 Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = Apartment.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-285.6369, -950.2663, 91.10831))
                 Wait(500)
@@ -311,7 +311,7 @@ Public Class _3AltaStreet
         If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
+            Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
             TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
@@ -351,7 +351,7 @@ Public Class _3AltaStreet
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -362,7 +362,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -373,7 +373,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -384,7 +384,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -395,7 +395,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -406,7 +406,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -417,7 +417,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -428,7 +428,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -439,7 +439,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -450,7 +450,7 @@ Public Class _3AltaStreet
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -475,7 +475,7 @@ Public Class _3AltaStreet
                         DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             BuyMenu.Visible = True
                             World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                             hideHud = True
@@ -490,7 +490,7 @@ Public Class _3AltaStreet
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()

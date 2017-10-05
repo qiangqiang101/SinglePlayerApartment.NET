@@ -192,7 +192,7 @@ Public Class SouthRockfordDr0112
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
                 Script.Wait(500)
@@ -204,7 +204,7 @@ Public Class SouthRockfordDr0112
                 WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
                 Apartment.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -220,7 +220,7 @@ Public Class SouthRockfordDr0112
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
                 Brain.TVOn = False
                 playerPed.Position = SixCarGarage.Elevator
@@ -248,7 +248,7 @@ Public Class SouthRockfordDr0112
                 If playerCash > Apartment.Cost Then
                     WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Script.Wait(&H3E8)
+                    Script.Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -291,7 +291,7 @@ Public Class SouthRockfordDr0112
 
                 Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 Game.Player.Character.Position = Apartment.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(260.0096, -999.2469, -99.00863))
                 Script.Wait(500)
@@ -307,7 +307,7 @@ Public Class SouthRockfordDr0112
             'Teleport to Garage
 
             Game.FadeScreenOut(500)
-            Script.Wait(&H3E8)
+            Script.Wait(500)
             SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
             SetInteriorActive2(263.86999, -998.78002, -99.010002) 'vespucci blvd
             playerPed.Position = SixCarGarage.GarageDoorL
@@ -345,7 +345,7 @@ Public Class SouthRockfordDr0112
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SixCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -356,7 +356,7 @@ Public Class SouthRockfordDr0112
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SixCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -367,7 +367,7 @@ Public Class SouthRockfordDr0112
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SixCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -378,7 +378,7 @@ Public Class SouthRockfordDr0112
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SixCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -389,7 +389,7 @@ Public Class SouthRockfordDr0112
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SixCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -400,7 +400,7 @@ Public Class SouthRockfordDr0112
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Script.Wait(&H3E8)
+                Script.Wait(500)
                 SixCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
                 SixCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
@@ -425,7 +425,7 @@ Public Class SouthRockfordDr0112
                         DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             BuyMenu.Visible = True
                             World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                             hideHud = True
@@ -440,7 +440,7 @@ Public Class SouthRockfordDr0112
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
                             Game.FadeScreenOut(500)
-                            Script.Wait(&H3E8)
+                            Script.Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()

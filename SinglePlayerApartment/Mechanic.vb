@@ -30,7 +30,7 @@ Public Class Mechanic
     Public Shared itemBCA, itemBDP, itemCA, itemHA, itemLLB0604, itemLLB2143, itemMR0184, itemPower, itemPD4401, itemPD4584, itemProsperity, itemSVS, itemSMMD, itemSRD0325, itemSA, itemSR, itemTR As UIMenuItem
     Public Shared itemGA, itemPB, itemSRD0112, itemZA As UIMenuItem
     Public Shared itemMBW As UIMenuItem '1.10 update
-    Public Shared GarageMenuItem(10) As UIMenuItem
+    Public Shared GarageMenuItem(20) As UIMenuItem
     Public Shared GrgMoveMenuItem(10) As UIMenuItem
     Public Shared GrgTransMenuItem(10) As UIMenuItem
     Public Shared GarageMenuSelectedItem, GarageMenuSelectedFile, MoveMenuSelectedItem, MoveMenuSelectedFile, MoveMenuSelectedIndex, SelectedGarage, PegasusSelectedVehicleFile As String, MoveIndex As Integer = -1
@@ -480,6 +480,28 @@ Public Class Mechanic
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(8))
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(9))
                 SelectedGarage = "Ten"
+            ElseIf SixOrTen = "MBWG1Twenty"
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(0))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(1))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(2))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(3))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(4))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(5))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(6))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(7))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(8))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(9))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(10))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(11))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(12))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(13))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(14))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(15))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(16))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(17))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(18))
+                GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(19))
+                SelectedGarage = "MBWG1Twenty"
             Else
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(0))
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(1))
@@ -522,7 +544,7 @@ Public Class Mechanic
         End If
     End Sub
 
-    Public Shared Sub CreateGarageMenu(file As String)
+    Public Shared Sub CreateGarageMenu(file As String, Optional Twenty As Boolean = False)
         Try
             GarageMenu = New UIMenu("", GrgOptions, New Point(0, -107))
             Dim Rectangle = New UIResRectangle()
@@ -531,16 +553,40 @@ Public Class Mechanic
             _menuPool.Add(GarageMenu)
             GarageMenu.MenuItems.Clear()
 
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(0), file, "vehicle_0.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(1), file, "vehicle_1.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(2), file, "vehicle_2.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(3), file, "vehicle_3.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(4), file, "vehicle_4.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(5), file, "vehicle_5.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(6), file, "vehicle_6.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(7), file, "vehicle_7.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(8), file, "vehicle_8.cfg")
-            GarageMenuAddITem(GarageMenu, GarageMenuItem(9), file, "vehicle_9.cfg")
+            If Twenty Then
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(0), file, "vehicle_0.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(1), file, "vehicle_1.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(2), file, "vehicle_2.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(3), file, "vehicle_3.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(4), file, "vehicle_4.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(5), file, "vehicle_5.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(6), file, "vehicle_6.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(7), file, "vehicle_7.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(8), file, "vehicle_8.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(9), file, "vehicle_9.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(10), file, "vehicle_10.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(11), file, "vehicle_11.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(12), file, "vehicle_12.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(13), file, "vehicle_13.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(14), file, "vehicle_14.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(15), file, "vehicle_15.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(16), file, "vehicle_16.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(17), file, "vehicle_17.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(18), file, "vehicle_18.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(19), file, "vehicle_19.cfg")
+            Else
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(0), file, "vehicle_0.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(1), file, "vehicle_1.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(2), file, "vehicle_2.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(3), file, "vehicle_3.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(4), file, "vehicle_4.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(5), file, "vehicle_5.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(6), file, "vehicle_6.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(7), file, "vehicle_7.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(8), file, "vehicle_8.cfg")
+                GarageMenuAddITem(GarageMenu, GarageMenuItem(9), file, "vehicle_9.cfg")
+            End If
+
 
             GarageMenu.RefreshIndex()
             AddHandler GarageMenu.OnItemSelect, AddressOf ItemSelectHandler
@@ -806,6 +852,22 @@ Public Class Mechanic
 
     Public Shared Sub GrgMoveIndexChangeHandler(sender As UIMenu, index As Integer)
         MoveIndex = index
+        If SelectedGarage = "MBWG1Twenty" Then
+            Select Case index
+                Case 0 To 5
+                    World.DestroyAllCameras()
+                    World.RenderingCamera = World.CreateCamera(New Vector3(-1396.66, -481.3375, 59.11948), New Vector3(-18.82641, 0, -73.41509), 50)
+                Case 6 To 12
+                    World.DestroyAllCameras()
+                    World.RenderingCamera = World.CreateCamera(New Vector3(-1396.66, -481.3375, 64.51948), New Vector3(-18.82641, 0, -73.41509), 50)
+                Case 13 To 19
+                    World.DestroyAllCameras()
+                    World.RenderingCamera = World.CreateCamera(New Vector3(-1396.66, -481.3375, 69.91948), New Vector3(-18.82641, 0, -73.41509), 50)
+                Case Else
+                    World.DestroyAllCameras()
+                    World.RenderingCamera = World.CreateCamera(New Vector3(-1396.66, -481.3375, 59.11948), New Vector3(-18.82641, 0, -73.41509), 50)
+            End Select
+        End If
     End Sub
 
     Public Shared Sub PegasusConfirmItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
@@ -842,7 +904,7 @@ Public Class Mechanic
                     MPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
                 MPV10.CurrentBlip.Color = BlipColor2.Michael
-                SetBlipName(MPV10.FriendlyName, MPV10.CurrentBlip)
+                MPV10.CurrentBlip.Name = MPV10.FriendlyName
                 SetModKit(MPV10, PegasusSelectedVehicleFile)
                 If Not (MPV10.ClassType = VehicleClass.Boats Or MPV10.ClassType = VehicleClass.Helicopters Or MPV10.ClassType = VehicleClass.Planes) Then
                     CreateMechanicInVehicle(MPV10)
@@ -886,7 +948,7 @@ Public Class Mechanic
                     FPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
                 FPV10.CurrentBlip.Color = BlipColor2.Franklin
-                SetBlipName(FPV10.FriendlyName, FPV10.CurrentBlip)
+                FPV10.CurrentBlip.Name = FPV10.FriendlyName
                 SetModKit(FPV10, PegasusSelectedVehicleFile)
                 If Not (FPV10.ClassType = VehicleClass.Boats Or FPV10.ClassType = VehicleClass.Helicopters Or FPV10.ClassType = VehicleClass.Planes) Then
                     CreateMechanicInVehicle(FPV10)
@@ -930,7 +992,7 @@ Public Class Mechanic
                     TPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
                 TPV10.CurrentBlip.Color = BlipColor2.Trevor
-                SetBlipName(TPV10.FriendlyName, TPV10.CurrentBlip)
+                TPV10.CurrentBlip.Name = TPV10.FriendlyName
                 SetModKit(TPV10, PegasusSelectedVehicleFile)
                 If Not (TPV10.ClassType = VehicleClass.Boats Or TPV10.ClassType = VehicleClass.Helicopters Or TPV10.ClassType = VehicleClass.Planes) Then
                     CreateMechanicInVehicle(TPV10)
@@ -974,7 +1036,7 @@ Public Class Mechanic
                     PPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 End If
                 PPV10.CurrentBlip.Color = BlipColor.Yellow
-                SetBlipName(PPV10.FriendlyName, PPV10.CurrentBlip)
+                PPV10.CurrentBlip.Name = PPV10.FriendlyName
                 SetModKit(PPV10, PegasusSelectedVehicleFile)
                 If Not (PPV10.ClassType = VehicleClass.Boats Or PPV10.ClassType = VehicleClass.Helicopters Or PPV10.ClassType = VehicleClass.Planes) Then
                     CreateMechanicInVehicle(PPV10)
@@ -1022,7 +1084,7 @@ Public Class Mechanic
                 If SelectedGarage = "Ten" Then
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         Dim tempVeh As Vehicle
                         playerPed.Position = TenCarGarage.lastLocationGarageOutVector
                         tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), TenCarGarage.lastLocationGarageOutVector, TenCarGarage.lastLocationGarageOutHeading)
@@ -1041,7 +1103,7 @@ Public Class Mechanic
                 ElseIf SelectedGarage = "Six" Then
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
                         Game.FadeScreenOut(500)
-                        Wait(&H3E8)
+                        Wait(500)
                         Dim tempVeh As Vehicle
                         playerPed.Position = SixCarGarage.lastLocationGarageOutVector
                         tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), SixCarGarage.lastLocationGarageOutVector, SixCarGarage.lastLocationGarageOutHeading)
@@ -1294,6 +1356,49 @@ Public Class Mechanic
                         Case 5
                             World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh5Pos.X, SixCarGarage.veh5Pos.Y, SixCarGarage.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
                     End Select
+                ElseIf SelectedGarage = "MBWG1Twenty" Then
+                    Select Case MoveIndex
+                        Case 0
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh0Pos.X, MazeBankWestGarage1.veh0Pos.Y, MazeBankWestGarage1.veh0Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 1
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh1Pos.X, MazeBankWestGarage1.veh1Pos.Y, MazeBankWestGarage1.veh1Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 2
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh2Pos.X, MazeBankWestGarage1.veh2Pos.Y, MazeBankWestGarage1.veh2Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 3
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh3Pos.X, MazeBankWestGarage1.veh3Pos.Y, MazeBankWestGarage1.veh3Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 4
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh4Pos.X, MazeBankWestGarage1.veh4Pos.Y, MazeBankWestGarage1.veh4Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 5
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh5Pos.X, MazeBankWestGarage1.veh5Pos.Y, MazeBankWestGarage1.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 6
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh6Pos.X, MazeBankWestGarage1.veh6Pos.Y, MazeBankWestGarage1.veh6Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 7
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh7Pos.X, MazeBankWestGarage1.veh7Pos.Y, MazeBankWestGarage1.veh7Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 8
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh8Pos.X, MazeBankWestGarage1.veh8Pos.Y, MazeBankWestGarage1.veh8Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 9
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh9Pos.X, MazeBankWestGarage1.veh9Pos.Y, MazeBankWestGarage1.veh9Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 10
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh10Pos.X, MazeBankWestGarage1.veh10Pos.Y, MazeBankWestGarage1.veh10Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 11
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh11Pos.X, MazeBankWestGarage1.veh11Pos.Y, MazeBankWestGarage1.veh11Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 12
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh12Pos.X, MazeBankWestGarage1.veh12Pos.Y, MazeBankWestGarage1.veh12Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 13
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh13Pos.X, MazeBankWestGarage1.veh13Pos.Y, MazeBankWestGarage1.veh13Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 14
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh14Pos.X, MazeBankWestGarage1.veh14Pos.Y, MazeBankWestGarage1.veh14Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 15
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh15Pos.X, MazeBankWestGarage1.veh15Pos.Y, MazeBankWestGarage1.veh15Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 16
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh16Pos.X, MazeBankWestGarage1.veh16Pos.Y, MazeBankWestGarage1.veh16Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 17
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh17Pos.X, MazeBankWestGarage1.veh17Pos.Y, MazeBankWestGarage1.veh17Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 18
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh18Pos.X, MazeBankWestGarage1.veh18Pos.Y, MazeBankWestGarage1.veh18Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                        Case 19
+                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(MazeBankWestGarage1.veh19Pos.X, MazeBankWestGarage1.veh19Pos.Y, MazeBankWestGarage1.veh19Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    End Select
                 End If
 
                 If playerPed.IsInVehicle Then
@@ -1350,7 +1455,7 @@ Public Class Mechanic
                             MPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         End If
                         MPV10.CurrentBlip.Color = BlipColor2.Michael
-                        SetBlipName(MPV10.FriendlyName, MPV10.CurrentBlip)
+                        MPV10.CurrentBlip.Name = MPV10.FriendlyName
                     End If
                     If Not FPV10 = Nothing AndAlso FPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
                         If FPV10.ClassType = VehicleClass.Boats Then
@@ -1367,7 +1472,7 @@ Public Class Mechanic
                             FPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         End If
                         FPV10.CurrentBlip.Color = BlipColor2.Franklin
-                        SetBlipName(FPV10.FriendlyName, FPV10.CurrentBlip)
+                        FPV10.CurrentBlip.Name = FPV10.FriendlyName
                     End If
                     If Not TPV10 = Nothing AndAlso TPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
                         If TPV10.ClassType = VehicleClass.Boats Then
@@ -1384,7 +1489,7 @@ Public Class Mechanic
                             TPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         End If
                         TPV10.CurrentBlip.Color = BlipColor2.Trevor
-                        SetBlipName(TPV10.FriendlyName, TPV10.CurrentBlip)
+                        TPV10.CurrentBlip.Name = TPV10.FriendlyName
                     End If
                     If Not PPV10 = Nothing AndAlso PPV10.CurrentBlip.Sprite = BlipSprite.Standard Then
                         If PPV10.ClassType = VehicleClass.Boats Then
@@ -1401,7 +1506,7 @@ Public Class Mechanic
                             PPV10.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                         End If
                         PPV10.CurrentBlip.Color = BlipColor.Yellow
-                        SetBlipName(PPV10.FriendlyName, PPV10.CurrentBlip)
+                        PPV10.CurrentBlip.Name = PPV10.FriendlyName
                     End If
                 End If
 
@@ -1761,7 +1866,7 @@ Public Class Mechanic
             MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             MPV0.CurrentBlip.Color = BlipColor2.Michael
             MPV0.CurrentBlip.IsShortRange = True
-            SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
+            MPV0.CurrentBlip.Name = MPV0.FriendlyName
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(MPV0, SelectedItem_Car)
@@ -1783,7 +1888,7 @@ Public Class Mechanic
                     MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     MPV0.CurrentBlip.Color = BlipColor2.Michael
                     MPV0.CurrentBlip.IsShortRange = True
-                    SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
+                    MPV0.CurrentBlip.Name = MPV0.FriendlyName
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(MPV0, SelectedItem_Car)
@@ -1806,7 +1911,7 @@ Public Class Mechanic
                 MPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 MPV0.CurrentBlip.Color = BlipColor2.Michael
                 MPV0.CurrentBlip.IsShortRange = True
-                SetBlipName(MPV0.FriendlyName, MPV0.CurrentBlip)
+                MPV0.CurrentBlip.Name = MPV0.FriendlyName
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(MPV0, SelectedItem_Car)
@@ -1830,7 +1935,7 @@ Public Class Mechanic
             FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             FPV0.CurrentBlip.Color = BlipColor2.Franklin
             FPV0.CurrentBlip.IsShortRange = True
-            SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
+            FPV0.CurrentBlip.Name = FPV0.FriendlyName
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(FPV0, SelectedItem_Car)
@@ -1852,7 +1957,7 @@ Public Class Mechanic
                     FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     FPV0.CurrentBlip.Color = BlipColor2.Franklin
                     FPV0.CurrentBlip.IsShortRange = True
-                    SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
+                    FPV0.CurrentBlip.Name = FPV0.FriendlyName
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(FPV0, SelectedItem_Car)
@@ -1875,7 +1980,7 @@ Public Class Mechanic
                 FPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 FPV0.CurrentBlip.Color = BlipColor2.Franklin
                 FPV0.CurrentBlip.IsShortRange = True
-                SetBlipName(FPV0.FriendlyName, FPV0.CurrentBlip)
+                FPV0.CurrentBlip.Name = FPV0.FriendlyName
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(FPV0, SelectedItem_Car)
@@ -1899,7 +2004,7 @@ Public Class Mechanic
             TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             TPV0.CurrentBlip.Color = BlipColor2.Trevor
             TPV0.CurrentBlip.IsShortRange = True
-            SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
+            TPV0.CurrentBlip.Name = TPV0.FriendlyName
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(TPV0, SelectedItem_Car)
@@ -1921,7 +2026,7 @@ Public Class Mechanic
                     TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     TPV0.CurrentBlip.Color = BlipColor2.Trevor
                     TPV0.CurrentBlip.IsShortRange = True
-                    SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
+                    TPV0.CurrentBlip.Name = TPV0.FriendlyName
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(TPV0, SelectedItem_Car)
@@ -1944,7 +2049,7 @@ Public Class Mechanic
                 TPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 TPV0.CurrentBlip.Color = BlipColor2.Trevor
                 TPV0.CurrentBlip.IsShortRange = True
-                SetBlipName(TPV0.FriendlyName, TPV0.CurrentBlip)
+                TPV0.CurrentBlip.Name = TPV0.FriendlyName
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(TPV0, SelectedItem_Car)
@@ -1968,7 +2073,7 @@ Public Class Mechanic
             PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
             PPV0.CurrentBlip.Color = BlipColor.Yellow
             PPV0.CurrentBlip.IsShortRange = True
-            SetBlipName(PPV0.FriendlyName, PPV0.CurrentBlip)
+            PPV0.CurrentBlip.Name = PPV0.FriendlyName
             selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
             WriteCfgValue("Active", "True", SelectedItem_Car)
             SetModKit(PPV0, SelectedItem_Car)
@@ -1990,7 +2095,7 @@ Public Class Mechanic
                     PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                     PPV0.CurrentBlip.Color = BlipColor.Yellow
                     PPV0.CurrentBlip.IsShortRange = True
-                    SetBlipName(PPV0.FriendlyName, PPV0.CurrentBlip)
+                    PPV0.CurrentBlip.Name = PPV0.FriendlyName
                     selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                     WriteCfgValue("Active", "True", SelectedItem_Car)
                     SetModKit(PPV0, SelectedItem_Car)
@@ -2013,7 +2118,7 @@ Public Class Mechanic
                 PPV0.CurrentBlip.Sprite = BlipSprite.PersonalVehicleCar
                 PPV0.CurrentBlip.Color = BlipColor.Yellow
                 PPV0.CurrentBlip.IsShortRange = True
-                SetBlipName(PPV0.FriendlyName, PPV0.CurrentBlip)
+                PPV0.CurrentBlip.Name = PPV0.FriendlyName
                 selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Car)
                 WriteCfgValue("Active", "True", SelectedItem_Car)
                 SetModKit(PPV0, SelectedItem_Car)

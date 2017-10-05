@@ -302,7 +302,7 @@ Public Module Resources
                     Result = "Garage"
             End Select
         Catch ex As Exception
-            SinglePlayerApartment.DisplayHelpTextThisFrame("Update your fucking ScriptHookV.NET!!!")
+            DisplayHelpTextThisFrame("Update your fucking ScriptHookV.NET!!!")
         End Try
         Return Result
     End Function
@@ -572,6 +572,8 @@ Label_005C:
             Case TenCarGarage.veh0, TenCarGarage.veh1, TenCarGarage.veh2, TenCarGarage.veh3, TenCarGarage.veh4, TenCarGarage.veh5, TenCarGarage.veh6, TenCarGarage.veh7, TenCarGarage.veh8, TenCarGarage.veh9
                 Result = True
             Case SixCarGarage.veh0, SixCarGarage.veh1, SixCarGarage.veh2, SixCarGarage.veh3, SixCarGarage.veh4, SixCarGarage.veh5
+                Result = True
+            Case MazeBankWestGarage1.veh0, MazeBankWestGarage1.veh1, MazeBankWestGarage1.veh2, MazeBankWestGarage1.veh3, MazeBankWestGarage1.veh4, MazeBankWestGarage1.veh5, MazeBankWestGarage1.veh6, MazeBankWestGarage1.veh7, MazeBankWestGarage1.veh8, MazeBankWestGarage1.veh9, MazeBankWestGarage1.veh10, MazeBankWestGarage1.veh11, MazeBankWestGarage1.veh12, MazeBankWestGarage1.veh13, MazeBankWestGarage1.veh14, MazeBankWestGarage1.veh15, MazeBankWestGarage1.veh16, MazeBankWestGarage1.veh17, MazeBankWestGarage1.veh18, MazeBankWestGarage1.veh19
                 Result = True
             Case Else
                 Result = False
@@ -1561,4 +1563,237 @@ Label_005C:
         Seabreeze
         Tula
     End Enum
+
+    Public Sub ToggleOfficeGarageDecor(Wall As String, Light As String, Number As String, interiorID As Integer)
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, interiorID, Wall)
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, interiorID, Light)
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, interiorID, Number)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, interiorID)
+        If Not InteriorIDList.Contains(interiorID) AndAlso Not interiorID = 0 Then InteriorIDList.Add(interiorID)
+    End Sub
+
+    Public Sub EnableInteriotProp(interiorID As Integer, Prop As String)
+        If Not Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, Prop) Then Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, interiorID, Prop)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, interiorID)
+    End Sub
+
+    Public Sub DisplayHelpTextThisFrame(helpText As String, Optional Shape As Integer = -1)
+        Native.Function.Call(Hash._SET_TEXT_COMPONENT_FORMAT, "CELL_EMAIL_BCON")
+        Const maxStringLength As Integer = 99
+
+        Dim i As Integer = 0
+        While i < helpText.Length
+            Native.Function.Call(Hash._0x6C188BE134E074AA, helpText.Substring(i, System.Math.Min(maxStringLength, helpText.Length - i)))
+            i += maxStringLength
+        End While
+        Native.Function.Call(Hash._DISPLAY_HELP_TEXT_FROM_STRING_LABEL, 0, 0, 1, Shape)
+    End Sub
+
+    Public Sub TimeLapse(ByVal SleepHour As Integer)
+        Try
+            Dim hour As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_HOURS)
+            Dim minute As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_MINUTES)
+            Dim second As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_SECONDS)
+            Dim day As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_DAY_OF_MONTH)
+            Dim month As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_MONTH)
+            Dim year As Integer = Native.Function.Call(Of Integer)(Hash.GET_CLOCK_YEAR)
+            Dim sleep As Integer = hour + SleepHour
+            Native.Function.Call(Hash.ADD_TO_CLOCK_TIME, sleep, minute, second)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub LoadMPDLCMap()
+        Try
+            If My.Settings.NeverEnableMPMaps = False Then
+                Native.Function.Call(Hash._LOAD_MP_DLC_MAPS)
+                LoadMPDLCMapMissingObjects()
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub LoadMPDLCMapMissingObjects()
+        Dim TID2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -1155.31005, -1518.5699, 10.6300001) 'Floyd Apartment
+        Dim MID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -802.31097, 175.05599, 72.84459) 'Michael House
+        Dim FID1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -9.96562, -1438.54003, 31.101499) 'Franklin Aunt House
+        Dim FID2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, 0.91675, 528.48498, 174.628005) 'Franklin House
+
+        Dim WODID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -172.983001, 494.032989, 137.654006) '3655 Wild Oats
+        Dim NCAID1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, 340.941009, 437.17999, 149.389999) '2044 North Conker
+        Dim NCAID2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, 373.0230102, 416.1050109, 145.70100402) '2045 North Conker
+        Dim HCAID1 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -676.1270141, 588.6119995, 145.16999816) '2862 Hillcrest Avenue
+        Dim HCAID2 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -763.10699462, 615.90600585, 144.139999) '2868 Hillcrest Avenue
+        Dim HCAID3 As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -857.79797363, 682.56298828, 152.6529998) '2874 Hillcrest Avenue
+        Dim MRID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -572.60998535, 653.13000488, 145.63000488) '2117 Milton Road
+        Dim WMDID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, 120.5, 549.952026367, 184.09700012207) '3677 Whispymound Drive
+        Dim MWTDID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, -1288, 440.74798583, 97.694602966) '2113 Mad Wayne Thunder Drive
+
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID1, "V_57_FranklinStuff")
+
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, TID2, "swap_clean_apt")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, TID2, "layer_whiskey")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, TID2, "layer_sextoys_a")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, TID2, "swap_mrJam_A")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, TID2, "swap_sofa_A")
+
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "V_Michael_bed_tidy")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "V_Michael_L_Items")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "V_Michael_S_Items")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "V_Michael_D_Items")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "V_Michael_M_Items")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "Michael_premier")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MID, "V_Michael_plane_ticket")
+
+        'Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "showhome_only")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "franklin_settled")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "franklin_unpacking")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "bong_and_wine")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "progress_flyer")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "progress_tshirt")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "progress_tux")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, FID2, "unlocked")
+
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, WODID, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, NCAID1, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, NCAID2, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, HCAID1, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, HCAID2, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, HCAID3, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MRID, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, WMDID, "Stilts_Kitchen_Window")
+        Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, MWTDID, "Stilts_Kitchen_Window")
+
+        Native.Function.Call(Hash.REFRESH_INTERIOR, FID1)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, TID2)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, MID)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, FID2)
+
+        Native.Function.Call(Hash.REFRESH_INTERIOR, WODID)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, NCAID1)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, NCAID2)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, HCAID1)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, HCAID2)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, HCAID3)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, MRID)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, WMDID)
+        Native.Function.Call(Hash.REFRESH_INTERIOR, MWTDID)
+    End Sub
+
+    Public Sub UnLoadMPDLCMap()
+        Try
+            If My.Settings.NeverEnableMPMaps = False Then
+                If My.Settings.AlwaysEnableMPMaps = False Then
+                    Native.Function.Call(Hash._LOAD_SP_DLC_MAPS)
+                End If
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub SetInteriorActive2(X As Single, Y As Single, Z As Single)
+        Try
+            Dim interiorID As Integer = Native.Function.Call(Of Integer)(Hash.GET_INTERIOR_AT_COORDS, X, Y, Z)
+            Native.Function.Call(Hash._0x2CA429C029CCF247, New InputArgument() {interiorID})
+            Native.Function.Call(Hash.SET_INTERIOR_ACTIVE, interiorID, True)
+            Native.Function.Call(Hash.DISABLE_INTERIOR, interiorID, False)
+            If Not interiorID = 0 AndAlso Not InteriorIDList.Contains(interiorID) Then InteriorIDList.Add(interiorID)
+            ClearArea(X, Y, Z)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub ClearArea(X As Single, Y As Single, Z As Single)
+        Dim arguments As InputArgument() = New InputArgument() {X, Y, Z, 100, True, False, False, False}
+        Native.Function.Call(Hash.CLEAR_AREA, arguments)
+        Dim arguments2 As InputArgument() = New InputArgument() {X, Y, Z, 100, True, True, True, True, True}
+    End Sub
+
+    Public Sub ToggleIPL(iplName As String, Optional Vector3 As Vector3 = Nothing)
+        If Native.Function.Call(Of Boolean)(Hash.IS_IPL_ACTIVE, New InputArgument() {iplName}) Then
+            Native.Function.Call(Hash.REMOVE_IPL, New InputArgument() {iplName})
+            Native.Function.Call(Hash.REQUEST_IPL, New InputArgument() {iplName})
+        Else
+            Native.Function.Call(Hash.REQUEST_IPL, New InputArgument() {iplName})
+        End If
+        If Not Vector3 = Nothing Then
+            Dim intID As Integer = INMNative.Apartment.GetInteriorID(Vector3)
+            If Not InteriorIDList.Contains(intID) AndAlso Not intID = 0 Then InteriorIDList.Add(intID)
+        End If
+    End Sub
+
+    Public Function IsIPLActive(iplName As String) As Boolean
+        Return Native.Function.Call(Of Boolean)(Hash.IS_IPL_ACTIVE, iplName)
+    End Function
+
+    Public Sub RemoveIPL(iplName As String)
+        If Native.Function.Call(Of Boolean)(Hash.IS_IPL_ACTIVE, New InputArgument() {iplName}) Then
+            Native.Function.Call(Hash.REMOVE_IPL, New InputArgument() {iplName})
+        End If
+    End Sub
+
+    Public Sub ChangeIPL(LastIplName As String, NewIplName As String, Optional Vector3 As Vector3 = Nothing)
+        On Error Resume Next
+        Native.Function.Call(Hash.REMOVE_IPL, New InputArgument() {LastIplName})
+        Native.Function.Call(Hash.REQUEST_IPL, New InputArgument() {NewIplName})
+        If Not Vector3 = Nothing Then
+            Dim intID As Integer = INMNative.Apartment.GetInteriorID(Vector3)
+            If Not InteriorIDList.Contains(intID) AndAlso Not intID = 0 Then InteriorIDList.Add(intID)
+        End If
+    End Sub
+
+    Enum IconType
+        ChatBox = 1
+        Email = 2
+        AddFriendRequest = 3
+        Nothing4 = 4
+        Nothing5 = 5
+        Nothing6 = 6
+        RightJumpingArrow = 7
+        RPIcon = 8
+        DollarSignIcon = 9
+    End Enum
+
+    ''' CHAR_DEFAULT : Default profile pic
+    ''' CHAR_FACEBOOK: Facebook
+    ''' CHAR_SOCIAL_CLUB: Social Club Star
+    ''' CHAR_CARSITE2: Super Auto San Andreas Car Site
+    ''' CHAR_BOATSITE: Boat Site Anchor
+    ''' CHAR_BANK_MAZE: Maze Bank Logo
+    ''' CHAR_BANK_FLEECA: Fleeca Bank
+    ''' CHAR_BANK_BOL: Bank Bell Icon
+    ''' CHAR_MINOTAUR: Minotaur Icon
+    ''' CHAR_EPSILON: Epsilon E
+    ''' CHAR_MILSITE: Warstock W
+    ''' CHAR_CARSITE: Legendary Motorsports Icon
+    ''' CHAR_DR_FRIEDLANDER: Dr Freidlander Face
+    ''' CHAR_BIKESITE: P and M Logo
+    ''' CHAR_LIFEINVADER: Liveinvader
+    ''' CHAR_PLANESITE: Plane Site E
+    ''' CHAR_MICHAEL: Michael's Face
+    ''' CHAR_FRANKLIN: Franklin's Face
+    ''' CHAR_TREVOR: Trevor's Face
+    ''' CHAR_SIMEON: Simeon's Face
+    ''' CHAR_RON: Ron's Face
+    ''' CHAR_JIMMY: Jimmy's Face
+    ''' CHAR_LESTER: Lester's Shadowed Face
+    ''' CHAR_DAVE: Dave Norton 's Face
+    ''' CHAR_LAMAR: Chop's Face
+    ''' CHAR_DEVIN: Devin Weston 's Face
+    ''' CHAR_AMANDA: Amanda's Face
+    ''' CHAR_TRACEY: Tracey's Face
+    ''' CHAR_STRETCH: Stretch's Face
+    ''' CHAR_WADE: Wade's Face
+    ''' CHAR_MARTIN: Martin Madrazo 's Face
+    ''' CHAR_ACTING_UP: Acting Icon
+    Public Sub DisplayNotificationThisFrame(Sender As String, Subject As String, Message As String, Icon As String, Flash As Boolean, Type As IconType)
+        Native.Function.Call(Hash._SET_NOTIFICATION_TEXT_ENTRY, "CELL_EMAIL_BCON")
+        Native.Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Message)
+        Native.Function.Call(Hash._SET_NOTIFICATION_MESSAGE, Icon, Icon, Flash, Type, Sender, Subject)
+        Native.Function.Call(Hash._DRAW_NOTIFICATION, False, True)
+    End Sub
 End Module

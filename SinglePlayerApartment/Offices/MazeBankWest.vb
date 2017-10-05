@@ -44,12 +44,12 @@ Public Class MazeBankWest
             Apartment.IPL = ReadCfgValue("MBWipl", saveFile) '/
             Apartment.LastIPL = Apartment.IPL  '/
             Apartment.Enabled = True
+            ToggleIPL(ReadCfgValue("MBWipl", saveFile))
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
             If Not Apartment.InteriorID = 0 Then If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
+            RemoveIPL(ReadCfgValue("MBWipl", saveFile))
             Apartment.AssistantPosition = New Vector3(-1379.698, -477.5231, 71.0375)
             Apartment.AssistantHeading = 277.4893
-            Apartment.CEOPosition = New Vector3(-1372.387, -464.3324, 71.04401)
-            Apartment.CEOHeading = 9.861806
 
             If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then
                 Translate()
@@ -323,9 +323,10 @@ Public Class MazeBankWest
                 'Exit Apt
                 ExitMenu.Visible = False
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
+                RemoveIPL(ReadCfgValue("MBWipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf selectedItem.Text = SellApt Then
@@ -334,7 +335,7 @@ Public Class MazeBankWest
                 WriteCfgValue(Apartment.SaveFile, "None", saveFile)
                 SavePosition2()
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
                 Apartment.Owner = "None"
                 Apartment.AptBlip.Remove()
@@ -342,6 +343,7 @@ Public Class MazeBankWest
                 CreateMazeBankWest()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
+                RemoveIPL(ReadCfgValue("MBWipl", saveFile))
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
@@ -349,7 +351,7 @@ Public Class MazeBankWest
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
                 TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
@@ -360,6 +362,7 @@ Public Class MazeBankWest
                 TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
                 TenCarGarage.CurrentPath = Apartment.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
+                RemoveIPL(ReadCfgValue("MBWipl", saveFile))
                 ExitMenu.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -367,16 +370,34 @@ Public Class MazeBankWest
                 ExitMenu.Visible = False
                 StyleMenu.Visible = True
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 World.RenderingCamera = World.CreateCamera(Apartment.ApartmentStyleCameraPosition, Apartment.ApartmentStyleCameraRotation, Apartment.ApartmentStyleCameraFOV)
                 hideHud = True
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf selectedItem.Text = OfficeGarage1
+                'Teleport to Garage
+                Game.FadeScreenOut(500)
+                Wait(500)
+                ToggleIPL("imp_sm_15_cargarage_a")
+                RemoveIPL(ReadCfgValue("MBWipl", saveFile))
+                ToggleOfficeGarageDecor(ReadCfgValue("MBWG1Wall", saveFile), ReadCfgValue("MBWG1Light", saveFile), ReadCfgValue("MBWG1Number", saveFile), INMNative.Apartment.GetInteriorID(MazeBankWestGarage1.Elevator))
+                MazeBankWestGarage1.LastLocationName = Apartment.Name & Apartment.Unit
+                MazeBankWestGarage1.lastLocationVector = Apartment.ApartmentExit
+                MazeBankWestGarage1.lastLocationGarageVector = Apartment.GarageEntrance
+                MazeBankWestGarage1.lastLocationGarageOutVector = Apartment.GarageOutside
+                MazeBankWestGarage1.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                MazeBankWestGarage1.CurrentPath = Apartment.GaragePath
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                ExitMenu.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
             End If
 
             If selectedItem.Text = OldSpiWarms Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_01a", saveFile)
                 Apartment.IPL = "ex_sm_15_office_01a"
                 RefreshOfficeProps()
@@ -388,7 +409,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = OldSpiClassical Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_01b", saveFile)
                 Apartment.IPL = "ex_sm_15_office_01b"
                 RefreshOfficeProps()
@@ -400,7 +421,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = OldSpiVintage Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_01c", saveFile)
                 Apartment.IPL = "ex_sm_15_office_01c"
                 RefreshOfficeProps()
@@ -412,7 +433,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = ExecContrast Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_02a", saveFile)
                 Apartment.IPL = "ex_sm_15_office_02a"
                 RefreshOfficeProps()
@@ -424,7 +445,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = ExecRich Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_02b", saveFile)
                 Apartment.IPL = "ex_sm_15_office_02b"
                 RefreshOfficeProps()
@@ -436,7 +457,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = ExecCool Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_02c", saveFile)
                 Apartment.IPL = "ex_sm_15_office_02c"
                 RefreshOfficeProps()
@@ -446,9 +467,9 @@ Public Class MazeBankWest
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-            ElseIf selectedItem.Text = PowBrkice Then
+            ElseIf selectedItem.Text = PowBrkIce Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_03a", saveFile)
                 Apartment.IPL = "ex_sm_15_office_03a"
                 RefreshOfficeProps()
@@ -460,7 +481,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = PowBrkConservative Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_03b", saveFile)
                 Apartment.IPL = "ex_sm_15_office_03b"
                 RefreshOfficeProps()
@@ -472,7 +493,7 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
             ElseIf selectedItem.Text = PowBrkPolished Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 WriteCfgValue("MBWipl", "ex_sm_15_office_03c", saveFile)
                 Apartment.IPL = "ex_sm_15_office_03c"
                 RefreshOfficeProps()
@@ -492,7 +513,7 @@ Public Class MazeBankWest
         Try
             If sender.MenuItems(index).Text = OldSpiWarms Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_01a", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_01a"
                 RefreshOfficeProps()
@@ -500,7 +521,7 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = OldSpiClassical Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_01b", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_01b"
                 RefreshOfficeProps()
@@ -508,7 +529,7 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = OldSpiVintage Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_01c", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_01c"
                 RefreshOfficeProps()
@@ -516,15 +537,15 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = ExecContrast Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_02a", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_02a"
                 RefreshOfficeProps()
                 Wait(500)
                 Game.FadeScreenIn(500)
-            ElseIf sender.MenuItems(index).Text = Execrich Then
+            ElseIf sender.MenuItems(index).Text = ExecRich Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_02b", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_02b"
                 RefreshOfficeProps()
@@ -532,7 +553,7 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = ExecCool Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_02c", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_02c"
                 RefreshOfficeProps()
@@ -540,7 +561,7 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = PowBrkIce Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_03a", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_03a"
                 RefreshOfficeProps()
@@ -548,7 +569,7 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = PowBrkConservative Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_03b", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_03b"
                 RefreshOfficeProps()
@@ -556,7 +577,7 @@ Public Class MazeBankWest
                 Game.FadeScreenIn(500)
             ElseIf sender.MenuItems(index).Text = PowBrkPolished Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 ChangeIPL(Apartment.LastIPL, "ex_sm_15_office_03c", Apartment.Interior)
                 Apartment.LastIPL = "ex_sm_15_office_03c"
                 RefreshOfficeProps()
@@ -575,7 +596,7 @@ Public Class MazeBankWest
                 If playerCash > Apartment.Cost Then
                     WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
                     Game.FadeScreenOut(500)
-                    Wait(&H3E8)
+                    Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
                     Apartment.Owner = GetPlayerName()
                     Apartment.AptBlip.Remove()
@@ -616,11 +637,12 @@ Public Class MazeBankWest
                 World.RenderingCamera = Nothing
                 If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                 ToggleIPL(ReadCfgValue("MBWipl", saveFile))
+                EnableOfficeProp()
 
                 Apartment.SetInteriorActive()
                 Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
+                Wait(500)
                 Game.Player.Character.Position = Apartment.TeleportInside
                 If Website.merryChristmas Then ShowXmasTree(New Vector3(-285.6369, -950.2663, 91.10831))
                 Wait(500)
@@ -632,26 +654,27 @@ Public Class MazeBankWest
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = OfficeGarage1 AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
             Game.FadeScreenOut(500)
-            Wait(&H3E8)
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            Apartment.SetInteriorActive()
-            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
-            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
-            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
-            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
-            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
-            TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
-            TenCarGarage.CurrentPath = Apartment.GaragePath
-            playerPed.Position = TenCarGarage.GarageDoorL
+            Wait(500)
+            ToggleIPL("imp_sm_15_cargarage_a")
+            RemoveIPL(ReadCfgValue("MBWipl", saveFile))
+            ToggleOfficeGarageDecor(ReadCfgValue("MBWG1Wall", saveFile), ReadCfgValue("MBWG1Light", saveFile), ReadCfgValue("MBWG1Number", saveFile), INMNative.Apartment.GetInteriorID(MazeBankWestGarage1.Elevator))
+            MazeBankWestGarage1.LastLocationName = Apartment.Name & Apartment.Unit
+            MazeBankWestGarage1.lastLocationVector = Apartment.ApartmentExit
+            MazeBankWestGarage1.lastLocationGarageVector = Apartment.GarageEntrance
+            MazeBankWestGarage1.lastLocationGarageOutVector = Apartment.GarageOutside
+            MazeBankWestGarage1.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+            MazeBankWestGarage1.CurrentPath = Apartment.GaragePath
+            playerPed.Position = MazeBankWestGarage1.Elevator
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = OfficeGarage1 AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
-            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
+            Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9, VehPlate10, VehPlate11, VehPlate12, VehPlate13, VehPlate14, VehPlate15, VehPlate16, VehPlate17, VehPlate18, VehPlate19 As String
             If IO.File.Exists(Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_1.cfg") Then VehPlate1 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_1.cfg") Else VehPlate1 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_2.cfg") Then VehPlate2 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_2.cfg") Else VehPlate2 = "0"
@@ -662,124 +685,247 @@ Public Class MazeBankWest
             If IO.File.Exists(Apartment.GaragePath & "vehicle_7.cfg") Then VehPlate7 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_7.cfg") Else VehPlate7 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_10.cfg") Then VehPlate10 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_10.cfg") Else VehPlate10 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_11.cfg") Then VehPlate11 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_11.cfg") Else VehPlate11 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_12.cfg") Then VehPlate12 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_12.cfg") Else VehPlate12 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_13.cfg") Then VehPlate13 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_13.cfg") Else VehPlate13 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_14.cfg") Then VehPlate14 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_14.cfg") Else VehPlate14 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_15.cfg") Then VehPlate15 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_15.cfg") Else VehPlate15 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_16.cfg") Then VehPlate16 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_16.cfg") Else VehPlate16 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_17.cfg") Then VehPlate17 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_17.cfg") Else VehPlate17 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_18.cfg") Then VehPlate18 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_18.cfg") Else VehPlate18 = "0"
+            If IO.File.Exists(Apartment.GaragePath & "vehicle_19.cfg") Then VehPlate19 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_19.cfg") Else VehPlate19 = "0"
 
-            SetInteriorActive2(222.592, -968.1, -99) '10 car garage
-            Apartment.SetInteriorActive()
-            TenCarGarage.CurrentPath = Apartment.GaragePath
-            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
-            TenCarGarage.lastLocationVector = Apartment.ApartmentExit
-            TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
-            TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
-            TenCarGarage.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            ToggleIPL("imp_sm_15_cargarage_a")
+            RemoveIPL(ReadCfgValue("MBWipl", saveFile))
+            ToggleOfficeGarageDecor(ReadCfgValue("MBWG1Wall", saveFile), ReadCfgValue("MBWG1Light", saveFile), ReadCfgValue("MBWG1Number", saveFile), INMNative.Apartment.GetInteriorID(MazeBankWestGarage1.Elevator))
+            MazeBankWestGarage1.LastLocationName = Apartment.Name & Apartment.Unit
+            MazeBankWestGarage1.lastLocationVector = Apartment.ApartmentExit
+            MazeBankWestGarage1.lastLocationGarageVector = Apartment.GarageEntrance
+            MazeBankWestGarage1.lastLocationGarageOutVector = Apartment.GarageOutside
+            MazeBankWestGarage1.lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+            MazeBankWestGarage1.CurrentPath = Apartment.GaragePath
+            playerPed.Position = MazeBankWestGarage1.Elevator
             GarageMenu.Visible = False
 
             If playerPed.CurrentVehicle.NumberPlate = VehPlate0 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_0.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh0, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh0, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate1 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_1.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh1, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh1, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate2 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_2.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh2, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh2, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate3 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_3.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh3, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh3, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate4 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_4.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh4, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh4, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate5 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_5.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh5, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh5, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate6 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_6.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh6, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh6, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate7 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_7.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh7, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh7, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate8 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_8.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh8, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh8, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
             ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate9 Then
                 Game.FadeScreenOut(500)
-                Wait(&H3E8)
-                TenCarGarage.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
-                TenCarGarage.LoadGarageVechicles(Apartment.GaragePath)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_9.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
                 playerPed.CurrentVehicle.Delete()
-                playerPed.Position = TenCarGarage.GarageDoorL
-                SetIntoVehicle(playerPed, TenCarGarage.veh9, VehicleSeat.Driver)
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh9, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate10 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_10.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh10, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate11 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_11.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh11, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate12 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_12.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh12, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate13 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_13.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh13, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate14 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_14.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh14, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate15 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_15.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh15, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate16 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_16.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh16, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate17 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_17.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh17, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate18 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_18.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh18, VehicleSeat.Driver)
+                playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
+                Wait(500)
+                Game.FadeScreenIn(500)
+            ElseIf playerPed.CurrentVehicle.NumberPlate = VehPlate19 Then
+                Game.FadeScreenOut(500)
+                Wait(500)
+                MazeBankWestGarage1.UpdateGarageVehicle(Apartment.GaragePath & "vehicle_19.cfg", "False")
+                MazeBankWestGarage1.LoadGarageVechicles(Apartment.GaragePath)
+                playerPed.CurrentVehicle.Delete()
+                playerPed.Position = MazeBankWestGarage1.Elevator
+                SetIntoVehicle(playerPed, MazeBankWestGarage1.veh19, VehicleSeat.Driver)
                 playerPed.Task.LeaveVehicle(playerPed.CurrentVehicle, True)
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -794,12 +940,18 @@ Public Class MazeBankWest
         Try
             If Not Game.IsLoading Then
                 If My.Settings.MazeBankWest = "Enable" Then
+                    'If IsIPLActive(ReadCfgValue("MBWipl", saveFile)) Then
+                    '    Apartment.InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(-1395.882, -480.5163, 56.10049))
+                    '    If Not Apartment.InteriorID = 0 AndAlso Not InteriorIDList.Contains(Apartment.InteriorID) Then InteriorIDList.Add(Apartment.InteriorID)
+                    '    EnableOfficeProp()
+                    'End If
+
                     'Enter Apartment
                     If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
                         DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             BuyMenu.Visible = True
                             World.RenderingCamera = World.CreateCamera(Apartment.CameraPosition, Apartment.CameraRotation, Apartment.CameraFOV)
                             hideHud = True
@@ -814,7 +966,7 @@ Public Class MazeBankWest
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
                             Game.FadeScreenOut(500)
-                            Wait(&H3E8)
+                            Wait(500)
                             TimeLapse(8)
                             Game.ShowSaveMenu()
                             SavePosition()
@@ -915,6 +1067,79 @@ Public Class MazeBankWest
         Native.Function.Call(Hash._0x3669F1B198DCAA4F)
     End Sub
 
+    Public Shared Sub EnableOfficeProp()
+        EnableInteriotProp(Apartment.InteriorID, "office_chairs")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_01")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_02")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_03")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_04")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_05")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_06")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_07")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_08")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_09")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_10")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_11")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_12")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_13")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_14")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_15")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_16")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_17")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_18")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_19")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_20")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_21")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_22")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_23")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_24")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Silver")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Silver2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Silver3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Pills")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Pills2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Pills3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Med")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Med2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Med3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_JewelWatch")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_JewelWatch2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_JewelWatch3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Ivory")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Ivory2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Ivory3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Guns")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Guns2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Guns3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Gems")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Gems2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Gems3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Furcoats")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Furcoats2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Furcoats3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_electronic")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_electronic2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_electronic3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugStatue")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugStatue2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugStatue3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugBags")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugBags2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugBags3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Counterfeit")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Counterfeit2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Counterfeit3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Booze_cigs")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Booze_cigs2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Booze_cigs3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Art")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Art2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Art3")
+        EnableInteriotProp(Apartment.InteriorID, "Office_Booze")
+        EnableInteriotProp(Apartment.InteriorID, "Gun_Locker")
+        EnableInteriotProp(Apartment.InteriorID, "Mod_Booth")
+    End Sub
+
     Public Sub CreateOfficeAssistant()
         If Apartment.AssistantChair = Nothing Then
             Apartment.AssistantChair = World.CreateProp(1580642483, Apartment.AssistantPosition, False, False)
@@ -938,12 +1163,6 @@ Public Class MazeBankWest
             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 7, 2, 0, 0)
             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 8, 0, 0, 0)
             Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 11, 1, 2, 0)
-        End If
-        If Apartment.CEOChair = Nothing Then
-            Apartment.CEOChair = World.CreateProp(-853526657, Apartment.CEOPosition, False, False)
-            Apartment.CEOChair.Heading = Apartment.CEOHeading
-            Apartment.CEOChair.FreezePosition = True
-            Apartment.CEOChair.IsInvincible = True
         End If
     End Sub
 
@@ -971,11 +1190,7 @@ Public Class MazeBankWest
         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 8, 0, 0, 0)
         Native.Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Apartment.OfficeAssistant, 11, 1, 2, 0)
 
-        Apartment.CEOChair.Delete()
-        Apartment.CEOChair = World.CreateProp(-853526657, Apartment.CEOPosition, False, False)
-        Apartment.CEOChair.Heading = Apartment.CEOHeading
-        Apartment.CEOChair.FreezePosition = True
-        Apartment.CEOChair.IsInvincible = True
+        EnableOfficeProp()
     End Sub
 
     Public Sub OnAborted() 'Handles MyBase.Aborted
@@ -984,7 +1199,6 @@ Public Class MazeBankWest
             If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
             If Not Apartment.OfficeAssistant = Nothing Then Apartment.OfficeAssistant.Delete()
             If Not Apartment.AssistantChair = Nothing Then Apartment.AssistantChair.Delete()
-            If Not Apartment.CEOChair = Nothing Then Apartment.CEOChair.Delete()
         Catch ex As Exception
         End Try
     End Sub

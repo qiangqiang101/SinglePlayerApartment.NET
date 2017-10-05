@@ -11,11 +11,11 @@ Namespace INMNative
         Private _cost, _interiorID, _radio As Integer
         Private _owner, _name, _desc, _unit, _grgpath, _savefile, _playermap, _ipl, _lastipl As String
         Private _aptblip, _grgblip As Blip
-        Private _entrance, _save, _telin, _telout, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot, _assistantpos, _ceopos As Vector3
-        Private _grgoutheading, _camerafov, _wardrobeheading, _ascamerafov, _assistantheading, _ceoheading As Single
+        Private _entrance, _save, _telin, _telout, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot, _assistantpos As Vector3
+        Private _grgoutheading, _camerafov, _wardrobeheading, _ascamerafov, _assistantheading As Single
         Private _isathome, _enabled As Boolean
         'added on v1.10
-        Private _lrRadio, _hrRadio, _brRadio, _assChair, _ceoChair As Prop
+        Private _lrRadio, _hrRadio, _brRadio, _assChair As Prop
         Private lrEmitter, hrEmitter, brEmitter As String
         Private lrPosition, hrPosition, brPosition As Vector3
         Private _officeAssistant As Ped
@@ -470,39 +470,12 @@ Namespace INMNative
             End Set
         End Property
 
-        Public Property CEOChair() As Prop
-            Get
-                Return _ceoChair
-            End Get
-            Set(value As Prop)
-                _ceoChair = value
-            End Set
-        End Property
-
-        Public Property CEOPosition() As Vector3
-            Get
-                Return _ceopos
-            End Get
-            Set(value As Vector3)
-                _ceopos = value
-            End Set
-        End Property
-
         Public Property AssistantHeading() As Single
             Get
                 Return _assistantheading
             End Get
             Set(value As Single)
                 _assistantheading = value
-            End Set
-        End Property
-
-        Public Property CEOHeading() As Single
-            Get
-                Return _ceoheading
-            End Get
-            Set(value As Single)
-                _ceoheading = value
             End Set
         End Property
 
