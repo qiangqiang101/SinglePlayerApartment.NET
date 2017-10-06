@@ -155,7 +155,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Class\timer.vb" />
-    <Compile Include="Offices\MazeBankWestGarage1.vb" />
+    <Compile Include="TwentyCarGarage.vb" />
     <Compile Include="Offices\MazeBankWest.vb" />
     <Compile Include="Phone.vb" />
     <Compile Include="Medium End Apartments\ProcopioDr4401.vb" />

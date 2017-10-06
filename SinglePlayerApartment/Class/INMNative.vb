@@ -11,7 +11,7 @@ Namespace INMNative
         Private _cost, _interiorID, _radio As Integer
         Private _owner, _name, _desc, _unit, _grgpath, _savefile, _playermap, _ipl, _lastipl As String
         Private _aptblip, _grgblip As Blip
-        Private _entrance, _save, _telin, _telout, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot, _assistantpos As Vector3
+        Private _entrance, _save, _telin, _telout, _telheli, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot, _assistantpos As Vector3
         Private _grgoutheading, _camerafov, _wardrobeheading, _ascamerafov, _assistantheading As Single
         Private _isathome, _enabled As Boolean
         'added on v1.10
@@ -19,6 +19,12 @@ Namespace INMNative
         Private lrEmitter, hrEmitter, brEmitter As String
         Private lrPosition, hrPosition, brPosition As Vector3
         Private _officeAssistant As Ped
+        Private _garageElevator, _menuActivator, _garageElevator2, _menuActivator2, _garageElevator3, _menuActivator3 As Vector3
+        Private veh0Pos, veh1Pos, veh2Pos, veh3Pos, veh4Pos, veh5Pos, veh6Pos, veh7Pos, veh8Pos, veh9Pos, veh10Pos, veh11Pos, veh12Pos, veh13Pos, veh14Pos, veh15Pos, veh16Pos, veh17Pos, veh18Pos, veh19Pos As Vector3
+        Private vehRot0613, vehRot1714, vehRot2815, vehRot3916, vehRot41017, vehRot51118, vehRot1219 As Vector3
+        Private _garageIPL, _garageIPL2, _garageIPL3, _garageWall1, _garageWall2, _garageWall3, _garageLight1, _garageLight2, _garageLight3, _garageNumber1, _garageNumber2, _garageNumber3 As String
+        Private _garageWallText1, _garageLightText1, _garageNumText1, _garageWallText2, _garageLightText2, _garageNumText2, _garageWallText3, _garageLightText3, _garageNumText3 As String
+        Private _1fCamPos, _2fCamPos, _3fCamPos, _1fCamRot, _2fCamRot, _3fCamRot As Vector3
 
         Public Sub New(Name As String, Unit As String, Cost As Integer, Optional Description As String = "")
             _name = Name
@@ -127,6 +133,15 @@ Namespace INMNative
             End Set
         End Property
 
+        Public Property TeleportHelipad() As Vector3
+            Get
+                Return _telheli
+            End Get
+            Set(value As Vector3)
+                _telheli = value
+            End Set
+        End Property
+
         Public Property ApartmentExit() As Vector3
             Get
                 Return _exit
@@ -223,6 +238,12 @@ Namespace INMNative
         Public ReadOnly Property EntranceDistance() As Single
             Get
                 Return World.GetDistance(Game.Player.Character.Position, Entrance)
+            End Get
+        End Property
+
+        Public ReadOnly Property RoofDistance() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, TeleportHelipad)
             End Get
         End Property
 
@@ -476,6 +497,582 @@ Namespace INMNative
             End Get
             Set(value As Single)
                 _assistantheading = value
+            End Set
+        End Property
+
+        Public Property GarageElevator() As Vector3
+            Get
+                Return _garageElevator
+            End Get
+            Set(value As Vector3)
+                _garageElevator = value
+            End Set
+        End Property
+
+        Public Property GarageMenuActivator() As Vector3
+            Get
+                Return _menuActivator
+            End Get
+            Set(value As Vector3)
+                _menuActivator = value
+            End Set
+        End Property
+
+        Public ReadOnly Property GarageElevatorDistance() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, GarageElevator)
+            End Get
+        End Property
+
+        Public ReadOnly Property GarageMenuActivatorDistance() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, GarageMenuActivator)
+            End Get
+        End Property
+
+        Public Property GarageElevator2() As Vector3
+            Get
+                Return _garageElevator2
+            End Get
+            Set(value As Vector3)
+                _garageElevator2 = value
+            End Set
+        End Property
+
+        Public Property GarageMenuActivator2() As Vector3
+            Get
+                Return _menuActivator2
+            End Get
+            Set(value As Vector3)
+                _menuActivator2 = value
+            End Set
+        End Property
+
+        Public ReadOnly Property GarageElevatorDistance2() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, GarageElevator2)
+            End Get
+        End Property
+
+        Public ReadOnly Property GarageMenuActivatorDistance2() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, GarageMenuActivator2)
+            End Get
+        End Property
+
+        Public Property GarageElevator3() As Vector3
+            Get
+                Return _garageElevator3
+            End Get
+            Set(value As Vector3)
+                _garageElevator3 = value
+            End Set
+        End Property
+
+        Public Property GarageMenuActivator3() As Vector3
+            Get
+                Return _menuActivator3
+            End Get
+            Set(value As Vector3)
+                _menuActivator3 = value
+            End Set
+        End Property
+
+        Public ReadOnly Property GarageElevatorDistance3() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, GarageElevator3)
+            End Get
+        End Property
+
+        Public ReadOnly Property GarageMenuActivatorDistance3() As Single
+            Get
+                Return World.GetDistance(Game.Player.Character.Position, GarageMenuActivator3)
+            End Get
+        End Property
+
+        Public Property GarageVeh0Pos() As Vector3
+            Get
+                Return veh0Pos
+            End Get
+            Set(value As Vector3)
+                veh0Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh1Pos() As Vector3
+            Get
+                Return veh1Pos
+            End Get
+            Set(value As Vector3)
+                veh1Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh2Pos() As Vector3
+            Get
+                Return veh2Pos
+            End Get
+            Set(value As Vector3)
+                veh2Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh3Pos() As Vector3
+            Get
+                Return veh3Pos
+            End Get
+            Set(value As Vector3)
+                veh3Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh4Pos() As Vector3
+            Get
+                Return veh4Pos
+            End Get
+            Set(value As Vector3)
+                veh4Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh5Pos() As Vector3
+            Get
+                Return veh5Pos
+            End Get
+            Set(value As Vector3)
+                veh5Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh6Pos() As Vector3
+            Get
+                Return veh6Pos
+            End Get
+            Set(value As Vector3)
+                veh6Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh7Pos() As Vector3
+            Get
+                Return veh7Pos
+            End Get
+            Set(value As Vector3)
+                veh7Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh8Pos() As Vector3
+            Get
+                Return veh8Pos
+            End Get
+            Set(value As Vector3)
+                veh8Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh9Pos() As Vector3
+            Get
+                Return veh9Pos
+            End Get
+            Set(value As Vector3)
+                veh9Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh10Pos() As Vector3
+            Get
+                Return veh10Pos
+            End Get
+            Set(value As Vector3)
+                veh10Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh11Pos() As Vector3
+            Get
+                Return veh11Pos
+            End Get
+            Set(value As Vector3)
+                veh11Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh12Pos() As Vector3
+            Get
+                Return veh12Pos
+            End Get
+            Set(value As Vector3)
+                veh12Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh13Pos() As Vector3
+            Get
+                Return veh13Pos
+            End Get
+            Set(value As Vector3)
+                veh13Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh14Pos() As Vector3
+            Get
+                Return veh14Pos
+            End Get
+            Set(value As Vector3)
+                veh14Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh15Pos() As Vector3
+            Get
+                Return veh15Pos
+            End Get
+            Set(value As Vector3)
+                veh15Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh16Pos() As Vector3
+            Get
+                Return veh16Pos
+            End Get
+            Set(value As Vector3)
+                veh16Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh17Pos() As Vector3
+            Get
+                Return veh17Pos
+            End Get
+            Set(value As Vector3)
+                veh17Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh18Pos() As Vector3
+            Get
+                Return veh18Pos
+            End Get
+            Set(value As Vector3)
+                veh18Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh19Pos() As Vector3
+            Get
+                Return veh19Pos
+            End Get
+            Set(value As Vector3)
+                veh19Pos = value
+            End Set
+        End Property
+
+        Public Property GarageVeh0613Rot() As Vector3
+            Get
+                Return vehRot0613
+            End Get
+            Set(value As Vector3)
+                vehRot0613 = value
+            End Set
+        End Property
+
+        Public Property GarageVeh1714Rot() As Vector3
+            Get
+                Return vehRot1714
+            End Get
+            Set(value As Vector3)
+                vehRot1714 = value
+            End Set
+        End Property
+
+        Public Property GarageVeh2815Rot() As Vector3
+            Get
+                Return vehRot2815
+            End Get
+            Set(value As Vector3)
+                vehRot2815 = value
+            End Set
+        End Property
+
+        Public Property GarageVeh3916Rot() As Vector3
+            Get
+                Return vehRot3916
+            End Get
+            Set(value As Vector3)
+                vehRot3916 = value
+            End Set
+        End Property
+
+        Public Property GarageVeh41017Rot() As Vector3
+            Get
+                Return vehRot41017
+            End Get
+            Set(value As Vector3)
+                vehRot41017 = value
+            End Set
+        End Property
+
+        Public Property GarageVeh51118Rot() As Vector3
+            Get
+                Return vehRot51118
+            End Get
+            Set(value As Vector3)
+                vehRot51118 = value
+            End Set
+        End Property
+
+        Public Property GarageVeh1219Rot() As Vector3
+            Get
+                Return vehRot1219
+            End Get
+            Set(value As Vector3)
+                vehRot1219 = value
+            End Set
+        End Property
+
+        Public Property GarageIPL() As String
+            Get
+                Return _garageIPL
+            End Get
+            Set(value As String)
+                _garageIPL = value
+            End Set
+        End Property
+
+        Public Property GarageIPL2() As String
+            Get
+                Return _garageIPL2
+            End Get
+            Set(value As String)
+                _garageIPL2 = value
+            End Set
+        End Property
+
+        Public Property GarageIPL3() As String
+            Get
+                Return _garageIPL3
+            End Get
+            Set(value As String)
+                _garageIPL3 = value
+            End Set
+        End Property
+
+        Public Property GarageWall1() As String
+            Get
+                Return _garageWall1
+            End Get
+            Set(value As String)
+                _garageWall1 = value
+            End Set
+        End Property
+
+        Public Property GarageWall2() As String
+            Get
+                Return _garageWall2
+            End Get
+            Set(value As String)
+                _garageWall2 = value
+            End Set
+        End Property
+
+        Public Property GarageWall3() As String
+            Get
+                Return _garageWall3
+            End Get
+            Set(value As String)
+                _garageWall3 = value
+            End Set
+        End Property
+
+        Public Property GarageLight1() As String
+            Get
+                Return _garageLight1
+            End Get
+            Set(value As String)
+                _garageLight1 = value
+            End Set
+        End Property
+
+        Public Property GarageLight2() As String
+            Get
+                Return _garageLight2
+            End Get
+            Set(value As String)
+                _garageLight2 = value
+            End Set
+        End Property
+
+        Public Property GarageLight3() As String
+            Get
+                Return _garageLight3
+            End Get
+            Set(value As String)
+                _garageLight3 = value
+            End Set
+        End Property
+
+        Public Property GarageNumber1() As String
+            Get
+                Return _garageNumber1
+            End Get
+            Set(value As String)
+                _garageNumber1 = value
+            End Set
+        End Property
+
+        Public Property GarageNumber2() As String
+            Get
+                Return _garageNumber2
+            End Get
+            Set(value As String)
+                _garageNumber2 = value
+            End Set
+        End Property
+
+        Public Property GarageNumber3() As String
+            Get
+                Return _garageNumber3
+            End Get
+            Set(value As String)
+                _garageNumber3 = value
+            End Set
+        End Property
+
+        Public Property CamPos1F() As Vector3
+            Get
+                Return _1fCamPos
+            End Get
+            Set(value As Vector3)
+                _1fCamPos = value
+            End Set
+        End Property
+
+        Public Property CamPos2F() As Vector3
+            Get
+                Return _2fCamPos
+            End Get
+            Set(value As Vector3)
+                _2fCamPos = value
+            End Set
+        End Property
+
+        Public Property CamPos3F() As Vector3
+            Get
+                Return _3fCamPos
+            End Get
+            Set(value As Vector3)
+                _3fCamPos = value
+            End Set
+        End Property
+
+        Public Property CamRot1F() As Vector3
+            Get
+                Return _1fCamRot
+            End Get
+            Set(value As Vector3)
+                _1fCamRot = value
+            End Set
+        End Property
+
+        Public Property CamRot2F() As Vector3
+            Get
+                Return _2fCamRot
+            End Get
+            Set(value As Vector3)
+                _2fCamRot = value
+            End Set
+        End Property
+
+        Public Property CamRot3F() As Vector3
+            Get
+                Return _3fCamRot
+            End Get
+            Set(value As Vector3)
+                _3fCamRot = value
+            End Set
+        End Property
+
+        Public Property GarageWallText1() As String
+            Get
+                Return _garageWallText1
+            End Get
+            Set(value As String)
+                _garageWallText1 = value
+            End Set
+        End Property
+
+        Public Property GarageLightText1() As String
+            Get
+                Return _garageLightText1
+            End Get
+            Set(value As String)
+                _garageLightText1 = value
+            End Set
+        End Property
+
+        Public Property GarageNumberText1() As String
+            Get
+                Return _garageNumText1
+            End Get
+            Set(value As String)
+                _garageNumText1 = value
+            End Set
+        End Property
+
+        Public Property GarageWallText2() As String
+            Get
+                Return _garageWallText2
+            End Get
+            Set(value As String)
+                _garageWallText2 = value
+            End Set
+        End Property
+
+        Public Property GarageLightText2() As String
+            Get
+                Return _garageLightText2
+            End Get
+            Set(value As String)
+                _garageLightText2 = value
+            End Set
+        End Property
+
+        Public Property GarageNumberText2() As String
+            Get
+                Return _garageNumText2
+            End Get
+            Set(value As String)
+                _garageNumText2 = value
+            End Set
+        End Property
+
+        Public Property GarageWallText3() As String
+            Get
+                Return _garageWallText3
+            End Get
+            Set(value As String)
+                _garageWallText3 = value
+            End Set
+        End Property
+
+        Public Property GarageLightText3() As String
+            Get
+                Return _garageLightText3
+            End Get
+            Set(value As String)
+                _garageLightText3 = value
+            End Set
+        End Property
+
+        Public Property GarageNumberText3() As String
+            Get
+                Return _garageNumText3
+            End Get
+            Set(value As String)
+                _garageNumText3 = value
             End Set
         End Property
 

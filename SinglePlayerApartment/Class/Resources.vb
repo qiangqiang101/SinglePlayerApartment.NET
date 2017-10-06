@@ -573,7 +573,7 @@ Label_005C:
                 Result = True
             Case SixCarGarage.veh0, SixCarGarage.veh1, SixCarGarage.veh2, SixCarGarage.veh3, SixCarGarage.veh4, SixCarGarage.veh5
                 Result = True
-            Case MazeBankWestGarage1.veh0, MazeBankWestGarage1.veh1, MazeBankWestGarage1.veh2, MazeBankWestGarage1.veh3, MazeBankWestGarage1.veh4, MazeBankWestGarage1.veh5, MazeBankWestGarage1.veh6, MazeBankWestGarage1.veh7, MazeBankWestGarage1.veh8, MazeBankWestGarage1.veh9, MazeBankWestGarage1.veh10, MazeBankWestGarage1.veh11, MazeBankWestGarage1.veh12, MazeBankWestGarage1.veh13, MazeBankWestGarage1.veh14, MazeBankWestGarage1.veh15, MazeBankWestGarage1.veh16, MazeBankWestGarage1.veh17, MazeBankWestGarage1.veh18, MazeBankWestGarage1.veh19
+            Case TwentyCarGarage.veh0, TwentyCarGarage.veh1, TwentyCarGarage.veh2, TwentyCarGarage.veh3, TwentyCarGarage.veh4, TwentyCarGarage.veh5, TwentyCarGarage.veh6, TwentyCarGarage.veh7, TwentyCarGarage.veh8, TwentyCarGarage.veh9, TwentyCarGarage.veh10, TwentyCarGarage.veh11, TwentyCarGarage.veh12, TwentyCarGarage.veh13, TwentyCarGarage.veh14, TwentyCarGarage.veh15, TwentyCarGarage.veh16, TwentyCarGarage.veh17, TwentyCarGarage.veh18, TwentyCarGarage.veh19
                 Result = True
             Case Else
                 Result = False
@@ -1120,10 +1120,62 @@ Label_005C:
         PowBrkConservative = ReadCfgValue("PowBrkConservative", langFile)
         PowBrkPolished = ReadCfgValue("PowBrkPolished", langFile)
         PowBrkIce = ReadCfgValue("PowBrkIce", langFile)
+        InteriorText = ReadCfgValue("InteriorText", langFile)
+        Interior1 = ReadCfgValue("InteriorOne", langFile)
+        Interior2 = ReadCfgValue("InteriorTwo", langFile)
+        Interior3 = ReadCfgValue("InteriorThree", langFile)
+        Interior4 = ReadCfgValue("InteriorFour", langFile)
+        LightingText = ReadCfgValue("LightingText", langFile)
+        Lighting1 = ReadCfgValue("LightingOne", langFile)
+        Lighting2 = ReadCfgValue("LightingTwo", langFile)
+        Lighting3 = ReadCfgValue("LightingThree", langFile)
+        Lighting4 = ReadCfgValue("LightingFour", langFile)
+        Lighting5 = ReadCfgValue("LightingFive", langFile)
+        Lighting6 = ReadCfgValue("LightingSix", langFile)
+        Lighting7 = ReadCfgValue("LightingSeven", langFile)
+        Lighting8 = ReadCfgValue("LightingEight", langFile)
+        Lighting9 = ReadCfgValue("LightingNine", langFile)
+        SignageText = ReadCfgValue("SignageText", langFile)
+        Signage1 = ReadCfgValue("SignageOne", langFile)
+        Signage2 = ReadCfgValue("SignageTwo", langFile)
+        Signage3 = ReadCfgValue("SignageThree", langFile)
+        Signage4 = ReadCfgValue("SignageFour", langFile)
+        Signage5 = ReadCfgValue("SignageFive", langFile)
+        Signage6 = ReadCfgValue("SignageSix", langFile)
+        Signage7 = ReadCfgValue("SignageSeven", langFile)
+        Signage8 = ReadCfgValue("SignageEight", langFile)
+        Signage9 = ReadCfgValue("SignageNine", langFile)
+        FloorText = ReadCfgValue("FloorText", langFile)
+        Floor1 = ReadCfgValue("FloorOne", langFile)
+        Floor2 = ReadCfgValue("FloorTwo", langFile)
+        Floor3 = ReadCfgValue("FloorThree", langFile)
+        Floor4 = ReadCfgValue("FloorFour", langFile)
+        Floor5 = ReadCfgValue("FloorFive", langFile)
+        Floor6 = ReadCfgValue("FloorSix", langFile)
+        Floor7 = ReadCfgValue("FloorSeven", langFile)
+        Floor8 = ReadCfgValue("FloorEight", langFile)
+        Floor9 = ReadCfgValue("FloorNine", langFile)
+        Floor10 = ReadCfgValue("FloorTen", langFile)
+        Floor11 = ReadCfgValue("FloorEleven", langFile)
+        Floor12 = ReadCfgValue("FloorTwelve", langFile)
+        Floor13 = ReadCfgValue("FloorThirteen", langFile)
+        Floor14 = ReadCfgValue("FloorFourteen", langFile)
+        Floor15 = ReadCfgValue("FloorFifteen", langFile)
+        Floor16 = ReadCfgValue("FloorSixteen", langFile)
+        Floor17 = ReadCfgValue("FloorSeventeen", langFile)
+        Floor18 = ReadCfgValue("FloorEighteen", langFile)
+        Floor19 = ReadCfgValue("FloorNineteen", langFile)
+        Floor20 = ReadCfgValue("FloorTwenty", langFile)
         OfficeGarage1 = ReadCfgValue("OfficeGarage1", langFile)
         OfficeGarage2 = ReadCfgValue("OfficeGarage2", langFile)
         OfficeGarage3 = ReadCfgValue("OfficeGarage3", langFile)
         OfficeAutoShop = ReadCfgValue("OfficeAutoShop", langFile)
+        EnterOffice = ReadCfgValue("EnterOffice", langFile)
+        GarageStyle = ReadCfgValue("GarageStyle", langFile)
+        OfficeStyle = ReadCfgValue("OfficeStyle", langFile)
+        ExitOfficeGround = ReadCfgValue("ExitOfficeGround", langFile)
+        ExitOfficeRoof = ReadCfgValue("ExitOfficeRoof", langFile)
+        OfficeOptions = ReadCfgValue("OfficeOptions", langFile)
     End Sub
 
     Public Enum BlipSprite2
@@ -1575,6 +1627,63 @@ Label_005C:
     Public Sub EnableInteriotProp(interiorID As Integer, Prop As String)
         If Not Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, Prop) Then Native.Function.Call(Hash._ENABLE_INTERIOR_PROP, interiorID, Prop)
         Native.Function.Call(Hash.REFRESH_INTERIOR, interiorID)
+    End Sub
+
+    Public Enum GarageDecorType
+        Wall
+        Lighting
+        Signage
+        Floor
+        All
+    End Enum
+
+    Public Sub RemoveAllOfficeGarageDecor(interiorID As Integer, type As GarageDecorType)
+        Select Case type
+            Case GarageDecorType.Wall, GarageDecorType.All
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "garage_decor_01") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "garage_decor_01")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "garage_decor_02") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "garage_decor_02")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "garage_decor_03") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "garage_decor_03")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "garage_decor_04") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "garage_decor_04")
+            Case GarageDecorType.Lighting, GarageDecorType.All
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option01") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option01")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option02") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option02")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option03") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option03")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option04") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option04")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option05") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option05")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option06") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option06")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option07") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option07")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option08") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option08")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "lighting_option09") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "lighting_option09")
+            Case GarageDecorType.Signage, GarageDecorType.All
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style01_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style01_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style01_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style01_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style01_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style01_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style02_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style02_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style02_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style02_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style02_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style02_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style03_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style03_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style03_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style03_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style03_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style03_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style04_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style04_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style04_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style04_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style04_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style04_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style05_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style05_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style05_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style05_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style05_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style05_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style06_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style06_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style06_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style06_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style06_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style06_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style07_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style07_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style07_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style07_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style07_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style07_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style08_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style08_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style08_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style08_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style08_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style08_n3")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style09_n1") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style09_n1")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style09_n2") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style09_n2")
+                If Native.Function.Call(Of Boolean)(Hash._IS_INTERIOR_PROP_ENABLED, interiorID, "numbering_style09_n3") Then Native.Function.Call(Hash._DISABLE_INTERIOR_PROP, interiorID, "numbering_style09_n3")
+            Case GarageDecorType.Floor, GarageDecorType.All
+        End Select
     End Sub
 
     Public Sub DisplayHelpTextThisFrame(helpText As String, Optional Shape As Integer = -1)

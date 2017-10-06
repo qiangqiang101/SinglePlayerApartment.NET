@@ -25,7 +25,10 @@ Public Class SinglePlayerApartment
     Public Shared ModernStyle, MoodyStyle, VibrantStyle, SharpStyle, MonochromeStyle, SeductiveStyle, RegalStyle, AquaStyle, ChooseVeh, ChooseVehDesc, ReturnVeh, AptStyle, _Phone, PegasusDeliver, PegasusDelete, CannotStore As String
     Public Shared GrgFull, MechanicBill, EnterElevator, ExitGarage, ManageGarage, Maze, Fleeca, BOL, ForSale, PropPurchased, InsFundApartment, EnterApartment, SaveGame, ExitApartment, ChangeClothes, _EnterGarage As String
     Public Shared Insurance1, Insurance2, Insurance3, Insurance4, MorsMutual As String
-    Public Shared ExecRich, ExecCool, ExecContrast, OldSpiClassical, OldSpiVintage, OldSpiWarms, PowBrkConservative, PowBrkPolished, PowBrkIce, OfficeGarage1, OfficeGarage2, OfficeGarage3, OfficeAutoShop As String
+    Public Shared ExecRich, ExecCool, ExecContrast, OldSpiClassical, OldSpiVintage, OldSpiWarms, PowBrkConservative, PowBrkPolished, PowBrkIce, OfficeGarage1, OfficeGarage2, OfficeGarage3, OfficeAutoShop, EnterOffice, OfficeOptions As String
+    Public Shared InteriorText, Interior1, Interior2, Interior3, Interior4, LightingText, Lighting1, Lighting2, Lighting3, Lighting4, Lighting5, Lighting6, Lighting7, Lighting8, Lighting9, GarageStyle, OfficeStyle, ExitOfficeGround, ExitOfficeRoof As String
+    Public Shared SignageText, Signage1, Signage2, Signage3, Signage4, Signage5, Signage6, Signage7, Signage8, Signage9, FloorText As String
+    Public Shared Floor1, Floor2, Floor3, Floor4, Floor5, Floor6, Floor7, Floor8, Floor9, Floor10, Floor11, Floor12, Floor13, Floor14, Floor15, Floor16, Floor17, Floor18, Floor19, Floor20 As String
 
     Private teleported As Boolean = False
     Private michaelSafeHouse, franklinAuntSafeHouse, franklinSafeHouse, trevorTrailerSafeHouse, trevorPubSafeHouse, floydSafeHouse As Integer
@@ -182,6 +185,8 @@ Public Class SinglePlayerApartment
             My.Settings.MechanicPad = ReadCfgValue("PadMechanic", settingFile)
             My.Settings.SecondMechanicPad = ReadCfgValue("SecondPadMechanic", settingFile)
             My.Settings.RefreshGrgVehs = ReadCfgValue("RefreshGarageVehicles", settingFile)
+            '1.10 update
+            My.Settings.MazeBankWest = ReadCfgValue("MazeBankWest", settingFile)
             My.Settings.Save()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -327,24 +332,30 @@ Public Class SinglePlayerApartment
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     MadWayne2113.Apartment.IsAtHome = True
                     ToggleIPL("apa_stilt_ch2_12b_ext1")
-                Case "EclipsePS1"
-                    SetInteriorActive2(EclipseTower.ApartmentPS1.Interior.X, EclipseTower.ApartmentPS1.Interior.Y, EclipseTower.ApartmentPS1.Interior.Z)
+                Case "EclipsePS1" 'patched 1.10 update
                     ToggleIPL(ReadCfgValue("ETP1ipl", saveFile), EclipseTower.ApartmentPS1.Interior)
+                    SetInteriorActive2(EclipseTower.ApartmentPS1.Interior.X, EclipseTower.ApartmentPS1.Interior.Y, EclipseTower.ApartmentPS1.Interior.Z)
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     EclipseTower.Apartment.IsAtHome = True
                 Case "EclipsePS2"
-                    SetInteriorActive2(EclipseTower.ApartmentPS2.Interior.X, EclipseTower.ApartmentPS2.Interior.Y, EclipseTower.ApartmentPS2.Interior.Z)
                     ToggleIPL(ReadCfgValue("ETP2ipl", saveFile), EclipseTower.ApartmentPS2.Interior)
+                    SetInteriorActive2(EclipseTower.ApartmentPS2.Interior.X, EclipseTower.ApartmentPS2.Interior.Y, EclipseTower.ApartmentPS2.Interior.Z)
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     EclipseTower.Apartment.IsAtHome = True
                 Case "EclipsePS3"
-                    SetInteriorActive2(EclipseTower.ApartmentPS3.Interior.X, EclipseTower.ApartmentPS3.Interior.Y, EclipseTower.ApartmentPS3.Interior.Z)
                     ToggleIPL(ReadCfgValue("ETP3ipl", saveFile), EclipseTower.ApartmentPS3.Interior)
+                    SetInteriorActive2(EclipseTower.ApartmentPS3.Interior.X, EclipseTower.ApartmentPS3.Interior.Y, EclipseTower.ApartmentPS3.Interior.Z)
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     EclipseTower.Apartment.IsAtHome = True
+                Case "MazeBankWest" 'added 1.10 update
+                    ToggleIPL(ReadCfgValue("MBWipl", saveFile), MazeBankWest.Apartment.Interior)
+                    SetInteriorActive2(MazeBankWest.Apartment.Interior.X, MazeBankWest.Apartment.Interior.Y, MazeBankWest.Apartment.Interior.Z)
+                    If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
+                    MazeBankWest.Apartment.IsAtHome = True
                 Case "None"
                     teleported = True
             End Select

@@ -22,7 +22,7 @@ Public Class Brain
     Public Shared TVCamera As Camera
     '<-- TV -->
     '<-- Radio -->
-    Public Shared RadioModels As List(Of Model) = New List(Of Model) From {2079380440, -627813781, 1729911864, -1999188639}
+    Public Shared RadioModels As List(Of Model) = New List(Of Model) From {2079380440, -627813781, 1729911864, -1999188639, -364924791}
     Public Shared RadioRoomsList As List(Of String) = New List(Of String) From {
         "SE_DLC_APT_Stilts_A_Bedroom", "SE_DLC_APT_Stilts_A_Heist_Room", "SE_DLC_APT_Stilts_A_Living_Room", "SE_DLC_APT_Stilts_B_Bedroom", "SE_DLC_APT_Stilts_B_Heist_Room", "SE_DLC_APT_Stilts_B_Living_Room",
         "SE_DLC_APT_Custom_Bedroom", "SE_DLC_APT_Custom_Heist_Room", "SE_DLC_APT_Custom_Living_Room", "SE_MP_GARAGE_L_RADIO", "SE_MP_AP_RAD_v_studio_lo_living", "SE_MP_AP_RAD_v_apart_midspaz_lounge", "SE_MP_APT_1_1",

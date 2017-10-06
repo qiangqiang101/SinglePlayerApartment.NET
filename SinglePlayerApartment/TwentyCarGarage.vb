@@ -3,10 +3,15 @@ Imports GTA.Native
 Imports GTA.Math
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.INMNative
+Imports INMNativeUI
+Imports System.Drawing
 
-Public Class MazeBankWestGarage1
+Public Class TwentyCarGarage
     Inherits Script
 
+    Public Shared Apartment As Apartment
+    Public Shared LastIPL As String
+    Public Shared WallText, LightText, NumberText As String
     Public Shared InteriorID As Integer
     Public Shared CurrentPath As String
     Public Shared veh0, veh1, veh2, veh3, veh4, veh5, veh6, veh7, veh8, veh9, veh10, veh11, veh12, veh13, veh14, veh15, veh16, veh17, veh18, veh19 As Vehicle
@@ -15,48 +20,788 @@ Public Class MazeBankWestGarage1
     Public Shared lastLocationGarageVector As Vector3
     Public Shared lastLocationGarageOutVector As Vector3
     Public Shared lastLocationGarageOutHeading As Single
-    Public Shared Elevator As Vector3 = New Vector3(-1395.882, -480.5163, 56.10049) '/
-    Public Shared MenuActivator As Vector3 = New Vector3(-1395.049, -476.1217, 56.10049)  '/
+    Public Shared Elevator As Vector3
+    Public Shared MenuActivator As Vector3
     Public Shared ElevatorDistance As Single
     Public Shared GarageMarkerDistance As Single
-    Public Shared veh0Pos As Vector3 = New Vector3(-1370.5, -482.9, 56.4) '//
-    Public Shared veh1Pos As Vector3 = New Vector3(-1370.4, -477.6, 56.4) '//
-    Public Shared veh2Pos As Vector3 = New Vector3(-1373.5, -473.0, 56.4) '//
-    Public Shared veh3Pos As Vector3 = New Vector3(-1378.3, -471.3, 56.4) '//
-    Public Shared veh4Pos As Vector3 = New Vector3(-1383.2, -471.8, 56.4) '//
-    Public Shared veh5Pos As Vector3 = New Vector3(-1387.8, -473.2, 56.4) '//
-
-    Public Shared veh6Pos As Vector3 = New Vector3(-1370.5, -482.9, 61.8) '//
-    Public Shared veh7Pos As Vector3 = New Vector3(-1370.4, -477.6, 61.8) '//
-    Public Shared veh8Pos As Vector3 = New Vector3(-1373.5, -473.0, 61.8) '//
-    Public Shared veh9Pos As Vector3 = New Vector3(-1378.3, -471.3, 61.8) '//
-    Public Shared veh10Pos As Vector3 = New Vector3(-1383.2, -471.8, 61.8) '//
-    Public Shared veh11Pos As Vector3 = New Vector3(-1387.8, -473.2, 61.8) '//
-    Public Shared veh12Pos As Vector3 = New Vector3(-1391.9, -475.1, 61.8) '//
-
-    Public Shared veh13Pos As Vector3 = New Vector3(-1370.5, -482.9, 67.1) '//
-    Public Shared veh14Pos As Vector3 = New Vector3(-1370.4, -477.6, 67.1) '//
-    Public Shared veh15Pos As Vector3 = New Vector3(-1373.5, -473.0, 67.1) '//
-    Public Shared veh16Pos As Vector3 = New Vector3(-1378.3, -471.3, 67.1) '//
-    Public Shared veh17Pos As Vector3 = New Vector3(-1383.2, -471.8, 67.1) '//
-    Public Shared veh18Pos As Vector3 = New Vector3(-1387.8, -473.2, 67.1) '//
-    Public Shared veh19Pos As Vector3 = New Vector3(-1391.9, -475.1, 67.1) '//
-    Public Shared vehRot0613 As Vector3 = New Vector3(0, 0, 76.5) '//
-    Public Shared vehRot1714 As Vector3 = New Vector3(0, 0, 106.0) '//
-    Public Shared vehRot2815 As Vector3 = New Vector3(0, 0, 143.1) '//
-    Public Shared vehRot3916 As Vector3 = New Vector3(0, 0, 175.0) '//
-    Public Shared vehRot41017 As Vector3 = New Vector3(0, 0, 199.5) '//
-    Public Shared vehRot51118 As Vector3 = New Vector3(0, 0, 202.5) '//
-    Public Shared vehRot1219 As Vector3 = New Vector3(0, 0, 204.8) '//
+    Public Shared veh0Pos, veh1Pos, veh2Pos, veh3Pos, veh4Pos, veh5Pos, veh6Pos, veh7Pos, veh8Pos, veh9Pos, veh10Pos, veh11Pos, veh12Pos, veh13Pos, veh14Pos, veh15Pos, veh16Pos, veh17Pos, veh18Pos, veh19Pos As Vector3
+    Public Shared vehRot0613, vehRot1714, vehRot2815, vehRot3916, vehRot41017, vehRot51118, vehRot1219 As Vector3
+    Public Shared Floor1CamPos, Floor2CamPos, Floor3CamPos, Floor1CamRot, Floor2CamRot, Floor3CamRot As Vector3
+    Public Shared ExitMenu, StyleMenu, WallMenu, LightMenu, NumberMenu As UIMenu
+    Public Shared itemWall, itemLight, itemNumber, itemStyle As UIMenuItem
+    Public Shared _menuPool As MenuPool
 
     Public Sub New()
         Try
-            If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then
-                Translate()
-            End If
+            Translate()
+            _menuPool = New MenuPool()
+            itemWall = New UIMenuItem(InteriorText)
+            itemLight = New UIMenuItem(LightingText)
+            itemNumber = New UIMenuItem(SignageText)
+            itemStyle = New UIMenuItem(GarageStyle)
+
+            CreateExitMenu()
+            CreateGarageStyleMenu()
+            CreateGarageInteriorMenu()
+            CreateGarageLightingMenu()
+            CreateGarageSignageMenu()
+
+            AddHandler ExitMenu.OnMenuClose, AddressOf MenuCloseHandler
+            AddHandler ExitMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler StyleMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler WallMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler LightMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler NumberMenu.OnItemSelect, AddressOf ItemSelectHandler
+            AddHandler WallMenu.OnIndexChange, AddressOf IndexChangeHandler
+            AddHandler LightMenu.OnIndexChange, AddressOf IndexChangeHandler
+            AddHandler NumberMenu.OnIndexChange, AddressOf IndexChangeHandler
+            AddHandler WallMenu.OnMenuClose, AddressOf MenuCloseHandler
+            AddHandler LightMenu.OnMenuClose, AddressOf MenuCloseHandler
+            AddHandler NumberMenu.OnMenuClose, AddressOf MenuCloseHandler
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
         End Try
+    End Sub
+
+    Public Shared Sub CreateExitMenu()
+        Try
+            ExitMenu = New UIMenu("", OfficeOptions, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            ExitMenu.SetBannerType(Rectangle)
+            _menuPool.Add(ExitMenu)
+            ExitMenu.AddItem(New UIMenuItem(EnterOffice))
+            ExitMenu.AddItem(New UIMenuItem(OfficeGarage1))
+            ExitMenu.AddItem(New UIMenuItem(OfficeGarage2))
+            ExitMenu.AddItem(New UIMenuItem(OfficeGarage3))
+            ExitMenu.AddItem(New UIMenuItem(OfficeAutoShop))
+            ExitMenu.AddItem(itemStyle)
+            ExitMenu.RefreshIndex()
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateGarageStyleMenu()
+        Try
+            StyleMenu = New UIMenu("", GarageStyle.ToUpper, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            StyleMenu.SetBannerType(Rectangle)
+            _menuPool.Add(StyleMenu)
+            StyleMenu.AddItem(itemWall)
+            StyleMenu.AddItem(itemLight)
+            StyleMenu.AddItem(itemNumber)
+            StyleMenu.RefreshIndex()
+            ExitMenu.BindMenuToItem(StyleMenu, itemStyle)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateGarageInteriorMenu()
+        Try
+            WallMenu = New UIMenu("", InteriorText.ToUpper, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            WallMenu.SetBannerType(Rectangle)
+            _menuPool.Add(WallMenu)
+            WallMenu.AddItem(New UIMenuItem(Interior1))
+            WallMenu.AddItem(New UIMenuItem(Interior2))
+            WallMenu.AddItem(New UIMenuItem(Interior3))
+            WallMenu.AddItem(New UIMenuItem(Interior4))
+            WallMenu.RefreshIndex()
+            StyleMenu.BindMenuToItem(WallMenu, itemWall)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateGarageLightingMenu()
+        Try
+            LightMenu = New UIMenu("", LightingText.ToUpper, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            LightMenu.SetBannerType(Rectangle)
+            _menuPool.Add(LightMenu)
+            LightMenu.AddItem(New UIMenuItem(Lighting1))
+            LightMenu.AddItem(New UIMenuItem(Lighting2))
+            LightMenu.AddItem(New UIMenuItem(Lighting3))
+            LightMenu.AddItem(New UIMenuItem(Lighting4))
+            LightMenu.AddItem(New UIMenuItem(Lighting5))
+            LightMenu.AddItem(New UIMenuItem(Lighting6))
+            LightMenu.AddItem(New UIMenuItem(Lighting7))
+            LightMenu.AddItem(New UIMenuItem(Lighting8))
+            LightMenu.AddItem(New UIMenuItem(Lighting9))
+            LightMenu.RefreshIndex()
+            StyleMenu.BindMenuToItem(LightMenu, itemLight)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Shared Sub CreateGarageSignageMenu()
+        Try
+            NumberMenu = New UIMenu("", SignageText.ToUpper, New Point(0, -107))
+            Dim Rectangle = New UIResRectangle()
+            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+            NumberMenu.SetBannerType(Rectangle)
+            _menuPool.Add(NumberMenu)
+            NumberMenu.AddItem(New UIMenuItem(Signage1))
+            NumberMenu.AddItem(New UIMenuItem(Signage2))
+            NumberMenu.AddItem(New UIMenuItem(Signage3))
+            NumberMenu.AddItem(New UIMenuItem(Signage4))
+            NumberMenu.AddItem(New UIMenuItem(Signage5))
+            NumberMenu.AddItem(New UIMenuItem(Signage6))
+            NumberMenu.AddItem(New UIMenuItem(Signage7))
+            NumberMenu.AddItem(New UIMenuItem(Signage8))
+            NumberMenu.AddItem(New UIMenuItem(Signage9))
+            NumberMenu.RefreshIndex()
+            StyleMenu.BindMenuToItem(NumberMenu, itemNumber)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub MenuCloseHandler(sender As UIMenu)
+        Try
+            hideHud = False
+            World.DestroyAllCameras()
+            World.RenderingCamera = Nothing
+            RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.All)
+            ToggleOfficeGarageDecor(Apartment.GarageWall1, Apartment.GarageLight1, Apartment.GarageNumber1, InteriorID)
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
+    End Sub
+
+    Public Sub ItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
+        If selectedItem.Text = EnterOffice Then
+            Game.FadeScreenOut(500)
+            Wait(500)
+            RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.All)
+            RemoveIPL(LastIPL)
+            ToggleIPL(Apartment.IPL)
+            EnableOfficeProp()
+            playerPed.Position = lastLocationVector
+            SinglePlayerApartment.player.LastVehicle.Delete()
+            ExitMenu.Visible = False
+            Wait(500)
+            Game.FadeScreenIn(500)
+        ElseIf selectedItem.Text = OfficeGarage1 Then
+            Game.FadeScreenOut(500)
+            Wait(500)
+            RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.All)
+            RemoveIPL(LastIPL)
+            ToggleIPL(Apartment.GarageIPL)
+            LastIPL = Apartment.GarageIPL
+            LastLocationName = Apartment.Name & Apartment.Unit
+            lastLocationVector = Apartment.ApartmentExit
+            lastLocationGarageVector = Apartment.GarageEntrance
+            lastLocationGarageOutVector = Apartment.GarageOutside
+            lastLocationGarageOutHeading = Apartment.GarageOutHeading
+            LoadGarageVechicles(Apartment.GaragePath)
+            CurrentPath = Apartment.GaragePath
+            Elevator = Apartment.GarageElevator
+            ToggleOfficeGarageDecor(Apartment.GarageWall1, Apartment.GarageLight1, Apartment.GarageNumber1, INMNative.Apartment.GetInteriorID(TwentyCarGarage.Elevator))
+            MenuActivator = Apartment.GarageMenuActivator
+            ElevatorDistance = Apartment.GarageElevatorDistance
+            GarageMarkerDistance = Apartment.GarageMenuActivatorDistance
+            veh0Pos = Apartment.GarageVeh0Pos
+            veh1Pos = Apartment.GarageVeh1Pos
+            veh2Pos = Apartment.GarageVeh2Pos
+            veh3Pos = Apartment.GarageVeh3Pos
+            veh4Pos = Apartment.GarageVeh4Pos
+            veh5Pos = Apartment.GarageVeh5Pos
+            veh6Pos = Apartment.GarageVeh6Pos
+            veh7Pos = Apartment.GarageVeh7Pos
+            veh8Pos = Apartment.GarageVeh8Pos
+            veh9Pos = Apartment.GarageVeh9Pos
+            veh10Pos = Apartment.GarageVeh10Pos
+            veh11Pos = Apartment.GarageVeh11Pos
+            veh12Pos = Apartment.GarageVeh12Pos
+            veh13Pos = Apartment.GarageVeh13Pos
+            veh14Pos = Apartment.GarageVeh14Pos
+            veh15Pos = Apartment.GarageVeh15Pos
+            veh16Pos = Apartment.GarageVeh16Pos
+            veh17Pos = Apartment.GarageVeh17Pos
+            veh18Pos = Apartment.GarageVeh18Pos
+            veh19Pos = Apartment.GarageVeh19Pos
+            vehRot0613 = Apartment.GarageVeh0613Rot
+            vehRot1714 = Apartment.GarageVeh1714Rot
+            vehRot2815 = Apartment.GarageVeh2815Rot
+            vehRot3916 = Apartment.GarageVeh3916Rot
+            vehRot41017 = Apartment.GarageVeh41017Rot
+            vehRot51118 = Apartment.GarageVeh51118Rot
+            vehRot1219 = Apartment.GarageVeh1219Rot
+            Floor1CamPos = Apartment.CamPos1F
+            Floor2CamPos = Apartment.CamPos2F
+            Floor3CamPos = Apartment.CamPos3F
+            Floor1CamRot = Apartment.CamRot1F
+            Floor2CamRot = Apartment.CamRot2F
+            Floor3CamRot = Apartment.CamRot3F
+            playerPed.Position = Elevator
+            ExitMenu.Visible = False
+            Wait(500)
+            Game.FadeScreenIn(500)
+        ElseIf selectedItem.Text = OfficeGarage2 Then
+        ElseIf selectedItem.Text = OfficeGarage3 Then
+        ElseIf selectedItem.Text = OfficeAutoShop Then
+        End If
+
+        Select Case selectedItem.Text
+            Case InteriorText, LightingText, SignageText
+                Game.FadeScreenOut(500)
+                Wait(500)
+                World.RenderingCamera = World.CreateCamera(Apartment.CamPos1F, Apartment.CamRot1F, 50)
+                hideHud = True
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Interior1
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(WallText, "garage_decor_01", saveFile)
+                If WallText.Contains("1") Then Apartment.GarageWall1 = "garage_decor_01"
+                If WallText.Contains("2") Then Apartment.GarageWall2 = "garage_decor_01"
+                If WallText.Contains("3") Then Apartment.GarageWall3 = "garage_decor_01"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_01")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                WallMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Interior2
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(WallText, "garage_decor_02", saveFile)
+                If WallText.Contains("1") Then Apartment.GarageWall1 = "garage_decor_02"
+                If WallText.Contains("2") Then Apartment.GarageWall2 = "garage_decor_02"
+                If WallText.Contains("3") Then Apartment.GarageWall3 = "garage_decor_02"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_02")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                WallMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Interior3
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(WallText, "garage_decor_03", saveFile)
+                If WallText.Contains("1") Then Apartment.GarageWall1 = "garage_decor_03"
+                If WallText.Contains("2") Then Apartment.GarageWall2 = "garage_decor_03"
+                If WallText.Contains("3") Then Apartment.GarageWall3 = "garage_decor_03"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_03")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                WallMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Interior4
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(WallText, "garage_decor_04", saveFile)
+                If WallText.Contains("1") Then Apartment.GarageWall1 = "garage_decor_04"
+                If WallText.Contains("2") Then Apartment.GarageWall2 = "garage_decor_04"
+                If WallText.Contains("3") Then Apartment.GarageWall3 = "garage_decor_04"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_04")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                WallMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting1
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option01", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option01"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option01"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option01"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option01")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting2
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option02", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option02"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option02"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option02"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option02")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting3
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option03", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option03"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option03"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option03"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option03")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting4
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option04", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option04"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option04"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option04"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option04")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting5
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option05", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option05"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option05"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option05"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option05")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting6
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option06", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option06"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option06"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option06"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option06")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting7
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option07", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option07"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option07"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option07"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option07")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting8
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option08", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option08"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option08"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option08"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option08")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Lighting9
+                Game.FadeScreenOut(500)
+                Wait(500)
+                WriteCfgValue(LightText, "lighting_option09", saveFile)
+                If LightText.Contains("1") Then Apartment.GarageLight1 = "lighting_option09"
+                If LightText.Contains("2") Then Apartment.GarageLight2 = "lighting_option09"
+                If LightText.Contains("3") Then Apartment.GarageLight3 = "lighting_option09"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option09")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                LightMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage1
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style01_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style01_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style01_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style01_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style01_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style01_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style01_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style01_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style01_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage2
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style02_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style02_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style02_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style02_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style02_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style02_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style02_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style02_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style02_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage3
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style03_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style03_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style03_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style03_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style03_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style03_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style03_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style03_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style03_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage4
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style04_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style04_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style04_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style04_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style04_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style04_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style04_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style04_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style04_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage5
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style05_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style05_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style05_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style05_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style05_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style05_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style05_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style05_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style05_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage6
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style06_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style06_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style06_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style06_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style06_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style06_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style06_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style06_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style06_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage7
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style07_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style07_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style07_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style07_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style07_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style07_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style07_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style07_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style07_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage8
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style08_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style08_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style08_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style08_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style08_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style08_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style08_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style08_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style08_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+            Case Signage9
+                Game.FadeScreenOut(500)
+                Wait(500)
+                If NumberText.Contains("1") Then WriteCfgValue(NumberText, "numbering_style09_n1", saveFile)
+                If NumberText.Contains("2") Then WriteCfgValue(NumberText, "numbering_style09_n2", saveFile)
+                If NumberText.Contains("3") Then WriteCfgValue(NumberText, "numbering_style09_n3", saveFile)
+                If NumberText.Contains("1") Then Apartment.GarageNumber1 = "numbering_style09_n1"
+                If NumberText.Contains("2") Then Apartment.GarageNumber2 = "numbering_style09_n2"
+                If NumberText.Contains("3") Then Apartment.GarageNumber3 = "numbering_style09_n3"
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style09_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style09_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style09_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+                NumberMenu.Visible = False
+                hideHud = False
+                World.DestroyAllCameras()
+                World.RenderingCamera = Nothing
+        End Select
+    End Sub
+
+    Public Sub IndexChangeHandler(sender As UIMenu, index As Integer)
+        Select Case sender.MenuItems(index).Text
+            Case Interior1
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_01")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Interior2
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_02")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Interior3
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_03")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Interior4
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Wall)
+                EnableInteriotProp(InteriorID, "garage_decor_04")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting1
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option01")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting2
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option02")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting3
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option03")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting4
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option04")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting5
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option05")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting6
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option06")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting7
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option07")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting8
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option08")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Lighting9
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Lighting)
+                EnableInteriotProp(InteriorID, "lighting_option09")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage1
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style01_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style01_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style01_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage2
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style02_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style02_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style02_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage3
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style03_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style03_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style03_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage4
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style04_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style04_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style04_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage5
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style05_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style05_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style05_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage6
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style06_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style06_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style06_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage7
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style07_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style07_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style07_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage8
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style08_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style08_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style08_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+            Case Signage9
+                Game.FadeScreenOut(500)
+                Wait(500)
+                RemoveAllOfficeGarageDecor(InteriorID, GarageDecorType.Signage)
+                If NumberText.Contains("1") Then EnableInteriotProp(InteriorID, "numbering_style09_n1")
+                If NumberText.Contains("2") Then EnableInteriotProp(InteriorID, "numbering_style09_n2")
+                If NumberText.Contains("3") Then EnableInteriotProp(InteriorID, "numbering_style09_n3")
+                Wait(500)
+                Game.FadeScreenIn(500)
+        End Select
+
     End Sub
 
     Public Shared Sub LoadGarageVehicle(ByRef veh As Vehicle, file As String, pos As Vector3, rot As Vector3, head As Single)
@@ -122,7 +867,7 @@ Public Class MazeBankWestGarage1
 
             Mechanic.Path = file
             Mechanic.CreateGarageMenu(file, True)
-            Mechanic.CreateGarageMenu2("MBWG1Twenty")
+            Mechanic.CreateGarageMenu2("Twenty")
 
             veh0.MarkAsNoLongerNeeded()
             veh1.MarkAsNoLongerNeeded()
@@ -733,54 +1478,54 @@ Public Class MazeBankWestGarage1
 
     Public Sub OnTick(o As Object, e As EventArgs) Handles Me.Tick
         Try
-            If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then
-                If Not Game.IsLoading Then
-                    ElevatorDistance = World.GetDistance(playerPed.Position, Elevator)
-                    GarageMarkerDistance = World.GetDistance(playerPed.Position, MenuActivator)
+            If Not Game.IsLoading Then
+                ElevatorDistance = World.GetDistance(playerPed.Position, Elevator)
+                GarageMarkerDistance = World.GetDistance(playerPed.Position, MenuActivator)
 
-                    If IsIPLActive("imp_sm_15_cargarage_a") Then
-                        InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(-1395.882, -480.5163, 56.10049))
-                        If Not InteriorID = 0 AndAlso Not InteriorIDList.Contains(InteriorID) Then InteriorIDList.Add(InteriorID)
-                    End If
-
-                    If InteriorID = playerInterior Then
-                        World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
-                        If My.Settings.RefreshGrgVehs = True Then RefreshGarageVehicles(CurrentPath)
-                    Else
-                        If Not Game.Player.Character.IsInVehicle Then
-                            If Not veh0 = Nothing Then veh0.Delete()
-                            If Not veh1 = Nothing Then veh1.Delete()
-                            If Not veh2 = Nothing Then veh2.Delete()
-                            If Not veh3 = Nothing Then veh3.Delete()
-                            If Not veh4 = Nothing Then veh4.Delete()
-                            If Not veh5 = Nothing Then veh5.Delete()
-                            If Not veh6 = Nothing Then veh6.Delete()
-                            If Not veh7 = Nothing Then veh7.Delete()
-                            If Not veh8 = Nothing Then veh8.Delete()
-                            If Not veh9 = Nothing Then veh9.Delete()
-                            If Not veh10 = Nothing Then veh0.Delete()
-                            If Not veh11 = Nothing Then veh11.Delete()
-                            If Not veh12 = Nothing Then veh12.Delete()
-                            If Not veh13 = Nothing Then veh13.Delete()
-                            If Not veh14 = Nothing Then veh14.Delete()
-                            If Not veh15 = Nothing Then veh15.Delete()
-                            If Not veh16 = Nothing Then veh16.Delete()
-                            If Not veh17 = Nothing Then veh17.Delete()
-                            If Not veh18 = Nothing Then veh18.Delete()
-                            If Not veh19 = Nothing Then veh19.Delete()
-                        End If
-                    End If
-
-                    If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
-                        DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
-                    End If
-
-                    If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
-                        DisplayHelpTextThisFrame(ManageGarage)
-                    End If
-
-                    ControlsKeyDown()
+                If IsIPLActive(Apartment.GarageIPL) Then
+                    InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(-1395.882, -480.5163, 56.10049))
+                    If Not InteriorID = 0 AndAlso Not InteriorIDList.Contains(InteriorID) Then InteriorIDList.Add(InteriorID)
                 End If
+
+                If InteriorID = playerInterior Then
+                    World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
+                    If My.Settings.RefreshGrgVehs = True Then RefreshGarageVehicles(CurrentPath)
+                Else
+                    If Not Game.Player.Character.IsInVehicle Then
+                        If Not veh0 = Nothing Then veh0.Delete()
+                        If Not veh1 = Nothing Then veh1.Delete()
+                        If Not veh2 = Nothing Then veh2.Delete()
+                        If Not veh3 = Nothing Then veh3.Delete()
+                        If Not veh4 = Nothing Then veh4.Delete()
+                        If Not veh5 = Nothing Then veh5.Delete()
+                        If Not veh6 = Nothing Then veh6.Delete()
+                        If Not veh7 = Nothing Then veh7.Delete()
+                        If Not veh8 = Nothing Then veh8.Delete()
+                        If Not veh9 = Nothing Then veh9.Delete()
+                        If Not veh10 = Nothing Then veh0.Delete()
+                        If Not veh11 = Nothing Then veh11.Delete()
+                        If Not veh12 = Nothing Then veh12.Delete()
+                        If Not veh13 = Nothing Then veh13.Delete()
+                        If Not veh14 = Nothing Then veh14.Delete()
+                        If Not veh15 = Nothing Then veh15.Delete()
+                        If Not veh16 = Nothing Then veh16.Delete()
+                        If Not veh17 = Nothing Then veh17.Delete()
+                        If Not veh18 = Nothing Then veh18.Delete()
+                        If Not veh19 = Nothing Then veh19.Delete()
+                    End If
+                End If
+
+                If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
+                    DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
+                End If
+
+                If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
+                    DisplayHelpTextThisFrame(ManageGarage)
+                End If
+
+                ControlsKeyDown()
+
+                _menuPool.ProcessMenus()
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -970,24 +1715,88 @@ Public Class MazeBankWestGarage1
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso ElevatorDistance < 3.0 Then
-            Game.FadeScreenOut(500)
-            Wait(500)
-            RemoveIPL("imp_sm_15_cargarage_a")
-            ToggleIPL(ReadCfgValue("MBWipl", saveFile))
-            MazeBankWest.EnableOfficeProp()
-
-            playerPed.Position = lastLocationVector
-            SinglePlayerApartment.player.LastVehicle.Delete()
-            Wait(500)
-            Game.FadeScreenIn(500)
+            ExitMenu.Visible = True
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 1.5 AndAlso Not Mechanic._menuPool.IsAnyMenuOpen Then
             Mechanic.CreateGarageMenu(CurrentPath, True)
-            Mechanic.CreateGarageMenu2("MBWG1Twenty")
+            Mechanic.CreateGarageMenu2("Twenty")
             Mechanic.GarageMenu.Visible = True
             World.RenderingCamera = World.CreateCamera(New Vector3(-1396.66, -481.3375, 59.11948), New Vector3(-18.82641, 0, -73.41509), 50)
         End If
+    End Sub
+
+    Public Shared Sub EnableOfficeProp()
+        EnableInteriotProp(Apartment.InteriorID, "office_chairs")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_01")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_02")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_03")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_04")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_05")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_06")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_07")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_08")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_09")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_10")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_11")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_12")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_13")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_14")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_15")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_16")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_17")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_18")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_19")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_20")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_21")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_22")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_23")
+        EnableInteriotProp(Apartment.InteriorID, "Cash_Set_24")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Silver")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Silver2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Silver3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Pills")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Pills2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Pills3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Med")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Med2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Med3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_JewelWatch")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_JewelWatch2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_JewelWatch3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Ivory")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Ivory2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Ivory3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Guns")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Guns2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Guns3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Gems")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Gems2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Gems3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Furcoats")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Furcoats2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Furcoats3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_electronic")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_electronic2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_electronic3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugStatue")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugStatue2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugStatue3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugBags")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugBags2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_DrugBags3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Counterfeit")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Counterfeit2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Counterfeit3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Booze_cigs")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Booze_cigs2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Booze_cigs3")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Art")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Art2")
+        EnableInteriotProp(Apartment.InteriorID, "Swag_Art3")
+        EnableInteriotProp(Apartment.InteriorID, "Office_Booze")
+        EnableInteriotProp(Apartment.InteriorID, "Gun_Locker")
+        EnableInteriotProp(Apartment.InteriorID, "Mod_Booth")
     End Sub
 
     Public Sub OnAborted() Handles MyBase.Aborted
