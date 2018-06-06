@@ -620,8 +620,11 @@ Public Class Website
             If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
             If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
             sender.Visible = False
-            World.DestroyAllCameras()
-            World.RenderingCamera = Nothing
+            'The Camera would not reset for me and stayed pointing at the Vinewood sign, so I replaced these two lines
+            'World.DestroyAllCameras()
+            'World.RenderingCamera = Nothing
+            GTA.Native.Function.Call(Hash.RENDER_SCRIPT_CAMS, False, False, WebsiteCam.Handle, True, True)
+            WebsiteCam.Destroy()
             hideHud = False
             GarageMenu.Visible = True
         Catch ex As Exception
@@ -694,6 +697,8 @@ Public Class Website
                             VehPreview.Delete()
                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
+                            GTA.Native.Function.Call(Hash.RENDER_SCRIPT_CAMS, False, False, WebsiteCam.Handle, True, True)
+                            WebsiteCam.Destroy()
                         End If
                     Else
                         DisplayNotificationThisFrame(Maze, "", InsFundVehicle, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
@@ -707,6 +712,8 @@ Public Class Website
                             VehPreview.Delete()
                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
+                            GTA.Native.Function.Call(Hash.RENDER_SCRIPT_CAMS, False, False, WebsiteCam.Handle, True, True)
+                            WebsiteCam.Destroy()
                         End If
                     Else
                         DisplayNotificationThisFrame(Fleeca, "", InsFundVehicle, "CHAR_BANK_FLEECA", True, IconType.RightJumpingArrow)
@@ -720,6 +727,8 @@ Public Class Website
                             VehPreview.Delete()
                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
+                            GTA.Native.Function.Call(Hash.RENDER_SCRIPT_CAMS, False, False, WebsiteCam.Handle, True, True)
+                            WebsiteCam.Destroy()
                         End If
                     Else
                         DisplayNotificationThisFrame(BOL, "", InsFundVehicle, "CHAR_BANK_BOL", True, IconType.RightJumpingArrow)
@@ -732,6 +741,8 @@ Public Class Website
                             VehPreview.Delete()
                             DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
+                            GTA.Native.Function.Call(Hash.RENDER_SCRIPT_CAMS, False, False, WebsiteCam.Handle, True, True)
+                            WebsiteCam.Destroy()
                         End If
                     Else
                         DisplayNotificationThisFrame(Maze, "", InsFundVehicle, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
