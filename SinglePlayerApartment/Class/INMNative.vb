@@ -14,6 +14,7 @@ Namespace INMNative
         Private _entrance, _save, _telin, _telout, _telheli, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot, _assistantpos As Vector3
         Private _grgoutheading, _camerafov, _wardrobeheading, _ascamerafov, _assistantheading As Single
         Private _isathome, _enabled As Boolean
+        Private _interiorV2 As Interior
         'added on v1.10
         Private _lrRadio, _hrRadio, _brRadio, _assChair As Prop
         Private lrEmitter, hrEmitter, brEmitter As String
@@ -308,6 +309,15 @@ Namespace INMNative
             End Get
             Set(value As Vector3)
                 _interior = value
+            End Set
+        End Property
+
+        Public Property InteriorV2() As Interior
+            Get
+                Return _interiorV2
+            End Get
+            Set(value As Interior)
+                _interiorV2 = value
             End Set
         End Property
 

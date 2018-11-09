@@ -573,8 +573,8 @@ Label_005C:
                 Result = True
             Case SixCarGarage.veh0, SixCarGarage.veh1, SixCarGarage.veh2, SixCarGarage.veh3, SixCarGarage.veh4, SixCarGarage.veh5
                 Result = True
-            Case TwentyCarGarage.veh0, TwentyCarGarage.veh1, TwentyCarGarage.veh2, TwentyCarGarage.veh3, TwentyCarGarage.veh4, TwentyCarGarage.veh5, TwentyCarGarage.veh6, TwentyCarGarage.veh7, TwentyCarGarage.veh8, TwentyCarGarage.veh9, TwentyCarGarage.veh10, TwentyCarGarage.veh11, TwentyCarGarage.veh12, TwentyCarGarage.veh13, TwentyCarGarage.veh14, TwentyCarGarage.veh15, TwentyCarGarage.veh16, TwentyCarGarage.veh17, TwentyCarGarage.veh18, TwentyCarGarage.veh19
-                Result = True
+                'Case TwentyCarGarage.veh0, TwentyCarGarage.veh1, TwentyCarGarage.veh2, TwentyCarGarage.veh3, TwentyCarGarage.veh4, TwentyCarGarage.veh5, TwentyCarGarage.veh6, TwentyCarGarage.veh7, TwentyCarGarage.veh8, TwentyCarGarage.veh9, TwentyCarGarage.veh10, TwentyCarGarage.veh11, TwentyCarGarage.veh12, TwentyCarGarage.veh13, TwentyCarGarage.veh14, TwentyCarGarage.veh15, TwentyCarGarage.veh16, TwentyCarGarage.veh17, TwentyCarGarage.veh18, TwentyCarGarage.veh19
+                '    Result = True
             Case Else
                 Result = False
         End Select

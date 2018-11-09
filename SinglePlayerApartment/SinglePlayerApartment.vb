@@ -350,12 +350,12 @@ Public Class SinglePlayerApartment
                     If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
                     Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
                     EclipseTower.Apartment.IsAtHome = True
-                Case "MazeBankWest" 'added 1.10 update
-                    ToggleIPL(ReadCfgValue("MBWipl", saveFile), MazeBankWest.Apartment.Interior)
-                    SetInteriorActive2(MazeBankWest.Apartment.Interior.X, MazeBankWest.Apartment.Interior.Y, MazeBankWest.Apartment.Interior.Z)
-                    If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
-                    MazeBankWest.Apartment.IsAtHome = True
+                'Case "MazeBankWest" 'added 1.10 update
+                '    ToggleIPL(ReadCfgValue("MBWipl", saveFile), MazeBankWest.Apartment.Interior)
+                '    SetInteriorActive2(MazeBankWest.Apartment.Interior.X, MazeBankWest.Apartment.Interior.Y, MazeBankWest.Apartment.Interior.Z)
+                '    If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+                '    Game.Player.Character.Position = New Vector3(lastPosX, lastPosY, lastPosZ)
+                '    MazeBankWest.Apartment.IsAtHome = True
                 Case "None"
                     teleported = True
             End Select

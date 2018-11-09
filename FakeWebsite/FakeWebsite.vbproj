@@ -1,0 +1,1174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B8E305E0-78CF-4EC9-AB3F-4AC647EB68BB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>FakeWebsite.My.MyApplication</StartupObject>
+    <RootNamespace>FakeWebsite</RootNamespace>
+    <AssemblyName>FakeWebsite</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>FakeWebsite.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>FakeWebsite.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class\Canvas.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Class\Graphic.vb" />
+    <Compile Include="Class\Helper.vb" />
+    <Compile Include="Class\Layer.vb" />
+    <Compile Include="Class\Reader.vb" />
+    <Compile Include="ControlPanel.Designer.vb">
+      <DependentUpon>ControlPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ControlPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="frmWeb.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWeb.Designer.vb">
+      <DependentUpon>frmWeb.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Legendary.Designer.vb">
+      <DependentUpon>Legendary.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Legendary.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LegendaryItem.Designer.vb">
+      <DependentUpon>LegendaryItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LegendaryItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="lmsItem.Designer.vb">
+      <DependentUpon>lmsItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="lmsItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ControlPanel.resx">
+      <DependentUpon>ControlPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWeb.resx">
+      <DependentUpon>frmWeb.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Legendary.resx">
+      <DependentUpon>Legendary.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LegendaryItem.resx">
+      <DependentUpon>LegendaryItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lmsItem.resx">
+      <DependentUpon>lmsItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toolbar_badger_gradient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\history_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\right_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\left_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_texture_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_bottom_nothing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_frame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_item_title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\adder.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_item_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\airbus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\akuma.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alpha.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\annihilator.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asea.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\asterope.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\avarus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baller.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baller3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baller4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baller5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baller6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\banshee.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\banshee2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barracks.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bati.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bati2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\besra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bestiagts.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bf400.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bfinjection.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bifta.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bison.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blade.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blazer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blazer3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blazer4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blazer5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bmx.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bobcatxl.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bodhi2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\boxville3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\boxville5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brawler.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brickade.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brioso.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btype3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buccaneer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buccaneer2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buffalo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buffalo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buzzard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carbonizzare.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carbonrs.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cargobob2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cargobob3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\casco.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cavalcade.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cavalcade2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cheetah.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chimera.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chino.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chino2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cliffhanger.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coach.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog55.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog552.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cogcabrio.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cognoscenti.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cognoscenti2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comet2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\comet3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\contender.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coquette.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coquette2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coquette3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cruiser.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crusader.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cuban800.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\daemon2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\defiler.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\diablous.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\diablous2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dilettante.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dinghy.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dodo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dominator.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\double.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dubsta3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dump.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dune.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dune4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dune5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\duster.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\elegy.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\elegy2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enduro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\entityxf.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exemplar.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\f620.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faction.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faction2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faction3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faggio.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faggio2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\faggio3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fcr.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fcr2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\felon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\felon2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feltzer2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feltzer3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fmj.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\frogger.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fugitive.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\furoregt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fusilade.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gargoyle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gauntlet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gburrito2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\glendale.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\granger.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gresley.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\guardian.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hakuchou.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hakuchou2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hexer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hotknife.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\huntley.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hydra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\infernus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ingot.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\innovation.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\insurgent.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\insurgent2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\intruder.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\issi2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\italigtb.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\italigtb2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jackal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jb700.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jester.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jester2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jetmax.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\journey.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kalahari.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\khamelion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kuruma.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kuruma2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\landstalker.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\le7b.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lectro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\limo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luxor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\luxor2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lynx.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mamba.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mammatus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manchez.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\marquis.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\massacro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\massacro2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maverick.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mesa3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\miljet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minivan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minivan2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\monroe.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moonbeam.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moonbeam2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mule2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mule3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nemesis.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nero.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nero2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nightblade.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nightshade.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nimbus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ninef.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ninef2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\omnis.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oracle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oracle2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\osiris.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\panto.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paradise.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pbus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pcj.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\penetrator.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\penumbra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pfister811.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phantom2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\picador.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pigalle.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\premier.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\primo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\primo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prototipo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\radi.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rallytruck.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rancherxl.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rapidgt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rapidgt2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\raptor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ratbike.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ratloader.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ratloader2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reaper.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rebel.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rebel2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\regina.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rentalbus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rhapsody.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rhino.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rocoto.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ruffian.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ruiner2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rumpo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rumpo3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sabregt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sabregt2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sadler.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sanchez.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sanchez2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sanctus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sandking.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sandking2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\savage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schafter2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schafter3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schafter4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schafter5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schafter6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schwarzer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scorcher.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seashark.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seashark3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seminole.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sentinel.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sentinel2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seven70.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shamal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sheava.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shotaro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slamvan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\slamvan3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\specter.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\specter2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\speeder.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\speeder2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\squalo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stanier.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stinger.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stingergt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stratum.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stretch.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stunt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\submersible2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sultan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sultanrs.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\suntrap.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\superd.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\supervolito.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\supervolito2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\surano.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\surfer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\surge.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\swift.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\swift2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\t20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tailgater.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tampa.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tampa2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\technical.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\technical2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tempesta.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\thrust.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\titan.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tornado.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tornado5.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tornado6.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toro2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tribike.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tribike2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tribike3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trophytruck.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trophytruck2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropic2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropos.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tug.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\turismor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tyrus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vacca.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vader.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\valkyrie.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\velum.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\velum2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\verlierer2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vestra.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vigero.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vindicator.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\virgo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\virgo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\virgo3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\volatus.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\voltic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\voltic2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\voodoo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\voodoo2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vortex.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warrener.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\washington.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wastelander.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\windsor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\windsor2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wolfsbane.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xls.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xls2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\youga.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zentorno.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zion2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zombiea.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zombieb.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ztype.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lms_order_but.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

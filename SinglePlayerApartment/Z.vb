@@ -59,7 +59,7 @@ Public Class Z
             If ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then PaletoBlvd.CreatePaletoBlvd()
             If ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then GrapeseedAve.CreateGrapeseedAve()
             '1.10 update
-            If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MazeBankWest.CreateMazeBankWest()
+            'If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MazeBankWest.CreateMazeBankWest()
             LoadPosition()
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -158,8 +158,8 @@ Public Class Z
                     If Not ZancudoAve.Apartment.AptBlip Is Nothing Then ZancudoAve.Apartment.AptBlip.Alpha = 255
                     If Not ZancudoAve.Apartment.GrgBlip Is Nothing Then ZancudoAve.Apartment.GrgBlip.Alpha = 255
                     '1.10 update
-                    If Not MazeBankWest.Apartment.AptBlip Is Nothing Then MazeBankWest.Apartment.AptBlip.Alpha = 255
-                    If Not MazeBankWest.Apartment.GrgBlip Is Nothing Then MazeBankWest.Apartment.GrgBlip.Alpha = 255
+                    'If Not MazeBankWest.Apartment.AptBlip Is Nothing Then MazeBankWest.Apartment.AptBlip.Alpha = 255
+                    'If Not MazeBankWest.Apartment.GrgBlip Is Nothing Then MazeBankWest.Apartment.GrgBlip.Alpha = 255
                 Else
                     If Game.MissionFlag Or Game.Player.WantedLevel > 0 Then
                         If Not _3AltaStreet.Apartment.AptBlip Is Nothing Then _3AltaStreet.Apartment.AptBlip.Alpha = 0
@@ -241,8 +241,8 @@ Public Class Z
                         If Not ZancudoAve.Apartment.AptBlip Is Nothing Then ZancudoAve.Apartment.AptBlip.Alpha = 0
                         If Not ZancudoAve.Apartment.GrgBlip Is Nothing Then ZancudoAve.Apartment.GrgBlip.Alpha = 0
                         '1.10 update
-                        If Not MazeBankWest.Apartment.AptBlip Is Nothing Then MazeBankWest.Apartment.AptBlip.Alpha = 0
-                        If Not MazeBankWest.Apartment.GrgBlip Is Nothing Then MazeBankWest.Apartment.GrgBlip.Alpha = 0
+                        'If Not MazeBankWest.Apartment.AptBlip Is Nothing Then MazeBankWest.Apartment.AptBlip.Alpha = 0
+                        'If Not MazeBankWest.Apartment.GrgBlip Is Nothing Then MazeBankWest.Apartment.GrgBlip.Alpha = 0
                     Else
                         If Not _3AltaStreet.Apartment.AptBlip Is Nothing Then _3AltaStreet.Apartment.AptBlip.Alpha = 255
                         If Not _3AltaStreet.Apartment.GrgBlip Is Nothing Then _3AltaStreet.Apartment.GrgBlip.Alpha = 255
@@ -323,8 +323,8 @@ Public Class Z
                         If Not ZancudoAve.Apartment.AptBlip Is Nothing Then ZancudoAve.Apartment.AptBlip.Alpha = 255
                         If Not ZancudoAve.Apartment.GrgBlip Is Nothing Then ZancudoAve.Apartment.GrgBlip.Alpha = 255
                         '1.10 update
-                        If Not MazeBankWest.Apartment.AptBlip Is Nothing Then MazeBankWest.Apartment.AptBlip.Alpha = 255
-                        If Not MazeBankWest.Apartment.GrgBlip Is Nothing Then MazeBankWest.Apartment.GrgBlip.Alpha = 255
+                        'If Not MazeBankWest.Apartment.AptBlip Is Nothing Then MazeBankWest.Apartment.AptBlip.Alpha = 255
+                        'If Not MazeBankWest.Apartment.GrgBlip Is Nothing Then MazeBankWest.Apartment.GrgBlip.Alpha = 255
                     End If
                 End If
             End If

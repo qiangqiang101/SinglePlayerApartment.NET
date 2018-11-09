@@ -101,7 +101,7 @@ Public Class Mechanic
             CreateVehMenuApartments6(SRD0112Menu, itemSRD0112, SouthRockfordDr0112.Apartment.GaragePath)
             CreateVehMenuApartments6(ZAMenu, itemZA, ZancudoAve.Apartment.GaragePath)
             '1.10 update
-            CreateVehMenuApartments20(MBWMenu, itemMBW, MazeBankWest.Apartment.GaragePath)
+            'CreateVehMenuApartments20(MBWMenu, itemMBW, MazeBankWest.Apartment.GaragePath)
             CreateConfirmPegasusMenu()
             ReturnAllVehiclesToGarageNEW()
         Catch ex As Exception
@@ -233,7 +233,7 @@ Public Class Mechanic
             If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSRD0112)
             If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemZA)
             '1.10 update
-            If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
+            'If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
             MechanicMenu.RefreshIndex()
             AddHandler MechanicMenu.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
@@ -301,7 +301,7 @@ Public Class Mechanic
             If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSRD0112)
             If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemZA)
             '1.10 update
-            If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
+            'If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
             GrgTransMenu.RefreshIndex()
             AddHandler GrgTransMenu.OnItemSelect, AddressOf TransVehItemSelectHandler
             AddHandler GrgTransMenu.OnMenuClose, AddressOf MenuCloseHandler
@@ -844,8 +844,8 @@ Public Class Mechanic
                     TargetPathDir = SouthRockfordDr0112.Apartment.GaragePath
                 Case itemZA.Text
                     TargetPathDir = ZancudoAve.Apartment.GaragePath
-                Case itemMBW.Text '1.10 update
-                    TargetPathDir = MazeBankWest.Apartment.GaragePath
+                    'Case itemMBW.Text '1.10 update
+                    '    TargetPathDir = MazeBankWest.Apartment.GaragePath
             End Select
 
             If IO.File.Exists(TargetPathDir & "vehicle_0.cfg") = False Then
@@ -929,7 +929,7 @@ Public Class Mechanic
             End If
             If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
             If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-            If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+            'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
             sender.Visible = False
             GarageMenu.Visible = True
         Catch ex As Exception
@@ -950,14 +950,14 @@ Public Class Mechanic
                     IO.File.Move(Path & "vehicle.cfg", Path & MoveMenuSelectedFile)
                     If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                     If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-                    If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+                    'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
                     sender.Visible = False
                     GarageMenu.Visible = True
                 Else
                     IO.File.Move(Path & GarageMenuSelectedFile, Path & MoveMenuSelectedFile)
                     If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                     If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-                    If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+                    'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
                     sender.Visible = False
                     GarageMenu.Visible = True
                 End If
@@ -972,22 +972,22 @@ Public Class Mechanic
 
     Public Shared Sub GrgMoveIndexChangeHandler(sender As UIMenu, index As Integer)
         MoveIndex = index
-        If SelectedGarage = "Twenty" Then
-            Select Case index
-                Case 0 To 5
-                    World.DestroyAllCameras()
-                    World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor1CamPos, TwentyCarGarage.Floor1CamRot, 50)
-                Case 6 To 12
-                    World.DestroyAllCameras()
-                    World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor2CamPos, TwentyCarGarage.Floor2CamRot, 50)
-                Case 13 To 19
-                    World.DestroyAllCameras()
-                    World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor3CamPos, TwentyCarGarage.Floor3CamRot, 50)
-                Case Else
-                    World.DestroyAllCameras()
-                    World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor1CamPos, TwentyCarGarage.Floor1CamRot, 50)
-            End Select
-        End If
+        'If SelectedGarage = "Twenty" Then
+        '    Select Case index
+        '        Case 0 To 5
+        '            World.DestroyAllCameras()
+        '            World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor1CamPos, TwentyCarGarage.Floor1CamRot, 50)
+        '        Case 6 To 12
+        '            World.DestroyAllCameras()
+        '            World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor2CamPos, TwentyCarGarage.Floor2CamRot, 50)
+        '        Case 13 To 19
+        '            World.DestroyAllCameras()
+        '            World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor3CamPos, TwentyCarGarage.Floor3CamRot, 50)
+        '        Case Else
+        '            World.DestroyAllCameras()
+        '            World.RenderingCamera = World.CreateCamera(TwentyCarGarage.Floor1CamPos, TwentyCarGarage.Floor1CamRot, 50)
+        '    End Select
+        'End If
     End Sub
 
     Public Shared Sub PegasusConfirmItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
@@ -1198,7 +1198,7 @@ Public Class Mechanic
                 IO.File.Delete(Path & GarageMenuSelectedFile)
                 If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                 If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-                If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+                'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
                 sender.Visible = False
                 GarageMenu.Visible = True
             ElseIf selectedItem.Text = GrgRemoveAndDrive Then
@@ -1239,24 +1239,24 @@ Public Class Mechanic
                         Game.FadeScreenIn(500)
                         UnLoadMPDLCMap()
                     End If
-                ElseIf SelectedGarage = "Twenty" Then
-                    If IO.File.Exists(Path & GarageMenuSelectedFile) Then
-                        Game.FadeScreenOut(500)
-                        Wait(500)
-                        Dim tempVeh As Vehicle
-                        playerPed.Position = TenCarGarage.lastLocationGarageOutVector
-                        tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), TwentyCarGarage.lastLocationGarageOutVector, TwentyCarGarage.lastLocationGarageOutHeading)
-                        SetModKit(tempVeh, Path & GarageMenuSelectedFile)
-                        tempVeh.MarkAsNoLongerNeeded()
-                        SetIntoVehicle(playerPed, tempVeh, VehicleSeat.Driver)
-                        IO.File.Delete(Path & GarageMenuSelectedFile)
-                        World.DestroyAllCameras()
-                        World.RenderingCamera = Nothing
-                        sender.Visible = False
-                        Wait(500)
-                        Game.FadeScreenIn(500)
-                        UnLoadMPDLCMap()
-                    End If
+                    'ElseIf SelectedGarage = "Twenty" Then
+                    '    If IO.File.Exists(Path & GarageMenuSelectedFile) Then
+                    '        Game.FadeScreenOut(500)
+                    '        Wait(500)
+                    '        Dim tempVeh As Vehicle
+                    '        playerPed.Position = TenCarGarage.lastLocationGarageOutVector
+                    '        tempVeh = CreateVehicle(ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile), ReadCfgValue("VehicleHash", Path & GarageMenuSelectedFile), TwentyCarGarage.lastLocationGarageOutVector, TwentyCarGarage.lastLocationGarageOutHeading)
+                    '        SetModKit(tempVeh, Path & GarageMenuSelectedFile)
+                    '        tempVeh.MarkAsNoLongerNeeded()
+                    '        SetIntoVehicle(playerPed, tempVeh, VehicleSeat.Driver)
+                    '        IO.File.Delete(Path & GarageMenuSelectedFile)
+                    '        World.DestroyAllCameras()
+                    '        World.RenderingCamera = Nothing
+                    '        sender.Visible = False
+                    '        Wait(500)
+                    '        Game.FadeScreenIn(500)
+                    '        UnLoadMPDLCMap()
+                    '    End If
                 End If
             ElseIf selectedItem.Text = GrgSell Then
                 Dim VehModel As String = ReadCfgValue("VehicleModel", Path & GarageMenuSelectedFile)
@@ -1268,102 +1268,102 @@ Public Class Mechanic
                         Case "vehicle_0.cfg"
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh0.Delete()
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh0.Delete()
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh0.Delete()
                             Else
                                 SixCarGarage.veh0.Delete()
                             End If
                         Case "vehicle_1.cfg"
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh1.Delete()
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh1.Delete()
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh1.Delete()
                             Else
                                 SixCarGarage.veh1.Delete()
                             End If
                         Case "vehicle_2.cfg"
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh2.Delete()
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh2.Delete()
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh2.Delete()
                             Else
                                 SixCarGarage.veh2.Delete()
                             End If
                         Case "vehicle_3.cfg"
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh3.Delete()
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh3.Delete()
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh3.Delete()
                             Else
                                 SixCarGarage.veh3.Delete()
                             End If
                         Case "vehicle_4.cfg"
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh4.Delete()
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh4.Delete()
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh4.Delete()
                             Else
                                 SixCarGarage.veh4.Delete()
                             End If
                         Case "vehicle_5.cfg"
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh5.Delete()
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh5.Delete()
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh5.Delete()
                             Else
                                 SixCarGarage.veh5.Delete()
                             End If
                         Case "vehicle_6.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh6.Delete()
+                                'TwentyCarGarage.veh6.Delete()
                             Else
                                 TenCarGarage.veh6.Delete()
                             End If
                         Case "vehicle_7.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh7.Delete()
+                                'TwentyCarGarage.veh7.Delete()
                             Else
                                 TenCarGarage.veh7.Delete()
                             End If
                         Case "vehicle_8.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh8.Delete()
+                                'TwentyCarGarage.veh8.Delete()
                             Else
                                 TenCarGarage.veh8.Delete()
                             End If
                         Case "vehicle_9.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh9.Delete()
+                                'TwentyCarGarage.veh9.Delete()
                             Else
                                 TenCarGarage.veh9.Delete()
                             End If
-                        Case "vehicle_10.cfg"
-                            TwentyCarGarage.veh10.Delete()
-                        Case "vehicle_11.cfg"
-                            TwentyCarGarage.veh11.Delete()
-                        Case "vehicle_12.cfg"
-                            TwentyCarGarage.veh12.Delete()
-                        Case "vehicle_13.cfg"
-                            TwentyCarGarage.veh13.Delete()
-                        Case "vehicle_14.cfg"
-                            TwentyCarGarage.veh14.Delete()
-                        Case "vehicle_15.cfg"
-                            TwentyCarGarage.veh15.Delete()
-                        Case "vehicle_16.cfg"
-                            TwentyCarGarage.veh16.Delete()
-                        Case "vehicle_17.cfg"
-                            TwentyCarGarage.veh17.Delete()
-                        Case "vehicle_18.cfg"
-                            TwentyCarGarage.veh18.Delete()
-                        Case "vehicle_19.cfg"
-                            TwentyCarGarage.veh19.Delete()
+                            'Case "vehicle_10.cfg"
+                            '    TwentyCarGarage.veh10.Delete()
+                            'Case "vehicle_11.cfg"
+                            '    TwentyCarGarage.veh11.Delete()
+                            'Case "vehicle_12.cfg"
+                            '    TwentyCarGarage.veh12.Delete()
+                            'Case "vehicle_13.cfg"
+                            '    TwentyCarGarage.veh13.Delete()
+                            'Case "vehicle_14.cfg"
+                            '    TwentyCarGarage.veh14.Delete()
+                            'Case "vehicle_15.cfg"
+                            '    TwentyCarGarage.veh15.Delete()
+                            'Case "vehicle_16.cfg"
+                            '    TwentyCarGarage.veh16.Delete()
+                            'Case "vehicle_17.cfg"
+                            '    TwentyCarGarage.veh17.Delete()
+                            'Case "vehicle_18.cfg"
+                            '    TwentyCarGarage.veh18.Delete()
+                            'Case "vehicle_19.cfg"
+                            '    TwentyCarGarage.veh19.Delete()
                     End Select
                     SinglePlayerApartment.player.Money = (playerCash + VehPrice)
                     CreateGarageMenu(Path)
                     IO.File.Delete(Path & GarageMenuSelectedFile)
                     If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                     If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-                    If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+                    'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
                     sender.Visible = False
                     GarageMenu.Visible = True
                 End If
@@ -1379,9 +1379,9 @@ Public Class Mechanic
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh0.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh0.NumberPlate, Path & GarageMenuSelectedFile)
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh0.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh0.NumberPlate, Path & GarageMenuSelectedFile)
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh0.NumberPlate = VehPlate
+                                '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh0.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 SixCarGarage.veh0.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", SixCarGarage.veh0.NumberPlate, Path & GarageMenuSelectedFile)
@@ -1390,9 +1390,9 @@ Public Class Mechanic
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh1.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh1.NumberPlate, Path & GarageMenuSelectedFile)
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh1.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh1.NumberPlate, Path & GarageMenuSelectedFile)
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh1.NumberPlate = VehPlate
+                                '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh1.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 SixCarGarage.veh1.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", SixCarGarage.veh1.NumberPlate, Path & GarageMenuSelectedFile)
@@ -1401,9 +1401,9 @@ Public Class Mechanic
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh2.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh2.NumberPlate, Path & GarageMenuSelectedFile)
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh2.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh2.NumberPlate, Path & GarageMenuSelectedFile)
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh2.NumberPlate = VehPlate
+                                '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh2.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 SixCarGarage.veh2.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", SixCarGarage.veh2.NumberPlate, Path & GarageMenuSelectedFile)
@@ -1412,9 +1412,9 @@ Public Class Mechanic
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh3.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh3.NumberPlate, Path & GarageMenuSelectedFile)
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh3.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh3.NumberPlate, Path & GarageMenuSelectedFile)
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh3.NumberPlate = VehPlate
+                                '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh3.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 SixCarGarage.veh3.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", SixCarGarage.veh3.NumberPlate, Path & GarageMenuSelectedFile)
@@ -1423,9 +1423,9 @@ Public Class Mechanic
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh4.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh4.NumberPlate, Path & GarageMenuSelectedFile)
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh4.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh4.NumberPlate, Path & GarageMenuSelectedFile)
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh4.NumberPlate = VehPlate
+                                '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh4.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 SixCarGarage.veh4.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", SixCarGarage.veh4.NumberPlate, Path & GarageMenuSelectedFile)
@@ -1434,80 +1434,80 @@ Public Class Mechanic
                             If SelectedGarage = "Ten" Then
                                 TenCarGarage.veh5.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh5.NumberPlate, Path & GarageMenuSelectedFile)
-                            ElseIf SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh5.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh5.NumberPlate, Path & GarageMenuSelectedFile)
+                                'ElseIf SelectedGarage = "Twenty" Then
+                                '    TwentyCarGarage.veh5.NumberPlate = VehPlate
+                                '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh5.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 SixCarGarage.veh5.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", SixCarGarage.veh5.NumberPlate, Path & GarageMenuSelectedFile)
                             End If
                         Case "vehicle_6.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh6.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh6.NumberPlate, Path & GarageMenuSelectedFile)
+                                'TwentyCarGarage.veh6.NumberPlate = VehPlate
+                                'WriteCfgValue("PlateNumber", TwentyCarGarage.veh6.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 TenCarGarage.veh6.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh6.NumberPlate, Path & GarageMenuSelectedFile)
                             End If
                         Case "vehicle_7.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh7.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh7.NumberPlate, Path & GarageMenuSelectedFile)
+                                'TwentyCarGarage.veh7.NumberPlate = VehPlate
+                                'WriteCfgValue("PlateNumber", TwentyCarGarage.veh7.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 TenCarGarage.veh7.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh7.NumberPlate, Path & GarageMenuSelectedFile)
                             End If
                         Case "vehicle_8.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh8.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh8.NumberPlate, Path & GarageMenuSelectedFile)
+                                'TwentyCarGarage.veh8.NumberPlate = VehPlate
+                                'WriteCfgValue("PlateNumber", TwentyCarGarage.veh8.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 TenCarGarage.veh8.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh8.NumberPlate, Path & GarageMenuSelectedFile)
                             End If
                         Case "vehicle_9.cfg"
                             If SelectedGarage = "Twenty" Then
-                                TwentyCarGarage.veh9.NumberPlate = VehPlate
-                                WriteCfgValue("PlateNumber", TwentyCarGarage.veh9.NumberPlate, Path & GarageMenuSelectedFile)
+                                'TwentyCarGarage.veh9.NumberPlate = VehPlate
+                                'WriteCfgValue("PlateNumber", TwentyCarGarage.veh9.NumberPlate, Path & GarageMenuSelectedFile)
                             Else
                                 TenCarGarage.veh9.NumberPlate = VehPlate
                                 WriteCfgValue("PlateNumber", TenCarGarage.veh9.NumberPlate, Path & GarageMenuSelectedFile)
                             End If
-                        Case "vehicle_10.cfg"
-                            TwentyCarGarage.veh10.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh10.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_11.cfg"
-                            TwentyCarGarage.veh11.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh11.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_12.cfg"
-                            TwentyCarGarage.veh12.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh12.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_13.cfg"
-                            TwentyCarGarage.veh13.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh13.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_14.cfg"
-                            TwentyCarGarage.veh14.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh14.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_15.cfg"
-                            TwentyCarGarage.veh15.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh15.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_16.cfg"
-                            TwentyCarGarage.veh16.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh16.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_17.cfg"
-                            TwentyCarGarage.veh17.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh17.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_18.cfg"
-                            TwentyCarGarage.veh18.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh18.NumberPlate, Path & GarageMenuSelectedFile)
-                        Case "vehicle_19.cfg"
-                            TwentyCarGarage.veh19.NumberPlate = VehPlate
-                            WriteCfgValue("PlateNumber", TwentyCarGarage.veh19.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_10.cfg"
+                            '    TwentyCarGarage.veh10.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh10.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_11.cfg"
+                            '    TwentyCarGarage.veh11.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh11.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_12.cfg"
+                            '    TwentyCarGarage.veh12.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh12.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_13.cfg"
+                            '    TwentyCarGarage.veh13.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh13.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_14.cfg"
+                            '    TwentyCarGarage.veh14.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh14.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_15.cfg"
+                            '    TwentyCarGarage.veh15.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh15.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_16.cfg"
+                            '    TwentyCarGarage.veh16.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh16.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_17.cfg"
+                            '    TwentyCarGarage.veh17.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh17.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_18.cfg"
+                            '    TwentyCarGarage.veh18.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh18.NumberPlate, Path & GarageMenuSelectedFile)
+                            'Case "vehicle_19.cfg"
+                            '    TwentyCarGarage.veh19.NumberPlate = VehPlate
+                            '    WriteCfgValue("PlateNumber", TwentyCarGarage.veh19.NumberPlate, Path & GarageMenuSelectedFile)
                     End Select
                 End If
                 If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                 If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-                If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+                'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
                 sender.Visible = False
                 GarageMenu.Visible = True
             ElseIf selectedItem.Text = GrgRename Then
@@ -1517,7 +1517,7 @@ Public Class Mechanic
                 End If
                 If SelectedGarage = "Ten" Then TenCarGarage.LoadGarageVechicles(Path)
                 If SelectedGarage = "Six" Then SixCarGarage.LoadGarageVechicles(Path)
-                If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
+                'If SelectedGarage = "Twenty" Then TwentyCarGarage.LoadGarageVechicles(Path)
                 sender.Visible = False
                 GarageMenu.Visible = True
             ElseIf selectedItem.Text = GrgTransfer Then
@@ -1638,49 +1638,49 @@ Public Class Mechanic
                         Case 5
                             World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(SixCarGarage.veh5Pos.X, SixCarGarage.veh5Pos.Y, SixCarGarage.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
                     End Select
-                ElseIf SelectedGarage = "Twenty" Then
-                    Select Case MoveIndex
-                        Case 0
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh0Pos.X, TwentyCarGarage.veh0Pos.Y, TwentyCarGarage.veh0Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 1
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh1Pos.X, TwentyCarGarage.veh1Pos.Y, TwentyCarGarage.veh1Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 2
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh2Pos.X, TwentyCarGarage.veh2Pos.Y, TwentyCarGarage.veh2Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 3
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh3Pos.X, TwentyCarGarage.veh3Pos.Y, TwentyCarGarage.veh3Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 4
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh4Pos.X, TwentyCarGarage.veh4Pos.Y, TwentyCarGarage.veh4Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 5
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh5Pos.X, TwentyCarGarage.veh5Pos.Y, TwentyCarGarage.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 6
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh6Pos.X, TwentyCarGarage.veh6Pos.Y, TwentyCarGarage.veh6Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 7
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh7Pos.X, TwentyCarGarage.veh7Pos.Y, TwentyCarGarage.veh7Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 8
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh8Pos.X, TwentyCarGarage.veh8Pos.Y, TwentyCarGarage.veh8Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 9
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh9Pos.X, TwentyCarGarage.veh9Pos.Y, TwentyCarGarage.veh9Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 10
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh10Pos.X, TwentyCarGarage.veh10Pos.Y, TwentyCarGarage.veh10Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 11
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh11Pos.X, TwentyCarGarage.veh11Pos.Y, TwentyCarGarage.veh11Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 12
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh12Pos.X, TwentyCarGarage.veh12Pos.Y, TwentyCarGarage.veh12Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 13
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh13Pos.X, TwentyCarGarage.veh13Pos.Y, TwentyCarGarage.veh13Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 14
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh14Pos.X, TwentyCarGarage.veh14Pos.Y, TwentyCarGarage.veh14Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 15
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh15Pos.X, TwentyCarGarage.veh15Pos.Y, TwentyCarGarage.veh15Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 16
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh16Pos.X, TwentyCarGarage.veh16Pos.Y, TwentyCarGarage.veh16Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 17
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh17Pos.X, TwentyCarGarage.veh17Pos.Y, TwentyCarGarage.veh17Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 18
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh18Pos.X, TwentyCarGarage.veh18Pos.Y, TwentyCarGarage.veh18Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                        Case 19
-                            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh19Pos.X, TwentyCarGarage.veh19Pos.Y, TwentyCarGarage.veh19Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
-                    End Select
+                    'ElseIf SelectedGarage = "Twenty" Then
+                    '    Select Case MoveIndex
+                    '        Case 0
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh0Pos.X, TwentyCarGarage.veh0Pos.Y, TwentyCarGarage.veh0Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 1
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh1Pos.X, TwentyCarGarage.veh1Pos.Y, TwentyCarGarage.veh1Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 2
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh2Pos.X, TwentyCarGarage.veh2Pos.Y, TwentyCarGarage.veh2Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 3
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh3Pos.X, TwentyCarGarage.veh3Pos.Y, TwentyCarGarage.veh3Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 4
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh4Pos.X, TwentyCarGarage.veh4Pos.Y, TwentyCarGarage.veh4Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 5
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh5Pos.X, TwentyCarGarage.veh5Pos.Y, TwentyCarGarage.veh5Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 6
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh6Pos.X, TwentyCarGarage.veh6Pos.Y, TwentyCarGarage.veh6Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 7
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh7Pos.X, TwentyCarGarage.veh7Pos.Y, TwentyCarGarage.veh7Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 8
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh8Pos.X, TwentyCarGarage.veh8Pos.Y, TwentyCarGarage.veh8Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 9
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh9Pos.X, TwentyCarGarage.veh9Pos.Y, TwentyCarGarage.veh9Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 10
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh10Pos.X, TwentyCarGarage.veh10Pos.Y, TwentyCarGarage.veh10Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 11
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh11Pos.X, TwentyCarGarage.veh11Pos.Y, TwentyCarGarage.veh11Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 12
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh12Pos.X, TwentyCarGarage.veh12Pos.Y, TwentyCarGarage.veh12Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 13
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh13Pos.X, TwentyCarGarage.veh13Pos.Y, TwentyCarGarage.veh13Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 14
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh14Pos.X, TwentyCarGarage.veh14Pos.Y, TwentyCarGarage.veh14Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 15
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh15Pos.X, TwentyCarGarage.veh15Pos.Y, TwentyCarGarage.veh15Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 16
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh16Pos.X, TwentyCarGarage.veh16Pos.Y, TwentyCarGarage.veh16Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 17
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh17Pos.X, TwentyCarGarage.veh17Pos.Y, TwentyCarGarage.veh17Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 18
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh18Pos.X, TwentyCarGarage.veh18Pos.Y, TwentyCarGarage.veh18Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    '        Case 19
+                    '            World.DrawMarker(MarkerType.UpsideDownCone, New Vector3(TwentyCarGarage.veh19Pos.X, TwentyCarGarage.veh19Pos.Y, TwentyCarGarage.veh19Pos.Z + 1.5), Vector3.Zero, Vector3.Zero, New Vector3(0.3, 0.3, 0.3), Drawing.Color.Red)
+                    'End Select
                 End If
 
                 If playerPed.IsInVehicle Then
@@ -1922,7 +1922,7 @@ Public Class Mechanic
         CreateVehMenuApartments6(SRD0112Menu, itemSRD0112, SouthRockfordDr0112.Apartment.GaragePath)
         CreateVehMenuApartments6(ZAMenu, itemZA, ZancudoAve.Apartment.GaragePath)
         '1.10 update
-        CreateVehMenuApartments20(MBWMenu, itemMBW, MazeBankWest.Apartment.GaragePath)
+        'CreateVehMenuApartments20(MBWMenu, itemMBW, MazeBankWest.Apartment.GaragePath)
 
         MechanicMenu.Visible = Not MechanicMenu.Visible
 
@@ -2018,7 +2018,7 @@ Public Class Mechanic
         itemSRD0112 = New UIMenuItem(SouthRockfordDr0112.Apartment.Name & SouthRockfordDr0112.Apartment.Unit)
         itemZA = New UIMenuItem(ZancudoAve.Apartment.Name & ZancudoAve.Apartment.Unit)
         '1.10 update
-        itemMBW = New UIMenuItem(MazeBankWest.Apartment.Name & MazeBankWest.Apartment.Unit)
+        'itemMBW = New UIMenuItem(MazeBankWest.Apartment.Name & MazeBankWest.Apartment.Unit)
     End Sub
 
     Public Shared Sub CreateMechanicInVehicle(Vehicle As Vehicle)
@@ -2081,7 +2081,7 @@ Public Class Mechanic
         ReturnAllVehiclesToGarage(SouthRockfordDr0112.Apartment.GaragePath)
         ReturnAllVehiclesToGarage(ZancudoAve.Apartment.GaragePath)
         '1.10 update
-        ReturnAllVehiclesToGarage(MazeBankWest.Apartment.GaragePath)
+        'ReturnAllVehiclesToGarage(MazeBankWest.Apartment.GaragePath)
     End Sub
 
     Public Shared Sub ReturnAllVehiclesToGarage(PathDir As String)
@@ -2114,43 +2114,47 @@ Public Class Mechanic
         Try
             vehicle.MarkAsNoLongerNeeded()
 
-            Select Case GetPlayerName()
-                Case "Michael"
-                    If MPersVeh.Exist AndAlso Not MPersVeh.Insurance = 0 Then
-                        If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
-                        Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
-                        DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                        WriteCfgValue("Active", "False", MPersVeh.FilePath)
-                        MPersVeh.Insurance = 0
-                        MPersVeh.Delete()
-                    End If
-                Case "Franklin"
-                    If FPersVeh.Exist AndAlso Not FPersVeh.Insurance = 0 Then
-                        If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
-                        Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
-                        DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                        WriteCfgValue("Active", "False", FPersVeh.FilePath)
-                        FPersVeh.Insurance = 0
-                        FPersVeh.Delete()
-                    End If
-                Case "Trevor"
-                    If TPersVeh.Exist AndAlso Not TPersVeh.Insurance = 0 Then
-                        If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
-                        Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
-                        DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                        WriteCfgValue("Active", "False", TPersVeh.FilePath)
-                        TPersVeh.Insurance = 0
-                        TPersVeh.Delete()
-                    End If
-                Case "Player3"
-                    If PPersVeh.Exist AndAlso Not PPersVeh.Insurance = 0 Then
-                        If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
-                        Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
-                        DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
-                        WriteCfgValue("Active", "False", PPersVeh.FilePath)
-                        PPersVeh.Insurance = 0
-                        PPersVeh.Delete()
-                    End If
+            Select Case playerInterior
+                Case TenCarGarage.InteriorID, SixCarGarage.InteriorID
+                Case Else
+                    Select Case GetPlayerName()
+                        Case "Michael"
+                            If MPersVeh.Exist AndAlso Not MPersVeh.Insurance = 0 Then
+                                If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
+                                Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
+                                DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
+                                WriteCfgValue("Active", "False", MPersVeh.FilePath)
+                                MPersVeh.Insurance = 0
+                                MPersVeh.Delete()
+                            End If
+                        Case "Franklin"
+                            If FPersVeh.Exist AndAlso Not FPersVeh.Insurance = 0 Then
+                                If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
+                                Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
+                                DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
+                                WriteCfgValue("Active", "False", FPersVeh.FilePath)
+                                FPersVeh.Insurance = 0
+                                FPersVeh.Delete()
+                            End If
+                        Case "Trevor"
+                            If TPersVeh.Exist AndAlso Not TPersVeh.Insurance = 0 Then
+                                If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
+                                Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
+                                DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
+                                WriteCfgValue("Active", "False", TPersVeh.FilePath)
+                                TPersVeh.Insurance = 0
+                                TPersVeh.Delete()
+                            End If
+                        Case "Player3"
+                            If PPersVeh.Exist AndAlso Not PPersVeh.Insurance = 0 Then
+                                If Not vehicle.CurrentBlip Is Nothing Then vehicle.CurrentBlip.Remove()
+                                Dim strArray As String() = New String() {Insurance1, Insurance2, Insurance3}
+                                DisplayNotificationThisFrame(MorsMutual, "", (strArray(New Random().Next(0, strArray.Length)) & Insurance4), "CHAR_MP_MORS_MUTUAL", True, IconType.RightJumpingArrow)
+                                WriteCfgValue("Active", "False", PPersVeh.FilePath)
+                                PPersVeh.Insurance = 0
+                                PPersVeh.Delete()
+                            End If
+                    End Select
             End Select
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -2481,6 +2485,10 @@ Public Class Mechanic
         If e.KeyCode = My.Settings.Mechanic AndAlso Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen() Then
             PhoneMenu.Visible = Not PhoneMenu.Visible
         End If
+
+        'If e.KeyCode = Keys.Y Then
+        '    logger.PinPoint(Game.Player.Character.Position)
+        'End If
     End Sub
 
     Public Sub OnAborted() Handles MyBase.Aborted

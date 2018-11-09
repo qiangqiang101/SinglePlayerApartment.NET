@@ -1,0 +1,15 @@
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\bin\Release\FakeWebsite.exe.config
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\bin\Release\FakeWebsite.exe
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\bin\Release\FakeWebsite.pdb
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\bin\Release\FakeWebsite.xml
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.vbprojResolveAssemblyReference.cache
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.ControlPanel.resources
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.frmWeb.resources
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.Resources.resources
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.vbproj.GenerateResource.Cache
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.exe
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.xml
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.pdb
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.Legendary.resources
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.lmsItem.resources
+E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\FakeWebsite\obj\Release\FakeWebsite.LegendaryItem.resources
