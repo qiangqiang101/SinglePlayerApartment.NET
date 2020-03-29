@@ -16,10 +16,8 @@ Public Class EclipseTower
 
     Public Sub New()
         Try
-            Apartment = New Apartment("Eclipse Tower Apt. ", "8", 400000)
-            Apartment.Name = ReadCfgValue("EclipseName", langFile)
-            Apartment.Description = ReadCfgValue("EclipseDesc", langFile)
-            Apartment.Owner = ReadCfgValue("ETowner", saveFile)
+            Apartment = New Apartment(Game.GetGXTEntry("MP_PROP_1"), 400000, Game.GetGXTEntry("MP_PROP_1DES"))
+            Apartment.Owner = AptEclipseTwrOwner
             Apartment.Entrance = New Vector3(-770.258, 313.033, 85.6981)
             Apartment.Save = New Vector3(-795.527, 337.415, 201.413)
             Apartment.TeleportInside = New Vector3(-780.152, 340.443, 207.621)
@@ -35,17 +33,14 @@ Public Class EclipseTower
             Apartment.Interior = New Vector3(-795.04, 342.37, 206.22)
             Apartment.WardrobeHeading = 268.5623
             Apartment.IsAtHome = False
-            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower\"
-            Apartment.SaveFile = "ETowner"
+            Apartment.GaragePath = "scripts\SinglePlayerApartment\Garage\eclipse_tower\"
             Apartment.PlayerMap = "Eclipse"
             Apartment.Enabled = True
             Apartment.InteriorID = Apartment.GetInteriorID(Apartment.Interior)
             If Not Apartment.InteriorID = 0 Then InteriorIDList.Add(Apartment.InteriorID)
 
-            ApartmentHL = New Apartment("Eclipse Tower Apt. ", "3", 800000)
-            ApartmentHL.Name = ReadCfgValue("EclipseHLName", langFile)
-            ApartmentHL.Description = ReadCfgValue("EclipseHLDesc", langFile)
-            ApartmentHL.Owner = ReadCfgValue("ETHLowner", saveFile)
+            ApartmentHL = New Apartment(Game.GetGXTEntry("MP_PROP_67"), 800000, Game.GetGXTEntry("MP_PROP_67DES"))
+            ApartmentHL.Owner = AptEclipseTwrOwner2
             ApartmentHL.Save = New Vector3(-793.2186, 332.4132, 210.7966)
             ApartmentHL.TeleportInside = New Vector3(-774.3142, 323.8076, 212.0325)
             ApartmentHL.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
@@ -53,17 +48,14 @@ Public Class EclipseTower
             ApartmentHL.Wardrobe = New Vector3(-793.4239, 326.7805, 210.7966)
             ApartmentHL.Interior = New Vector3(-773.8549, 331.5905, 211.4325)
             ApartmentHL.WardrobeHeading = 356.4841
-            ApartmentHL.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
-            ApartmentHL.SaveFile = "ETHLowner"
+            ApartmentHL.GaragePath = "scripts\SinglePlayerApartment\Garage\eclipse_tower_hl\"
             ApartmentHL.PlayerMap = "EclipseHL"
             ApartmentHL.Enabled = True
             ApartmentHL.InteriorID = Apartment.GetInteriorID(ApartmentHL.Interior)
             If Not ApartmentHL.InteriorID = 0 Then InteriorIDList.Add(ApartmentHL.InteriorID)
 
-            ApartmentPS1 = New Apartment("Eclipse, Penthouse Suite ", "1", 985000)
-            ApartmentPS1.Name = ReadCfgValue("EclipsePS1Name", langFile)
-            ApartmentPS1.Description = ReadCfgValue("EclipsePS1Desc", langFile)
-            ApartmentPS1.Owner = ReadCfgValue("ETP1owner", saveFile)
+            ApartmentPS1 = New Apartment(Game.GetGXTEntry("MP_PROP_79"), 985000, Game.GetGXTEntry("MP_PROP_79DES"))
+            ApartmentPS1.Owner = AptEclipseTwrOwner3
             ApartmentPS1.Save = New Vector3(-797.7579, 337.3798, 220.4384)
             ApartmentPS1.TeleportInside = New Vector3(-784.0423, 320.9214, 217.439)
             ApartmentPS1.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
@@ -74,19 +66,16 @@ Public Class EclipseTower
             ApartmentPS1.ApartmentStyleCameraPosition = New Vector3(-786.6251, 343.8772, 218.0287)
             ApartmentPS1.ApartmentStyleCameraRotation = New Vector3(-7.585561, 0, -163.3333)
             ApartmentPS1.ApartmentStyleCameraFOV = 50.0
-            ApartmentPS1.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
-            ApartmentPS1.SaveFile = "ETP1owner"
+            ApartmentPS1.GaragePath = "scripts\SinglePlayerApartment\Garage\eclipse_tower_ps1\"
             ApartmentPS1.PlayerMap = "EclipsePS1"
-            ApartmentPS1.IPL = ReadCfgValue("ETP1ipl", saveFile)
+            ApartmentPS1.IPL = ETP1ipl
             ApartmentPS1.LastIPL = ApartmentPS1.IPL
             ApartmentPS1.Enabled = True
             ApartmentPS1.InteriorID = Apartment.GetInteriorID(ApartmentPS1.Interior)
             If Not ApartmentPS1.InteriorID = 0 Then InteriorIDList.Add(ApartmentPS1.InteriorID)
 
-            ApartmentPS2 = New Apartment("Eclipse, Penthouse Suite ", "2", 905000)
-            ApartmentPS2.Name = ReadCfgValue("EclipsePS2Name", langFile)
-            ApartmentPS2.Description = ReadCfgValue("EclipsePS1Desc", langFile)
-            ApartmentPS2.Owner = ReadCfgValue("ETP2owner", saveFile)
+            ApartmentPS2 = New Apartment(Game.GetGXTEntry("MP_PROP_80"), 905000, Game.GetGXTEntry("MP_PROP_80DES"))
+            ApartmentPS2.Owner = AptEclipseTwrOwner4
             ApartmentPS2.Save = New Vector3(-763.3478, 320.4298, 199.4861)
             ApartmentPS2.TeleportInside = New Vector3(-776.9169, 336.887, 196.4864)
             ApartmentPS2.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
@@ -97,19 +86,16 @@ Public Class EclipseTower
             ApartmentPS2.ApartmentStyleCameraPosition = New Vector3(-774.2443, 314.4292, 196.6641)
             ApartmentPS2.ApartmentStyleCameraRotation = New Vector3(-2.762131, 0, 16.02366)
             ApartmentPS2.ApartmentStyleCameraFOV = 50.0
-            ApartmentPS2.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
-            ApartmentPS2.SaveFile = "ETP2owner"
+            ApartmentPS2.GaragePath = "scripts\SinglePlayerApartment\Garage\eclipse_tower_ps2\"
             ApartmentPS2.PlayerMap = "EclipsePS2"
-            ApartmentPS2.IPL = ReadCfgValue("ETP2ipl", saveFile)
+            ApartmentPS2.IPL = ETP2ipl
             ApartmentPS2.LastIPL = ApartmentPS2.IPL
             ApartmentPS2.Enabled = True
             ApartmentPS2.InteriorID = Apartment.GetInteriorID(ApartmentPS2.Interior)
             If Not ApartmentPS2.InteriorID = 0 Then InteriorIDList.Add(ApartmentPS2.InteriorID)
 
-            ApartmentPS3 = New Apartment("Eclipse, Penthouse Suite ", "3", 1100000)
-            ApartmentPS3.Name = ReadCfgValue("EclipsePS3Name", langFile)
-            ApartmentPS3.Description = ReadCfgValue("EclipsePS3Desc", langFile)
-            ApartmentPS3.Owner = ReadCfgValue("ETP3owner", saveFile)
+            ApartmentPS3 = New Apartment(Game.GetGXTEntry("MP_PROP_81"), 1100000, Game.GetGXTEntry("MP_PROP_81DES"))
+            ApartmentPS3.Owner = AptEclipseTwrOwner5
             ApartmentPS3.Save = New Vector3(-797.7316, 337.315, 190.7134)
             ApartmentPS3.TeleportInside = New Vector3(-784.0712, 320.7265, 187.7136)
             ApartmentPS3.TeleportOutside = New Vector3(-773.282, 312.275, 84.698)
@@ -120,18 +106,15 @@ Public Class EclipseTower
             ApartmentPS3.ApartmentStyleCameraPosition = New Vector3(-786.7924, 343.3035, 187.8668)
             ApartmentPS3.ApartmentStyleCameraRotation = New Vector3(-1.956791, 0, -163.332)
             ApartmentPS3.ApartmentStyleCameraFOV = 50.0
-            ApartmentPS3.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
-            ApartmentPS3.SaveFile = "ETP3owner"
+            ApartmentPS3.GaragePath = "scripts\SinglePlayerApartment\Garage\eclipse_tower_ps3\"
             ApartmentPS3.PlayerMap = "EclipsePS3"
-            ApartmentPS3.IPL = ReadCfgValue("ETP3ipl", saveFile)
+            ApartmentPS3.IPL = ETP3ipl
             ApartmentPS3.LastIPL = ApartmentPS3.IPL
             ApartmentPS3.Enabled = True
             ApartmentPS3.InteriorID = Apartment.GetInteriorID(ApartmentPS3.Interior)
             If Not ApartmentPS3.InteriorID = 0 Then InteriorIDList.Add(ApartmentPS3.InteriorID)
 
-            If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then
-                Translate()
-
+            If AptEclipseTwr Then
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
                 CreateExitMenu()
@@ -179,15 +162,15 @@ Public Class EclipseTower
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             BuyMenu.SetBannerType(Rectangle)
             _menuPool.Add(BuyMenu)
-            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
+            Dim item As New UIMenuItem(Apartment.Name, Apartment.Description)
             With item
-                If Apartment.Owner = "Michael" Then
+                If Apartment.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Apartment.Owner = "Franklin" Then
+                ElseIf Apartment.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Apartment.Owner = "Trevor" Then
+                ElseIf Apartment.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Apartment.Owner = "Player3" Then
+                ElseIf Apartment.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & Apartment.Cost.ToString("N"))
@@ -195,15 +178,15 @@ Public Class EclipseTower
                 End If
             End With
             BuyMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit, ApartmentHL.Description)
+            Dim item2 As New UIMenuItem(ApartmentHL.Name, ApartmentHL.Description)
             With item2
-                If ApartmentHL.Owner = "Michael" Then
+                If ApartmentHL.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentHL.Owner = "Franklin" Then
+                ElseIf ApartmentHL.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentHL.Owner = "Trevor" Then
+                ElseIf ApartmentHL.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentHL.Owner = "Player3" Then
+                ElseIf ApartmentHL.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & ApartmentHL.Cost.ToString("N"))
@@ -211,15 +194,15 @@ Public Class EclipseTower
                 End If
             End With
             BuyMenu.AddItem(item2)
-            Dim item3 As New UIMenuItem(ApartmentPS1.Name & ApartmentPS1.Unit, ApartmentPS1.Description)
+            Dim item3 As New UIMenuItem(ApartmentPS1.Name, ApartmentPS1.Description)
             With item3
-                If ApartmentPS1.Owner = "Michael" Then
+                If ApartmentPS1.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentPS1.Owner = "Franklin" Then
+                ElseIf ApartmentPS1.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentPS1.Owner = "Trevor" Then
+                ElseIf ApartmentPS1.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentPS1.Owner = "Player3" Then
+                ElseIf ApartmentPS1.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & ApartmentPS1.Cost.ToString("N"))
@@ -227,15 +210,15 @@ Public Class EclipseTower
                 End If
             End With
             BuyMenu.AddItem(item3)
-            Dim item4 As New UIMenuItem(ApartmentPS2.Name & ApartmentPS2.Unit, ApartmentPS2.Description)
+            Dim item4 As New UIMenuItem(ApartmentPS2.Name, ApartmentPS2.Description)
             With item4
-                If ApartmentPS2.Owner = "Michael" Then
+                If ApartmentPS2.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentPS2.Owner = "Franklin" Then
+                ElseIf ApartmentPS2.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentPS2.Owner = "Trevor" Then
+                ElseIf ApartmentPS2.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentPS2.Owner = "Player3" Then
+                ElseIf ApartmentPS2.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & ApartmentPS2.Cost.ToString("N"))
@@ -243,15 +226,15 @@ Public Class EclipseTower
                 End If
             End With
             BuyMenu.AddItem(item4)
-            Dim item5 As New UIMenuItem(ApartmentPS3.Name & ApartmentPS3.Unit, ApartmentPS3.Description)
+            Dim item5 As New UIMenuItem(ApartmentPS3.Name, ApartmentPS3.Description)
             With item5
-                If ApartmentPS3.Owner = "Michael" Then
+                If ApartmentPS3.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentPS3.Owner = "Franklin" Then
+                ElseIf ApartmentPS3.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentPS3.Owner = "Trevor" Then
+                ElseIf ApartmentPS3.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentPS3.Owner = "Player3" Then
+                ElseIf ApartmentPS3.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & ApartmentPS3.Cost.ToString("N"))
@@ -267,15 +250,15 @@ Public Class EclipseTower
 
     Public Shared Sub RefreshMenu()
         BuyMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
+        Dim item As New UIMenuItem(Apartment.Name, Apartment.Description)
         With item
-            If Apartment.Owner = "Michael" Then
+            If Apartment.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Apartment.Owner = "Franklin" Then
+            ElseIf Apartment.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Apartment.Owner = "Trevor" Then
+            ElseIf Apartment.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Apartment.Owner = "Player3" Then
+            ElseIf Apartment.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & Apartment.Cost.ToString("N"))
@@ -283,15 +266,15 @@ Public Class EclipseTower
             End If
         End With
         BuyMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit, ApartmentHL.Description)
+        Dim item2 As New UIMenuItem(ApartmentHL.Name, ApartmentHL.Description)
         With item2
-            If ApartmentHL.Owner = "Michael" Then
+            If ApartmentHL.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentHL.Owner = "Franklin" Then
+            ElseIf ApartmentHL.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentHL.Owner = "Trevor" Then
+            ElseIf ApartmentHL.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentHL.Owner = "Player3" Then
+            ElseIf ApartmentHL.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & ApartmentHL.Cost.ToString("N"))
@@ -299,15 +282,15 @@ Public Class EclipseTower
             End If
         End With
         BuyMenu.AddItem(item2)
-        Dim item3 As New UIMenuItem(ApartmentPS1.Name & ApartmentPS1.Unit, ApartmentPS1.Description)
+        Dim item3 As New UIMenuItem(ApartmentPS1.Name, ApartmentPS1.Description)
         With item3
-            If ApartmentPS1.Owner = "Michael" Then
+            If ApartmentPS1.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentPS1.Owner = "Franklin" Then
+            ElseIf ApartmentPS1.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentPS1.Owner = "Trevor" Then
+            ElseIf ApartmentPS1.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentPS1.Owner = "Player3" Then
+            ElseIf ApartmentPS1.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & ApartmentPS1.Cost.ToString("N"))
@@ -315,15 +298,15 @@ Public Class EclipseTower
             End If
         End With
         BuyMenu.AddItem(item3)
-        Dim item4 As New UIMenuItem(ApartmentPS2.Name & ApartmentPS2.Unit, ApartmentPS2.Description)
+        Dim item4 As New UIMenuItem(ApartmentPS2.Name, ApartmentPS2.Description)
         With item4
-            If ApartmentPS2.Owner = "Michael" Then
+            If ApartmentPS2.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentPS2.Owner = "Franklin" Then
+            ElseIf ApartmentPS2.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentPS2.Owner = "Trevor" Then
+            ElseIf ApartmentPS2.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentPS2.Owner = "Player3" Then
+            ElseIf ApartmentPS2.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & ApartmentPS2.Cost.ToString("N"))
@@ -331,15 +314,15 @@ Public Class EclipseTower
             End If
         End With
         BuyMenu.AddItem(item4)
-        Dim item5 As New UIMenuItem(ApartmentPS3.Name & ApartmentPS3.Unit, ApartmentPS3.Description)
+        Dim item5 As New UIMenuItem(ApartmentPS3.Name, ApartmentPS3.Description)
         With item5
-            If ApartmentPS3.Owner = "Michael" Then
+            If ApartmentPS3.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentPS3.Owner = "Franklin" Then
+            ElseIf ApartmentPS3.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentPS3.Owner = "Trevor" Then
+            ElseIf ApartmentPS3.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentPS3.Owner = "Player3" Then
+            ElseIf ApartmentPS3.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & ApartmentPS3.Cost.ToString("N"))
@@ -352,75 +335,75 @@ Public Class EclipseTower
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
+        Dim item As New UIMenuItem(Apartment.Name & Garage)
         With item
-            If Apartment.Owner = "Michael" Then
+            If Apartment.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Apartment.Owner = "Franklin" Then
+            ElseIf Apartment.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Apartment.Owner = "Trevor" Then
+            ElseIf Apartment.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Apartment.Owner = "Player3" Then
+            ElseIf Apartment.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
         GarageMenu.AddItem(item)
-        Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit & Garage)
+        Dim item2 As New UIMenuItem(ApartmentHL.Name & Garage)
         With item2
-            If ApartmentHL.Owner = "Michael" Then
+            If ApartmentHL.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentHL.Owner = "Franklin" Then
+            ElseIf ApartmentHL.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentHL.Owner = "Trevor" Then
+            ElseIf ApartmentHL.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentHL.Owner = "Player3" Then
+            ElseIf ApartmentHL.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
         GarageMenu.AddItem(item2)
-        Dim item3 As New UIMenuItem(ApartmentPS1.Name & ApartmentPS1.Unit & Garage)
+        Dim item3 As New UIMenuItem(ApartmentPS1.Name & Garage)
         With item3
-            If ApartmentPS1.Owner = "Michael" Then
+            If ApartmentPS1.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentPS1.Owner = "Franklin" Then
+            ElseIf ApartmentPS1.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentPS1.Owner = "Trevor" Then
+            ElseIf ApartmentPS1.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentPS1.Owner = "Player3" Then
+            ElseIf ApartmentPS1.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
         GarageMenu.AddItem(item3)
-        Dim item4 As New UIMenuItem(ApartmentPS2.Name & ApartmentPS2.Unit & Garage)
+        Dim item4 As New UIMenuItem(ApartmentPS2.Name & Garage)
         With item4
-            If ApartmentPS2.Owner = "Michael" Then
+            If ApartmentPS2.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentPS2.Owner = "Franklin" Then
+            ElseIf ApartmentPS2.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentPS2.Owner = "Trevor" Then
+            ElseIf ApartmentPS2.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentPS2.Owner = "Player3" Then
+            ElseIf ApartmentPS2.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
             End If
         End With
         GarageMenu.AddItem(item4)
-        Dim item5 As New UIMenuItem(ApartmentPS3.Name & ApartmentPS3.Unit & Garage)
+        Dim item5 As New UIMenuItem(ApartmentPS3.Name & Garage)
         With item5
-            If ApartmentPS3.Owner = "Michael" Then
+            If ApartmentPS3.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf ApartmentPS3.Owner = "Franklin" Then
+            ElseIf ApartmentPS3.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf ApartmentPS3.Owner = "Trevor" Then
+            ElseIf ApartmentPS3.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf ApartmentPS3.Owner = "Player3" Then
+            ElseIf ApartmentPS3.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -583,75 +566,75 @@ Public Class EclipseTower
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
+            Dim item As New UIMenuItem(Apartment.Name & Garage)
             With item
-                If Apartment.Owner = "Michael" Then
+                If Apartment.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Apartment.Owner = "Franklin" Then
+                ElseIf Apartment.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Apartment.Owner = "Trevor" Then
+                ElseIf Apartment.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Apartment.Owner = "Player3" Then
+                ElseIf Apartment.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
             GarageMenu.AddItem(item)
-            Dim item2 As New UIMenuItem(ApartmentHL.Name & ApartmentHL.Unit & Garage)
+            Dim item2 As New UIMenuItem(ApartmentHL.Name & Garage)
             With item2
-                If ApartmentHL.Owner = "Michael" Then
+                If ApartmentHL.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentHL.Owner = "Franklin" Then
+                ElseIf ApartmentHL.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentHL.Owner = "Trevor" Then
+                ElseIf ApartmentHL.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentHL.Owner = "Player3" Then
+                ElseIf ApartmentHL.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
             GarageMenu.AddItem(item2)
-            Dim item3 As New UIMenuItem(ApartmentPS1.Name & ApartmentPS1.Unit & Garage)
+            Dim item3 As New UIMenuItem(ApartmentPS1.Name & Garage)
             With item3
-                If ApartmentPS1.Owner = "Michael" Then
+                If ApartmentPS1.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentPS1.Owner = "Franklin" Then
+                ElseIf ApartmentPS1.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentPS1.Owner = "Trevor" Then
+                ElseIf ApartmentPS1.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentPS1.Owner = "Player3" Then
+                ElseIf ApartmentPS1.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
             GarageMenu.AddItem(item3)
-            Dim item4 As New UIMenuItem(ApartmentPS2.Name & ApartmentPS2.Unit & Garage)
+            Dim item4 As New UIMenuItem(ApartmentPS2.Name & Garage)
             With item4
-                If ApartmentPS2.Owner = "Michael" Then
+                If ApartmentPS2.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentPS2.Owner = "Franklin" Then
+                ElseIf ApartmentPS2.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentPS2.Owner = "Trevor" Then
+                ElseIf ApartmentPS2.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentPS2.Owner = "Player3" Then
+                ElseIf ApartmentPS2.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
                 End If
             End With
             GarageMenu.AddItem(item4)
-            Dim item5 As New UIMenuItem(ApartmentPS3.Name & ApartmentPS3.Unit & Garage)
+            Dim item5 As New UIMenuItem(ApartmentPS3.Name & Garage)
             With item5
-                If ApartmentPS3.Owner = "Michael" Then
+                If ApartmentPS3.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf ApartmentPS3.Owner = "Franklin" Then
+                ElseIf ApartmentPS3.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf ApartmentPS3.Owner = "Trevor" Then
+                ElseIf ApartmentPS3.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf ApartmentPS3.Owner = "Player3" Then
+                ElseIf ApartmentPS3.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -692,12 +675,12 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue(Apartment.SaveFile, "None", saveFile)
+                AptEclipseTwrOwner = UpdateValue(Of Owner)(owners, eclipsetwr, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
-                Apartment.Owner = "None"
+                Apartment.Owner = Owner.None
                 Apartment.AptBlip.Remove()
                 If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateEclipseTower()
@@ -713,7 +696,7 @@ Public Class EclipseTower
                 Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+                TenCarGarage.LastLocationName = Apartment.Name
                 TenCarGarage.lastLocationVector = Apartment.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
                 TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -741,16 +724,16 @@ Public Class EclipseTower
                 Game.Player.Character.Position = ApartmentHL.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenuHL.Visible = False
-                WriteCfgValue(ApartmentHL.SaveFile, "None", saveFile)
+                AptEclipseTwrOwner2 = UpdateValue(Of Owner)(owners, eclipsetwr2, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentHL.Cost)
-                ApartmentHL.Owner = "None"
+                ApartmentHL.Owner = Owner.None
                 Apartment.AptBlip.Remove()
                 If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateEclipseTower()
@@ -760,14 +743,14 @@ Public Class EclipseTower
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
+                TenCarGarage.LastLocationName = ApartmentHL.Name
                 TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
                 TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -793,37 +776,37 @@ Public Class EclipseTower
                 Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentPS1.TeleportOutside
-                RemoveIPL(ReadCfgValue("ETP1ipl", saveFile))
+                RemoveIPL(ETP1ipl)
                 Wait(500)
                 Game.FadeScreenIn(500)
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenuPS1.Visible = False
-                WriteCfgValue(ApartmentPS1.SaveFile, "None", saveFile)
+                AptEclipseTwrOwner3 = UpdateValue(Of Owner)(owners, eclipsetwr3, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentPS1.Cost)
-                ApartmentPS1.Owner = "None"
+                ApartmentPS1.Owner = Owner.None
                 Apartment.AptBlip.Remove()
                 If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateEclipseTower()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
-                RemoveIPL(ReadCfgValue("ETP1ipl", saveFile))
+                RemoveIPL(ETP1ipl)
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                TenCarGarage.LastLocationName = ApartmentPS1.Name & ApartmentPS1.Unit
+                TenCarGarage.LastLocationName = ApartmentPS1.Name
                 TenCarGarage.lastLocationVector = ApartmentPS1.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
                 TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -831,7 +814,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentPS1.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
-                RemoveIPL(ReadCfgValue("ETP1ipl", saveFile))
+                RemoveIPL(ETP1ipl)
                 ExitMenuPS1.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -849,7 +832,7 @@ Public Class EclipseTower
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_01_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_01_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_01_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -860,7 +843,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_02_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_02_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_02_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -871,7 +854,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_03_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_03_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_03_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -882,7 +865,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_04_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_04_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_04_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -893,7 +876,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_05_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_05_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_05_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -904,7 +887,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_06_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_06_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_06_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -915,7 +898,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_07_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_07_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_07_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -926,7 +909,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP1ipl", "apa_v_mp_h_08_a", saveFile)
+                ETP1ipl = UpdateValue(Of String)(ipls, "ETP1", "apa_v_mp_h_08_a")
                 ApartmentPS1.IPL = "apa_v_mp_h_08_a"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -949,37 +932,37 @@ Public Class EclipseTower
                 Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentPS2.TeleportOutside
-                RemoveIPL(ReadCfgValue("ETP2ipl", saveFile))
+                RemoveIPL(ETP2ipl)
                 Wait(500)
                 Game.FadeScreenIn(500)
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenuPS2.Visible = False
-                WriteCfgValue(ApartmentPS2.SaveFile, "None", saveFile)
+                AptEclipseTwrOwner4 = UpdateValue(Of Owner)(owners, eclipsetwr4, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentPS2.Cost)
-                ApartmentPS2.Owner = "None"
+                ApartmentPS2.Owner = Owner.None
                 Apartment.AptBlip.Remove()
                 If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateEclipseTower()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
-                RemoveIPL(ReadCfgValue("ETP2ipl", saveFile))
+                RemoveIPL(ETP2ipl)
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                TenCarGarage.LastLocationName = ApartmentPS2.Name & ApartmentPS2.Unit
+                TenCarGarage.LastLocationName = ApartmentPS2.Name
                 TenCarGarage.lastLocationVector = ApartmentPS2.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
                 TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -987,7 +970,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentPS2.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
-                RemoveIPL(ReadCfgValue("ETP2ipl", saveFile))
+                RemoveIPL(ETP2ipl)
                 ExitMenuPS2.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1005,7 +988,7 @@ Public Class EclipseTower
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_01_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_01_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_01_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1016,7 +999,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_02_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_02_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_02_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1027,7 +1010,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_03_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_03_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_03_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1038,7 +1021,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_04_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_04_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_04_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1049,7 +1032,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_05_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_05_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_05_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1060,7 +1043,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_06_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_06_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_06_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1071,7 +1054,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_07_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_07_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_07_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1082,7 +1065,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP2ipl", "apa_v_mp_h_08_b", saveFile)
+                ETP2ipl = UpdateValue(Of String)(ipls, "ETP2", "apa_v_mp_h_08_b")
                 ApartmentPS2.IPL = "apa_v_mp_h_08_b"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1105,37 +1088,37 @@ Public Class EclipseTower
                 Wait(500)
                 Brain.TVOn = False
                 Game.Player.Character.Position = ApartmentPS3.TeleportOutside
-                RemoveIPL(ReadCfgValue("ETP3ipl", saveFile))
+                RemoveIPL(ETP3ipl)
                 Wait(500)
                 Game.FadeScreenIn(500)
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenuPS3.Visible = False
-                WriteCfgValue(ApartmentPS3.SaveFile, "None", saveFile)
+                AptEclipseTwrOwner5 = UpdateValue(Of Owner)(owners, eclipsetwr5, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + ApartmentPS3.Cost)
-                ApartmentPS3.Owner = "None"
+                ApartmentPS3.Owner = Owner.None
                 Apartment.AptBlip.Remove()
                 If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateEclipseTower()
                 Brain.TVOn = False
                 Game.Player.Character.Position = Apartment.TeleportOutside
-                RemoveIPL(ReadCfgValue("ETP3ipl", saveFile))
+                RemoveIPL(ETP3ipl)
                 Wait(500)
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                UnLoadMPDLCMap()
+
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
-                TenCarGarage.LastLocationName = ApartmentPS3.Name & ApartmentPS3.Unit
+                TenCarGarage.LastLocationName = ApartmentPS3.Name
                 TenCarGarage.lastLocationVector = ApartmentPS3.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
                 TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -1143,7 +1126,7 @@ Public Class EclipseTower
                 TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
                 TenCarGarage.CurrentPath = ApartmentPS3.GaragePath
                 playerPed.Position = TenCarGarage.Elevator
-                RemoveIPL(ReadCfgValue("ETP3ipl", saveFile))
+                RemoveIPL(ETP3ipl)
                 ExitMenuPS3.Visible = False
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1161,7 +1144,7 @@ Public Class EclipseTower
             If selectedItem.Text = ModernStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_01_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_01_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_01_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1172,7 +1155,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = MoodyStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_02_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_02_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_02_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1183,7 +1166,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = VibrantStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_03_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_03_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_03_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1194,7 +1177,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SharpStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_04_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_04_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_04_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1205,7 +1188,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = MonochromeStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_05_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_05_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_05_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1216,7 +1199,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = SeductiveStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_06_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_06_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_06_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1227,7 +1210,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = RegalStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_07_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_07_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_07_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1238,7 +1221,7 @@ Public Class EclipseTower
             ElseIf selectedItem.Text = AquaStyle Then
                 Game.FadeScreenOut(500)
                 Wait(500)
-                WriteCfgValue("ETP3ipl", "apa_v_mp_h_08_c", saveFile)
+                ETP3ipl = UpdateValue(Of String)(ipls, "ETP3", "apa_v_mp_h_08_c")
                 ApartmentPS3.IPL = "apa_v_mp_h_08_c"
                 Wait(500)
                 Game.FadeScreenIn(500)
@@ -1450,14 +1433,14 @@ Public Class EclipseTower
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
             'Eclipse Tower
-            If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
+            If selectedItem.Text = Apartment.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = Owner.None Then
                 'Buy Apartment
                 If playerCash > Apartment.Cost Then
-                    WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
+                    AptEclipseTwrOwner = UpdateValue(Of Owner)(owners, eclipsetwr, GetOwner)
                     Game.FadeScreenOut(500)
                     Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
-                    Apartment.Owner = GetPlayerName()
+                    Apartment.Owner = GetOwner()
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateEclipseTower()
@@ -1466,7 +1449,7 @@ Public Class EclipseTower
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -1488,7 +1471,7 @@ Public Class EclipseTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = Apartment.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetOwner() Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
@@ -1505,14 +1488,14 @@ Public Class EclipseTower
             End If
 
             '4 Integrity Way HL
-            If selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentHL.Cost.ToString("N") AndAlso ApartmentHL.Owner = "None" Then
+            If selectedItem.Text = ApartmentHL.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentHL.Cost.ToString("N") AndAlso ApartmentHL.Owner = Owner.None Then
                 'Buy Apartment
                 If playerCash > ApartmentHL.Cost Then
-                    WriteCfgValue(ApartmentHL.SaveFile, GetPlayerName(), saveFile)
+                    AptEclipseTwrOwner2 = UpdateValue(Of Owner)(owners, eclipsetwr2, GetOwner)
                     Game.FadeScreenOut(500)
                     Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentHL.Cost)
-                    ApartmentHL.Owner = GetPlayerName()
+                    ApartmentHL.Owner = GetOwner()
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateEclipseTower()
@@ -1521,7 +1504,7 @@ Public Class EclipseTower
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentHL.Name & ApartmentHL.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentHL.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -1543,13 +1526,13 @@ Public Class EclipseTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentHL.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = ApartmentHL.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentHL.Owner = GetOwner() Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+
 
                 ApartmentHL.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -1561,14 +1544,14 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower Penthouse 1
-            If selectedItem.Text = ApartmentPS1.Name & ApartmentPS1.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentPS1.Cost.ToString("N") AndAlso ApartmentPS1.Owner = "None" Then
+            If selectedItem.Text = ApartmentPS1.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentPS1.Cost.ToString("N") AndAlso ApartmentPS1.Owner = Owner.None Then
                 'Buy Apartment
                 If playerCash > ApartmentPS1.Cost Then
-                    WriteCfgValue(ApartmentPS1.SaveFile, GetPlayerName(), saveFile)
+                    AptEclipseTwrOwner3 = UpdateValue(Of Owner)(owners, eclipsetwr3, GetOwner)
                     Game.FadeScreenOut(500)
                     Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS1.Cost)
-                    ApartmentPS1.Owner = GetPlayerName()
+                    ApartmentPS1.Owner = GetOwner
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateEclipseTower()
@@ -1577,7 +1560,7 @@ Public Class EclipseTower
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentPS1.Name & ApartmentPS1.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentPS1.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -1599,14 +1582,14 @@ Public Class EclipseTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = ApartmentPS1.Name & ApartmentPS1.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentPS1.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = ApartmentPS1.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentPS1.Owner = GetOwner Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                ToggleIPL(ReadCfgValue("ETP1ipl", saveFile))
+
+                ToggleIPL(ETP1ipl)
 
                 ApartmentPS1.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -1618,14 +1601,14 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower Penthouse 2
-            If selectedItem.Text = ApartmentPS2.Name & ApartmentPS2.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentPS2.Cost.ToString("N") AndAlso ApartmentPS2.Owner = "None" Then
+            If selectedItem.Text = ApartmentPS2.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentPS2.Cost.ToString("N") AndAlso ApartmentPS2.Owner = Owner.None Then
                 'Buy Apartment
                 If playerCash > ApartmentPS2.Cost Then
-                    WriteCfgValue(ApartmentPS2.SaveFile, GetPlayerName(), saveFile)
+                    AptEclipseTwrOwner4 = UpdateValue(Of Owner)(owners, eclipsetwr4, GetOwner)
                     Game.FadeScreenOut(500)
                     Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS2.Cost)
-                    ApartmentPS2.Owner = GetPlayerName()
+                    ApartmentPS2.Owner = GetOwner()
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateEclipseTower()
@@ -1634,7 +1617,7 @@ Public Class EclipseTower
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentPS2.Name & ApartmentPS2.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentPS2.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -1656,14 +1639,14 @@ Public Class EclipseTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = ApartmentPS2.Name & ApartmentPS2.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentPS2.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = ApartmentPS2.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentPS2.Owner = GetOwner Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                ToggleIPL(ReadCfgValue("ETP2ipl", saveFile))
+
+                ToggleIPL(ETP2ipl)
 
                 ApartmentPS2.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -1675,14 +1658,14 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower Penthouse 3
-            If selectedItem.Text = ApartmentPS3.Name & ApartmentPS3.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentPS3.Cost.ToString("N") AndAlso ApartmentPS3.Owner = "None" Then
+            If selectedItem.Text = ApartmentPS3.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & ApartmentPS3.Cost.ToString("N") AndAlso ApartmentPS3.Owner = Owner.None Then
                 'Buy Apartment
                 If playerCash > ApartmentPS3.Cost Then
-                    WriteCfgValue(ApartmentPS3.SaveFile, GetPlayerName(), saveFile)
+                    AptEclipseTwrOwner5 = UpdateValue(Of Owner)(owners, eclipsetwr5, GetOwner)
                     Game.FadeScreenOut(500)
                     Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - ApartmentPS3.Cost)
-                    ApartmentPS3.Owner = GetPlayerName()
+                    ApartmentPS3.Owner = GetOwner()
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateEclipseTower()
@@ -1691,7 +1674,7 @@ Public Class EclipseTower
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentPS3.Name & ApartmentPS3.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & ApartmentPS3.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -1713,14 +1696,14 @@ Public Class EclipseTower
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = ApartmentPS3.Name & ApartmentPS3.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentPS3.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = ApartmentPS3.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso ApartmentPS3.Owner = GetOwner Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-                ToggleIPL(ReadCfgValue("ETP3ipl", saveFile))
+
+                ToggleIPL(ETP3ipl)
 
                 ApartmentPS3.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -1737,14 +1720,14 @@ Public Class EclipseTower
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         'Eclipse Tower On Foot
-        If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Apartment.Owner = GetPlayerName() Then
+        If selectedItem.Text = Apartment.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso Apartment.Owner = GetOwner() Then
             'Teleport to Garage
 
             Game.FadeScreenOut(500)
             Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
-            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.LastLocationName = Apartment.Name
             TenCarGarage.lastLocationVector = Apartment.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -1756,7 +1739,7 @@ Public Class EclipseTower
             Wait(500)
             Game.FadeScreenIn(500)
             'Eclipse Tower On Vehicle
-        ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Apartment.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = Apartment.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso Apartment.Owner = GetOwner() Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             If IO.File.Exists(Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
@@ -1773,7 +1756,7 @@ Public Class EclipseTower
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             Apartment.SetInteriorActive()
             TenCarGarage.CurrentPath = Apartment.GaragePath
-            TenCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            TenCarGarage.LastLocationName = Apartment.Name
             TenCarGarage.lastLocationVector = Apartment.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -1896,15 +1879,15 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower HL On Foot
-        ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentHL.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentHL.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentHL.Owner = GetOwner() Then
             'Teleport to Garage
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+
 
             Game.FadeScreenOut(500)
             Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentHL.SetInteriorActive()
-            TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
+            TenCarGarage.LastLocationName = ApartmentHL.Name
             TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -1917,7 +1900,7 @@ Public Class EclipseTower
             Game.FadeScreenIn(500)
 
             'Eclipse Tower HL On Vehicle
-        ElseIf selectedItem.Text = ApartmentHL.Name & ApartmentHL.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentHL.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentHL.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentHL.Owner = GetOwner() Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             Dim path As String = ApartmentHL.GaragePath
@@ -1932,12 +1915,12 @@ Public Class EclipseTower
             If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(ApartmentHL.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", ApartmentHL.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentHL.SetInteriorActive()
             TenCarGarage.CurrentPath = ApartmentHL.GaragePath
-            TenCarGarage.LastLocationName = ApartmentHL.Name & ApartmentHL.Unit
+            TenCarGarage.LastLocationName = ApartmentHL.Name
             TenCarGarage.lastLocationVector = ApartmentHL.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2060,15 +2043,15 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower Penthouse 1 On Foot
-        ElseIf selectedItem.Text = ApartmentPS1.Name & ApartmentPS1.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentPS1.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentPS1.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentPS1.Owner = GetOwner Then
             'Teleport to Garage
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            ToggleIPL(ReadCfgValue("ETP1ipl", saveFile))
+
+            ToggleIPL(ETP1ipl)
             Game.FadeScreenOut(500)
             Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS1.SetInteriorActive()
-            TenCarGarage.LastLocationName = ApartmentPS1.Name & ApartmentPS1.Unit
+            TenCarGarage.LastLocationName = ApartmentPS1.Name
             TenCarGarage.lastLocationVector = ApartmentPS1.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2080,7 +2063,7 @@ Public Class EclipseTower
             Wait(500)
             Game.FadeScreenIn(500)
             'Eclipse Tower Penthouse 1 On Vehicle
-        ElseIf selectedItem.Text = ApartmentPS1.Name & ApartmentPS1.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentPS1.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentPS1.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentPS1.Owner = GetOwner Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             If IO.File.Exists(ApartmentPS1.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", ApartmentPS1.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
@@ -2094,13 +2077,13 @@ Public Class EclipseTower
             If IO.File.Exists(ApartmentPS1.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", ApartmentPS1.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(ApartmentPS1.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", ApartmentPS1.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            ToggleIPL(ReadCfgValue("ETP1ipl", saveFile))
+
+            ToggleIPL(ETP1ipl)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS1.SetInteriorActive()
             TenCarGarage.LoadGarageVechicles(ApartmentPS1.GaragePath)
             TenCarGarage.CurrentPath = ApartmentPS1.GaragePath
-            TenCarGarage.LastLocationName = ApartmentPS1.Name & ApartmentPS1.Unit
+            TenCarGarage.LastLocationName = ApartmentPS1.Name
             TenCarGarage.lastLocationVector = ApartmentPS1.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2223,15 +2206,15 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower Penthouse 2 On Foot
-        ElseIf selectedItem.Text = ApartmentPS2.Name & ApartmentPS2.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentPS2.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentPS2.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentPS2.Owner = GetOwner Then
             'Teleport to Garage
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            ToggleIPL(ReadCfgValue("ETP2ipl", saveFile))
+
+            ToggleIPL(ETP2ipl)
             Game.FadeScreenOut(500)
             Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS2.SetInteriorActive()
-            TenCarGarage.LastLocationName = ApartmentPS2.Name & ApartmentPS2.Unit
+            TenCarGarage.LastLocationName = ApartmentPS2.Name
             TenCarGarage.lastLocationVector = ApartmentPS2.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2243,7 +2226,7 @@ Public Class EclipseTower
             Wait(500)
             Game.FadeScreenIn(500)
             'Eclipse Tower Penthouse 2 On Vehicle
-        ElseIf selectedItem.Text = ApartmentPS2.Name & ApartmentPS2.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentPS2.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentPS2.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentPS2.Owner = GetOwner Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             If IO.File.Exists(ApartmentPS2.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", ApartmentPS2.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
@@ -2257,13 +2240,13 @@ Public Class EclipseTower
             If IO.File.Exists(ApartmentPS2.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", ApartmentPS2.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(ApartmentPS2.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", ApartmentPS2.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            ToggleIPL(ReadCfgValue("ETP2ipl", saveFile))
+
+            ToggleIPL(ETP2ipl)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS2.SetInteriorActive()
             TenCarGarage.LoadGarageVechicles(ApartmentPS2.GaragePath)
             TenCarGarage.CurrentPath = ApartmentPS2.GaragePath
-            TenCarGarage.LastLocationName = ApartmentPS2.Name & ApartmentPS2.Unit
+            TenCarGarage.LastLocationName = ApartmentPS2.Name
             TenCarGarage.lastLocationVector = ApartmentPS2.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2386,15 +2369,15 @@ Public Class EclipseTower
             End If
 
             'Eclipse Tower Penthouse 3 On Foot
-        ElseIf selectedItem.Text = ApartmentPS3.Name & ApartmentPS3.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentPS3.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentPS3.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle AndAlso ApartmentPS3.Owner = GetOwner Then
             'Teleport to Garage
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            ToggleIPL(ReadCfgValue("ETP3ipl", saveFile))
+
+            ToggleIPL(ETP3ipl)
             Game.FadeScreenOut(500)
             Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS3.SetInteriorActive()
-            TenCarGarage.LastLocationName = ApartmentPS3.Name & ApartmentPS3.Unit
+            TenCarGarage.LastLocationName = ApartmentPS3.Name
             TenCarGarage.lastLocationVector = ApartmentPS3.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2406,7 +2389,7 @@ Public Class EclipseTower
             Wait(500)
             Game.FadeScreenIn(500)
             'Eclipse Tower Penthouse 3 On Vehicle
-        ElseIf selectedItem.Text = ApartmentPS3.Name & ApartmentPS3.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentPS3.Owner = GetPlayerName() Then
+        ElseIf selectedItem.Text = ApartmentPS3.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle AndAlso ApartmentPS3.Owner = GetOwner Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             If IO.File.Exists(ApartmentPS3.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", ApartmentPS3.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
@@ -2420,13 +2403,13 @@ Public Class EclipseTower
             If IO.File.Exists(ApartmentPS3.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", ApartmentPS3.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(ApartmentPS3.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", ApartmentPS3.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
-            ToggleIPL(ReadCfgValue("ETP3ipl", saveFile))
+
+            ToggleIPL(ETP3ipl)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             ApartmentPS3.SetInteriorActive()
             TenCarGarage.LoadGarageVechicles(ApartmentPS3.GaragePath)
             TenCarGarage.CurrentPath = ApartmentPS3.GaragePath
-            TenCarGarage.LastLocationName = ApartmentPS3.Name & ApartmentPS3.Unit
+            TenCarGarage.LastLocationName = ApartmentPS3.Name
             TenCarGarage.lastLocationVector = ApartmentPS3.ApartmentExit
             TenCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -2553,10 +2536,10 @@ Public Class EclipseTower
     Public Sub OnTick()
         Try
             If Not Game.IsLoading Then
-                If My.Settings.EclipseTower = "Enable" Then
+                If AptEclipseTwr Then
                     'Enter Apartment
                     If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
-                        DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
+                        DisplayHelpTextThisFrame(EnterApartmentHelp(Apartment.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
                             Wait(500)
@@ -2569,7 +2552,7 @@ Public Class EclipseTower
                     End If
 
                     'Save Game
-                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.SaveDistance < 3.0 Then
+                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.SaveDistance < 3.0 Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
@@ -2582,7 +2565,7 @@ Public Class EclipseTower
                             Game.FadeScreenIn(500)
                         End If
                     End If
-                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = GetPlayerName()) AndAlso ApartmentHL.SaveDistance < 3.0 Then
+                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = GetOwner()) AndAlso ApartmentHL.SaveDistance < 3.0 Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentHL.PlayerMap
@@ -2595,7 +2578,7 @@ Public Class EclipseTower
                             Game.FadeScreenIn(500)
                         End If
                     End If
-                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS1.Owner = GetPlayerName()) AndAlso ApartmentPS1.SaveDistance < 3.0 Then
+                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS1.Owner = GetOwner) AndAlso ApartmentPS1.SaveDistance < 3.0 Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentPS1.PlayerMap
@@ -2608,7 +2591,7 @@ Public Class EclipseTower
                             Game.FadeScreenIn(500)
                         End If
                     End If
-                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS2.Owner = GetPlayerName()) AndAlso ApartmentPS2.SaveDistance < 3.0 Then
+                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS2.Owner = GetOwner) AndAlso ApartmentPS2.SaveDistance < 3.0 Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentPS2.PlayerMap
@@ -2621,7 +2604,7 @@ Public Class EclipseTower
                             Game.FadeScreenIn(500)
                         End If
                     End If
-                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS3.Owner = GetPlayerName()) AndAlso ApartmentPS3.SaveDistance < 3.0 Then
+                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS3.Owner = GetOwner) AndAlso ApartmentPS3.SaveDistance < 3.0 Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = ApartmentPS3.PlayerMap
@@ -2636,39 +2619,39 @@ Public Class EclipseTower
                     End If
 
                     'Exit Apartment
-                    If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.ExitDistance < 2.0 Then
-                        DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
+                    If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.ExitDistance < 2.0 Then
+                        DisplayHelpTextThisFrame(ExitApartmentHelp(Apartment.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenu.Visible = True
                         End If
                     End If
-                    If ((Not ExitMenuHL.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = GetPlayerName()) AndAlso ApartmentHL.ExitDistance < 2.0 Then
-                        DisplayHelpTextThisFrame(ExitApartment & ApartmentHL.Name & ApartmentHL.Unit)
+                    If ((Not ExitMenuHL.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = GetOwner()) AndAlso ApartmentHL.ExitDistance < 2.0 Then
+                        DisplayHelpTextThisFrame(ExitApartmentHelp(ApartmentHL.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenuHL.Visible = True
                         End If
                     End If
-                    If ((Not ExitMenuPS1.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS1.Owner = GetPlayerName()) AndAlso ApartmentPS1.ExitDistance < 2.0 Then
-                        DisplayHelpTextThisFrame(ExitApartment & ApartmentPS1.Name & ApartmentPS1.Unit)
+                    If ((Not ExitMenuPS1.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS1.Owner = GetOwner) AndAlso ApartmentPS1.ExitDistance < 2.0 Then
+                        DisplayHelpTextThisFrame(ExitApartmentHelp(ApartmentPS1.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenuPS1.Visible = True
                         End If
                     End If
-                    If ((Not ExitMenuPS2.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS2.Owner = GetPlayerName()) AndAlso ApartmentPS2.ExitDistance < 2.0 Then
-                        DisplayHelpTextThisFrame(ExitApartment & ApartmentPS2.Name & ApartmentPS2.Unit)
+                    If ((Not ExitMenuPS2.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS2.Owner = GetOwner) AndAlso ApartmentPS2.ExitDistance < 2.0 Then
+                        DisplayHelpTextThisFrame(ExitApartmentHelp(ApartmentPS2.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenuPS2.Visible = True
                         End If
                     End If
-                    If ((Not ExitMenuPS3.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS3.Owner = GetPlayerName()) AndAlso ApartmentPS3.ExitDistance < 2.0 Then
-                        DisplayHelpTextThisFrame(ExitApartment & ApartmentPS3.Name & ApartmentPS3.Unit)
+                    If ((Not ExitMenuPS3.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS3.Owner = GetOwner) AndAlso ApartmentPS3.ExitDistance < 2.0 Then
+                        DisplayHelpTextThisFrame(ExitApartmentHelp(ApartmentPS3.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenuPS3.Visible = True
                         End If
                     End If
 
                     'Wardrobe
-                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.WardrobeDistance < 1.0 Then
+                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.WardrobeDistance < 1.0 Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = Apartment.Wardrobe
@@ -2680,7 +2663,7 @@ Public Class EclipseTower
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -2694,7 +2677,7 @@ Public Class EclipseTower
                             End If
                         End If
                     End If
-                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = GetPlayerName()) AndAlso ApartmentHL.WardrobeDistance < 1.0 Then
+                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentHL.Owner = GetOwner()) AndAlso ApartmentHL.WardrobeDistance < 1.0 Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = ApartmentHL.Wardrobe
@@ -2706,7 +2689,7 @@ Public Class EclipseTower
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -2720,7 +2703,7 @@ Public Class EclipseTower
                             End If
                         End If
                     End If
-                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS1.Owner = GetPlayerName()) AndAlso ApartmentPS1.WardrobeDistance < 1.0 Then
+                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS1.Owner = GetOwner) AndAlso ApartmentPS1.WardrobeDistance < 1.0 Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = ApartmentPS1.Wardrobe
@@ -2732,7 +2715,7 @@ Public Class EclipseTower
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -2746,7 +2729,7 @@ Public Class EclipseTower
                             End If
                         End If
                     End If
-                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS2.Owner = GetPlayerName()) AndAlso ApartmentPS2.WardrobeDistance < 1.0 Then
+                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS2.Owner = GetOwner) AndAlso ApartmentPS2.WardrobeDistance < 1.0 Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = ApartmentPS2.Wardrobe
@@ -2758,7 +2741,7 @@ Public Class EclipseTower
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -2772,7 +2755,7 @@ Public Class EclipseTower
                             End If
                         End If
                     End If
-                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS3.Owner = GetPlayerName()) AndAlso ApartmentPS3.WardrobeDistance < 1.0 Then
+                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso ApartmentPS3.Owner = GetOwner) AndAlso ApartmentPS3.WardrobeDistance < 1.0 Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = ApartmentPS3.Wardrobe
@@ -2784,7 +2767,7 @@ Public Class EclipseTower
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -2800,9 +2783,9 @@ Public Class EclipseTower
                     End If
 
                     'Enter Garage
-                    If (Not playerPed.IsDead AndAlso (Apartment.Owner = GetPlayerName() Or ApartmentHL.Owner = GetPlayerName() Or ApartmentPS1.Owner = GetPlayerName() Or ApartmentPS2.Owner = GetPlayerName() Or ApartmentPS3.Owner = GetPlayerName())) AndAlso Apartment.GarageDistance < 5.0 Then
+                    If (Not playerPed.IsDead AndAlso (Apartment.Owner = GetOwner() Or ApartmentHL.Owner = GetOwner() Or ApartmentPS1.Owner = GetOwner Or ApartmentPS2.Owner = GetOwner Or ApartmentPS3.Owner = GetOwner)) AndAlso Apartment.GarageDistance < 5.0 Then
                         If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                            DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                            DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.Trim))
                             If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                 GarageMenu.Visible = True
                             End If
@@ -2810,7 +2793,7 @@ Public Class EclipseTower
                             If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
                                 DisplayHelpTextThisFrame(CannotStore)
                             ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                                DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                                DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.Trim))
                                 If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                     GarageMenu.Visible = True
                                 End If

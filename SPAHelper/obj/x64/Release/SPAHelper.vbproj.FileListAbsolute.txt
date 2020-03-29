@@ -18,3 +18,12 @@ E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Rele
 E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.dll
 E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.xml
 E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.pdb
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\HelperSPA.dll
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\HelperSPA.pdb
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\bin\x64\Release\HelperSPA.xml
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\SPAHelper.vbprojResolveAssemblyReference.cache
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\SPAHelper.Resources.resources
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\SPAHelper.vbproj.GenerateResource.Cache
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.dll
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.xml
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SPAHelper\obj\x64\Release\HelperSPA.pdb

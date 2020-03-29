@@ -39,7 +39,7 @@
 '            Apartment.ApartmentStyleCameraRotation = New Vector3(-5.396699, 0, 45.76079)
 '            Apartment.ApartmentStyleCameraFOV = 50.0
 '            Apartment.IsAtHome = False
-'            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\maze_bank_west\" '/
+'            Apartment.GaragePath = "scripts\SinglePlayerApartment\Garage\maze_bank_west\" '/
 '            Apartment.SaveFile = "MBWowner"  '/
 '            Apartment.PlayerMap = "MazeBankWest"  '/
 '            Apartment.IPL = ReadCfgValue("MBWipl", saveFile) '/
@@ -138,15 +138,15 @@
 '            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
 '            BuyMenu.SetBannerType(Rectangle)
 '            _menuPool.Add(BuyMenu)
-'            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
+'            Dim item As New UIMenuItem(Apartment.Name, Apartment.Description)
 '            With item
-'                If Apartment.Owner = "Michael" Then
+'                If Apartment.Owner = Owner.Michael Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'                ElseIf Apartment.Owner = "Franklin" Then
+'                ElseIf Apartment.Owner = Owner.Franklin Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'                ElseIf Apartment.Owner = "Trevor" Then
+'                ElseIf Apartment.Owner = Owner.Trevor Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'                ElseIf Apartment.Owner = "Player3" Then
+'                ElseIf Apartment.Owner = Owner.Player3 Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '                Else
 '                    .SetRightLabel("$" & Apartment.Cost.ToString("N"))
@@ -162,15 +162,15 @@
 
 '    Public Shared Sub RefreshMenu()
 '        BuyMenu.MenuItems.Clear()
-'        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
+'        Dim item As New UIMenuItem(Apartment.Name, Apartment.Description)
 '        With item
-'            If Apartment.Owner = "Michael" Then
+'            If Apartment.Owner = Owner.Michael Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'            ElseIf Apartment.Owner = "Franklin" Then
+'            ElseIf Apartment.Owner = Owner.Franklin Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'            ElseIf Apartment.Owner = "Trevor" Then
+'            ElseIf Apartment.Owner = Owner.Trevor Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'            ElseIf Apartment.Owner = "Player3" Then
+'            ElseIf Apartment.Owner = Owner.Player3 Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '            Else
 '                .SetRightLabel("$" & Apartment.Cost.ToString("N"))
@@ -185,13 +185,13 @@
 '        GarageMenu.MenuItems.Clear()
 '        Dim Garage1 As New UIMenuItem(OfficeGarage1)
 '        With Garage1
-'            If Apartment.Owner = "Michael" Then
+'            If Apartment.Owner = Owner.Michael Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'            ElseIf Apartment.Owner = "Franklin" Then
+'            ElseIf Apartment.Owner = Owner.Franklin Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'            ElseIf Apartment.Owner = "Trevor" Then
+'            ElseIf Apartment.Owner = Owner.Trevor Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'            ElseIf Apartment.Owner = "Player3" Then
+'            ElseIf Apartment.Owner = Owner.Player3 Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '            Else
 '                .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -200,13 +200,13 @@
 '        GarageMenu.AddItem(Garage1)
 '        Dim Garage2 As New UIMenuItem(OfficeGarage2)
 '        With Garage2
-'            If Apartment.Owner = "Michael" Then
+'            If Apartment.Owner = Owner.Michael Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'            ElseIf Apartment.Owner = "Franklin" Then
+'            ElseIf Apartment.Owner = Owner.Franklin Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'            ElseIf Apartment.Owner = "Trevor" Then
+'            ElseIf Apartment.Owner = Owner.Trevor Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'            ElseIf Apartment.Owner = "Player3" Then
+'            ElseIf Apartment.Owner = Owner.Player3 Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '            Else
 '                .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -215,13 +215,13 @@
 '        GarageMenu.AddItem(Garage2)
 '        Dim Garage3 As New UIMenuItem(OfficeGarage3)
 '        With Garage3
-'            If Apartment.Owner = "Michael" Then
+'            If Apartment.Owner = Owner.Michael Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'            ElseIf Apartment.Owner = "Franklin" Then
+'            ElseIf Apartment.Owner = Owner.Franklin Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'            ElseIf Apartment.Owner = "Trevor" Then
+'            ElseIf Apartment.Owner = Owner.Trevor Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'            ElseIf Apartment.Owner = "Player3" Then
+'            ElseIf Apartment.Owner = Owner.Player3 Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '            Else
 '                .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -230,13 +230,13 @@
 '        GarageMenu.AddItem(Garage3)
 '        Dim AutoShop As New UIMenuItem(OfficeAutoShop)
 '        With AutoShop
-'            If Apartment.Owner = "Michael" Then
+'            If Apartment.Owner = Owner.Michael Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'            ElseIf Apartment.Owner = "Franklin" Then
+'            ElseIf Apartment.Owner = Owner.Franklin Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'            ElseIf Apartment.Owner = "Trevor" Then
+'            ElseIf Apartment.Owner = Owner.Trevor Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'            ElseIf Apartment.Owner = "Player3" Then
+'            ElseIf Apartment.Owner = Owner.Player3 Then
 '                .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '            Else
 '                .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -298,13 +298,13 @@
 '            _menuPool.Add(GarageMenu)
 '            Dim Garage1 As New UIMenuItem(OfficeGarage1)
 '            With Garage1
-'                If Apartment.Owner = "Michael" Then
+'                If Apartment.Owner = Owner.Michael Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'                ElseIf Apartment.Owner = "Franklin" Then
+'                ElseIf Apartment.Owner = Owner.Franklin Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'                ElseIf Apartment.Owner = "Trevor" Then
+'                ElseIf Apartment.Owner = Owner.Trevor Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'                ElseIf Apartment.Owner = "Player3" Then
+'                ElseIf Apartment.Owner = Owner.Player3 Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '                Else
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -313,13 +313,13 @@
 '            GarageMenu.AddItem(Garage1)
 '            Dim Garage2 As New UIMenuItem(OfficeGarage2)
 '            With Garage2
-'                If Apartment.Owner = "Michael" Then
+'                If Apartment.Owner = Owner.Michael Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'                ElseIf Apartment.Owner = "Franklin" Then
+'                ElseIf Apartment.Owner = Owner.Franklin Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'                ElseIf Apartment.Owner = "Trevor" Then
+'                ElseIf Apartment.Owner = Owner.Trevor Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'                ElseIf Apartment.Owner = "Player3" Then
+'                ElseIf Apartment.Owner = Owner.Player3 Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '                Else
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -328,13 +328,13 @@
 '            GarageMenu.AddItem(Garage2)
 '            Dim Garage3 As New UIMenuItem(OfficeGarage3)
 '            With Garage3
-'                If Apartment.Owner = "Michael" Then
+'                If Apartment.Owner = Owner.Michael Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'                ElseIf Apartment.Owner = "Franklin" Then
+'                ElseIf Apartment.Owner = Owner.Franklin Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'                ElseIf Apartment.Owner = "Trevor" Then
+'                ElseIf Apartment.Owner = Owner.Trevor Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'                ElseIf Apartment.Owner = "Player3" Then
+'                ElseIf Apartment.Owner = Owner.Player3 Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '                Else
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -343,13 +343,13 @@
 '            GarageMenu.AddItem(Garage3)
 '            Dim AutoShop As New UIMenuItem(OfficeAutoShop)
 '            With AutoShop
-'                If Apartment.Owner = "Michael" Then
+'                If Apartment.Owner = Owner.Michael Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-'                ElseIf Apartment.Owner = "Franklin" Then
+'                ElseIf Apartment.Owner = Owner.Franklin Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-'                ElseIf Apartment.Owner = "Trevor" Then
+'                ElseIf Apartment.Owner = Owner.Trevor Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-'                ElseIf Apartment.Owner = "Player3" Then
+'                ElseIf Apartment.Owner = Owner.Player3 Then
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
 '                Else
 '                    .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -405,7 +405,7 @@
 '                Game.FadeScreenOut(500)
 '                Wait(500)
 '                SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
-'                Apartment.Owner = "None"
+'                Apartment.Owner = Owner.None
 '                Apartment.AptBlip.Remove()
 '                If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
 '                CreateMazeBankWest()
@@ -436,7 +436,7 @@
 '                TwentyCarGarage.WallText = Apartment.GarageWallText1
 '                TwentyCarGarage.LightText = Apartment.GarageLightText1
 '                TwentyCarGarage.NumberText = Apartment.GarageNumberText1
-'                TwentyCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+'                TwentyCarGarage.LastLocationName = Apartment.Name
 '                TwentyCarGarage.lastLocationVector = Apartment.ApartmentExit
 '                TwentyCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
 '                TwentyCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -683,14 +683,14 @@
 
 '    Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
 '        Try
-'            If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
+'            If selectedItem.Text = Apartment.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = Owner.None Then
 '                'Buy Apartment
 '                If playerCash > Apartment.Cost Then
 '                    WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
 '                    Game.FadeScreenOut(500)
 '                    Wait(500)
 '                    If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
-'                    Apartment.Owner = GetPlayerName()
+'                    Apartment.Owner = GetOwner
 '                    Apartment.AptBlip.Remove()
 '                    If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
 '                    CreateMazeBankWest()
@@ -699,7 +699,7 @@
 '                    Wait(500)
 '                    Game.FadeScreenIn(500)
 '                    Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-'                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
+'                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name, Nothing)
 '                    If GetPlayerName() = "Michael" Then
 '                        selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
 '                    ElseIf GetPlayerName() = "Franklin" Then
@@ -721,13 +721,13 @@
 '                        DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
 '                    End If
 '                End If
-'            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetPlayerName() Then
+'            ElseIf selectedItem.Text = Apartment.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetOwner Then
 '                'Enter Apartment
 '                BuyMenu.Visible = False
 '                hideHud = False
 '                World.DestroyAllCameras()
 '                World.RenderingCamera = Nothing
-'                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+'               
 '                ToggleIPL(ReadCfgValue("MBWipl", saveFile))
 '                EnableOfficeProp()
 
@@ -757,7 +757,7 @@
 '            TwentyCarGarage.WallText = Apartment.GarageWallText1
 '            TwentyCarGarage.LightText = Apartment.GarageLightText1
 '            TwentyCarGarage.NumberText = Apartment.GarageNumberText1
-'            TwentyCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+'            TwentyCarGarage.LastLocationName = Apartment.Name
 '            TwentyCarGarage.lastLocationVector = Apartment.ApartmentExit
 '            TwentyCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
 '            TwentyCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -837,7 +837,7 @@
 '            TwentyCarGarage.WallText = Apartment.GarageWallText1
 '            TwentyCarGarage.LightText = Apartment.GarageLightText1
 '            TwentyCarGarage.NumberText = Apartment.GarageNumberText1
-'            TwentyCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+'            TwentyCarGarage.LastLocationName = Apartment.Name
 '            TwentyCarGarage.lastLocationVector = Apartment.ApartmentExit
 '            TwentyCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
 '            TwentyCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -1117,7 +1117,7 @@
 '                If My.Settings.MazeBankWest = "Enable" Then
 '                    'Enter Apartment
 '                    If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso (Apartment.EntranceDistance < 3.0 Or Apartment.RoofDistance < 3.0) Then
-'                        DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
+'                        DisplayHelpTextThisFrame(EnterApartmentHelp(Apartment.Name))
 '                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
 '                            Game.FadeScreenOut(500)
 '                            Wait(500)
@@ -1130,7 +1130,7 @@
 '                    End If
 
 '                    'Save Game
-'                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.SaveDistance < 3.0 Then
+'                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner) AndAlso Apartment.SaveDistance < 3.0 Then
 '                        DisplayHelpTextThisFrame(SaveGame)
 '                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
 '                            playerMap = Apartment.PlayerMap
@@ -1145,15 +1145,15 @@
 '                    End If
 
 '                    'Exit Apartment
-'                    If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.ExitDistance < 2.0 Then
-'                        DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
+'                    If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner) AndAlso Apartment.ExitDistance < 2.0 Then
+'                        DisplayHelpTextThisFrame(ExitApartmentHelp(Apartment.Name))
 '                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
 '                            ExitMenu.Visible = True
 '                        End If
 '                    End If
 
 '                    'Wardrobe
-'                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.WardrobeDistance < 1.0 Then
+'                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner) AndAlso Apartment.WardrobeDistance < 1.0 Then
 '                        DisplayHelpTextThisFrame(ChangeClothes)
 '                        If Game.IsControlJustPressed(0, GTA.Control.Context) Then
 '                            WardrobeVector = Apartment.Wardrobe
@@ -1181,9 +1181,9 @@
 '                    End If
 
 '                    'Enter Garage
-'                    If (Not playerPed.IsDead AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.GarageDistance < 5.0 Then
+'                    If (Not playerPed.IsDead AndAlso Apartment.Owner = GetOwner) AndAlso Apartment.GarageDistance < 5.0 Then
 '                        If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-'                            DisplayHelpTextThisFrame(_EnterGarage & Garage)
+'                           DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.trim))
 '                            If Game.IsControlJustPressed(0, GTA.Control.Context) Then
 '                                GarageMenu.Visible = True
 '                            End If
@@ -1191,7 +1191,7 @@
 '                            If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
 '                                DisplayHelpTextThisFrame(CannotStore)
 '                            ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-'                                DisplayHelpTextThisFrame(_EnterGarage & Garage)
+'                               DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.trim))
 '                                If Game.IsControlJustPressed(0, GTA.Control.Context) Then
 '                                    GarageMenu.Visible = True
 '                                End If

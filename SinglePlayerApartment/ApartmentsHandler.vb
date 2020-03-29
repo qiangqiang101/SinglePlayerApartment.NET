@@ -46,6 +46,9 @@ Public Class ApartmentsHandler
     'Dim mbw As MazeBankWest
 
     Public Sub New()
+        Translate()
+        configFile.Save()
+
         _3as = New _3AltaStreet()
         _4iw = New _4IntegrityWay()
         dph = New DelPerroHeight()

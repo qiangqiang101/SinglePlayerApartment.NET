@@ -36,19 +36,14 @@ Public Class Mechanic
     Public Shared GrgTransMenuItem(10) As UIMenuItem
     Public Shared GarageMenuSelectedItem, GarageMenuSelectedFile, MoveMenuSelectedItem, MoveMenuSelectedFile, MoveMenuSelectedIndex, SelectedGarage, PegasusSelectedVehicleFile As String, MoveIndex As Integer = -1
     Public Shared MechanicPed As Ped
-    Public Shared MichaelPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Michael\"
-    Public Shared FranklinPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Franklin\"
-    Public Shared TrevorPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Trevor\"
-    Public Shared Player3PathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Pegasus\Player3\"
-    Public Shared SoundPathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Sounds\"
+    Public Shared MichaelPathDir As String = "scripts\SinglePlayerApartment\Pegasus\Michael\"
+    Public Shared FranklinPathDir As String = "scripts\SinglePlayerApartment\Pegasus\Franklin\"
+    Public Shared TrevorPathDir As String = "scripts\SinglePlayerApartment\Pegasus\Trevor\"
+    Public Shared Player3PathDir As String = "scripts\SinglePlayerApartment\Pegasus\Player3\"
+    Public Shared SoundPathDir As String = "scripts\SinglePlayerApartment\Sounds\"
 
     Public Sub New()
         Try
-            Translate()
-
-            My.Settings.Mechanic = [Enum].Parse(GetType(Keys), ReadCfgValue("Mechanic", settingFile), False)
-            My.Settings.Save()
-
             _menuPool = New MenuPool()
 
             CreatePhoneMenu()
@@ -163,13 +158,13 @@ Public Class Mechanic
             _menuPool.Add(PhoneMenu)
             PhoneMenu.AddItem(New UIMenuItem(_Mechanic))
             PhoneMenu.AddItem(New UIMenuItem(_Pegasus))
-            PhoneMenu.AddItem(New UIMenuItem(Website.BennysOriginal))
-            PhoneMenu.AddItem(New UIMenuItem(Website.DockTease))
-            PhoneMenu.AddItem(New UIMenuItem(Website.ElitasTravel))
-            PhoneMenu.AddItem(New UIMenuItem(Website.LegendaryMotorsport))
-            PhoneMenu.AddItem(New UIMenuItem(Website.PedalToMetal))
-            PhoneMenu.AddItem(New UIMenuItem(Website.SouthernSA))
-            PhoneMenu.AddItem(New UIMenuItem(Website.WarstockCache))
+            PhoneMenu.AddItem(New UIMenuItem(BennysOriginal))
+            PhoneMenu.AddItem(New UIMenuItem(DockTease))
+            PhoneMenu.AddItem(New UIMenuItem(ElitasTravel))
+            PhoneMenu.AddItem(New UIMenuItem(LegendaryMotorsport))
+            PhoneMenu.AddItem(New UIMenuItem(PedalToMetal))
+            PhoneMenu.AddItem(New UIMenuItem(SouthernSA))
+            PhoneMenu.AddItem(New UIMenuItem(WarstockCache))
             PhoneMenu.RefreshIndex()
             AddHandler PhoneMenu.OnItemSelect, AddressOf PhoneMenuItemSelectHandler
         Catch ex As Exception
@@ -185,55 +180,55 @@ Public Class Mechanic
             MechanicMenu.SetBannerType(Rectangle)
             _menuPool.Add(MechanicMenu)
             MechanicMenu.MenuItems.Clear()
-            If _3AltaStreet.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then MechanicMenu.AddItem(itemAS3)
-            If _4IntegrityWay.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then MechanicMenu.AddItem(itemIW4)
-            If _4IntegrityWay.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then MechanicMenu.AddItem(itemIW4HL)
-            If DelPerroHeight.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then MechanicMenu.AddItem(itemDPH)
-            If DelPerroHeight.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then MechanicMenu.AddItem(itemDPHHL)
-            If DreamTower.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemDT)
-            If EclipseTower.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemET)
-            If EclipseTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETHL)
-            If RichardMajestic.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then MechanicMenu.AddItem(itemRM)
-            If RichardMajestic.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then MechanicMenu.AddItem(itemRMHL)
-            If TinselTower.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemTT)
-            If TinselTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemTTHL)
-            If WeazelPlaza.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then MechanicMenu.AddItem(itemWP)
-            If VespucciBlvd.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemVB)
-            If NorthConker2044.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then MechanicMenu.AddItem(itemNC2044)
-            If HillcrestAve2862.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemHA2862)
-            If HillcrestAve2868.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemHA2868)
-            If WildOats3655.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then MechanicMenu.AddItem(itemWO3655)
-            If NorthConker2045.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then MechanicMenu.AddItem(itemNC2045)
-            If MiltonRd2117.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMR2117)
-            If HillcrestAve2874._Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemHA2874)
-            If Whispymound3677.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then MechanicMenu.AddItem(itemWD3677)
-            If MadWayne2113.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMW2113)
-            If EclipseTower.ApartmentPS1.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP1)
-            If EclipseTower.ApartmentPS2.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP2)
-            If EclipseTower.ApartmentPS3.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then MechanicMenu.AddItem(itemETP3)
-            If BayCityAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemBCA)
-            If BlvdDelPerro.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then MechanicMenu.AddItem(itemBDP)
-            If CougarAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemCA)
-            If HangmanAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemHA)
-            If LasLagunasBlvd0604.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemLLB0604)
-            If LasLagunasBlvd2143.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemLLB2143)
-            If MiltonRd0184.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMR0184)
-            If PowerSt.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPower)
-            If ProcopioDr4401.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPD4401)
-            If ProcopioDr4584.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPD4584)
-            If ProsperitySt.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then MechanicMenu.AddItem(itemProsperity)
-            If SanVitasSt.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSVS)
-            If SouthMoMiltonDr.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSMMD)
-            If SouthRockfordDrive0325.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSRD0325)
-            If SpanishAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSA)
-            If SustanciaRd.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSR)
-            If TheRoyale.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then MechanicMenu.AddItem(itemTR)
-            If GrapeseedAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemGA)
-            If PaletoBlvd.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then MechanicMenu.AddItem(itemPB)
-            If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then MechanicMenu.AddItem(itemSRD0112)
-            If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then MechanicMenu.AddItem(itemZA)
+            If _3AltaStreet.Apartment.Owner = GetOwner AndAlso Not GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt3AltaSt Then MechanicMenu.AddItem(itemAS3)
+            If _4IntegrityWay.Apartment.Owner = GetOwner AndAlso Not GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt4IntegrityWay Then MechanicMenu.AddItem(itemIW4)
+            If _4IntegrityWay.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso Apt4IntegrityWay Then MechanicMenu.AddItem(itemIW4HL)
+            If DelPerroHeight.Apartment.Owner = GetOwner AndAlso Not GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptDelPerroHgt Then MechanicMenu.AddItem(itemDPH)
+            If DelPerroHeight.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso AptDelPerroHgt Then MechanicMenu.AddItem(itemDPHHL)
+            If DreamTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptDreamTwr Then MechanicMenu.AddItem(itemDT)
+            If EclipseTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptEclipseTwr Then MechanicMenu.AddItem(itemET)
+            If EclipseTower.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso AptEclipseTwr Then MechanicMenu.AddItem(itemETHL)
+            If RichardMajestic.Apartment.Owner = GetOwner AndAlso Not GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptRichardMajestic Then MechanicMenu.AddItem(itemRM)
+            If RichardMajestic.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso AptRichardMajestic Then MechanicMenu.AddItem(itemRMHL)
+            If TinselTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptTinselTwr Then MechanicMenu.AddItem(itemTT)
+            If TinselTower.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 0 AndAlso AptTinselTwr Then MechanicMenu.AddItem(itemTTHL)
+            If WeazelPlaza.Apartment.Owner = GetOwner AndAlso Not GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptWeazelPlz Then MechanicMenu.AddItem(itemWP)
+            If VespucciBlvd.Apartment.Owner = GetOwner AndAlso Not GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptVespucciBlvd Then MechanicMenu.AddItem(itemVB)
+            If NorthConker2044.Apartment.Owner = GetOwner AndAlso Not GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2044NorthConker Then MechanicMenu.AddItem(itemNC2044)
+            If HillcrestAve2862.Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2862Hillcrest Then MechanicMenu.AddItem(itemHA2862)
+            If HillcrestAve2868.Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2868Hillcrest Then MechanicMenu.AddItem(itemHA2868)
+            If WildOats3655.Apartment.Owner = GetOwner AndAlso Not GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt3655WildOats Then MechanicMenu.AddItem(itemWO3655)
+            If NorthConker2045.Apartment.Owner = GetOwner AndAlso Not GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2045NorthConker Then MechanicMenu.AddItem(itemNC2045)
+            If MiltonRd2117.Apartment.Owner = GetOwner AndAlso Not GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2117MiltonRd Then MechanicMenu.AddItem(itemMR2117)
+            If HillcrestAve2874._Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2874Hillcrest Then MechanicMenu.AddItem(itemHA2874)
+            If Whispymound3677.Apartment.Owner = GetOwner AndAlso Not GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt3677Whispymound Then MechanicMenu.AddItem(itemWD3677)
+            If MadWayne2113.Apartment.Owner = GetOwner AndAlso Not GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2113MadWayne Then MechanicMenu.AddItem(itemMW2113)
+            If EclipseTower.ApartmentPS1.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 0 AndAlso AptEclipseTwr Then MechanicMenu.AddItem(itemETP1)
+            If EclipseTower.ApartmentPS2.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 0 AndAlso AptEclipseTwr Then MechanicMenu.AddItem(itemETP2)
+            If EclipseTower.ApartmentPS3.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 0 AndAlso AptEclipseTwr Then MechanicMenu.AddItem(itemETP3)
+            If BayCityAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptBayCityAve Then MechanicMenu.AddItem(itemBCA)
+            If BlvdDelPerro.Apartment.Owner = GetOwner AndAlso Not GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptBlvdDelPerro Then MechanicMenu.AddItem(itemBDP)
+            If CougarAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptCougarAve Then MechanicMenu.AddItem(itemCA)
+            If HangmanAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptHangmanAve Then MechanicMenu.AddItem(itemHA)
+            If LasLagunasBlvd0604.Apartment.Owner = GetOwner AndAlso Not GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt0604LasLagunas Then MechanicMenu.AddItem(itemLLB0604)
+            If LasLagunasBlvd2143.Apartment.Owner = GetOwner AndAlso Not GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt2143LasLagunas Then MechanicMenu.AddItem(itemLLB2143)
+            If MiltonRd0184.Apartment.Owner = GetOwner AndAlso Not GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt0184MiltonRd Then MechanicMenu.AddItem(itemMR0184)
+            If PowerSt.Apartment.Owner = GetOwner AndAlso Not GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptPowerSt Then MechanicMenu.AddItem(itemPower)
+            If ProcopioDr4401.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt4401ProcopioDr Then MechanicMenu.AddItem(itemPD4401)
+            If ProcopioDr4584.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt4584ProcopioDr Then MechanicMenu.AddItem(itemPD4584)
+            If ProsperitySt.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptProsperitySt Then MechanicMenu.AddItem(itemProsperity)
+            If SanVitasSt.Apartment.Owner = GetOwner AndAlso Not GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptSanVitasSt Then MechanicMenu.AddItem(itemSVS)
+            If SouthMoMiltonDr.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptSouthMoMiltonDr Then MechanicMenu.AddItem(itemSMMD)
+            If SouthRockfordDrive0325.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt0325SouthRfDr Then MechanicMenu.AddItem(itemSRD0325)
+            If SpanishAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptSpanishAve Then MechanicMenu.AddItem(itemSA)
+            If SustanciaRd.Apartment.Owner = GetOwner AndAlso Not GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptSustanciaRd Then MechanicMenu.AddItem(itemSR)
+            If TheRoyale.Apartment.Owner = GetOwner AndAlso Not GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptTheRoyale Then MechanicMenu.AddItem(itemTR)
+            If GrapeseedAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptGrapeseedAve Then MechanicMenu.AddItem(itemGA)
+            If PaletoBlvd.Apartment.Owner = GetOwner AndAlso Not GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptPaletoBlvd Then MechanicMenu.AddItem(itemPB)
+            If SouthRockfordDr0112.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso Apt0112SouthRfDr Then MechanicMenu.AddItem(itemSRD0112)
+            If ZancudoAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso AptZancudoAve Then MechanicMenu.AddItem(itemZA)
             '1.10 update
-            'If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
+            'If MazeBankWest.Apartment.Owner = GetOwner AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 0 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
             MechanicMenu.RefreshIndex()
             AddHandler MechanicMenu.OnMenuClose, AddressOf CategoryMenuCloseHandler
         Catch ex As Exception
@@ -253,55 +248,55 @@ Public Class Mechanic
 
             ReadMenuItems()
 
-            If _3AltaStreet.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemAS3)
-            If _4IntegrityWay.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemIW4)
-            If _4IntegrityWay.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemIW4HL)
-            If DelPerroHeight.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemDPH)
-            If DelPerroHeight.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemDPHHL)
-            If DreamTower.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemDT)
-            If EclipseTower.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemET)
-            If EclipseTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETHL)
-            If RichardMajestic.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemRM)
-            If RichardMajestic.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemRMHL)
-            If TinselTower.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTT)
-            If TinselTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTTHL)
-            If WeazelPlaza.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWP)
-            If VespucciBlvd.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemVB)
-            If NorthConker2044.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemNC2044)
-            If HillcrestAve2862.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2862)
-            If HillcrestAve2868.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2868)
-            If WildOats3655.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWO3655)
-            If NorthConker2045.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemNC2045)
-            If MiltonRd2117.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMR2117)
-            If HillcrestAve2874._Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA2874)
-            If Whispymound3677.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemWD3677)
-            If MadWayne2113.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMW2113)
-            If EclipseTower.ApartmentPS1.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP1)
-            If EclipseTower.ApartmentPS2.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP2)
-            If EclipseTower.ApartmentPS3.Owner = GetPlayerName() AndAlso Not GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemETP3)
-            If BayCityAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemBCA)
-            If BlvdDelPerro.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemBDP)
-            If CougarAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemCA)
-            If HangmanAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemHA)
-            If LasLagunasBlvd0604.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemLLB0604)
-            If LasLagunasBlvd2143.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemLLB2143)
-            If MiltonRd0184.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemMR0184)
-            If PowerSt.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPower)
-            If ProcopioDr4401.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPD4401)
-            If ProcopioDr4584.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPD4584)
-            If ProsperitySt.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemProsperity)
-            If SanVitasSt.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSVS)
-            If SouthMoMiltonDr.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSMMD)
-            If SouthRockfordDrive0325.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSRD0325)
-            If SpanishAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSA)
-            If SustanciaRd.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSR)
-            If TheRoyale.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemTR)
-            If GrapeseedAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemGA)
-            If PaletoBlvd.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemPB)
-            If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemSRD0112)
-            If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then GrgTransMenu.AddItem(itemZA)
+            If _3AltaStreet.Apartment.Owner = GetOwner AndAlso Not GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt3AltaSt Then GrgTransMenu.AddItem(itemAS3)
+            If _4IntegrityWay.Apartment.Owner = GetOwner AndAlso Not GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt4IntegrityWay Then GrgTransMenu.AddItem(itemIW4)
+            If _4IntegrityWay.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso Apt4IntegrityWay Then GrgTransMenu.AddItem(itemIW4HL)
+            If DelPerroHeight.Apartment.Owner = GetOwner AndAlso Not GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptDelPerroHgt Then GrgTransMenu.AddItem(itemDPH)
+            If DelPerroHeight.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptDelPerroHgt Then GrgTransMenu.AddItem(itemDPHHL)
+            If DreamTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptDreamTwr Then GrgTransMenu.AddItem(itemDT)
+            If EclipseTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then GrgTransMenu.AddItem(itemET)
+            If EclipseTower.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then GrgTransMenu.AddItem(itemETHL)
+            If RichardMajestic.Apartment.Owner = GetOwner AndAlso Not GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptRichardMajestic Then GrgTransMenu.AddItem(itemRM)
+            If RichardMajestic.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptRichardMajestic Then GrgTransMenu.AddItem(itemRMHL)
+            If TinselTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptTinselTwr Then GrgTransMenu.AddItem(itemTT)
+            If TinselTower.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptTinselTwr Then GrgTransMenu.AddItem(itemTTHL)
+            If WeazelPlaza.Apartment.Owner = GetOwner AndAlso Not GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptWeazelPlz Then GrgTransMenu.AddItem(itemWP)
+            If VespucciBlvd.Apartment.Owner = GetOwner AndAlso Not GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptVespucciBlvd Then GrgTransMenu.AddItem(itemVB)
+            If NorthConker2044.Apartment.Owner = GetOwner AndAlso Not GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2044NorthConker Then GrgTransMenu.AddItem(itemNC2044)
+            If HillcrestAve2862.Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2862Hillcrest Then GrgTransMenu.AddItem(itemHA2862)
+            If HillcrestAve2868.Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2868Hillcrest Then GrgTransMenu.AddItem(itemHA2868)
+            If WildOats3655.Apartment.Owner = GetOwner AndAlso Not GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt3655WildOats Then GrgTransMenu.AddItem(itemWO3655)
+            If NorthConker2045.Apartment.Owner = GetOwner AndAlso Not GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2045NorthConker Then GrgTransMenu.AddItem(itemNC2045)
+            If MiltonRd2117.Apartment.Owner = GetOwner AndAlso Not GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2117MiltonRd Then GrgTransMenu.AddItem(itemMR2117)
+            If HillcrestAve2874._Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2874Hillcrest Then GrgTransMenu.AddItem(itemHA2874)
+            If Whispymound3677.Apartment.Owner = GetOwner AndAlso Not GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt3677Whispymound Then GrgTransMenu.AddItem(itemWD3677)
+            If MadWayne2113.Apartment.Owner = GetOwner AndAlso Not GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2113MadWayne Then GrgTransMenu.AddItem(itemMW2113)
+            If EclipseTower.ApartmentPS1.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then GrgTransMenu.AddItem(itemETP1)
+            If EclipseTower.ApartmentPS2.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then GrgTransMenu.AddItem(itemETP2)
+            If EclipseTower.ApartmentPS3.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then GrgTransMenu.AddItem(itemETP3)
+            If BayCityAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptBayCityAve Then GrgTransMenu.AddItem(itemBCA)
+            If BlvdDelPerro.Apartment.Owner = GetOwner AndAlso Not GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptBlvdDelPerro Then GrgTransMenu.AddItem(itemBDP)
+            If CougarAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptCougarAve Then GrgTransMenu.AddItem(itemCA)
+            If HangmanAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptHangmanAve Then GrgTransMenu.AddItem(itemHA)
+            If LasLagunasBlvd0604.Apartment.Owner = GetOwner AndAlso Not GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt0604LasLagunas Then GrgTransMenu.AddItem(itemLLB0604)
+            If LasLagunasBlvd2143.Apartment.Owner = GetOwner AndAlso Not GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2143LasLagunas Then GrgTransMenu.AddItem(itemLLB2143)
+            If MiltonRd0184.Apartment.Owner = GetOwner AndAlso Not GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt0184MiltonRd Then GrgTransMenu.AddItem(itemMR0184)
+            If PowerSt.Apartment.Owner = GetOwner AndAlso Not GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptPowerSt Then GrgTransMenu.AddItem(itemPower)
+            If ProcopioDr4401.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt4401ProcopioDr Then GrgTransMenu.AddItem(itemPD4401)
+            If ProcopioDr4584.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt4584ProcopioDr Then GrgTransMenu.AddItem(itemPD4584)
+            If ProsperitySt.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptProsperitySt Then GrgTransMenu.AddItem(itemProsperity)
+            If SanVitasSt.Apartment.Owner = GetOwner AndAlso Not GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSanVitasSt Then GrgTransMenu.AddItem(itemSVS)
+            If SouthMoMiltonDr.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSouthMoMiltonDr Then GrgTransMenu.AddItem(itemSMMD)
+            If SouthRockfordDrive0325.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt0325SouthRfDr Then GrgTransMenu.AddItem(itemSRD0325)
+            If SpanishAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSpanishAve Then GrgTransMenu.AddItem(itemSA)
+            If SustanciaRd.Apartment.Owner = GetOwner AndAlso Not GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSustanciaRd Then GrgTransMenu.AddItem(itemSR)
+            If TheRoyale.Apartment.Owner = GetOwner AndAlso Not GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptTheRoyale Then GrgTransMenu.AddItem(itemTR)
+            If GrapeseedAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptGrapeseedAve Then GrgTransMenu.AddItem(itemGA)
+            If PaletoBlvd.Apartment.Owner = GetOwner AndAlso Not GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptPaletoBlvd Then GrgTransMenu.AddItem(itemPB)
+            If SouthRockfordDr0112.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso Apt0112SouthRfDr Then GrgTransMenu.AddItem(itemSRD0112)
+            If ZancudoAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptZancudoAve Then GrgTransMenu.AddItem(itemZA)
             '1.10 update
-            'If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
+            'If MazeBankWest.Apartment.Owner = GetOwner AndAlso Not GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MechanicMenu.AddItem(itemMBW)
             GrgTransMenu.RefreshIndex()
             AddHandler GrgTransMenu.OnItemSelect, AddressOf TransVehItemSelectHandler
             AddHandler GrgTransMenu.OnMenuClose, AddressOf MenuCloseHandler
@@ -311,22 +306,26 @@ Public Class Mechanic
     End Sub
 
     Public Shared Sub VehMenuAddItem(ByRef Menu As UIMenu, ByRef Item As UIMenuItem, PathDir As String, VehicleFile As String)
-        If IO.File.Exists(PathDir & VehicleFile) Then
-            Dim Active As String = ReadCfgValue("Active", PathDir & VehicleFile)
-            Dim VehName As String = ReadCfgValue("VehicleName", PathDir & VehicleFile)
-            Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & VehicleFile)
-            Dim VehDispName As String
-            If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
-            Item = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & VehicleFile) & ")", ChooseVehDesc)
-            Menu.AddItem(Item)
-            With Item
-                .SubString1 = PathDir & VehicleFile
-                If Active = "True" Then
-                    .SetRightBadge(UIMenuItem.BadgeStyle.Car)
-                    .Enabled = False
-                End If
-            End With
-        End If
+        Try
+            If IO.File.Exists(PathDir & VehicleFile) Then
+                Dim Active As String = ReadCfgValue("Active", PathDir & VehicleFile)
+                Dim VehName As String = ReadCfgValue("VehicleName", PathDir & VehicleFile)
+                Dim VehNick As String = ReadCfgValue("VehicleNick", PathDir & VehicleFile)
+                Dim VehDispName As String
+                If VehNick = "" Then VehDispName = VehName Else VehDispName = VehNick
+                Item = New UIMenuItem(VehDispName & " (" & ReadCfgValue("PlateNumber", PathDir & VehicleFile) & ")", ChooseVehDesc)
+                Menu.AddItem(Item)
+                With Item
+                    .SubString1 = PathDir & VehicleFile
+                    If Active = "True" Then
+                        .SetRightBadge(UIMenuItem.BadgeStyle.Car)
+                        .Enabled = False
+                    End If
+                End With
+            End If
+        Catch ex As Exception
+            logger.Log(ex.Message & " " & ex.StackTrace)
+        End Try
     End Sub
 
     Public Shared Sub CreateVehMenuApartments(MenuCategory As UIMenu, MenuItem As UIMenuItem, PathDir As String)
@@ -361,59 +360,59 @@ Public Class Mechanic
             'AddHandler MenuCategory.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
             'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryInGarageMenuCloseHandler
         Catch ex As Exception
-            If Not ex.StackTrace.Contains("ContainsKey") Then
+            If Not ex.StackTrace.Contains("System.Collections.Generic.Dictionary`2.FindEntry(TKey key)") Then
                 logger.Log(ex.Message & " " & ex.StackTrace)
             End If
         End Try
     End Sub
 
-    Public Shared Sub CreateVehMenuApartments20(MenuCategory As UIMenu, MenuItem As UIMenuItem, PathDir As String)
-        Try
-            MenuCategory = New UIMenu("", ChooseVeh, New Point(0, -107))
-            Dim Rectangle = New UIResRectangle()
-            Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
-            MenuCategory.SetBannerType(Rectangle)
-            _menuPool.Add(MenuCategory)
-            MenuCategory.MenuItems.Clear()
-            Dim item(20) As UIMenuItem
+    'Public Shared Sub CreateVehMenuApartments20(MenuCategory As UIMenu, MenuItem As UIMenuItem, PathDir As String)
+    '    Try
+    '        MenuCategory = New UIMenu("", ChooseVeh, New Point(0, -107))
+    '        Dim Rectangle = New UIResRectangle()
+    '        Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
+    '        MenuCategory.SetBannerType(Rectangle)
+    '        _menuPool.Add(MenuCategory)
+    '        MenuCategory.MenuItems.Clear()
+    '        Dim item(20) As UIMenuItem
 
-            VehMenuAddItem(MenuCategory, item(0), PathDir, "vehicle_0.cfg")
-            VehMenuAddItem(MenuCategory, item(1), PathDir, "vehicle_1.cfg")
-            VehMenuAddItem(MenuCategory, item(2), PathDir, "vehicle_2.cfg")
-            VehMenuAddItem(MenuCategory, item(3), PathDir, "vehicle_3.cfg")
-            VehMenuAddItem(MenuCategory, item(4), PathDir, "vehicle_4.cfg")
-            VehMenuAddItem(MenuCategory, item(5), PathDir, "vehicle_5.cfg")
-            VehMenuAddItem(MenuCategory, item(6), PathDir, "vehicle_6.cfg")
-            VehMenuAddItem(MenuCategory, item(7), PathDir, "vehicle_7.cfg")
-            VehMenuAddItem(MenuCategory, item(8), PathDir, "vehicle_8.cfg")
-            VehMenuAddItem(MenuCategory, item(9), PathDir, "vehicle_9.cfg")
-            VehMenuAddItem(MenuCategory, item(10), PathDir, "vehicle_10.cfg")
-            VehMenuAddItem(MenuCategory, item(11), PathDir, "vehicle_11.cfg")
-            VehMenuAddItem(MenuCategory, item(12), PathDir, "vehicle_12.cfg")
-            VehMenuAddItem(MenuCategory, item(13), PathDir, "vehicle_13.cfg")
-            VehMenuAddItem(MenuCategory, item(14), PathDir, "vehicle_14.cfg")
-            VehMenuAddItem(MenuCategory, item(15), PathDir, "vehicle_15.cfg")
-            VehMenuAddItem(MenuCategory, item(16), PathDir, "vehicle_16.cfg")
-            VehMenuAddItem(MenuCategory, item(17), PathDir, "vehicle_17.cfg")
-            VehMenuAddItem(MenuCategory, item(18), PathDir, "vehicle_18.cfg")
-            VehMenuAddItem(MenuCategory, item(19), PathDir, "vehicle_19.cfg")
+    '        VehMenuAddItem(MenuCategory, item(0), PathDir, "vehicle_0.cfg")
+    '        VehMenuAddItem(MenuCategory, item(1), PathDir, "vehicle_1.cfg")
+    '        VehMenuAddItem(MenuCategory, item(2), PathDir, "vehicle_2.cfg")
+    '        VehMenuAddItem(MenuCategory, item(3), PathDir, "vehicle_3.cfg")
+    '        VehMenuAddItem(MenuCategory, item(4), PathDir, "vehicle_4.cfg")
+    '        VehMenuAddItem(MenuCategory, item(5), PathDir, "vehicle_5.cfg")
+    '        VehMenuAddItem(MenuCategory, item(6), PathDir, "vehicle_6.cfg")
+    '        VehMenuAddItem(MenuCategory, item(7), PathDir, "vehicle_7.cfg")
+    '        VehMenuAddItem(MenuCategory, item(8), PathDir, "vehicle_8.cfg")
+    '        VehMenuAddItem(MenuCategory, item(9), PathDir, "vehicle_9.cfg")
+    '        VehMenuAddItem(MenuCategory, item(10), PathDir, "vehicle_10.cfg")
+    '        VehMenuAddItem(MenuCategory, item(11), PathDir, "vehicle_11.cfg")
+    '        VehMenuAddItem(MenuCategory, item(12), PathDir, "vehicle_12.cfg")
+    '        VehMenuAddItem(MenuCategory, item(13), PathDir, "vehicle_13.cfg")
+    '        VehMenuAddItem(MenuCategory, item(14), PathDir, "vehicle_14.cfg")
+    '        VehMenuAddItem(MenuCategory, item(15), PathDir, "vehicle_15.cfg")
+    '        VehMenuAddItem(MenuCategory, item(16), PathDir, "vehicle_16.cfg")
+    '        VehMenuAddItem(MenuCategory, item(17), PathDir, "vehicle_17.cfg")
+    '        VehMenuAddItem(MenuCategory, item(18), PathDir, "vehicle_18.cfg")
+    '        VehMenuAddItem(MenuCategory, item(19), PathDir, "vehicle_19.cfg")
 
-            Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
-            MenuCategory.AddItem(ReturnVehItem)
-            With ReturnVehItem
-                .SubString1 = PathDir
-            End With
-            MenuCategory.RefreshIndex()
-            MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
-            AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
-            'AddHandler MenuCategory.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
-            'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryInGarageMenuCloseHandler
-        Catch ex As Exception
-            If Not ex.StackTrace.Contains("ContainsKey") Then
-                logger.Log(ex.Message & " " & ex.StackTrace)
-            End If
-        End Try
-    End Sub
+    '        Dim ReturnVehItem As New UIMenuItem(ReturnVeh)
+    '        MenuCategory.AddItem(ReturnVehItem)
+    '        With ReturnVehItem
+    '            .SubString1 = PathDir
+    '        End With
+    '        MenuCategory.RefreshIndex()
+    '        MechanicMenu.BindMenuToItem(MenuCategory, MenuItem)
+    '        AddHandler MenuCategory.OnItemSelect, AddressOf CategoryItemSelectHandler
+    '        'AddHandler MenuCategory.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
+    '        'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryInGarageMenuCloseHandler
+    '    Catch ex As Exception
+    '        If Not ex.StackTrace.Contains("ContainsKey") Then
+    '            logger.Log(ex.Message & " " & ex.StackTrace)
+    '        End If
+    '    End Try
+    'End Sub
 
     Public Shared Sub CreateVehMenuApartments6(MenuCategory As UIMenu, MenuItem As UIMenuItem, PathDir As String)
         Try
@@ -443,7 +442,7 @@ Public Class Mechanic
             'AddHandler MenuCategory.OnIndexChange, AddressOf GrgMoveIndexChangeHandler
             'AddHandler MenuCategory.OnMenuClose, AddressOf CategoryInGarageMenuCloseHandler
         Catch ex As Exception
-            If Not ex.StackTrace.Contains("ContainsKey") Then
+            If Not ex.StackTrace.Contains("System.Collections.Generic.Dictionary`2.FindEntry(TKey key)") Then
                 logger.Log(ex.Message & " " & ex.StackTrace)
             End If
         End Try
@@ -490,14 +489,14 @@ Public Class Mechanic
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(7), file, "vehicle_7.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(8), file, "vehicle_8.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(9), file, "vehicle_9.cfg")
-            ElseIf SelectedGarage = "Six"
+            ElseIf SelectedGarage = "Six" Then
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(0), file, "vehicle_0.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(1), file, "vehicle_1.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(2), file, "vehicle_2.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(3), file, "vehicle_3.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(4), file, "vehicle_4.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(5), file, "vehicle_5.cfg")
-            ElseIf SelectedGarage = "Twenty"
+            ElseIf SelectedGarage = "Twenty" Then
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(0), file, "vehicle_0.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(1), file, "vehicle_1.cfg")
                 MoveMenuAddItem(GrgMoveMenu, GrgMoveMenuItem(2), file, "vehicle_2.cfg")
@@ -555,7 +554,7 @@ Public Class Mechanic
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(8))
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(9))
                 SelectedGarage = "Ten"
-            ElseIf SixOrTen = "Twenty"
+            ElseIf SixOrTen = "Twenty" Then
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(0))
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(1))
                 GarageMenu.BindMenuToItem(GarageMenu2, GarageMenuItem(2))
@@ -728,19 +727,19 @@ Public Class Mechanic
                 Call_Mechanic()
             Case _Pegasus
                 Call_Pegasus(True)
-            Case Website.BennysOriginal
+            Case BennysOriginal
                 Website.Call_Benny()
-            Case Website.DockTease
+            Case DockTease
                 Website.Call_DockTease()
-            Case Website.ElitasTravel
+            Case ElitasTravel
                 Website.Call_ElitasTravel()
-            Case Website.LegendaryMotorsport
+            Case LegendaryMotorsport
                 Website.Call_Legendary()
-            Case Website.PedalToMetal
+            Case PedalToMetal
                 Website.Call_PedalToMetal()
-            Case Website.SouthernSA
+            Case SouthernSA
                 Website.Call_SouthernSA()
-            Case Website.WarstockCache
+            Case WarstockCache
                 Website.Call_Warstock()
         End Select
         sender.Visible = False
@@ -1014,7 +1013,7 @@ Public Class Mechanic
                     MPV10.CurrentBlip.Sprite = BlipSprite.Boat
                 ElseIf MPV10.ClassType = VehicleClass.Helicopters Then
                     MPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf MPV10.ClassType = VehicleClass.Utility
+                ElseIf MPV10.ClassType = VehicleClass.Utility Then
                     MPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                 ElseIf MPV10.ClassType = VehicleClass.Planes Then
                     MPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1058,7 +1057,7 @@ Public Class Mechanic
                     FPV10.CurrentBlip.Sprite = BlipSprite.Boat
                 ElseIf FPV10.ClassType = VehicleClass.Helicopters Then
                     FPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf FPV10.ClassType = VehicleClass.Utility
+                ElseIf FPV10.ClassType = VehicleClass.Utility Then
                     FPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                 ElseIf FPV10.ClassType = VehicleClass.Planes Then
                     FPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1102,7 +1101,7 @@ Public Class Mechanic
                     TPV10.CurrentBlip.Sprite = BlipSprite.Boat
                 ElseIf TPV10.ClassType = VehicleClass.Helicopters Then
                     TPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf TPV10.ClassType = VehicleClass.Utility
+                ElseIf TPV10.ClassType = VehicleClass.Utility Then
                     TPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                 ElseIf TPV10.ClassType = VehicleClass.Planes Then
                     TPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1146,7 +1145,7 @@ Public Class Mechanic
                     PPV10.CurrentBlip.Sprite = BlipSprite.Boat
                 ElseIf PPV10.ClassType = VehicleClass.Helicopters Then
                     PPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                ElseIf PPV10.ClassType = VehicleClass.Utility
+                ElseIf PPV10.ClassType = VehicleClass.Utility Then
                     PPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                 ElseIf PPV10.ClassType = VehicleClass.Planes Then
                     PPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1219,7 +1218,7 @@ Public Class Mechanic
                         Wait(500)
                         Game.FadeScreenIn(500)
                         TenCarGarage.ShowAllHiddenMapObject()
-                        UnLoadMPDLCMap()
+
                     End If
                 ElseIf SelectedGarage = "Six" Then
                     If IO.File.Exists(Path & GarageMenuSelectedFile) Then
@@ -1237,7 +1236,7 @@ Public Class Mechanic
                         sender.Visible = False
                         Wait(500)
                         Game.FadeScreenIn(500)
-                        UnLoadMPDLCMap()
+
                     End If
                     'ElseIf SelectedGarage = "Twenty" Then
                     '    If IO.File.Exists(Path & GarageMenuSelectedFile) Then
@@ -1255,7 +1254,7 @@ Public Class Mechanic
                     '        sender.Visible = False
                     '        Wait(500)
                     '        Game.FadeScreenIn(500)
-                    '        UnLoadMPDLCMap()
+                    '        
                     '    End If
                 End If
             ElseIf selectedItem.Text = GrgSell Then
@@ -1596,7 +1595,8 @@ Public Class Mechanic
                 If Not TPV0 = Nothing Then TPVD = World.GetDistance(playerPed.Position, TPV0.Position)
                 If Not PPV0 = Nothing Then PPVD = World.GetDistance(playerPed.Position, PPV0.Position)
 
-                If (Native.Function.Call(Of Boolean)(Native.Hash._GET_LAST_INPUT_METHOD, 2) = False AndAlso Game.IsControlPressed(2, My.Settings.MechanicPad) AndAlso Game.IsControlPressed(2, My.Settings.SecondMechanicPad)) AndAlso (Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen()) Then
+                If (Native.Function.Call(Of Boolean)(Native.Hash._GET_LAST_INPUT_METHOD, 2) = False AndAlso Game.IsControlPressed(2, MechanicJoyP) AndAlso Game.IsControlPressed(2, MechanicJoyS)) AndAlso (Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen()) Then
+                    PhoneMenu.Subtitle.Caption = _Phone
                     PhoneMenu.Visible = Not PhoneMenu.Visible
                 End If
 
@@ -1727,7 +1727,7 @@ Public Class Mechanic
                             MPV10.CurrentBlip.Sprite = BlipSprite.Boat
                         ElseIf MPV10.ClassType = VehicleClass.Helicopters Then
                             MPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                        ElseIf MPV10.ClassType = VehicleClass.Utility
+                        ElseIf MPV10.ClassType = VehicleClass.Utility Then
                             MPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                         ElseIf MPV10.ClassType = VehicleClass.Planes Then
                             MPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1744,7 +1744,7 @@ Public Class Mechanic
                             FPV10.CurrentBlip.Sprite = BlipSprite.Boat
                         ElseIf FPV10.ClassType = VehicleClass.Helicopters Then
                             FPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                        ElseIf FPV10.ClassType = VehicleClass.Utility
+                        ElseIf FPV10.ClassType = VehicleClass.Utility Then
                             FPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                         ElseIf FPV10.ClassType = VehicleClass.Planes Then
                             FPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1761,7 +1761,7 @@ Public Class Mechanic
                             TPV10.CurrentBlip.Sprite = BlipSprite.Boat
                         ElseIf TPV10.ClassType = VehicleClass.Helicopters Then
                             TPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                        ElseIf TPV10.ClassType = VehicleClass.Utility
+                        ElseIf TPV10.ClassType = VehicleClass.Utility Then
                             TPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                         ElseIf TPV10.ClassType = VehicleClass.Planes Then
                             TPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1778,7 +1778,7 @@ Public Class Mechanic
                             PPV10.CurrentBlip.Sprite = BlipSprite.Boat
                         ElseIf PPV10.ClassType = VehicleClass.Helicopters Then
                             PPV10.CurrentBlip.Sprite = BlipSprite.Helicopter
-                        ElseIf PPV10.ClassType = VehicleClass.Utility
+                        ElseIf PPV10.ClassType = VehicleClass.Utility Then
                             PPV10.CurrentBlip.Sprite = BlipSprite.ArmoredTruck
                         ElseIf PPV10.ClassType = VehicleClass.Planes Then
                             PPV10.CurrentBlip.Sprite = BlipSprite.Plane
@@ -1855,7 +1855,7 @@ Public Class Mechanic
                     UI.Notify(MechanicBill)
                 End If
 
-                If Not MechanicPed = Nothing AndAlso My.Settings.VehicleSpawn = 1 Then
+                If Not MechanicPed = Nothing AndAlso MechanicSpawn = 1 Then
                     Dim veh As Vehicle = MechanicPed.LastVehicle
                     If MechanicPed.IsInVehicle AndAlso MechanicPed.Position.DistanceTo(playerPed.Position) < 5.0 Then
                         MechanicPed.Task.LeaveVehicle()
@@ -1970,59 +1970,59 @@ Public Class Mechanic
     End Sub
 
     Public Shared Sub ReadMenuItems()
-        itemAS3 = New UIMenuItem(_3AltaStreet.Apartment.Name & _3AltaStreet.Apartment.Unit)
-        itemIW4 = New UIMenuItem(_4IntegrityWay.Apartment.Name & _4IntegrityWay.Apartment.Unit)
-        itemIW4HL = New UIMenuItem(_4IntegrityWay.ApartmentHL.Name & _4IntegrityWay.ApartmentHL.Unit)
-        itemDPH = New UIMenuItem(DelPerroHeight.Apartment.Name & DelPerroHeight.Apartment.Unit)
-        itemDPHHL = New UIMenuItem(DelPerroHeight.ApartmentHL.Name & DelPerroHeight.ApartmentHL.Unit)
-        itemDT = New UIMenuItem(DreamTower.Apartment.Name & DreamTower.Apartment.Unit)
-        itemET = New UIMenuItem(EclipseTower.Apartment.Name & EclipseTower.Apartment.Unit)
-        itemETHL = New UIMenuItem(EclipseTower.ApartmentHL.Name & EclipseTower.ApartmentHL.Unit)
-        itemRM = New UIMenuItem(RichardMajestic.Apartment.Name & RichardMajestic.Apartment.Unit)
-        itemRMHL = New UIMenuItem(RichardMajestic.ApartmentHL.Name & RichardMajestic.ApartmentHL.Unit)
-        itemTT = New UIMenuItem(TinselTower.Apartment.Name & TinselTower.Apartment.Unit)
-        itemTTHL = New UIMenuItem(TinselTower.ApartmentHL.Name & TinselTower.ApartmentHL.Unit)
-        itemWP = New UIMenuItem(WeazelPlaza.Apartment.Name & WeazelPlaza.Apartment.Unit)
-        itemVB = New UIMenuItem(VespucciBlvd.Apartment.Name & VespucciBlvd.Apartment.Unit)
-        itemNC2044 = New UIMenuItem(NorthConker2044.Apartment.Name & NorthConker2044.Apartment.Unit)
-        itemHA2862 = New UIMenuItem(HillcrestAve2862.Apartment.Name & HillcrestAve2862.Apartment.Unit)
-        itemHA2868 = New UIMenuItem(HillcrestAve2868.Apartment.Name & HillcrestAve2868.Apartment.Unit)
-        itemWO3655 = New UIMenuItem(WildOats3655.Apartment.Name & WildOats3655.Apartment.Unit)
-        itemNC2045 = New UIMenuItem(NorthConker2045.Apartment.Name & NorthConker2045.Apartment.Unit)
-        itemMR2117 = New UIMenuItem(MiltonRd2117.Apartment.Name & MiltonRd2117.Apartment.Unit)
-        itemHA2874 = New UIMenuItem(HillcrestAve2874._Apartment.Name & HillcrestAve2874._Apartment.Unit)
-        itemWD3677 = New UIMenuItem(Whispymound3677.Apartment.Name & Whispymound3677.Apartment.Unit)
-        itemMW2113 = New UIMenuItem(MadWayne2113.Apartment.Name & MadWayne2113.Apartment.Unit)
-        itemETP1 = New UIMenuItem(EclipseTower.ApartmentPS1.Name & EclipseTower.ApartmentPS1.Unit)
-        itemETP2 = New UIMenuItem(EclipseTower.ApartmentPS2.Name & EclipseTower.ApartmentPS2.Unit)
-        itemETP3 = New UIMenuItem(EclipseTower.ApartmentPS3.Name & EclipseTower.ApartmentPS3.Unit)
-        itemBCA = New UIMenuItem(BayCityAve.Apartment.Name & BayCityAve.Apartment.Unit)
-        itemBDP = New UIMenuItem(BlvdDelPerro.Apartment.Name & BlvdDelPerro.Apartment.Unit)
-        itemCA = New UIMenuItem(CougarAve.Apartment.Name & CougarAve.Apartment.Unit)
-        itemHA = New UIMenuItem(HangmanAve.Apartment.Name & HangmanAve.Apartment.Unit)
-        itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604.Apartment.Name & LasLagunasBlvd0604.Apartment.Unit)
-        itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143.Apartment.Name & LasLagunasBlvd2143.Apartment.Unit)
-        itemMR0184 = New UIMenuItem(MiltonRd0184.Apartment.Name & MiltonRd0184.Apartment.Unit)
-        itemPower = New UIMenuItem(PowerSt.Apartment.Name & PowerSt.Apartment.Unit)
-        itemPD4401 = New UIMenuItem(ProcopioDr4401.Apartment.Name & ProcopioDr4401.Apartment.Unit)
-        itemPD4584 = New UIMenuItem(ProcopioDr4584.Apartment.Name & ProcopioDr4584.Apartment.Unit)
-        itemProsperity = New UIMenuItem(ProsperitySt.Apartment.Name & ProsperitySt.Apartment.Unit)
-        itemSVS = New UIMenuItem(SanVitasSt.Apartment.Name & SanVitasSt.Apartment.Unit)
-        itemSMMD = New UIMenuItem(SouthMoMiltonDr.Apartment.Name & SouthMoMiltonDr.Apartment.Unit)
-        itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325.Apartment.Name & SouthRockfordDrive0325.Apartment.Unit)
-        itemSA = New UIMenuItem(SpanishAve.Apartment.Name & SpanishAve.Apartment.Unit)
-        itemSR = New UIMenuItem(SustanciaRd.Apartment.Name & SustanciaRd.Apartment.Unit)
-        itemTR = New UIMenuItem(TheRoyale.Apartment.Name & TheRoyale.Apartment.Unit)
-        itemGA = New UIMenuItem(GrapeseedAve.Apartment.Name & GrapeseedAve.Apartment.Unit)
-        itemPB = New UIMenuItem(PaletoBlvd.Apartment.Name & PaletoBlvd.Apartment.Unit)
-        itemSRD0112 = New UIMenuItem(SouthRockfordDr0112.Apartment.Name & SouthRockfordDr0112.Apartment.Unit)
-        itemZA = New UIMenuItem(ZancudoAve.Apartment.Name & ZancudoAve.Apartment.Unit)
+        itemAS3 = New UIMenuItem(_3AltaStreet.Apartment.Name)
+        itemIW4 = New UIMenuItem(_4IntegrityWay.Apartment.Name)
+        itemIW4HL = New UIMenuItem(_4IntegrityWay.ApartmentHL.Name)
+        itemDPH = New UIMenuItem(DelPerroHeight.Apartment.Name)
+        itemDPHHL = New UIMenuItem(DelPerroHeight.ApartmentHL.Name)
+        itemDT = New UIMenuItem(DreamTower.Apartment.Name)
+        itemET = New UIMenuItem(EclipseTower.Apartment.Name)
+        itemETHL = New UIMenuItem(EclipseTower.ApartmentHL.Name)
+        itemRM = New UIMenuItem(RichardMajestic.Apartment.Name)
+        itemRMHL = New UIMenuItem(RichardMajestic.ApartmentHL.Name)
+        itemTT = New UIMenuItem(TinselTower.Apartment.Name)
+        itemTTHL = New UIMenuItem(TinselTower.ApartmentHL.Name)
+        itemWP = New UIMenuItem(WeazelPlaza.Apartment.Name)
+        itemVB = New UIMenuItem(VespucciBlvd.Apartment.Name)
+        itemNC2044 = New UIMenuItem(NorthConker2044.Apartment.Name)
+        itemHA2862 = New UIMenuItem(HillcrestAve2862.Apartment.Name)
+        itemHA2868 = New UIMenuItem(HillcrestAve2868.Apartment.Name)
+        itemWO3655 = New UIMenuItem(WildOats3655.Apartment.Name)
+        itemNC2045 = New UIMenuItem(NorthConker2045.Apartment.Name)
+        itemMR2117 = New UIMenuItem(MiltonRd2117.Apartment.Name)
+        itemHA2874 = New UIMenuItem(HillcrestAve2874._Apartment.Name)
+        itemWD3677 = New UIMenuItem(Whispymound3677.Apartment.Name)
+        itemMW2113 = New UIMenuItem(MadWayne2113.Apartment.Name)
+        itemETP1 = New UIMenuItem(EclipseTower.ApartmentPS1.Name)
+        itemETP2 = New UIMenuItem(EclipseTower.ApartmentPS2.Name)
+        itemETP3 = New UIMenuItem(EclipseTower.ApartmentPS3.Name)
+        itemBCA = New UIMenuItem(BayCityAve.Apartment.Name)
+        itemBDP = New UIMenuItem(BlvdDelPerro.Apartment.Name)
+        itemCA = New UIMenuItem(CougarAve.Apartment.Name)
+        itemHA = New UIMenuItem(HangmanAve.Apartment.Name)
+        itemLLB0604 = New UIMenuItem(LasLagunasBlvd0604.Apartment.Name)
+        itemLLB2143 = New UIMenuItem(LasLagunasBlvd2143.Apartment.Name)
+        itemMR0184 = New UIMenuItem(MiltonRd0184.Apartment.Name)
+        itemPower = New UIMenuItem(PowerSt.Apartment.Name)
+        itemPD4401 = New UIMenuItem(ProcopioDr4401.Apartment.Name)
+        itemPD4584 = New UIMenuItem(ProcopioDr4584.Apartment.Name)
+        itemProsperity = New UIMenuItem(ProsperitySt.Apartment.Name)
+        itemSVS = New UIMenuItem(SanVitasSt.Apartment.Name)
+        itemSMMD = New UIMenuItem(SouthMoMiltonDr.Apartment.Name)
+        itemSRD0325 = New UIMenuItem(SouthRockfordDrive0325.Apartment.Name)
+        itemSA = New UIMenuItem(SpanishAve.Apartment.Name)
+        itemSR = New UIMenuItem(SustanciaRd.Apartment.Name)
+        itemTR = New UIMenuItem(TheRoyale.Apartment.Name)
+        itemGA = New UIMenuItem(GrapeseedAve.Apartment.Name)
+        itemPB = New UIMenuItem(PaletoBlvd.Apartment.Name)
+        itemSRD0112 = New UIMenuItem(SouthRockfordDr0112.Apartment.Name)
+        itemZA = New UIMenuItem(ZancudoAve.Apartment.Name)
         '1.10 update
         'itemMBW = New UIMenuItem(MazeBankWest.Apartment.Name & MazeBankWest.Apartment.Unit)
     End Sub
 
     Public Shared Sub CreateMechanicInVehicle(Vehicle As Vehicle)
-        If My.Settings.VehicleSpawn = 1 Then
+        If MechanicSpawn = 1 Then
             MechanicPed = Vehicle.CreatePedOnSeat(VehicleSeat.Driver, PedHash.Autoshop01SMM)
             DriveTo(MechanicPed, Vehicle, playerPed.Position, 20.0, 15.0, DrivingStyle.Normal)
             MechanicPed.DrivingStyle = DrivingStyle.Normal
@@ -2482,13 +2482,10 @@ Public Class Mechanic
     End Sub
 
     Public Sub OnKeyDown(o As Object, e As KeyEventArgs) Handles Me.KeyDown
-        If e.KeyCode = My.Settings.Mechanic AndAlso Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen() Then
+        If e.KeyCode = MechanicKey AndAlso Not _menuPool.IsAnyMenuOpen() AndAlso Not Website._menuPool.IsAnyMenuOpen() Then
+            PhoneMenu.Subtitle.Caption = _Phone
             PhoneMenu.Visible = Not PhoneMenu.Visible
         End If
-
-        'If e.KeyCode = Keys.Y Then
-        '    logger.PinPoint(Game.Player.Character.Position)
-        'End If
     End Sub
 
     Public Sub OnAborted() Handles MyBase.Aborted

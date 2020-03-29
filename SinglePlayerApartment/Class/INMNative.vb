@@ -8,8 +8,8 @@ Namespace INMNative
 
     Public Class Apartment
 
-        Private _cost, _interiorID, _radio As Integer
-        Private _owner, _name, _desc, _unit, _grgpath, _savefile, _playermap, _ipl, _lastipl As String
+        Private _cost, _interiorID, _radio As Integer, _owner As Owner
+        Private _name, _desc, _grgpath, _playermap, _ipl, _lastipl As String
         Private _aptblip, _grgblip As Blip
         Private _entrance, _save, _telin, _telout, _telheli, _exit, _wardrobe, _garageent, _grgout, _camerapos, _camerarot, _interior, _ascamerapos, _ascamerarot, _assistantpos As Vector3
         Private _grgoutheading, _camerafov, _wardrobeheading, _ascamerafov, _assistantheading As Single
@@ -27,19 +27,18 @@ Namespace INMNative
         Private _garageWallText1, _garageLightText1, _garageNumText1, _garageWallText2, _garageLightText2, _garageNumText2, _garageWallText3, _garageLightText3, _garageNumText3 As String
         Private _1fCamPos, _2fCamPos, _3fCamPos, _1fCamRot, _2fCamRot, _3fCamRot As Vector3
 
-        Public Sub New(Name As String, Unit As String, Cost As Integer, Optional Description As String = "")
+        Public Sub New(Name As String, Cost As Integer, Optional Description As String = "")
             _name = Name
-            _unit = Unit
             _cost = Cost
             _desc = Description
             _enabled = True
         End Sub
 
-        Public Property Owner() As String
+        Public Property Owner() As Owner
             Get
                 Return _owner
             End Get
-            Set(value As String)
+            Set(value As Owner)
                 _owner = value
             End Set
         End Property
@@ -50,15 +49,6 @@ Namespace INMNative
             End Get
             Set(value As String)
                 _name = value
-            End Set
-        End Property
-
-        Public Property Unit() As String
-            Get
-                Return _unit
-            End Get
-            Set(value As String)
-                _unit = value
             End Set
         End Property
 
@@ -318,15 +308,6 @@ Namespace INMNative
             End Get
             Set(value As Interior)
                 _interiorV2 = value
-            End Set
-        End Property
-
-        Public Property SaveFile() As String
-            Get
-                Return _savefile
-            End Get
-            Set(value As String)
-                _savefile = value
             End Set
         End Property
 
@@ -1106,7 +1087,7 @@ Namespace INMNative
         Public Sub Create(Apartment1 As Apartment, Optional Apartment2 As Apartment = Nothing)
             If Apartment2 Is Nothing Then
                 Apartment1.AptBlip = World.CreateBlip(Apartment1.Entrance)
-                If Apartment1.Owner = "Michael" Then
+                If Apartment1.Owner = Owner.Michael Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Michael
                     Apartment1.AptBlip.IsShortRange = True
@@ -1115,8 +1096,8 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Michael
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-                ElseIf Apartment1.Owner = "Franklin" Then
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+                ElseIf Apartment1.Owner = Owner.Franklin Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Franklin
                     Apartment1.AptBlip.IsShortRange = True
@@ -1125,8 +1106,8 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Franklin
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-                ElseIf Apartment1.Owner = "Trevor" Then
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+                ElseIf Apartment1.Owner = Owner.Trevor Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Trevor
                     Apartment1.AptBlip.IsShortRange = True
@@ -1135,8 +1116,8 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Trevor
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-                ElseIf Apartment1.Owner = "Player3" Then
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+                ElseIf Apartment1.Owner = Owner.Player3 Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Yellow
                     Apartment1.AptBlip.IsShortRange = True
@@ -1145,16 +1126,16 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Yellow
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
                 Else
                     Apartment1.AptBlip.Sprite = BlipSprite.SafehouseForSale
                     Apartment1.AptBlip.Color = INMBlipColor.White
                     Apartment1.AptBlip.IsShortRange = True
-                    Apartment1.AptBlip.Name = SinglePlayerApartment.ForSale
+                    Apartment1.AptBlip.Name = ForSale
                 End If
             Else
                 Apartment1.AptBlip = World.CreateBlip(Apartment1.Entrance)
-                If Apartment1.Owner = "Michael" AndAlso Apartment2.Owner = "Michael" Then
+                If Apartment1.Owner = Owner.Michael AndAlso Apartment2.Owner = Owner.Michael Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Michael
                     Apartment1.AptBlip.IsShortRange = True
@@ -1163,8 +1144,8 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Michael
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-                ElseIf Apartment1.Owner = "Franklin" AndAlso Apartment2.Owner = "Franklin" Then
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+                ElseIf Apartment1.Owner = Owner.Franklin AndAlso Apartment2.Owner = Owner.Franklin Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Franklin
                     Apartment1.AptBlip.IsShortRange = True
@@ -1173,8 +1154,8 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Franklin
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-                ElseIf Apartment1.Owner = "Trevor" AndAlso Apartment2.Owner = "Trevor" Then
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+                ElseIf Apartment1.Owner = Owner.Trevor AndAlso Apartment2.Owner = Owner.Trevor Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Trevor
                     Apartment1.AptBlip.IsShortRange = True
@@ -1183,8 +1164,8 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Trevor
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-                ElseIf Apartment1.Owner = "Player3" AndAlso Apartment2.Owner = "Player3" Then
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+                ElseIf Apartment1.Owner = Owner.Player3 AndAlso Apartment2.Owner = Owner.Player3 Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.Yellow
                     Apartment1.AptBlip.IsShortRange = True
@@ -1193,7 +1174,7 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.Yellow
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
                 ElseIf Apartment1.Owner <> Apartment2.Owner Then
                     Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                     Apartment1.AptBlip.Color = INMBlipColor.White
@@ -1203,19 +1184,19 @@ Namespace INMNative
                     Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                     Apartment1.GrgBlip.Color = INMBlipColor.White
                     Apartment1.GrgBlip.IsShortRange = True
-                    Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
+                    Apartment1.GrgBlip.Name = Apartment1.Name & Garage
                 Else
                     Apartment1.AptBlip.Sprite = BlipSprite.SafehouseForSale
                     Apartment1.AptBlip.Color = INMBlipColor.White
                     Apartment1.AptBlip.IsShortRange = True
-                    Apartment1.AptBlip.Name = SinglePlayerApartment.ForSale
+                    Apartment1.AptBlip.Name = ForSale
                 End If
             End If
         End Sub
 
         Public Sub CreateStilt(Apartment1 As Apartment)
             Apartment1.AptBlip = World.CreateBlip(Apartment1.Entrance)
-            If Apartment1.Owner = "Michael" Then
+            If Apartment1.Owner = Owner.Michael Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Michael
                 Apartment1.AptBlip.IsShortRange = True
@@ -1224,8 +1205,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Michael
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Franklin" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Franklin Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Franklin
                 Apartment1.AptBlip.IsShortRange = True
@@ -1234,8 +1215,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Franklin
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Trevor" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Trevor Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Trevor
                 Apartment1.AptBlip.IsShortRange = True
@@ -1244,8 +1225,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Trevor
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Player3" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Player3 Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Yellow
                 Apartment1.AptBlip.IsShortRange = True
@@ -1254,18 +1235,18 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Yellow
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
             Else
                 Apartment1.AptBlip.Sprite = BlipSprite.SafehouseForSale
                 Apartment1.AptBlip.Color = INMBlipColor.White
                 Apartment1.AptBlip.IsShortRange = True
-                Apartment1.AptBlip.Name = SinglePlayerApartment.ForSale
+                Apartment1.AptBlip.Name = ForSale
             End If
         End Sub
 
         Public Sub CreateOffice(Apartment1 As Apartment)
             Apartment1.AptBlip = World.CreateBlip(Apartment1.Entrance)
-            If Apartment1.Owner = "Michael" Then
+            If Apartment1.Owner = Owner.Michael Then
                 Apartment1.AptBlip.Sprite = BlipSprite2.Office
                 Apartment1.AptBlip.Color = INMBlipColor.Michael
                 Apartment1.AptBlip.IsShortRange = True
@@ -1274,8 +1255,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Michael
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Franklin" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Franklin Then
                 Apartment1.AptBlip.Sprite = BlipSprite2.Office
                 Apartment1.AptBlip.Color = INMBlipColor.Franklin
                 Apartment1.AptBlip.IsShortRange = True
@@ -1284,8 +1265,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Franklin
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Trevor" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Trevor Then
                 Apartment1.AptBlip.Sprite = BlipSprite2.Office
                 Apartment1.AptBlip.Color = INMBlipColor.Trevor
                 Apartment1.AptBlip.IsShortRange = True
@@ -1294,8 +1275,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Trevor
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Player3" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Player3 Then
                 Apartment1.AptBlip.Sprite = BlipSprite2.Office
                 Apartment1.AptBlip.Color = INMBlipColor.Yellow
                 Apartment1.AptBlip.IsShortRange = True
@@ -1304,18 +1285,18 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Yellow
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & Apartment1.Unit & SinglePlayerApartment.Garage
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
             Else
                 Apartment1.AptBlip.Sprite = BlipSprite2.OfficeForSale
                 Apartment1.AptBlip.Color = INMBlipColor.White
                 Apartment1.AptBlip.IsShortRange = True
-                Apartment1.AptBlip.Name = SinglePlayerApartment.ForSale
+                Apartment1.AptBlip.Name = ForSale
             End If
         End Sub
 
         Public Sub Create5(Apartment1 As Apartment, Apartment2 As Apartment, Apartment3 As Apartment, Apartment4 As Apartment, Apartment5 As Apartment)
             Apartment1.AptBlip = World.CreateBlip(Apartment1.Entrance)
-            If Apartment1.Owner = "Michael" AndAlso Apartment2.Owner = "Michael" AndAlso Apartment3.Owner = "Michael" AndAlso Apartment4.Owner = "Michael" AndAlso Apartment5.Owner = "Michael" Then
+            If Apartment1.Owner = Owner.Michael AndAlso Apartment2.Owner = Owner.Michael AndAlso Apartment3.Owner = Owner.Michael AndAlso Apartment4.Owner = Owner.Michael AndAlso Apartment5.Owner = Owner.Michael Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Michael
                 Apartment1.AptBlip.IsShortRange = True
@@ -1324,8 +1305,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Michael
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Franklin" AndAlso Apartment2.Owner = "Franklin" AndAlso Apartment3.Owner = "Franklin" AndAlso Apartment4.Owner = "Franklin" AndAlso Apartment5.Owner = "Franklin" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Franklin AndAlso Apartment2.Owner = Owner.Franklin AndAlso Apartment3.Owner = Owner.Franklin AndAlso Apartment4.Owner = Owner.Franklin AndAlso Apartment5.Owner = Owner.Franklin Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Franklin
                 Apartment1.AptBlip.IsShortRange = True
@@ -1334,8 +1315,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Franklin
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Trevor" AndAlso Apartment2.Owner = "Trevor" AndAlso Apartment3.Owner = "Trevor" AndAlso Apartment4.Owner = "Trevor" AndAlso Apartment5.Owner = "Trevor" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Trevor AndAlso Apartment2.Owner = Owner.Trevor AndAlso Apartment3.Owner = Owner.Trevor AndAlso Apartment4.Owner = Owner.Trevor AndAlso Apartment5.Owner = Owner.Trevor Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Trevor
                 Apartment1.AptBlip.IsShortRange = True
@@ -1344,8 +1325,8 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Trevor
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
-            ElseIf Apartment1.Owner = "Player3" AndAlso Apartment2.Owner = "Player3" AndAlso Apartment3.Owner = "Player3" AndAlso Apartment4.Owner = "Player3" AndAlso Apartment5.Owner = "Player3" Then
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
+            ElseIf Apartment1.Owner = Owner.Player3 AndAlso Apartment2.Owner = Owner.Player3 AndAlso Apartment3.Owner = Owner.Player3 AndAlso Apartment4.Owner = Owner.Player3 AndAlso Apartment5.Owner = Owner.Player3 Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.Yellow
                 Apartment1.AptBlip.IsShortRange = True
@@ -1354,7 +1335,7 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.Yellow
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
             ElseIf (Apartment1.Owner <> Apartment2.Owner) Or (Apartment1.Owner <> Apartment3.Owner) Or (Apartment1.Owner <> Apartment4.Owner) Or (Apartment1.Owner <> Apartment5.Owner) Or (Apartment2.Owner <> Apartment3.Owner) Or (Apartment2.Owner <> Apartment4.Owner) Or (Apartment2.Owner <> Apartment5.Owner) Or (Apartment3.Owner <> Apartment4.Owner) Or (Apartment3.Owner <> Apartment5.Owner) Or (Apartment4.Owner <> Apartment5.Owner) Then
                 Apartment1.AptBlip.Sprite = BlipSprite.Safehouse
                 Apartment1.AptBlip.Color = INMBlipColor.White
@@ -1364,12 +1345,12 @@ Namespace INMNative
                 Apartment1.GrgBlip.Sprite = BlipSprite.Garage
                 Apartment1.GrgBlip.Color = INMBlipColor.White
                 Apartment1.GrgBlip.IsShortRange = True
-                Apartment1.GrgBlip.Name = Apartment1.Name & SinglePlayerApartment.Garage
+                Apartment1.GrgBlip.Name = Apartment1.Name & Garage
             Else
                 Apartment1.AptBlip.Sprite = BlipSprite.SafehouseForSale
                 Apartment1.AptBlip.Color = INMBlipColor.White
                 Apartment1.AptBlip.IsShortRange = True
-                Apartment1.AptBlip.Name = SinglePlayerApartment.ForSale
+                Apartment1.AptBlip.Name = ForSale
             End If
         End Sub
 

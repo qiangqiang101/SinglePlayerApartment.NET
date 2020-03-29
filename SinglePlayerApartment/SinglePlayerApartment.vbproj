@@ -72,8 +72,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="iFruitAddon">
-      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\iFruitAddon.dll</HintPath>
+    <Reference Include="iFruitAddon2">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\scripts\iFruitAddon2.dll</HintPath>
     </Reference>
     <Reference Include="INMNativeUI">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\INMNativeUI.dll</HintPath>
@@ -102,9 +102,10 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\Localization.vb" />
     <Compile Include="Class\INMNative.vb" />
     <Compile Include="Class\Interior.vb" />
-    <Compile Include="Class\Scaleform.vb" />
+    <Compile Include="Class\Setting.vb" />
     <Compile Include="Class\SoundPlayer.vb" />
     <Compile Include="ApartmentsHandler.vb" />
     <Compile Include="Medium End Apartments\HangmanAve.vb" />
@@ -125,7 +126,7 @@
     <Compile Include="High End Apartments\WeazelPlaza.vb" />
     <Compile Include="Brain.vb" />
     <Compile Include="Class\CFGRead.vb" />
-    <Compile Include="Class\logger.vb" />
+    <Compile Include="Class\Logger.vb" />
     <Compile Include="High End Apartments\EclipseTower.vb" />
     <Compile Include="Class\Reader.vb" />
     <Compile Include="Class\Resources.vb" />
@@ -206,7 +207,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY "$(TargetDir)$(TargetFileName)" "E:\Program Files (x86)\Steam\SteamApps\common\Grand Theft Auto V\scripts"</PostBuildEvent>
+    <PostBuildEvent>COPY "$(TargetDir)$(TargetFileName)" "E:\Program Files (x86)\Steam\SteamApps\common\Grand Theft Auto V\scripts"
+COPY "$(TargetDir)$(TargetName).pdb" "E:\Program Files (x86)\Steam\SteamApps\common\Grand Theft Auto V\scripts"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

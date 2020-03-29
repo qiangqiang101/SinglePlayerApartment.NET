@@ -16,10 +16,8 @@ Public Class GrapeseedAve
 
     Public Sub New()
         Try
-            Apartment = New Apartment("Grapeseed Avenue ", "1893", 118000)
-            Apartment.Name = ReadCfgValue("GrapeseedAveName", langFile)
-            Apartment.Description = ReadCfgValue("GrapeseedAveDesc", langFile)
-            Apartment.Owner = ReadCfgValue("GAowner", saveFile)
+            Apartment = New Apartment(Game.GetGXTEntry("MP_PROP_78"), 118000, Game.GetGXTEntry("MP_PROP_78"))
+            Apartment.Owner = AptGrapeseedAveOwner
             Apartment.Entrance = New Vector3(1662.156, 4776.137, 42.01189)
             Apartment.Save = New Vector3(262.9082, -1003.095, -99.0086)
             Apartment.TeleportInside = New Vector3(265.3285, -1002.7042, -99.0085)
@@ -33,15 +31,12 @@ Public Class GrapeseedAve
             Apartment.CameraRotation = New Vector3(-2.922752, 0, 93.5119)
             Apartment.CameraFOV = 50.0
             Apartment.WardrobeHeading = 359.818
-            Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\grapeseed_ave\"
-            Apartment.SaveFile = "GAowner"
+            Apartment.GaragePath = "scripts\SinglePlayerApartment\Garage\grapeseed_ave\"
             Apartment.PlayerMap = "GrapeseedAve"
             Apartment.Interior = New Vector3(263.86999, -998.78002, -99.010002)
             Apartment.Enabled = True
 
-            If ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then
-                Translate()
-
+            If AptGrapeseedAve Then
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
                 CreateExitMenu()
@@ -65,15 +60,15 @@ Public Class GrapeseedAve
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             BuyMenu.SetBannerType(Rectangle)
             _menuPool.Add(BuyMenu)
-            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
+            Dim item As New UIMenuItem(Apartment.Name, Apartment.Description)
             With item
-                If Apartment.Owner = "Michael" Then
+                If Apartment.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Apartment.Owner = "Franklin" Then
+                ElseIf Apartment.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Apartment.Owner = "Trevor" Then
+                ElseIf Apartment.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Apartment.Owner = "Player3" Then
+                ElseIf Apartment.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & Apartment.Cost.ToString("N"))
@@ -89,15 +84,15 @@ Public Class GrapeseedAve
 
     Public Shared Sub RefreshMenu()
         BuyMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit, Apartment.Description)
+        Dim item As New UIMenuItem(Apartment.Name, Apartment.Description)
         With item
-            If Apartment.Owner = "Michael" Then
+            If Apartment.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Apartment.Owner = "Franklin" Then
+            ElseIf Apartment.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Apartment.Owner = "Trevor" Then
+            ElseIf Apartment.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Apartment.Owner = "Player3" Then
+            ElseIf Apartment.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & Apartment.Cost.ToString("N"))
@@ -110,15 +105,15 @@ Public Class GrapeseedAve
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
+        Dim item As New UIMenuItem(Apartment.Name & Garage)
         With item
-            If Apartment.Owner = "Michael" Then
+            If Apartment.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf Apartment.Owner = "Franklin" Then
+            ElseIf Apartment.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf Apartment.Owner = "Trevor" Then
+            ElseIf Apartment.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf Apartment.Owner = "Player3" Then
+            ElseIf Apartment.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -151,15 +146,15 @@ Public Class GrapeseedAve
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(Apartment.Name & Apartment.Unit & Garage)
+            Dim item As New UIMenuItem(Apartment.Name & Garage)
             With item
-                If Apartment.Owner = "Michael" Then
+                If Apartment.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf Apartment.Owner = "Franklin" Then
+                ElseIf Apartment.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf Apartment.Owner = "Trevor" Then
+                ElseIf Apartment.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf Apartment.Owner = "Player3" Then
+                ElseIf Apartment.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -201,12 +196,12 @@ Public Class GrapeseedAve
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue(Apartment.SaveFile, "None", saveFile)
+                AptGrapeseedAveOwner = UpdateValue(Of Owner)(owners, grapeseedave1, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Script.Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + Apartment.Cost)
-                Apartment.Owner = "None"
+                Apartment.Owner = Owner.None
                 Apartment.AptBlip.Remove()
                 If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                 CreateGrapeseedAve()
@@ -224,7 +219,7 @@ Public Class GrapeseedAve
                 SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
                 Brain.TVOn = False
                 playerPed.Position = SixCarGarage.Elevator
-                SixCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+                SixCarGarage.LastLocationName = Apartment.Name
                 SixCarGarage.lastLocationVector = Apartment.ApartmentExit
                 SixCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
                 SixCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -234,7 +229,7 @@ Public Class GrapeseedAve
                 ExitMenu.Visible = False
                 Script.Wait(500)
                 Game.FadeScreenIn(500)
-                LowEndLastLocationName = Apartment.Name & Apartment.Unit
+                LowEndLastLocationName = Apartment.Name
             End If
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)
@@ -243,14 +238,14 @@ Public Class GrapeseedAve
 
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
-            If selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = "None" Then
+            If selectedItem.Text = Apartment.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & Apartment.Cost.ToString("N") AndAlso Apartment.Owner = Owner.None Then
                 'Buy Apartment
                 If playerCash > Apartment.Cost Then
-                    WriteCfgValue(Apartment.SaveFile, GetPlayerName(), saveFile)
+                    AptGrapeseedAveOwner = UpdateValue(Of Owner)(owners, grapeseedave1, GetOwner)
                     Game.FadeScreenOut(500)
                     Script.Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - Apartment.Cost)
-                    Apartment.Owner = GetPlayerName()
+                    Apartment.Owner = GetOwner()
                     Apartment.AptBlip.Remove()
                     If Not Apartment.GrgBlip Is Nothing Then Apartment.GrgBlip.Remove()
                     CreateGrapeseedAve()
@@ -259,7 +254,7 @@ Public Class GrapeseedAve
                     Script.Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name & Apartment.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & Apartment.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -281,13 +276,13 @@ Public Class GrapeseedAve
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = Apartment.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Apartment.Owner = GetOwner() Then
                 'Enter Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                LowEndLastLocationName = Apartment.Name & Apartment.Unit
+                LowEndLastLocationName = Apartment.Name
 
                 Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -303,7 +298,7 @@ Public Class GrapeseedAve
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = Apartment.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
 
             Game.FadeScreenOut(500)
@@ -311,7 +306,7 @@ Public Class GrapeseedAve
             SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
             SetInteriorActive2(263.86999, -998.78002, -99.010002) 'vespucci blvd
             playerPed.Position = SixCarGarage.GarageDoorL
-            SixCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            SixCarGarage.LastLocationName = Apartment.Name
             SixCarGarage.lastLocationVector = Apartment.ApartmentExit
             SixCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             SixCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -321,8 +316,8 @@ Public Class GrapeseedAve
             GarageMenu.Visible = False
             Script.Wait(500)
             Game.FadeScreenIn(500)
-            LowEndLastLocationName = Apartment.Name & Apartment.Unit
-        ElseIf selectedItem.Text = Apartment.Name & Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+            LowEndLastLocationName = Apartment.Name
+        ElseIf selectedItem.Text = Apartment.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5 As String
             If IO.File.Exists(Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
@@ -332,11 +327,11 @@ Public Class GrapeseedAve
             If IO.File.Exists(Apartment.GaragePath & "vehicle_4.cfg") Then VehPlate4 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_4.cfg") Else VehPlate4 = "0"
             If IO.File.Exists(Apartment.GaragePath & "vehicle_5.cfg") Then VehPlate5 = ReadCfgValue("PlateNumber", Apartment.GaragePath & "vehicle_5.cfg") Else VehPlate5 = "0"
 
-            LowEndLastLocationName = Apartment.Name & Apartment.Unit
+            LowEndLastLocationName = Apartment.Name
             SetInteriorActive2(193.9493, -1004.425, -99.99999) '6 car garage
             Apartment.SetInteriorActive()
             SixCarGarage.CurrentPath = Apartment.GaragePath
-            SixCarGarage.LastLocationName = Apartment.Name & Apartment.Unit
+            SixCarGarage.LastLocationName = Apartment.Name
             SixCarGarage.lastLocationVector = Apartment.ApartmentExit
             SixCarGarage.lastLocationGarageVector = Apartment.GarageEntrance
             SixCarGarage.lastLocationGarageOutVector = Apartment.GarageOutside
@@ -419,10 +414,10 @@ Public Class GrapeseedAve
     Public Sub OnTick()
         Try
             If Not Game.IsLoading Then
-                If My.Settings.GrapeseedAve = "Enable" Then
+                If AptGrapeseedAve Then
                     'Enter Apartment
                     If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.EntranceDistance < 3.0 Then
-                        DisplayHelpTextThisFrame(EnterApartment & Apartment.Name)
+                        DisplayHelpTextThisFrame(EnterApartmentHelp(Apartment.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             Game.FadeScreenOut(500)
                             Wait(500)
@@ -435,7 +430,7 @@ Public Class GrapeseedAve
                     End If
 
                     'Save Game
-                    If (LowEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.SaveDistance < 1.0) Then
+                    If (LowEndLastLocationName = (Apartment.Name) AndAlso ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.SaveDistance < 1.0) Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = Apartment.PlayerMap
@@ -450,15 +445,15 @@ Public Class GrapeseedAve
                     End If
 
                     'Exit Apartment
-                    If (LowEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.ExitDistance < 2.0) Then
-                        DisplayHelpTextThisFrame(ExitApartment & Apartment.Name & Apartment.Unit)
+                    If (LowEndLastLocationName = (Apartment.Name) AndAlso ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.ExitDistance < 2.0) Then
+                        DisplayHelpTextThisFrame(ExitApartmentHelp(Apartment.Name))
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenu.Visible = True
                         End If
                     End If
 
                     'Wardrobe
-                    If (LowEndLastLocationName = (Apartment.Name & Apartment.Unit) AndAlso ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.WardrobeDistance < 1.0) Then
+                    If (LowEndLastLocationName = (Apartment.Name) AndAlso ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.WardrobeDistance < 1.0) Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = Apartment.Wardrobe
@@ -470,7 +465,7 @@ Public Class GrapeseedAve
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -486,9 +481,9 @@ Public Class GrapeseedAve
                     End If
 
                     'Enter Garage
-                    If (Not playerPed.IsDead AndAlso Apartment.Owner = GetPlayerName()) AndAlso Apartment.GarageDistance < 5.0 Then
+                    If (Not playerPed.IsDead AndAlso Apartment.Owner = GetOwner()) AndAlso Apartment.GarageDistance < 5.0 Then
                         If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                            DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                            DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.Trim))
                             If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                 GarageMenu.Visible = True
                             End If
@@ -496,7 +491,7 @@ Public Class GrapeseedAve
                             If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
                                 DisplayHelpTextThisFrame(CannotStore)
                             ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                                DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                                DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.Trim))
                                 If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                     GarageMenu.Visible = True
                                 End If

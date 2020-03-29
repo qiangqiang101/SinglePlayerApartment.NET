@@ -16,10 +16,8 @@ Public Class HillcrestAve2874
 
     Public Sub New()
         Try
-            _Apartment = New Apartment("Hillcrest Avenue ", "2874", 571000)
-            _Apartment.Name = ReadCfgValue("2874Name", langFile)
-            _Apartment.Description = ReadCfgValue("2874Desc", langFile)
-            _Apartment.Owner = ReadCfgValue("2874HAowner", saveFile)
+            _Apartment = New Apartment(Game.GetGXTEntry("MP_PROP_92"), 571000, Game.GetGXTEntry("MP_PROP_92DES"))
+            _Apartment.Owner = Apt2874HillcrestOwner
             _Apartment.Entrance = New Vector3(-853.075, 695.4132, 148.7877)
             _Apartment.Save = New Vector3(-851.2404, 677.0281, 149.0784)
             _Apartment.TeleportInside = New Vector3(-859.5645, 688.7182, 152.8571)
@@ -34,34 +32,14 @@ Public Class HillcrestAve2874
             _Apartment.CameraFOV = 50.0
             _Apartment.WardrobeHeading = 182.5082
             _Apartment.IsAtHome = False
-            _Apartment.GaragePath = Application.StartupPath & "\scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\"
-            _Apartment.SaveFile = "2874HAowner"
+            _Apartment.GaragePath = "scripts\SinglePlayerApartment\Garage\2874_hillcreast_ave\"
             _Apartment.PlayerMap = "HillcrestA2874"
             _Apartment.IPL = "apa_stilt_ch2_09b_ext2"
             _Apartment.Enabled = True
             _Apartment.InteriorID = Apartment.GetInteriorID(_Apartment.TeleportInside)
             If Not _Apartment.InteriorID = 0 Then InteriorIDList.Add(_Apartment.InteriorID)
 
-            If ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then
-                Garage = ReadCfgValue("Garage", langFile)
-                AptOptions = ReadCfgValue("AptOptions", langFile)
-                ExitApt = ReadCfgValue("ExitApt", langFile)
-                SellApt = ReadCfgValue("SellApt", langFile)
-                EnterGarage = ReadCfgValue("EnterGarage", langFile)
-                GrgOptions = ReadCfgValue("GrgOptions", langFile)
-                ForSale = ReadCfgValue("ForSale", langFile)
-                PropPurchased = ReadCfgValue("PropPurchased", langFile)
-                Maze = ReadCfgValue("Maze", langFile)
-                Fleeca = ReadCfgValue("Fleeca", langFile)
-                BOL = ReadCfgValue("BOL", langFile)
-                InsFundApartment = ReadCfgValue("InsFund_Apartment", langFile)
-                EnterApartment = ReadCfgValue("Enter_Apartment", langFile)
-                SaveGame = ReadCfgValue("SaveGame", langFile)
-                ExitApartment = ReadCfgValue("Exit_Apartment", langFile)
-                ChangeClothes = ReadCfgValue("ChangeClothes", langFile)
-                _EnterGarage = ReadCfgValue("_EnterGarage", langFile)
-                CannotStore = ReadCfgValue("CannotStore", langFile)
-
+            If Apt2874Hillcrest Then
                 _menuPool = New MenuPool()
                 CreateBuyMenu()
                 CreateExitMenu()
@@ -85,15 +63,15 @@ Public Class HillcrestAve2874
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             BuyMenu.SetBannerType(Rectangle)
             _menuPool.Add(BuyMenu)
-            Dim item As New UIMenuItem(_Apartment.Name & _Apartment.Unit, _Apartment.Description)
+            Dim item As New UIMenuItem(_Apartment.Name, _Apartment.Description)
             With item
-                If _Apartment.Owner = "Michael" Then
+                If _Apartment.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf _Apartment.Owner = "Franklin" Then
+                ElseIf _Apartment.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf _Apartment.Owner = "Trevor" Then
+                ElseIf _Apartment.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf _Apartment.Owner = "Player3" Then
+                ElseIf _Apartment.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightLabel("$" & _Apartment.Cost.ToString("N"))
@@ -109,15 +87,15 @@ Public Class HillcrestAve2874
 
     Public Shared Sub RefreshMenu()
         BuyMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Apartment.Name & _Apartment.Unit, _Apartment.Description)
+        Dim item As New UIMenuItem(_Apartment.Name, _Apartment.Description)
         With item
-            If _Apartment.Owner = "Michael" Then
+            If _Apartment.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf _Apartment.Owner = "Franklin" Then
+            ElseIf _Apartment.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf _Apartment.Owner = "Trevor" Then
+            ElseIf _Apartment.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf _Apartment.Owner = "Player3" Then
+            ElseIf _Apartment.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightLabel("$" & _Apartment.Cost.ToString("N"))
@@ -130,15 +108,15 @@ Public Class HillcrestAve2874
 
     Public Shared Sub RefreshGarageMenu()
         GarageMenu.MenuItems.Clear()
-        Dim item As New UIMenuItem(_Apartment.Name & _Apartment.Unit & Garage)
+        Dim item As New UIMenuItem(_Apartment.Name & Garage)
         With item
-            If _Apartment.Owner = "Michael" Then
+            If _Apartment.Owner = Owner.Michael Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-            ElseIf _Apartment.Owner = "Franklin" Then
+            ElseIf _Apartment.Owner = Owner.Franklin Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-            ElseIf _Apartment.Owner = "Trevor" Then
+            ElseIf _Apartment.Owner = Owner.Trevor Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-            ElseIf _Apartment.Owner = "Player3" Then
+            ElseIf _Apartment.Owner = Owner.Player3 Then
                 .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
             Else
                 .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -171,15 +149,15 @@ Public Class HillcrestAve2874
             Rectangle.Color = Color.FromArgb(0, 0, 0, 0)
             GarageMenu.SetBannerType(Rectangle)
             _menuPool.Add(GarageMenu)
-            Dim item As New UIMenuItem(_Apartment.Name & _Apartment.Unit & Garage)
+            Dim item As New UIMenuItem(_Apartment.Name & Garage)
             With item
-                If _Apartment.Owner = "Michael" Then
+                If _Apartment.Owner = Owner.Michael Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Michael)
-                ElseIf _Apartment.Owner = "Franklin" Then
+                ElseIf _Apartment.Owner = Owner.Franklin Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Franklin)
-                ElseIf _Apartment.Owner = "Trevor" Then
+                ElseIf _Apartment.Owner = Owner.Trevor Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Trevor)
-                ElseIf _Apartment.Owner = "Player3" Then
+                ElseIf _Apartment.Owner = Owner.Player3 Then
                     .SetRightBadge(UIMenuItem.BadgeStyle.Heart)
                 Else
                     .SetRightBadge(UIMenuItem.BadgeStyle.None)
@@ -217,17 +195,17 @@ Public Class HillcrestAve2874
                 Game.Player.Character.Position = _Apartment.TeleportOutside
                 Wait(500)
                 Game.FadeScreenIn(500)
-                UnLoadMPDLCMap()
+
                 RemoveIPL(_Apartment.IPL)
             ElseIf selectedItem.Text = SellApt Then
                 'Sell Apt
                 ExitMenu.Visible = False
-                WriteCfgValue(_Apartment.SaveFile, "None", saveFile)
+                Apt2874HillcrestOwner = UpdateValue(Of Owner)(owners, hillcrest2874, Owner.None)
                 SavePosition2()
                 Game.FadeScreenOut(500)
                 Wait(500)
                 SinglePlayerApartment.player.Money = (playerCash + _Apartment.Cost)
-                _Apartment.Owner = "None"
+                _Apartment.Owner = Owner.None
                 _Apartment.AptBlip.Remove()
                 If Not _Apartment.GrgBlip Is Nothing Then _Apartment.GrgBlip.Remove()
                 CreateHillcrestAve2874()
@@ -237,7 +215,7 @@ Public Class HillcrestAve2874
                 Game.FadeScreenIn(500)
                 RefreshMenu()
                 RefreshGarageMenu()
-                UnLoadMPDLCMap()
+
                 RemoveIPL(_Apartment.IPL)
             ElseIf selectedItem.Text = EnterGarage Then
                 'Enter Garage
@@ -246,7 +224,7 @@ Public Class HillcrestAve2874
                 SetInteriorActive2(222.592, -968.1, -99) '10 car garage
                 Brain.TVOn = False
 
-                TenCarGarage.LastLocationName = _Apartment.Name & _Apartment.Unit
+                TenCarGarage.LastLocationName = _Apartment.Name
                 TenCarGarage.lastLocationVector = _Apartment.ApartmentExit
                 TenCarGarage.lastLocationGarageVector = _Apartment.GarageEntrance
                 TenCarGarage.lastLocationGarageOutVector = _Apartment.GarageOutside
@@ -265,14 +243,14 @@ Public Class HillcrestAve2874
 
     Public Sub BuyItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
         Try
-            If selectedItem.Text = _Apartment.Name & _Apartment.Unit AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & _Apartment.Cost.ToString("N") AndAlso _Apartment.Owner = "None" Then
+            If selectedItem.Text = _Apartment.Name AndAlso selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso selectedItem.RightLabel = "$" & _Apartment.Cost.ToString("N") AndAlso _Apartment.Owner = Owner.None Then
                 'Buy _Apartment
                 If playerCash > _Apartment.Cost Then
-                    WriteCfgValue(_Apartment.SaveFile, GetPlayerName(), saveFile)
+                    Apt2874HillcrestOwner = UpdateValue(Of Owner)(owners, hillcrest2874, GetOwner)
                     Game.FadeScreenOut(500)
                     Wait(500)
                     If Website.freeRealEstate = False Then SinglePlayerApartment.player.Money = (playerCash - _Apartment.Cost)
-                    _Apartment.Owner = GetPlayerName()
+                    _Apartment.Owner = GetOwner()
                     _Apartment.AptBlip.Remove()
                     If Not _Apartment.GrgBlip Is Nothing Then _Apartment.GrgBlip.Remove()
                     CreateHillcrestAve2874()
@@ -281,7 +259,7 @@ Public Class HillcrestAve2874
                     Wait(500)
                     Game.FadeScreenIn(500)
                     Native.Function.Call(Hash.PLAY_SOUND_FRONTEND, -1, "PROPERTY_PURCHASE", "HUD_AWARDS", False)
-                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & _Apartment.Name & _Apartment.Unit, Nothing)
+                    BigMessageThread.MessageInstance.ShowWeaponPurchasedMessage("~y~" & PropPurchased, "~w~" & _Apartment.Name, Nothing)
                     If GetPlayerName() = "Michael" Then
                         selectedItem.SetRightBadge(UIMenuItem.BadgeStyle.Michael)
                     ElseIf GetPlayerName() = "Franklin" Then
@@ -303,13 +281,13 @@ Public Class HillcrestAve2874
                         DisplayNotificationThisFrame(Maze, "", InsFundApartment, "CHAR_BANK_MAZE", True, IconType.RightJumpingArrow)
                     End If
                 End If
-            ElseIf selectedItem.Text = _Apartment.Name & _Apartment.Unit AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso _Apartment.Owner = GetPlayerName() Then
+            ElseIf selectedItem.Text = _Apartment.Name AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso _Apartment.Owner = GetOwner() Then
                 'Enter _Apartment
                 BuyMenu.Visible = False
                 hideHud = False
                 World.DestroyAllCameras()
                 World.RenderingCamera = Nothing
-                If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+
                 ToggleIPL(_Apartment.IPL)
                 _Apartment.SetInteriorActive()
                 Game.FadeScreenOut(500)
@@ -325,16 +303,16 @@ Public Class HillcrestAve2874
     End Sub
 
     Public Sub GarageItemSelectHandler(sender As UIMenu, selectedItem As UIMenuItem, index As Integer)
-        If selectedItem.Text = _Apartment.Name & _Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
+        If selectedItem.Text = _Apartment.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso Not playerPed.IsInVehicle Then
             'Teleport to Garage
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+
             ToggleIPL(_Apartment.IPL)
 
             Game.FadeScreenOut(500)
             Wait(500)
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             _Apartment.SetInteriorActive()
-            TenCarGarage.LastLocationName = _Apartment.Name & _Apartment.Unit
+            TenCarGarage.LastLocationName = _Apartment.Name
             TenCarGarage.lastLocationVector = _Apartment.ApartmentExit
             TenCarGarage.lastLocationGarageVector = _Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = _Apartment.GarageOutside
@@ -345,7 +323,7 @@ Public Class HillcrestAve2874
             GarageMenu.Visible = False
             Wait(500)
             Game.FadeScreenIn(500)
-        ElseIf selectedItem.Text = _Apartment.Name & _Apartment.Unit & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
+        ElseIf selectedItem.Text = _Apartment.Name & Garage AndAlso Not selectedItem.RightBadge = UIMenuItem.BadgeStyle.None AndAlso playerPed.IsInVehicle Then
             On Error Resume Next
             Dim VehPlate0, VehPlate1, VehPlate2, VehPlate3, VehPlate4, VehPlate5, VehPlate6, VehPlate7, VehPlate8, VehPlate9 As String
             If IO.File.Exists(_Apartment.GaragePath & "vehicle_0.cfg") Then VehPlate0 = ReadCfgValue("PlateNumber", _Apartment.GaragePath & "vehicle_0.cfg") Else VehPlate0 = "0"
@@ -359,13 +337,13 @@ Public Class HillcrestAve2874
             If IO.File.Exists(_Apartment.GaragePath & "vehicle_8.cfg") Then VehPlate8 = ReadCfgValue("PlateNumber", _Apartment.GaragePath & "vehicle_8.cfg") Else VehPlate8 = "0"
             If IO.File.Exists(_Apartment.GaragePath & "vehicle_9.cfg") Then VehPlate9 = ReadCfgValue("PlateNumber", _Apartment.GaragePath & "vehicle_9.cfg") Else VehPlate9 = "0"
 
-            If My.Settings.AlwaysEnableMPMaps = False Then LoadMPDLCMap()
+
             ToggleIPL(_Apartment.IPL)
 
             SetInteriorActive2(222.592, -968.1, -99) '10 car garage
             _Apartment.SetInteriorActive()
             TenCarGarage.CurrentPath = _Apartment.GaragePath
-            TenCarGarage.LastLocationName = _Apartment.Name & _Apartment.Unit
+            TenCarGarage.LastLocationName = _Apartment.Name
             TenCarGarage.lastLocationVector = _Apartment.ApartmentExit
             TenCarGarage.lastLocationGarageVector = _Apartment.GarageEntrance
             TenCarGarage.lastLocationGarageOutVector = _Apartment.GarageOutside
@@ -492,7 +470,7 @@ Public Class HillcrestAve2874
     Public Sub OnTick()
         Try
             If Not Game.IsLoading Then
-                If My.Settings.Hillcrest2874 = "Enable" Then
+                If Apt2874Hillcrest Then
                     'Enter _Apartment
                     If (Not BuyMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.EntranceDistance < 3.0 Then
                         DisplayHelpTextThisFrame(EnterApartment & _Apartment.Name)
@@ -508,7 +486,7 @@ Public Class HillcrestAve2874
                     End If
 
                     'Save Game
-                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.Owner = GetPlayerName()) AndAlso _Apartment.SaveDistance < 3.0 Then
+                    If ((Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.Owner = GetOwner()) AndAlso _Apartment.SaveDistance < 3.0 Then
                         DisplayHelpTextThisFrame(SaveGame)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             playerMap = _Apartment.PlayerMap
@@ -523,15 +501,15 @@ Public Class HillcrestAve2874
                     End If
 
                     'Exit _Apartment
-                    If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.Owner = GetPlayerName()) AndAlso _Apartment.ExitDistance < 2.0 Then
-                        DisplayHelpTextThisFrame(ExitApartment & _Apartment.Name & _Apartment.Unit)
+                    If ((Not ExitMenu.Visible AndAlso Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.Owner = GetOwner()) AndAlso _Apartment.ExitDistance < 2.0 Then
+                        DisplayHelpTextThisFrame(ExitApartment & _Apartment.Name)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             ExitMenu.Visible = True
                         End If
                     End If
 
                     'Wardrobe
-                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.Owner = GetPlayerName()) AndAlso _Apartment.WardrobeDistance < 1.0 Then
+                    If ((WardrobeScriptStatus = -1) AndAlso (Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead) AndAlso _Apartment.Owner = GetOwner()) AndAlso _Apartment.WardrobeDistance < 1.0 Then
                         DisplayHelpTextThisFrame(ChangeClothes)
                         If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                             WardrobeVector = _Apartment.Wardrobe
@@ -543,7 +521,7 @@ Public Class HillcrestAve2874
                             ElseIf GetPlayerName() = "Franklin" Then
                                 Player1W.Visible = True
                                 MakeACamera()
-                            ElseIf GetPlayerName() = “Trevor"
+                            ElseIf GetPlayerName() = “Trevor" Then
                                 Player2W.Visible = True
                                 MakeACamera()
                             ElseIf GetPlayerName() = "Player3" Then
@@ -559,9 +537,9 @@ Public Class HillcrestAve2874
                     End If
 
                     'Enter Garage
-                    If (Not playerPed.IsDead AndAlso _Apartment.Owner = GetPlayerName()) AndAlso _Apartment.GarageDistance < 5.0 Then
+                    If (Not playerPed.IsDead AndAlso _Apartment.Owner = GetOwner()) AndAlso _Apartment.GarageDistance < 5.0 Then
                         If Not playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                            DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                            DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.Trim))
                             If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                 GarageMenu.Visible = True
                             End If
@@ -569,7 +547,7 @@ Public Class HillcrestAve2874
                             If Resources.GetVehicleClass(playerPed.CurrentVehicle) = "Pegasus" Then
                                 DisplayHelpTextThisFrame(CannotStore)
                             ElseIf playerPed.IsInVehicle AndAlso (Not GarageMenu.Visible) Then
-                                DisplayHelpTextThisFrame(_EnterGarage & Garage)
+                                DisplayHelpTextThisFrame(EnterApartmentHelp(Garage.Trim))
                                 If Game.IsControlJustPressed(0, GTA.Control.Context) Then
                                     GarageMenu.Visible = True
                                 End If

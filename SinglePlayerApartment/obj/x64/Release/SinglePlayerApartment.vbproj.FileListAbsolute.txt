@@ -22,3 +22,14 @@ E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\
 E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.xml
 E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.pdb
 E:\Users\Barry\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.dll.config
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.dll
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.pdb
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\SinglePlayerApartment.xml
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\bin\x64\Release\iFruitAddon2.dll
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.vbprojResolveAssemblyReference.cache
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.Resources.resources
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.vbproj.GenerateResource.Cache
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.dll
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.xml
+E:\Users\Bartholomew\Documents\GitHub\SinglePlayerApartment.NET\SinglePlayerApartment\obj\x64\Release\SinglePlayerApartment.pdb

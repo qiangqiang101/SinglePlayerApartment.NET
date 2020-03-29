@@ -35,7 +35,6 @@ Public Class SixCarGarage
 
     Public Sub New()
         Try
-            Translate()
             InteriorID = INMNative.Apartment.GetInteriorID(New Vector3(193.9493, -1004.425, -99.99999))
             If Not InteriorID = 0 Then InteriorIDList.Add(InteriorID)
         Catch ex As Exception
@@ -351,7 +350,7 @@ Public Class SixCarGarage
 
                 If InteriorID = playerInterior Then
                     World.DrawMarker(MarkerType.VerticalCylinder, MenuActivator, Vector3.Zero, Vector3.Zero, New Vector3(1.0, 1.0, 1.0), Drawing.Color.LightBlue)
-                    If My.Settings.RefreshGrgVehs = True Then RefreshGarageVehicles(CurrentPath)
+                    If Setting.RefreshGarageVehicles Then RefreshGarageVehicles(CurrentPath)
                 Else
                     If Not Game.Player.Character.IsInVehicle Then
                         If Not veh0 = Nothing Then veh0.Delete()
@@ -364,11 +363,11 @@ Public Class SixCarGarage
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso ElevatorDistance < 3.0 Then
-                    DisplayHelpTextThisFrame(EnterElevator & LastLocationName)
+                    DisplayHelpTextThisFrame(EnterApartmentHelp(_Apartment))
                 End If
 
                 If Not playerPed.IsInVehicle AndAlso Not playerPed.IsDead AndAlso (GarageDoorLDistance < 3.0 Or GarageDoorRDistance < 3.0) Then
-                    DisplayHelpTextThisFrame(ExitGarage & Garage)
+                    DisplayHelpTextThisFrame(ExitApartmentHelp(Garage.Trim))
                 End If
 
                 If Not playerPed.IsDead AndAlso GarageMarkerDistance < 1.5 Then
@@ -519,7 +518,7 @@ Public Class SixCarGarage
             LowEndLastLocationName = Nothing
             Wait(500)
             Game.FadeScreenIn(500)
-            UnLoadMPDLCMap()
+
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso ElevatorDistance < 3.0 Then
@@ -541,7 +540,7 @@ Public Class SixCarGarage
             SinglePlayerApartment.player.LastVehicle.Delete()
             Wait(500)
             Game.FadeScreenIn(500)
-            UnLoadMPDLCMap()
+
         End If
 
         If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso GarageMarkerDistance < 1.5 AndAlso Not Mechanic._menuPool.IsAnyMenuOpen Then

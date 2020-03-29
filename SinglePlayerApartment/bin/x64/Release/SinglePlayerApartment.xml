@@ -6,40 +6,6 @@ SinglePlayerApartment
 </name>
 </assembly>
 <members>
-<member name="M:SinglePlayerApartment.Resources.DisplayNotificationThisFrame(System.String,System.String,System.String,System.String,System.Boolean,SinglePlayerApartment.Resources.IconType)">
- CHAR_DEFAULT : Default profile pic
- CHAR_FACEBOOK: Facebook
- CHAR_SOCIAL_CLUB: Social Club Star
- CHAR_CARSITE2: Super Auto San Andreas Car Site
- CHAR_BOATSITE: Boat Site Anchor
- CHAR_BANK_MAZE: Maze Bank Logo
- CHAR_BANK_FLEECA: Fleeca Bank
- CHAR_BANK_BOL: Bank Bell Icon
- CHAR_MINOTAUR: Minotaur Icon
- CHAR_EPSILON: Epsilon E
- CHAR_MILSITE: Warstock W
- CHAR_CARSITE: Legendary Motorsports Icon
- CHAR_DR_FRIEDLANDER: Dr Freidlander Face
- CHAR_BIKESITE: P and M Logo
- CHAR_LIFEINVADER: Liveinvader
- CHAR_PLANESITE: Plane Site E
- CHAR_MICHAEL: Michael's Face
- CHAR_FRANKLIN: Franklin's Face
- CHAR_TREVOR: Trevor's Face
- CHAR_SIMEON: Simeon's Face
- CHAR_RON: Ron's Face
- CHAR_JIMMY: Jimmy's Face
- CHAR_LESTER: Lester's Shadowed Face
- CHAR_DAVE: Dave Norton 's Face
- CHAR_LAMAR: Chop's Face
- CHAR_DEVIN: Devin Weston 's Face
- CHAR_AMANDA: Amanda's Face
- CHAR_TRACEY: Tracey's Face
- CHAR_STRETCH: Stretch's Face
- CHAR_WADE: Wade's Face
- CHAR_MARTIN: Martin Madrazo 's Face
- CHAR_ACTING_UP: Acting Icon
-</member>
 <member name="T:SinglePlayerApartment.My.Resources.Resources">
 <summary>
   A strongly-typed resource class, for looking up localized strings, etc.
@@ -116,6 +82,40 @@ TyreSmokeColorRed &quot;&quot;
 TyreSmokeColorGreen &quot;&quot;
 T [rest of string was truncated]&quot;;.
 </summary>
+</member>
+<member name="M:SinglePlayerApartment.Resources.DisplayNotificationThisFrame(System.String,System.String,System.String,System.String,System.Boolean,SinglePlayerApartment.Resources.IconType)">
+ CHAR_DEFAULT : Default profile pic
+ CHAR_FACEBOOK: Facebook
+ CHAR_SOCIAL_CLUB: Social Club Star
+ CHAR_CARSITE2: Super Auto San Andreas Car Site
+ CHAR_BOATSITE: Boat Site Anchor
+ CHAR_BANK_MAZE: Maze Bank Logo
+ CHAR_BANK_FLEECA: Fleeca Bank
+ CHAR_BANK_BOL: Bank Bell Icon
+ CHAR_MINOTAUR: Minotaur Icon
+ CHAR_EPSILON: Epsilon E
+ CHAR_MILSITE: Warstock W
+ CHAR_CARSITE: Legendary Motorsports Icon
+ CHAR_DR_FRIEDLANDER: Dr Freidlander Face
+ CHAR_BIKESITE: P and M Logo
+ CHAR_LIFEINVADER: Liveinvader
+ CHAR_PLANESITE: Plane Site E
+ CHAR_MICHAEL: Michael's Face
+ CHAR_FRANKLIN: Franklin's Face
+ CHAR_TREVOR: Trevor's Face
+ CHAR_SIMEON: Simeon's Face
+ CHAR_RON: Ron's Face
+ CHAR_JIMMY: Jimmy's Face
+ CHAR_LESTER: Lester's Shadowed Face
+ CHAR_DAVE: Dave Norton 's Face
+ CHAR_LAMAR: Chop's Face
+ CHAR_DEVIN: Devin Weston 's Face
+ CHAR_AMANDA: Amanda's Face
+ CHAR_TRACEY: Tracey's Face
+ CHAR_STRETCH: Stretch's Face
+ CHAR_WADE: Wade's Face
+ CHAR_MARTIN: Martin Madrazo 's Face
+ CHAR_ACTING_UP: Acting Icon
 </member>
 </members>
 </doc>

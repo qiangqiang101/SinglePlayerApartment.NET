@@ -17,47 +17,45 @@ Public Class Z
                 playerCash = SinglePlayerApartment.player.Money
             End If
 
-            Translate()
-
-            If ReadCfgValue("EclipseTower", settingFile) = "Enable" Then EclipseTower.CreateEclipseTower()
-            If ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then _3AltaStreet.Create3AltaStreet()
-            If ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then _4IntegrityWay.Create4IntegrityWay()
-            If ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DelPerroHeight.CreateDelPerroHeight()
-            If ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then RichardMajestic.CreateRichardsMajestic()
-            If ReadCfgValue("TinselTower", settingFile) = "Enable" Then TinselTower.CreateTinselTower()
-            If ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then WeazelPlaza.CreateWeazelPlaza()
-            If ReadCfgValue("DreamTower", settingFile) = "Enable" Then DreamTower.CreateDreamTower()
-            If ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then VespucciBlvd.CreateVespucciBlvd()
-            If ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then NorthConker2044.CreateNorthConker2044()
-            If ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then HillcrestAve2862.CreateHillcrestAve2862()
-            If ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then HillcrestAve2868.CreateHillcrestAve2868()
-            If ReadCfgValue("3655WildOats", settingFile) = "Enable" Then WildOats3655.CreateWildOats3655()
-            If ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then NorthConker2045.CreateNorthConker2045()
-            If ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then MiltonRd2117.CreateMiltonRoad2117()
-            If ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then HillcrestAve2874.CreateHillcrestAve2874()
-            If ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then Whispymound3677.CreateWhispymound3677()
-            If ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then MadWayne2113.CreateMadWayne2113()
-            If ReadCfgValue("CougarAve", settingFile) = "Enable" Then CougarAve.CreateCougarAve()
-            If ReadCfgValue("BayCityAve", settingFile) = "Enable" Then BayCityAve.CreateBayCityAve()
-            If ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then MiltonRd0184.Create0184MiltonRoad()
-            If ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then SouthRockfordDrive0325.Create0325SouthRockfordDr()
-            If ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then SouthMoMiltonDr.CreateSouthMoMiltonDr()
-            If ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then LasLagunasBlvd0604.Create0604LasLagunasBlvd()
-            If ReadCfgValue("SpanishAve", settingFile) = "Enable" Then SpanishAve.CreateSpanishAve()
-            If ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then BlvdDelPerro.CreateBlvdDelPerro()
-            If ReadCfgValue("PowerSt", settingFile) = "Enable" Then PowerSt.CreatePowerSt()
-            If ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then ProsperitySt.CreateProsperitySt()
-            If ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then SanVitasSt.CreateSanVitasSt()
-            If ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then LasLagunasBlvd2143.Create2143LasLagunasBlvd()
-            If ReadCfgValue("TheRoyale", settingFile) = "Enable" Then TheRoyale.CreateTheRoyale()
-            If ReadCfgValue("HangmanAve", settingFile) = "Enable" Then HangmanAve.CreateHangmanAve()
-            If ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then SustanciaRd.CreateSustanciaRd()
-            If ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then ProcopioDr4401.Create4401ProcopioDr()
-            If ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then ProcopioDr4584.Create4584ProcopioDr()
-            If ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then SouthRockfordDr0112.Create0112SouthRockfordDr()
-            If ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then ZancudoAve.CreateZancudoAve()
-            If ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then PaletoBlvd.CreatePaletoBlvd()
-            If ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then GrapeseedAve.CreateGrapeseedAve()
+            If AptEclipseTwr Then EclipseTower.CreateEclipseTower()
+            If Apt3AltaSt Then _3AltaStreet.Create3AltaStreet()
+            If Apt4IntegrityWay Then _4IntegrityWay.Create4IntegrityWay()
+            If AptDelPerroHgt Then DelPerroHeight.CreateDelPerroHeight()
+            If AptRichardMajestic Then RichardMajestic.CreateRichardsMajestic()
+            If AptTinselTwr Then TinselTower.CreateTinselTower()
+            If AptWeazelPlz Then WeazelPlaza.CreateWeazelPlaza()
+            If AptDreamTwr Then DreamTower.CreateDreamTower()
+            If AptVespucciBlvd Then VespucciBlvd.CreateVespucciBlvd()
+            If Apt2044NorthConker Then NorthConker2044.CreateNorthConker2044()
+            If Apt2868Hillcrest Then HillcrestAve2862.CreateHillcrestAve2862()
+            If Apt2868Hillcrest Then HillcrestAve2868.CreateHillcrestAve2868()
+            If Apt3655WildOats Then WildOats3655.CreateWildOats3655()
+            If Apt2045NorthConker Then NorthConker2045.CreateNorthConker2045()
+            If Apt2117MiltonRd Then MiltonRd2117.CreateMiltonRoad2117()
+            If Apt2874Hillcrest Then HillcrestAve2874.CreateHillcrestAve2874()
+            If Apt3677Whispymound Then Whispymound3677.CreateWhispymound3677()
+            If Apt2113MadWayne Then MadWayne2113.CreateMadWayne2113()
+            If AptCougarAve Then CougarAve.CreateCougarAve()
+            If AptBayCityAve Then BayCityAve.CreateBayCityAve()
+            If Apt0184MiltonRd Then MiltonRd0184.Create0184MiltonRoad()
+            If Apt0325SouthRfDr Then SouthRockfordDrive0325.Create0325SouthRockfordDr()
+            If AptSouthMoMiltonDr Then SouthMoMiltonDr.CreateSouthMoMiltonDr()
+            If Apt0604LasLagunas Then LasLagunasBlvd0604.Create0604LasLagunasBlvd()
+            If AptSpanishAve Then SpanishAve.CreateSpanishAve()
+            If AptBlvdDelPerro Then BlvdDelPerro.CreateBlvdDelPerro()
+            If AptPowerSt Then PowerSt.CreatePowerSt()
+            If AptProsperitySt Then ProsperitySt.CreateProsperitySt()
+            If AptSanVitasSt Then SanVitasSt.CreateSanVitasSt()
+            If Apt2143LasLagunas Then LasLagunasBlvd2143.Create2143LasLagunasBlvd()
+            If AptTheRoyale Then TheRoyale.CreateTheRoyale()
+            If AptHangmanAve Then HangmanAve.CreateHangmanAve()
+            If AptSustanciaRd Then SustanciaRd.CreateSustanciaRd()
+            If Apt4401ProcopioDr Then ProcopioDr4401.Create4401ProcopioDr()
+            If Apt4584ProcopioDr Then ProcopioDr4584.Create4584ProcopioDr()
+            If Apt0112SouthRfDr Then SouthRockfordDr0112.Create0112SouthRockfordDr()
+            If AptZancudoAve Then ZancudoAve.CreateZancudoAve()
+            If AptPaletoBlvd Then PaletoBlvd.CreatePaletoBlvd()
+            If AptGrapeseedAve Then GrapeseedAve.CreateGrapeseedAve()
             '1.10 update
             'If ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then MazeBankWest.CreateMazeBankWest()
             LoadPosition()
@@ -335,62 +333,63 @@ Public Class Z
     Private Sub LoadPosition()
         Try
             Dim lastInterior As String = Nothing
-            If GetPlayerName() = "Michael" Then
-                lastInterior = ReadCfgValue("MlastInterior", saveFile)
-            ElseIf GetPlayerName() = "Franklin" Then
-                lastInterior = ReadCfgValue("FlastInterior", saveFile)
-            ElseIf GetPlayerName() = "Trevor" Then
-                lastInterior = ReadCfgValue("TlastInterior", saveFile)
-            ElseIf GetPlayerName() = "Player3" Then
-                lastInterior = ReadCfgValue("3lastInterior", saveFile)
-            End If
+
+            Select Case GetPlayerName()
+                Case "Michael"
+                    lastInterior = MLastInt
+                Case "Franklin"
+                    lastInterior = FLastInt
+                Case "Trevor"
+                    lastInterior = TLastInt
+            End Select
+
             Select Case lastInterior
                 Case "SinnerSt"
-                    MediumEndLastLocationName = DreamTower.Apartment.Name & DreamTower.Apartment.Unit
+                    MediumEndLastLocationName = DreamTower.Apartment.Name
                 Case "CougarAve"
-                    MediumEndLastLocationName = CougarAve.Apartment.Name & CougarAve.Apartment.Unit
+                    MediumEndLastLocationName = CougarAve.Apartment.Name
                 Case "BayCityAve"
-                    MediumEndLastLocationName = BayCityAve.Apartment.Name & BayCityAve.Apartment.Unit
+                    MediumEndLastLocationName = BayCityAve.Apartment.Name
                 Case "0184MiltonRd"
-                    MediumEndLastLocationName = MiltonRd0184.Apartment.Name & MiltonRd0184.Apartment.Unit
+                    MediumEndLastLocationName = MiltonRd0184.Apartment.Name
                 Case "0325SouthRockfordDr"
-                    MediumEndLastLocationName = SouthRockfordDrive0325.Apartment.Name & SouthRockfordDrive0325.Apartment.Unit
+                    MediumEndLastLocationName = SouthRockfordDrive0325.Apartment.Name
                 Case "SouthMoMiltonDr"
-                    MediumEndLastLocationName = SouthMoMiltonDr.Apartment.Name & SouthMoMiltonDr.Apartment.Unit
+                    MediumEndLastLocationName = SouthMoMiltonDr.Apartment.Name
                 Case "0604LasLagunasBlvd"
-                    MediumEndLastLocationName = LasLagunasBlvd0604.Apartment.Name & LasLagunasBlvd0604.Apartment.Unit
+                    MediumEndLastLocationName = LasLagunasBlvd0604.Apartment.Name
                 Case "SpanishAve"
-                    MediumEndLastLocationName = SpanishAve.Apartment.Name & SpanishAve.Apartment.Unit
+                    MediumEndLastLocationName = SpanishAve.Apartment.Name
                 Case "BlvdDelPerro"
-                    MediumEndLastLocationName = BlvdDelPerro.Apartment.Name & BlvdDelPerro.Apartment.Unit
+                    MediumEndLastLocationName = BlvdDelPerro.Apartment.Name
                 Case "PowerSt"
-                    MediumEndLastLocationName = PowerSt.Apartment.Name & PowerSt.Apartment.Unit
+                    MediumEndLastLocationName = PowerSt.Apartment.Name
                 Case "ProsperitySt"
-                    MediumEndLastLocationName = ProsperitySt.Apartment.Name & ProsperitySt.Apartment.Unit
+                    MediumEndLastLocationName = ProsperitySt.Apartment.Name
                 Case "SanVitasSt"
-                    MediumEndLastLocationName = SanVitasSt.Apartment.Name & SanVitasSt.Apartment.Unit
+                    MediumEndLastLocationName = SanVitasSt.Apartment.Name
                 Case "2143LasLagunasBlvd"
-                    MediumEndLastLocationName = LasLagunasBlvd2143.Apartment.Name & LasLagunasBlvd2143.Apartment.Unit
+                    MediumEndLastLocationName = LasLagunasBlvd2143.Apartment.Name
                 Case "TheRoyale"
-                    MediumEndLastLocationName = TheRoyale.Apartment.Name & TheRoyale.Apartment.Unit
+                    MediumEndLastLocationName = TheRoyale.Apartment.Name
                 Case "HangmanAve"
-                    MediumEndLastLocationName = HangmanAve.Apartment.Name & HangmanAve.Apartment.Unit
+                    MediumEndLastLocationName = HangmanAve.Apartment.Name
                 Case "SustanciaRd"
-                    MediumEndLastLocationName = SustanciaRd.Apartment.Name & SustanciaRd.Apartment.Unit
+                    MediumEndLastLocationName = SustanciaRd.Apartment.Name
                 Case "4401ProcopioDr"
-                    MediumEndLastLocationName = ProcopioDr4401.Apartment.Name & ProcopioDr4401.Apartment.Unit
+                    MediumEndLastLocationName = ProcopioDr4401.Apartment.Name
                 Case "4584ProcopioDr"
-                    MediumEndLastLocationName = ProcopioDr4584.Apartment.Name & ProcopioDr4584.Apartment.Unit
+                    MediumEndLastLocationName = ProcopioDr4584.Apartment.Name
                 Case "VespucciBlvd"
-                    LowEndLastLocationName = VespucciBlvd.Apartment.Name & VespucciBlvd.Apartment.Unit
+                    LowEndLastLocationName = VespucciBlvd.Apartment.Name
                 Case "0112SouthRockfordDr"
-                    LowEndLastLocationName = SouthRockfordDr0112.Apartment.Name & SouthRockfordDr0112.Apartment.Unit
+                    LowEndLastLocationName = SouthRockfordDr0112.Apartment.Name
                 Case "ZancudoAve"
-                    LowEndLastLocationName = ZancudoAve.Apartment.Name & ZancudoAve.Apartment.Unit
+                    LowEndLastLocationName = ZancudoAve.Apartment.Name
                 Case "PaletoBlvd"
-                    LowEndLastLocationName = PaletoBlvd.Apartment.Name & PaletoBlvd.Apartment.Unit
+                    LowEndLastLocationName = PaletoBlvd.Apartment.Name
                 Case "GrapeseedAve"
-                    LowEndLastLocationName = GrapeseedAve.Apartment.Name & GrapeseedAve.Apartment.Unit
+                    LowEndLastLocationName = GrapeseedAve.Apartment.Name
             End Select
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

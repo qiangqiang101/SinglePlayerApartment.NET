@@ -195,7 +195,7 @@
 '            RemoveIPL(LastIPL)
 '            ToggleIPL(Apartment.GarageIPL)
 '            LastIPL = Apartment.GarageIPL
-'            LastLocationName = Apartment.Name & Apartment.Unit
+'            LastLocationName = Apartment.Name
 '            lastLocationVector = Apartment.ApartmentExit
 '            lastLocationGarageVector = Apartment.GarageEntrance
 '            lastLocationGarageOutVector = Apartment.GarageOutside
@@ -1711,7 +1711,7 @@
 '            playerPed.CurrentVehicle.Heading = lastLocationGarageOutHeading
 '            Wait(500)
 '            Game.FadeScreenIn(500)
-'            UnLoadMPDLCMap()
+'            
 '        End If
 
 '        If Game.IsControlJustPressed(0, GTA.Control.Context) AndAlso Not playerPed.IsInVehicle AndAlso ElevatorDistance < 3.0 Then

@@ -66,9 +66,6 @@ Public Class Brain
     Public Shared ShowerTaskScriptStatus As Integer = -1
     '<-- Shower -->
 
-    'Translate
-    Public Shared _Bong, _Whiskey, _Wine, _Wheat, _Shower, _TVOn, _TVOff, _RadioSwitchStation, _TVChannel As String
-
     Public Shared a_d0, a_d1, a_d2, a_d3, a_d4, a_d5, a_d6, a_d7, a_d8, a_d9, a_d10, a_d11, a_t0, a_t1, a_t2, a_t3, a_t4, a_t5, a_t6, a_t7, a_t8, a_t9, a_t10, a_t11, b_d0, b_d1, b_d2, b_t0, b_t1, b_t2 As Integer
     Public Shared drunkTimer As Timer
 
@@ -79,7 +76,6 @@ Public Class Brain
 
     Public Sub New()
         Try
-            Translate()
             drunkTimer = New Timer(60000)
         Catch ex As Exception
             logger.Log(ex.Message & " " & ex.StackTrace)

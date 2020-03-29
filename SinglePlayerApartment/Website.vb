@@ -21,15 +21,15 @@
 '    Public Shared BennysOriginal, DockTease, ElitasTravel, LegendaryMotorsport, PedalToMetal, SouthernSA, WarstockCache, YourNew, IsConfirm, InsFundVehicle As String
 '    Public Shared BennyMenu, DockMenu, ElitasMenu, LegendaryMenu, PedalMenu, SouthernMenu, WarstockMenu, DeliveryMenu As UIMenu
 
-'    Public Shared BennyFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\bennysoriginalmotorworks.cfg"
-'    Public Shared DockFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\docktease.cfg"
-'    Public Shared ElitasFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\elitastravel.cfg"
-'    Public Shared LegendaryFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\legendarymotorsport.cfg"
-'    Public Shared PedalFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\padmcycles.cfg"
-'    Public Shared SouthernFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\southernsanandreassuperautos.cfg"
-'    Public Shared WarstockFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\warstock-cache-and-carry.cfg"
+'    Public Shared BennyFile As String = "scripts\SinglePlayerApartment\Shopping\bennysoriginalmotorworks.cfg"
+'    Public Shared DockFile As String = "scripts\SinglePlayerApartment\Shopping\docktease.cfg"
+'    Public Shared ElitasFile As String = "scripts\SinglePlayerApartment\Shopping\elitastravel.cfg"
+'    Public Shared LegendaryFile As String = "scripts\SinglePlayerApartment\Shopping\legendarymotorsport.cfg"
+'    Public Shared PedalFile As String = "scripts\SinglePlayerApartment\Shopping\padmcycles.cfg"
+'    Public Shared SouthernFile As String = "scripts\SinglePlayerApartment\Shopping\southernsanandreassuperautos.cfg"
+'    Public Shared WarstockFile As String = "scripts\SinglePlayerApartment\Shopping\warstock-cache-and-carry.cfg"
 '    Public Shared Parameters As String() = {"[name]", "[price]", "[model]", "[gxt]", "[make]", "[category]", "[desc]"}
-'    Public Shared ImagePathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\Images\"
+'    Public Shared ImagePathDir As String = "scripts\SinglePlayerApartment\Shopping\Images\"
 '    Public Shared Caller, CallerImg, Subtitle As String
 '    Public Shared WebsiteCam As Camera
 '    Public Shared SpinHeading As Single = 314.2483
@@ -275,55 +275,55 @@
 '        Try
 '            DeliveryMenu.MenuItems.Clear()
 '            ReadMenuItems()
-'            If _3AltaStreet.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
-'            If _4IntegrityWay.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
-'            If _4IntegrityWay.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4HL)
-'            If DelPerroHeight.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPH)
-'            If DelPerroHeight.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPHHL)
-'            If DreamTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDT)
-'            If EclipseTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemET)
-'            If EclipseTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETHL)
-'            If RichardMajestic.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRM)
-'            If RichardMajestic.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRMHL)
-'            If TinselTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTT)
-'            If TinselTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTTHL)
-'            If WeazelPlaza.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWP)
-'            If VespucciBlvd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemVB)
-'            If NorthConker2044.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2044)
-'            If HillcrestAve2862.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2862)
-'            If HillcrestAve2868.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2868)
-'            If WildOats3655.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWO3655)
-'            If NorthConker2045.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2045)
-'            If MiltonRd2117.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR2117)
-'            If HillcrestAve2874._Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2874)
-'            If Whispymound3677.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
-'            If MadWayne2113.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
-'            If EclipseTower.ApartmentPS1.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
-'            If EclipseTower.ApartmentPS2.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
-'            If EclipseTower.ApartmentPS3.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
-'            If BayCityAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBCA)
-'            If BlvdDelPerro.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBDP)
-'            If CougarAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemCA)
-'            If HangmanAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA)
-'            If LasLagunasBlvd0604.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
-'            If LasLagunasBlvd2143.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
-'            If MiltonRd0184.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
-'            If PowerSt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
-'            If ProcopioDr4401.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
-'            If ProcopioDr4584.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
-'            If ProsperitySt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
-'            If SanVitasSt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSVS)
-'            If SouthMoMiltonDr.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSMMD)
-'            If SouthRockfordDrive0325.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0325)
-'            If SpanishAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSA)
-'            If SustanciaRd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
-'            If TheRoyale.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
-'            If GrapeseedAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
-'            If PaletoBlvd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
-'            If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
-'            If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
+'            If _3AltaStreet.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
+'            If _4IntegrityWay.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
+'            If _4IntegrityWay.ApartmentHL.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4HL)
+'            If DelPerroHeight.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPH)
+'            If DelPerroHeight.ApartmentHL.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPHHL)
+'            If DreamTower.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDT)
+'            If EclipseTower.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemET)
+'            If EclipseTower.ApartmentHL.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETHL)
+'            If RichardMajestic.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRM)
+'            If RichardMajestic.ApartmentHL.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRMHL)
+'            If TinselTower.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTT)
+'            If TinselTower.ApartmentHL.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTTHL)
+'            If WeazelPlaza.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWP)
+'            If VespucciBlvd.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemVB)
+'            If NorthConker2044.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2044)
+'            If HillcrestAve2862.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2862)
+'            If HillcrestAve2868.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2868)
+'            If WildOats3655.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWO3655)
+'            If NorthConker2045.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2045)
+'            If MiltonRd2117.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR2117)
+'            If HillcrestAve2874._Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2874)
+'            If Whispymound3677.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
+'            If MadWayne2113.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
+'            If EclipseTower.ApartmentPS1.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
+'            If EclipseTower.ApartmentPS2.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
+'            If EclipseTower.ApartmentPS3.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
+'            If BayCityAve.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBCA)
+'            If BlvdDelPerro.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBDP)
+'            If CougarAve.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemCA)
+'            If HangmanAve.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA)
+'            If LasLagunasBlvd0604.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
+'            If LasLagunasBlvd2143.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
+'            If MiltonRd0184.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
+'            If PowerSt.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
+'            If ProcopioDr4401.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
+'            If ProcopioDr4584.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
+'            If ProsperitySt.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
+'            If SanVitasSt.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSVS)
+'            If SouthMoMiltonDr.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSMMD)
+'            If SouthRockfordDrive0325.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0325)
+'            If SpanishAve.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSA)
+'            If SustanciaRd.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
+'            If TheRoyale.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
+'            If GrapeseedAve.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
+'            If PaletoBlvd.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
+'            If SouthRockfordDr0112.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
+'            If ZancudoAve.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
 '            '1.10 update
-'            'If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMBW)
+'            'If MazeBankWest.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMBW)
 
 '            DeliveryMenu.RefreshIndex()
 '        Catch ex As Exception
@@ -462,140 +462,140 @@
 '                CreateFile(TargetPathDir & "vehicle_0.cfg")
 '                SavePegasusVehicle(TargetPathDir & "vehicle_0.cfg")
 '                VehPreview.Delete()
-'                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '            Else
 '                If IO.File.Exists(TargetPathDir & "vehicle_1.cfg") = False Then
 '                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                    CreateFile(TargetPathDir & "vehicle_1.cfg")
 '                    SavePegasusVehicle(TargetPathDir & "vehicle_1.cfg")
 '                    VehPreview.Delete()
-'                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                Else
 '                    If IO.File.Exists(TargetPathDir & "vehicle_2.cfg") = False Then
 '                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                        CreateFile(TargetPathDir & "vehicle_2.cfg")
 '                        SavePegasusVehicle(TargetPathDir & "vehicle_2.cfg")
 '                        VehPreview.Delete()
-'                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                    Else
 '                        If IO.File.Exists(TargetPathDir & "vehicle_3.cfg") = False Then
 '                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                            CreateFile(TargetPathDir & "vehicle_3.cfg")
 '                            SavePegasusVehicle(TargetPathDir & "vehicle_3.cfg")
 '                            VehPreview.Delete()
-'                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                        Else
 '                            If IO.File.Exists(TargetPathDir & "vehicle_4.cfg") = False Then
 '                                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                CreateFile(TargetPathDir & "vehicle_4.cfg")
 '                                SavePegasusVehicle(TargetPathDir & "vehicle_4.cfg")
 '                                VehPreview.Delete()
-'                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                            Else
 '                                If IO.File.Exists(TargetPathDir & "vehicle_5.cfg") = False Then
 '                                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                    CreateFile(TargetPathDir & "vehicle_5.cfg")
 '                                    SavePegasusVehicle(TargetPathDir & "vehicle_5.cfg")
 '                                    VehPreview.Delete()
-'                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                Else
 '                                    If IO.File.Exists(TargetPathDir & "vehicle_6.cfg") = False Then
 '                                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                        CreateFile(TargetPathDir & "vehicle_6.cfg")
 '                                        SavePegasusVehicle(TargetPathDir & "vehicle_6.cfg")
 '                                        VehPreview.Delete()
-'                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                    Else
 '                                        If IO.File.Exists(TargetPathDir & "vehicle_7.cfg") = False Then
 '                                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                            CreateFile(TargetPathDir & "vehicle_7.cfg")
 '                                            SavePegasusVehicle(TargetPathDir & "vehicle_7.cfg")
 '                                            VehPreview.Delete()
-'                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                        Else
 '                                            If IO.File.Exists(TargetPathDir & "vehicle_8.cfg") = False Then
 '                                                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                CreateFile(TargetPathDir & "vehicle_8.cfg")
 '                                                SavePegasusVehicle(TargetPathDir & "vehicle_8.cfg")
 '                                                VehPreview.Delete()
-'                                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                            Else
 '                                                If IO.File.Exists(TargetPathDir & "vehicle_9.cfg") = False Then
 '                                                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                    CreateFile(TargetPathDir & "vehicle_9.cfg")
 '                                                    SavePegasusVehicle(TargetPathDir & "vehicle_9.cfg")
 '                                                    VehPreview.Delete()
-'                                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                Else
 '                                                    If IO.File.Exists(TargetPathDir & "vehicle_10.cfg") = False Then
 '                                                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                        CreateFile(TargetPathDir & "vehicle_10.cfg")
 '                                                        SavePegasusVehicle(TargetPathDir & "vehicle_10.cfg")
 '                                                        VehPreview.Delete()
-'                                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                    Else
 '                                                        If IO.File.Exists(TargetPathDir & "vehicle_11.cfg") = False Then
 '                                                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                            CreateFile(TargetPathDir & "vehicle_11.cfg")
 '                                                            SavePegasusVehicle(TargetPathDir & "vehicle_11.cfg")
 '                                                            VehPreview.Delete()
-'                                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                        Else
 '                                                            If IO.File.Exists(TargetPathDir & "vehicle_12.cfg") = False Then
 '                                                                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                CreateFile(TargetPathDir & "vehicle_12.cfg")
 '                                                                SavePegasusVehicle(TargetPathDir & "vehicle_12.cfg")
 '                                                                VehPreview.Delete()
-'                                                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                            Else
 '                                                                If IO.File.Exists(TargetPathDir & "vehicle_13.cfg") = False Then
 '                                                                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                    CreateFile(TargetPathDir & "vehicle_13.cfg")
 '                                                                    SavePegasusVehicle(TargetPathDir & "vehicle_13.cfg")
 '                                                                    VehPreview.Delete()
-'                                                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                Else
 '                                                                    If IO.File.Exists(TargetPathDir & "vehicle_14.cfg") = False Then
 '                                                                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                        CreateFile(TargetPathDir & "vehicle_14.cfg")
 '                                                                        SavePegasusVehicle(TargetPathDir & "vehicle_14.cfg")
 '                                                                        VehPreview.Delete()
-'                                                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                    Else
 '                                                                        If IO.File.Exists(TargetPathDir & "vehicle_15.cfg") = False Then
 '                                                                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                            CreateFile(TargetPathDir & "vehicle_15.cfg")
 '                                                                            SavePegasusVehicle(TargetPathDir & "vehicle_15.cfg")
 '                                                                            VehPreview.Delete()
-'                                                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                        Else
 '                                                                            If IO.File.Exists(TargetPathDir & "vehicle_16.cfg") = False Then
 '                                                                                If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                                CreateFile(TargetPathDir & "vehicle_16.cfg")
 '                                                                                SavePegasusVehicle(TargetPathDir & "vehicle_16.cfg")
 '                                                                                VehPreview.Delete()
-'                                                                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                            Else
 '                                                                                If IO.File.Exists(TargetPathDir & "vehicle_17.cfg") = False Then
 '                                                                                    If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                                    CreateFile(TargetPathDir & "vehicle_17.cfg")
 '                                                                                    SavePegasusVehicle(TargetPathDir & "vehicle_17.cfg")
 '                                                                                    VehPreview.Delete()
-'                                                                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                                Else
 '                                                                                    If IO.File.Exists(TargetPathDir & "vehicle_18.cfg") = False Then
 '                                                                                        If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                                        CreateFile(TargetPathDir & "vehicle_18.cfg")
 '                                                                                        SavePegasusVehicle(TargetPathDir & "vehicle_18.cfg")
 '                                                                                        VehPreview.Delete()
-'                                                                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                                    Else
 '                                                                                        If IO.File.Exists(TargetPathDir & "vehicle_19.cfg") = False Then
 '                                                                                            If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
 '                                                                                            CreateFile(TargetPathDir & "vehicle_19.cfg")
 '                                                                                            SavePegasusVehicle(TargetPathDir & "vehicle_19.cfg")
 '                                                                                            VehPreview.Delete()
-'                                                                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                                                                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                                                                                        End If
 '                                                                                    End If
 '                                                                                End If
@@ -692,7 +692,7 @@
 '                            CreateFile(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
 '                            SavePegasusVehicle(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
 '                            VehPreview.Delete()
-'                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                            sender.Visible = False
 '                        End If
 '                    Else
@@ -705,7 +705,7 @@
 '                            CreateFile(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
 '                            SavePegasusVehicle(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
 '                            VehPreview.Delete()
-'                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                            sender.Visible = False
 '                        End If
 '                    Else
@@ -718,7 +718,7 @@
 '                            CreateFile(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
 '                            SavePegasusVehicle(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
 '                            VehPreview.Delete()
-'                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                            sender.Visible = False
 '                        End If
 '                    Else
@@ -730,7 +730,7 @@
 '                            CreateFile(Player3PathDir & VehPreview.NumberPlate & ".cfg")
 '                            SavePegasusVehicle(Player3PathDir & VehPreview.NumberPlate & ".cfg")
 '                            VehPreview.Delete()
-'                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+'                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
 '                            sender.Visible = False
 '                        End If
 '                    Else
@@ -980,6 +980,7 @@ Imports INMNativeUI
 Imports SinglePlayerApartment.SinglePlayerApartment
 Imports SinglePlayerApartment.Mechanic
 Imports SinglePlayerApartment.INMNative
+Imports System.IO.Directory
 
 Public Class Website
     Inherits Script
@@ -991,19 +992,18 @@ Public Class Website
     Public Shared Price As Decimal = 0
     Public Shared Category As String = Nothing
 
-    Public Shared BennysOriginal, DockTease, ElitasTravel, LegendaryMotorsport, PedalToMetal, SouthernSA, WarstockCache, YourNew, IsConfirm, InsFundVehicle As String
     Public Shared BennyMenu, DockMenu, ElitasMenu, LegendaryMenu, PedalMenu, SouthernMenu, WarstockMenu, DeliveryMenu As UIMenu
     Public Shared GarageMenu As UIMenu
 
-    Public Shared BennyFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\bennysoriginalmotorworks.cfg"
-    Public Shared DockFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\docktease.cfg"
-    Public Shared ElitasFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\elitastravel.cfg"
-    Public Shared LegendaryFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\legendarymotorsport.cfg"
-    Public Shared PedalFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\padmcycles.cfg"
-    Public Shared SouthernFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\southernsanandreassuperautos.cfg"
-    Public Shared WarstockFile As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\warstock-cache-and-carry.cfg"
+    Public Shared BennyFile As String = "scripts\SinglePlayerApartment\Shopping\bennysoriginalmotorworks.cfg"
+    Public Shared DockFile As String = "scripts\SinglePlayerApartment\Shopping\docktease.cfg"
+    Public Shared ElitasFile As String = "scripts\SinglePlayerApartment\Shopping\elitastravel.cfg"
+    Public Shared LegendaryFile As String = "scripts\SinglePlayerApartment\Shopping\legendarymotorsport.cfg"
+    Public Shared PedalFile As String = "scripts\SinglePlayerApartment\Shopping\padmcycles.cfg"
+    Public Shared SouthernFile As String = "scripts\SinglePlayerApartment\Shopping\southernsanandreassuperautos.cfg"
+    Public Shared WarstockFile As String = "scripts\SinglePlayerApartment\Shopping\warstock-cache-and-carry.cfg"
     Public Shared Parameters As String() = {"[name]", "[price]", "[model]", "[gxt]", "[make]", "[category]", "[desc]"}
-    Public Shared ImagePathDir As String = Application.StartupPath & "\scripts\SinglePlayerApartment\Shopping\Images\"
+    Public Shared ImagePathDir As String = "scripts\SinglePlayerApartment\Shopping\Images\"
     Public Shared Caller, CallerImg, Subtitle As String
     Public Shared image As String = ""
     Public Shared pointX As Integer
@@ -1017,23 +1017,6 @@ Public Class Website
     Public Shared iWillGetThereAsSoonAsICan As Boolean = False
 
     Public Sub New()
-        'New Language
-        ChooseApt = ReadCfgValue("ChooseApt", langFile)
-        BennysOriginal = ReadCfgValue("BennysOriginal", langFile)
-        DockTease = ReadCfgValue("DockTease", langFile)
-        LegendaryMotorsport = ReadCfgValue("LegendaryMotorsport", langFile)
-        ElitasTravel = ReadCfgValue("ElitasTravel", langFile)
-        PedalToMetal = ReadCfgValue("PedalToMetal", langFile)
-        SouthernSA = ReadCfgValue("SouthernSA", langFile)
-        WarstockCache = ReadCfgValue("WarstockCache", langFile)
-        YourNew = ReadCfgValue("YourNew", langFile)
-        IsConfirm = ReadCfgValue("IsConfirm", langFile)
-        Maze = ReadCfgValue("Maze", langFile)
-        Fleeca = ReadCfgValue("Fleeca", langFile)
-        BOL = ReadCfgValue("BOL", langFile)
-        InsFundVehicle = ReadCfgValue("InsFundVehicle", langFile)
-        'End Language
-
         AddHandler Tick, AddressOf OnTick
 
         _menuPool = New MenuPool()
@@ -1280,55 +1263,55 @@ Public Class Website
         Try
             DeliveryMenu.MenuItems.Clear()
             ReadMenuItems()
-            If _3AltaStreet.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3AltaStreet", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemAS3)
-            If _4IntegrityWay.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4)
-            If _4IntegrityWay.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4IntegrityWay", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemIW4HL)
-            If DelPerroHeight.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPH)
-            If DelPerroHeight.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DelPerroHeights", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDPHHL)
-            If DreamTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("DreamTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemDT)
-            If EclipseTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemET)
-            If EclipseTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETHL)
-            If RichardMajestic.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRM)
-            If RichardMajestic.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("RichardMajestic", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemRMHL)
-            If TinselTower.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTT)
-            If TinselTower.ApartmentHL.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TinselTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTTHL)
-            If WeazelPlaza.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("WeazelPlaza", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWP)
-            If VespucciBlvd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("VespucciBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemVB)
-            If NorthConker2044.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2044NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2044)
-            If HillcrestAve2862.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2862Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2862)
-            If HillcrestAve2868.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2868Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2868)
-            If WildOats3655.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3655WildOats", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWO3655)
-            If NorthConker2045.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2045NorthConker", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemNC2045)
-            If MiltonRd2117.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2117MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR2117)
-            If HillcrestAve2874._Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2874Hillcrest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA2874)
-            If Whispymound3677.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("3677Whispymound", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemWD3677)
-            If MadWayne2113.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2113MadWayne", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMW2113)
-            If EclipseTower.ApartmentPS1.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP1)
-            If EclipseTower.ApartmentPS2.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP2)
-            If EclipseTower.ApartmentPS3.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("EclipseTower", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemETP3)
-            If BayCityAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BayCityAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBCA)
-            If BlvdDelPerro.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("BlvdDelPerro", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemBDP)
-            If CougarAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("CougarAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemCA)
-            If HangmanAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("HangmanAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemHA)
-            If LasLagunasBlvd0604.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0604LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB0604)
-            If LasLagunasBlvd2143.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("2143LasLagunasBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemLLB2143)
-            If MiltonRd0184.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0184MiltonRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMR0184)
-            If PowerSt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("PowerSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPower)
-            If ProcopioDr4401.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4401ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4401)
-            If ProcopioDr4584.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("4584ProcopioDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPD4584)
-            If ProsperitySt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("ProsperitySt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemProsperity)
-            If SanVitasSt.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SanVitasSt", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSVS)
-            If SouthMoMiltonDr.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SouthMoMiltonDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSMMD)
-            If SouthRockfordDrive0325.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("0325SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0325)
-            If SpanishAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SpanishAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSA)
-            If SustanciaRd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("SustanciaRd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSR)
-            If TheRoyale.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso ReadCfgValue("TheRoyale", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemTR)
-            If GrapeseedAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("GrapeseedAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemGA)
-            If PaletoBlvd.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("PaletoBlvd", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemPB)
-            If SouthRockfordDr0112.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("0112SouthRockfordDr", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemSRD0112)
-            If ZancudoAve.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso ReadCfgValue("ZancudoAve", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemZA)
+            If _3AltaStreet.Apartment.Owner = GetOwner AndAlso Not GetFiles(_3AltaStreet.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt3AltaSt Then DeliveryMenu.AddItem(itemAS3)
+            If _4IntegrityWay.Apartment.Owner = GetOwner AndAlso Not GetFiles(_4IntegrityWay.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt4IntegrityWay Then DeliveryMenu.AddItem(itemIW4)
+            If _4IntegrityWay.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(_4IntegrityWay.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso Apt4IntegrityWay Then DeliveryMenu.AddItem(itemIW4HL)
+            If DelPerroHeight.Apartment.Owner = GetOwner AndAlso Not GetFiles(DelPerroHeight.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptDelPerroHgt Then DeliveryMenu.AddItem(itemDPH)
+            If DelPerroHeight.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(DelPerroHeight.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptDelPerroHgt Then DeliveryMenu.AddItem(itemDPHHL)
+            If DreamTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(DreamTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptDreamTwr Then DeliveryMenu.AddItem(itemDT)
+            If EclipseTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then DeliveryMenu.AddItem(itemET)
+            If EclipseTower.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then DeliveryMenu.AddItem(itemETHL)
+            If RichardMajestic.Apartment.Owner = GetOwner AndAlso Not GetFiles(RichardMajestic.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptRichardMajestic Then DeliveryMenu.AddItem(itemRM)
+            If RichardMajestic.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(RichardMajestic.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptRichardMajestic Then DeliveryMenu.AddItem(itemRMHL)
+            If TinselTower.Apartment.Owner = GetOwner AndAlso Not GetFiles(TinselTower.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptTinselTwr Then DeliveryMenu.AddItem(itemTT)
+            If TinselTower.ApartmentHL.Owner = GetOwner AndAlso Not GetFiles(TinselTower.ApartmentHL.GaragePath, "*.cfg").Count = 10 AndAlso AptTinselTwr Then DeliveryMenu.AddItem(itemTTHL)
+            If WeazelPlaza.Apartment.Owner = GetOwner AndAlso Not GetFiles(WeazelPlaza.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptWeazelPlz Then DeliveryMenu.AddItem(itemWP)
+            If VespucciBlvd.Apartment.Owner = GetOwner AndAlso Not GetFiles(VespucciBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptVespucciBlvd Then DeliveryMenu.AddItem(itemVB)
+            If NorthConker2044.Apartment.Owner = GetOwner AndAlso Not GetFiles(NorthConker2044.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2044NorthConker Then DeliveryMenu.AddItem(itemNC2044)
+            If HillcrestAve2862.Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2862.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2862Hillcrest Then DeliveryMenu.AddItem(itemHA2862)
+            If HillcrestAve2868.Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2868.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2868Hillcrest Then DeliveryMenu.AddItem(itemHA2868)
+            If WildOats3655.Apartment.Owner = GetOwner AndAlso Not GetFiles(WildOats3655.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt3655WildOats Then DeliveryMenu.AddItem(itemWO3655)
+            If NorthConker2045.Apartment.Owner = GetOwner AndAlso Not GetFiles(NorthConker2045.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2045NorthConker Then DeliveryMenu.AddItem(itemNC2045)
+            If MiltonRd2117.Apartment.Owner = GetOwner AndAlso Not GetFiles(MiltonRd2117.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2117MiltonRd Then DeliveryMenu.AddItem(itemMR2117)
+            If HillcrestAve2874._Apartment.Owner = GetOwner AndAlso Not GetFiles(HillcrestAve2874._Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2874Hillcrest Then DeliveryMenu.AddItem(itemHA2874)
+            If Whispymound3677.Apartment.Owner = GetOwner AndAlso Not GetFiles(Whispymound3677.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt3677Whispymound Then DeliveryMenu.AddItem(itemWD3677)
+            If MadWayne2113.Apartment.Owner = GetOwner AndAlso Not GetFiles(MadWayne2113.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2113MadWayne Then DeliveryMenu.AddItem(itemMW2113)
+            If EclipseTower.ApartmentPS1.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS1.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then DeliveryMenu.AddItem(itemETP1)
+            If EclipseTower.ApartmentPS2.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS2.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then DeliveryMenu.AddItem(itemETP2)
+            If EclipseTower.ApartmentPS3.Owner = GetOwner AndAlso Not GetFiles(EclipseTower.ApartmentPS3.GaragePath, "*.cfg").Count = 10 AndAlso AptEclipseTwr Then DeliveryMenu.AddItem(itemETP3)
+            If BayCityAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(BayCityAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptBayCityAve Then DeliveryMenu.AddItem(itemBCA)
+            If BlvdDelPerro.Apartment.Owner = GetOwner AndAlso Not GetFiles(BlvdDelPerro.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptBlvdDelPerro Then DeliveryMenu.AddItem(itemBDP)
+            If CougarAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(CougarAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptCougarAve Then DeliveryMenu.AddItem(itemCA)
+            If HangmanAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(HangmanAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptHangmanAve Then DeliveryMenu.AddItem(itemHA)
+            If LasLagunasBlvd0604.Apartment.Owner = GetOwner AndAlso Not GetFiles(LasLagunasBlvd0604.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt0604LasLagunas Then DeliveryMenu.AddItem(itemLLB0604)
+            If LasLagunasBlvd2143.Apartment.Owner = GetOwner AndAlso Not GetFiles(LasLagunasBlvd2143.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt2143LasLagunas Then DeliveryMenu.AddItem(itemLLB2143)
+            If MiltonRd0184.Apartment.Owner = GetOwner AndAlso Not GetFiles(MiltonRd0184.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt0184MiltonRd Then DeliveryMenu.AddItem(itemMR0184)
+            If PowerSt.Apartment.Owner = GetOwner AndAlso Not GetFiles(PowerSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptPowerSt Then DeliveryMenu.AddItem(itemPower)
+            If ProcopioDr4401.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProcopioDr4401.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt4401ProcopioDr Then DeliveryMenu.AddItem(itemPD4401)
+            If ProcopioDr4584.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProcopioDr4584.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt4584ProcopioDr Then DeliveryMenu.AddItem(itemPD4584)
+            If ProsperitySt.Apartment.Owner = GetOwner AndAlso Not GetFiles(ProsperitySt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptProsperitySt Then DeliveryMenu.AddItem(itemProsperity)
+            If SanVitasSt.Apartment.Owner = GetOwner AndAlso Not GetFiles(SanVitasSt.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSanVitasSt Then DeliveryMenu.AddItem(itemSVS)
+            If SouthMoMiltonDr.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthMoMiltonDr.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSouthMoMiltonDr Then DeliveryMenu.AddItem(itemSMMD)
+            If SouthRockfordDrive0325.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthRockfordDrive0325.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso Apt0325SouthRfDr Then DeliveryMenu.AddItem(itemSRD0325)
+            If SpanishAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(SpanishAve.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSpanishAve Then DeliveryMenu.AddItem(itemSA)
+            If SustanciaRd.Apartment.Owner = GetOwner AndAlso Not GetFiles(SustanciaRd.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptSustanciaRd Then DeliveryMenu.AddItem(itemSR)
+            If TheRoyale.Apartment.Owner = GetOwner AndAlso Not GetFiles(TheRoyale.Apartment.GaragePath, "*.cfg").Count = 10 AndAlso AptTheRoyale Then DeliveryMenu.AddItem(itemTR)
+            If GrapeseedAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(GrapeseedAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptGrapeseedAve Then DeliveryMenu.AddItem(itemGA)
+            If PaletoBlvd.Apartment.Owner = GetOwner AndAlso Not GetFiles(PaletoBlvd.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptPaletoBlvd Then DeliveryMenu.AddItem(itemPB)
+            If SouthRockfordDr0112.Apartment.Owner = GetOwner AndAlso Not GetFiles(SouthRockfordDr0112.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso Apt0112SouthRfDr Then DeliveryMenu.AddItem(itemSRD0112)
+            If ZancudoAve.Apartment.Owner = GetOwner AndAlso Not GetFiles(ZancudoAve.Apartment.GaragePath, "*.cfg").Count = 6 AndAlso AptZancudoAve Then DeliveryMenu.AddItem(itemZA)
             '1.10 update
-            'If MazeBankWest.Apartment.Owner = GetPlayerName() AndAlso Not IO.Directory.GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMBW)
+            'If MazeBankWest.Apartment.Owner = GetOwner AndAlso Not IO.Directory.GetFiles(MazeBankWest.Apartment.GaragePath, "*.cfg").Count = 20 AndAlso ReadCfgValue("MazeBankWest", settingFile) = "Enable" Then DeliveryMenu.AddItem(itemMBW)
 
             DeliveryMenu.RefreshIndex()
         Catch ex As Exception
@@ -1462,140 +1445,140 @@ Public Class Website
                 CreateFile(TargetPathDir & "vehicle_0.cfg")
                 SavePegasusVehicle(TargetPathDir & "vehicle_0.cfg")
                 VehPreview.Delete()
-                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
             Else
                 If IO.File.Exists(TargetPathDir & "vehicle_1.cfg") = False Then
                     If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                     CreateFile(TargetPathDir & "vehicle_1.cfg")
                     SavePegasusVehicle(TargetPathDir & "vehicle_1.cfg")
                     VehPreview.Delete()
-                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                 Else
                     If IO.File.Exists(TargetPathDir & "vehicle_2.cfg") = False Then
                         If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                         CreateFile(TargetPathDir & "vehicle_2.cfg")
                         SavePegasusVehicle(TargetPathDir & "vehicle_2.cfg")
                         VehPreview.Delete()
-                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                     Else
                         If IO.File.Exists(TargetPathDir & "vehicle_3.cfg") = False Then
                             If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                             CreateFile(TargetPathDir & "vehicle_3.cfg")
                             SavePegasusVehicle(TargetPathDir & "vehicle_3.cfg")
                             VehPreview.Delete()
-                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                         Else
                             If IO.File.Exists(TargetPathDir & "vehicle_4.cfg") = False Then
                                 If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                 CreateFile(TargetPathDir & "vehicle_4.cfg")
                                 SavePegasusVehicle(TargetPathDir & "vehicle_4.cfg")
                                 VehPreview.Delete()
-                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                             Else
                                 If IO.File.Exists(TargetPathDir & "vehicle_5.cfg") = False Then
                                     If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                     CreateFile(TargetPathDir & "vehicle_5.cfg")
                                     SavePegasusVehicle(TargetPathDir & "vehicle_5.cfg")
                                     VehPreview.Delete()
-                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                 Else
                                     If IO.File.Exists(TargetPathDir & "vehicle_6.cfg") = False Then
                                         If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                         CreateFile(TargetPathDir & "vehicle_6.cfg")
                                         SavePegasusVehicle(TargetPathDir & "vehicle_6.cfg")
                                         VehPreview.Delete()
-                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                     Else
                                         If IO.File.Exists(TargetPathDir & "vehicle_7.cfg") = False Then
                                             If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                             CreateFile(TargetPathDir & "vehicle_7.cfg")
                                             SavePegasusVehicle(TargetPathDir & "vehicle_7.cfg")
                                             VehPreview.Delete()
-                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                         Else
                                             If IO.File.Exists(TargetPathDir & "vehicle_8.cfg") = False Then
                                                 If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                 CreateFile(TargetPathDir & "vehicle_8.cfg")
                                                 SavePegasusVehicle(TargetPathDir & "vehicle_8.cfg")
                                                 VehPreview.Delete()
-                                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                             Else
                                                 If IO.File.Exists(TargetPathDir & "vehicle_9.cfg") = False Then
                                                     If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                     CreateFile(TargetPathDir & "vehicle_9.cfg")
                                                     SavePegasusVehicle(TargetPathDir & "vehicle_9.cfg")
                                                     VehPreview.Delete()
-                                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                 Else
                                                     If IO.File.Exists(TargetPathDir & "vehicle_10.cfg") = False Then
                                                         If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                         CreateFile(TargetPathDir & "vehicle_10.cfg")
                                                         SavePegasusVehicle(TargetPathDir & "vehicle_10.cfg")
                                                         VehPreview.Delete()
-                                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                     Else
                                                         If IO.File.Exists(TargetPathDir & "vehicle_11.cfg") = False Then
                                                             If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                             CreateFile(TargetPathDir & "vehicle_11.cfg")
                                                             SavePegasusVehicle(TargetPathDir & "vehicle_11.cfg")
                                                             VehPreview.Delete()
-                                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                         Else
                                                             If IO.File.Exists(TargetPathDir & "vehicle_12.cfg") = False Then
                                                                 If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                 CreateFile(TargetPathDir & "vehicle_12.cfg")
                                                                 SavePegasusVehicle(TargetPathDir & "vehicle_12.cfg")
                                                                 VehPreview.Delete()
-                                                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                             Else
                                                                 If IO.File.Exists(TargetPathDir & "vehicle_13.cfg") = False Then
                                                                     If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                     CreateFile(TargetPathDir & "vehicle_13.cfg")
                                                                     SavePegasusVehicle(TargetPathDir & "vehicle_13.cfg")
                                                                     VehPreview.Delete()
-                                                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                 Else
                                                                     If IO.File.Exists(TargetPathDir & "vehicle_14.cfg") = False Then
                                                                         If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                         CreateFile(TargetPathDir & "vehicle_14.cfg")
                                                                         SavePegasusVehicle(TargetPathDir & "vehicle_14.cfg")
                                                                         VehPreview.Delete()
-                                                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                     Else
                                                                         If IO.File.Exists(TargetPathDir & "vehicle_15.cfg") = False Then
                                                                             If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                             CreateFile(TargetPathDir & "vehicle_15.cfg")
                                                                             SavePegasusVehicle(TargetPathDir & "vehicle_15.cfg")
                                                                             VehPreview.Delete()
-                                                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                         Else
                                                                             If IO.File.Exists(TargetPathDir & "vehicle_16.cfg") = False Then
                                                                                 If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                                 CreateFile(TargetPathDir & "vehicle_16.cfg")
                                                                                 SavePegasusVehicle(TargetPathDir & "vehicle_16.cfg")
                                                                                 VehPreview.Delete()
-                                                                                DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                                DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                             Else
                                                                                 If IO.File.Exists(TargetPathDir & "vehicle_17.cfg") = False Then
                                                                                     If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                                     CreateFile(TargetPathDir & "vehicle_17.cfg")
                                                                                     SavePegasusVehicle(TargetPathDir & "vehicle_17.cfg")
                                                                                     VehPreview.Delete()
-                                                                                    DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                                    DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                                 Else
                                                                                     If IO.File.Exists(TargetPathDir & "vehicle_18.cfg") = False Then
                                                                                         If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                                         CreateFile(TargetPathDir & "vehicle_18.cfg")
                                                                                         SavePegasusVehicle(TargetPathDir & "vehicle_18.cfg")
                                                                                         VehPreview.Delete()
-                                                                                        DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                                        DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                                     Else
                                                                                         If IO.File.Exists(TargetPathDir & "vehicle_19.cfg") = False Then
                                                                                             If freeWheels = False Then Game.Player.Money = (playerCash - VehiclePrice)
                                                                                             CreateFile(TargetPathDir & "vehicle_19.cfg")
                                                                                             SavePegasusVehicle(TargetPathDir & "vehicle_19.cfg")
                                                                                             VehPreview.Delete()
-                                                                                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                                                                                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                                                                                         End If
                                                                                     End If
                                                                                 End If
@@ -1703,7 +1686,7 @@ Public Class Website
                             Resources.CreateFile(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(MichaelPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
-                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
                         End If
                     Else
@@ -1716,7 +1699,7 @@ Public Class Website
                             Resources.CreateFile(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(FranklinPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
-                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
                         End If
                     Else
@@ -1729,7 +1712,7 @@ Public Class Website
                             Resources.CreateFile(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(TrevorPathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
-                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
                         End If
                     Else
@@ -1741,7 +1724,7 @@ Public Class Website
                             Resources.CreateFile(Player3PathDir & VehPreview.NumberPlate & ".cfg")
                             SavePegasusVehicle(Player3PathDir & VehPreview.NumberPlate & ".cfg")
                             VehPreview.Delete()
-                            DisplayNotificationThisFrame(Caller, "", YourNew & SelectedVehicle & IsConfirm, CallerImg, True, IconType.RightJumpingArrow)
+                            DisplayNotificationThisFrame(Caller, "", YourNew, CallerImg, True, IconType.RightJumpingArrow)
                             sender.Visible = False
                         End If
                     Else
