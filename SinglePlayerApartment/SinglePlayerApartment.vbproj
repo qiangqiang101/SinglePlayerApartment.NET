@@ -75,11 +75,12 @@
     <Reference Include="iFruitAddon">
       <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\iFruitAddon.dll</HintPath>
     </Reference>
-    <Reference Include="INMNativeUI">
-      <HintPath>F:\Program Files\Steam\SteamApps\common\Grand Theft Auto V\scripts\INMNativeUI.dll</HintPath>
+    <Reference Include="INMNativeUI, Version=1.6.1.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\scripts\INMNativeUI.dll</HintPath>
     </Reference>
     <Reference Include="ScriptHookVDotNet2">
-      <HintPath>..\..\..\..\..\..\Program Files\Steam\SteamApps\common\Grand Theft Auto V\ScriptHookVDotNet2.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\ScriptHookVDotNet2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
